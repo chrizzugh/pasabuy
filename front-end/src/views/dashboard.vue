@@ -786,7 +786,7 @@ el:'#shop-list',
     },
     listlistener(){
       this.list = false;
-  },
+    },
     toggleEditShoppingOffer(){
       this.editShoppingOffer = !this.editShoppingOffer 
     },
@@ -824,7 +824,13 @@ el:'#shop-list',
       this.sendrequest = false;
     },
   },
- 
+   mounted(){
+    api.get('/api/user').then((res)=>{
+      this.user = res.data;
+    }).catch((error) => {
+      this.error=error.response.data.errors;
+    })
+  }
    
 }
 </script>

@@ -47,8 +47,8 @@
                             <router-link to="/edit-profile" class="font-bold" >Skip for now</router-link>
                         </div>
                         <div class="flex justify-end w-1/2 px-1 mt-3 vs:mt-7 vs:w-full">
-                            <button class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none ">
-                            <router-link to="/verification-message" >NEXT</router-link></button>
+                           <button  @click="saveUser" class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none ">
+                            NEXT</button>
                     </div>
                 </div>
             </div>
@@ -77,3 +77,30 @@
 
 
 </style>
+<script>
+
+
+import api from '../api'
+export default {
+    methods:{
+        saveUser(){
+            var dataform = {personal:JSON.parse(localStorage.getItem('personal')), account:JSON.parse(localStorage.getItem('account')), address: JSON.parse(localStorage.getItem('address')) }
+
+            console.log('mail=',dataform.personal.email)
+            api.post('/api/register', {email:dataform.personal.email, password:dataform.account.password, firstName:dataform.personal.firstName, lastName:dataform.personal.lastName, phoneNumber:dataform.personal.phoneNumber, houseNumber:dataform.address.houseNumber, province:dataform.address.province,barangay:dataform.address.barangay, cityMunicipality:dataform.address.cityMunicipality}).then((res)=>{
+                 console.log(res.data);
+                 if(res){
+                     localStorage.removeItem('personal')
+                     localStorage.removeItem('address')
+                     localStorage.removeItem('account')
+                  this.$router.push({name:"dashboard"});
+                 }
+                 else 
+                 console.log("Information not saved")
+                
+             
+            })
+        }
+    }
+}
+</script>

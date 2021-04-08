@@ -24,9 +24,21 @@
                     ">
              <span class="  font-raleways font-bold grid grid-cols-2 "> 
         <p class="text-gray-500">NAME</p>
+<<<<<<< HEAD
+        <span class="flex justify-between">
+        <p v-if="show" id="name">{{personal.firstname + ' ' + personal.lastname}}</p>
+        <input type="text" v-if="hidden" 
+        id="input_fname" v-model="personal.firstname" 
+        class="ring-2 ring-gray-400 font-bold w-full">
+        <input type="text" v-if="hidden" 
+        id="input_lname" v-model="personal.lastname" 
+        class="ring-2 ring-gray-400 font-bold w-full">
+        </span>
+=======
         <span>
         <p >{{personal.name}} {{personal.midname}} {{personal.lastname}}</p>
        </span>
+>>>>>>> origin/master
         </span>
         <span class=" font-raleways font-bold  grid grid-cols-2 ">
         <p class="text-gray-500">PHONE NUMBER</p>
@@ -117,6 +129,7 @@
 </template>
 <script>
 import Profile from './ProfileEdit.vue'
+import api from '../api'
 export default {
   
   name:'personal',
@@ -134,25 +147,50 @@ data(){
     edit2:false,
     message:'yeah',
     personal:  {
-      name:'Juan',
-      midname:'B',
-      lastname:'Delacruz',
-      phone_number:'09021050502',
-      work:'Krusty Crab',
-      gender:'Male',
-      language:'Bicol',
-      birdate:new Date().toISOString().slice(0,10)
+      firstname:'',
+      lastname:'',
+      phone_number:'',
+      work:'',
+      gender:'',
+      language:'',
+      birdate: ''
     },
     }
   
 },
-methods:
-    {
+methods:{
+
+    submit () {
+      api.post('/api/editPersonal', this.personal).then((res)=>{
+        console.log(res.data);
+      //this.user = res.data;
+      }).catch(() => {
+        location.reload();
+        })
+
+    },
       handleInput(value) {
       this.name = value;
       alert(this.name)
     },
 
-    }
+},
+mounted(){
+    //get the user information from the laravel API
+    api.get('/api/getPersonal').then((res)=>{
+      console.log('personal info' ,res.data);
+      this.personal.firstname = res.data.firstName;
+      this.personal.lastname = res.data.lastName;
+      this.personal.phone_number = res.data.phoneNumber;
+      this.personal.gender = res.data.gender;
+      this.personal.birdate = res.data.birthDate; 
+      //this.user = res.data;
+    })
+    api.get('/api/getLanguages').then((res)=>{
+      console.log('language ' ,res.data);
+      this.personal.language = res.data.languages;
+      //this.user = res.data;
+    })
+  }
 }
 </script>
