@@ -127,5 +127,25 @@ class PostController extends Controller
 			], 401);
 		}
 	}
+
+	/**
+	 *    [get_user_posts description]
+	 *    @author Al Vincent Musa
+	 *    @param  Request $request [description]
+	 *    @param  [type]  $userId  [description]
+	 *    @return [type]           [description]
+	 */
+	public function get_user_posts(Request $request) {
+
+		$user = Auth::user();
+		$data = DB::select("SELECT * FROM tbl_post post, tbl_shoppingOfferPost offer_post, tbl_orderRequestPost request_post WHERE post.postNumber = offer_post.postNumber OR post.postNumber = request_post.postNumber AND post.postDeleteStatus = 0 AND post.email = ?", [$user->email]);
+
+		return response()->json([
+			'data' => [
+				$data
+			],
+			200
+		]);
+	}
     
 }
