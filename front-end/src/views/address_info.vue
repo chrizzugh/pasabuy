@@ -7,7 +7,11 @@
         <div>  <label for="sub" id="edt2" @click="edit2=!edit2,Edit('edt2'), show=!show" class="
                text-blue-800 w-min font-bold text-sm cursor-pointer">Edit</label></div>
         </div>
-        <div class="text-sm w-3/5 gap-x-10 space-y-8 pt-8 vs:w-full">
+         <div  class="text-sm w-full gap-x-10 pt-8 space-y-8
+                      xl:w-7/12
+                      2xl:w-9/12
+                      lg:w-8/12
+                    ">
         <span class="  font-raleways font-bold grid grid-cols-2 "> 
         <p class="text-gray-500">HOUSE NUMBER</p>
         <span>
@@ -48,10 +52,9 @@
     </div>
 </template>
 <script>
+import api from '../api'
 export default {
-   beforeCreate:function () {
-      document.body.className='account';
-  },
+  
 data(){
     return{
     disabled: 0,
@@ -60,10 +63,10 @@ data(){
     show2:true,
     edit2:false,
     address_info:{
-    house_number:'0210',
-    province:'Albay',
-    city:'Legaspi',
-    barangay:'Banquerohan'
+        house_number:'',
+        province:'',
+        city:'',
+        barangay:''
     },
     }
 
@@ -71,7 +74,13 @@ data(){
 methods:{
 
     submit () {
-       
+        api.post('/api/editAddress', this.address_info).then((res)=>{
+        console.log(res.data);
+
+      //this.user = res.data;
+        }).catch(() => {
+            location.reload();
+        })
     },
      Edit(pars) {
       let x=document.getElementById(pars).innerHTML;
@@ -81,10 +90,24 @@ methods:{
       }
       else{
          document.getElementById(pars).innerHTML="Edit"; 
-         
+         this.submit();
       }
     }
 
-}
+},
+mounted(){
+    //get the user information from the laravel API
+    api.get('/api/getAddress').then((res)=>{
+      console.log('address info ',res.data);
+      this.address_info.house_number = res.data.houseNumber;
+      this.address_info.province = res.data.province;
+      this.address_info.city = res.data.cityMunicipality;
+      this.address_info.barangay = res.data.barangay;
+      //this.user = res.data;
+    }).catch((error) => {
+      this.error=error.response.data.errors;
+    })
+  }
 }
 </script>
+ 

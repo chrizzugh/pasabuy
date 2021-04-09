@@ -6,8 +6,12 @@
             </div>
            <div>  <label for="sub" id="edt3" @click="edit3=!edit3,Edit('edt3'), show=!show" class="
                text-blue-800 w-min font-bold text-sm cursor-pointer">Edit</label></div>
-        </div>
-        <div class="text-sm w-1/2 gap-x-10 space-y-8 pt-8 vs:w-full">
+        </div> 
+        <div  class="text-sm w-full gap-x-10 pt-8 space-y-8
+                      xl:w-7/12
+                      2xl:w-9/12
+                      lg:w-8/12
+                    ">
         <span class="  font-raleways font-bold grid grid-cols-2 "> 
         <p class="text-gray-500">Email</p>
        <span>
@@ -20,7 +24,7 @@
         <span class=" font-raleways font-bold  grid grid-cols-2"> 
         <p  class="text-gray-500">Password</p>
         <span>
-            <p v-if="show" >{{account_info.password}}</p>
+            <input v-if="show" type="password" v-model="account_info.password" disabled/>
             <input type="password" v-if="edit3"
         id="input_password"  v-model="account_info.password" 
         class="ring-2 ring-gray-400 font-bold w-full">
@@ -30,10 +34,9 @@
     </div>
 </template>
 <script>
+import api from '../api'
 export default {
-   beforeCreate:function () {
-      document.body.className='account';
-  },
+   
 data(){
     return{
     disabled: 0,
@@ -42,8 +45,8 @@ data(){
     show2:true,
     edit3:false,
     account_info:{
-        email:'sanJuan@gmail.com',
-        password:'password',
+        email:'',
+        password:'',
         password_int:'',
         type:'password',
     },
@@ -67,6 +70,17 @@ methods:{
       }
     }
 
-}
+},
+mounted(){
+    //get the user information from the laravel API
+    api.get('/api/user').then((res)=>{
+      console.log('account info ', res.data);
+      this.account_info.email = res.data.email;
+      this.account_info.password = 'password';
+      //this.user = res.data;
+    }).catch(() => {
+      //this.error=error.response.data.errors;
+    })
+  }
 }
 </script>
