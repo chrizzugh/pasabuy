@@ -47,7 +47,7 @@ class Post extends Model
         return $this->hasMany(share::class,'postNumber','postNumber');
     }
 
-    // public function shoppingList() {
-    //     return $this->hasManyThrough(ShoppingList::class, RequestPost::class, 'postNumber', 'shoppingListNumber', 'postNumber', 'shoppingListNumber');
-    // }
+    public function shoppingList() {
+        return $this->hasOneThrough(ShoppingList::class, RequestPost::class, 'postNumber', 'shoppingListNumber', 'postNumber', 'shoppingListNumber');
+    }
 }

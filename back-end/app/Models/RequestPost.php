@@ -27,13 +27,13 @@ class RequestPost extends Model
     public $timestamps = false;
     public $primaryKey = 'indexOrderRequestPost';
 
-    // public static function boot()
-    // {
-    //     parent::boot();
-    //     self::creating(function ($model) {
-    //         $model->shoppingListNumber = (string) Uuid::generate(4);
-    //     });
-    // }
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->shoppingListNumber = (string) Uuid::generate(4);
+        });
+    }
 
     /**
      *    [post description]
@@ -44,7 +44,7 @@ class RequestPost extends Model
 		return $this->belongsTo(Post::class, 'postNUmber', 'postNumber');    	
     }
 
-    // public function shoppingList() {
-    //     return $this->hasMany(ShoppingList::class, 'shoppingListNumber', 'shoppingListNumber');
-    // }
+    public function shoppingList() {
+        return $this->hasOne(ShoppingList::class, 'shoppingListNumber', 'shoppingListNumber');
+    }
 }
