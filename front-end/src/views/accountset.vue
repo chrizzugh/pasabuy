@@ -24,10 +24,8 @@ lg:flex
               lg:w-608  lg:mr-16
               xl:w-608 xl:mr-16
               md:w-8/12
-              sm:w-10/12 
-
-            "     >
-            
+              sm:w-10/12
+            ">
         <Personal />
         <Address/>
         <InfoAccount/>
@@ -44,6 +42,10 @@ lg:flex
         </span>
         </div>
     </div>
+    <p class="text-gray-500 text-sm">
+        Privacy Policy-Cookies Policy-Terms and Conditions
+        Return and Refund Policy-PasaBuy   2021
+    </p>
 </div>
 </div>
 </template>
