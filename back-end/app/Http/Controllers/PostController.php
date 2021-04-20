@@ -13,6 +13,7 @@ use App\Models\PasabuyUser;
 use App\Models\RequestPost;
 use App\Models\userAddress;
 use App\Models\ShoppingList;
+use App\Models\Follower;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -230,15 +231,69 @@ class PostController extends Controller
 				switch ($params['post_type']) {
 					
 					case 'all':
-						# code...
+						$followed_emails1 = DB::select("SELECT email2 as email from tbl_follow WHERE email1 = '$user->email' AND email1FollowEmail2 = 1");
+						$followed_emails2 = DB::select("SELECT email1 as email from tbl_follow WHERE email2 = '$user->email' AND emaill2FollowEmail1 = 1");
+						$followed_emails = array_merge($followed_emails1, $followed_emails2);		
+
+						$followed_posts = [];
+
+						foreach($followed_emails as $followed_user) {
+							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as offer_delivery_area, offer.shoppingPlace as offer_shopping_place, offer.deliverySchedule as offer_delivery_schedule, offer.transportMode as offer_transport_mode, offer.capacity, offer.paymentMethod as offer_payment_method, offer.caption as offer_caption, request.shoppingPlace as request_shopping_place, request.deliverySchedule as request_delivery_schedule, request.paymentMethod as request_payment_method, request.caption as request_caption, shopping_list.text as items FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE post.email = '$followed_user->email' ORDER BY post.dateCreated DESC");
+
+							foreach($feeds as $feed) {
+								$feed->avatar = utf8_encode($feed->avatar);
+							}
+
+							$followed_posts = array_merge($followed_posts, $feeds);
+						}
+
+						$data['data']['feeds'] = $followed_posts;
+
+						return response()->json($data, 200);
 						break;
 
 					case 'offers':
-						# code...
+						$followed_emails1 = DB::select("SELECT email2 as email from tbl_follow WHERE email1 = '$user->email' AND email1FollowEmail2 = 1");
+						$followed_emails2 = DB::select("SELECT email1 as email from tbl_follow WHERE email2 = '$user->email' AND emaill2FollowEmail1 = 1");
+						$followed_emails = array_merge($followed_emails1, $followed_emails2);		
+
+						$followed_posts = [];
+
+						foreach($followed_emails as $followed_user) {
+							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as delivery_area, offer.shoppingPlace as shopping_place, offer.deliverySchedule as schedule, offer.transportMode as transport_mode, offer.capacity, offer.paymentMethod as payment_method, offer.caption FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber WHERE post.email = '$followed_user->email' ORDER BY post.dateCreated DESC");
+
+							foreach($feeds as $feed) {
+								$feed->avatar = utf8_encode($feed->avatar);
+							}
+
+							$followed_posts = array_merge($followed_posts, $feeds);
+						}
+
+						$data['data']['feeds'] = $followed_posts;
+						
+						return response()->json($data, 200);
 						break;
 
 					case 'requests':
-						# code...
+						$followed_emails1 = DB::select("SELECT email2 as email from tbl_follow WHERE email1 = '$user->email' AND email1FollowEmail2 = 1");
+						$followed_emails2 = DB::select("SELECT email1 as email from tbl_follow WHERE email2 = '$user->email' AND emaill2FollowEmail1 = 1");
+						$followed_emails = array_merge($followed_emails1, $followed_emails2);		
+
+						$followed_posts = [];
+
+						foreach($followed_emails as $followed_user) {
+							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, request.deliveryAddress as delivery_area, request.shoppingPlace as shopping_place, request.deliverySchedule as schedule, request.paymentMethod as payment_method, request.caption, shopping_list.text as items FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE post.email = '$followed_user->email' ORDER BY post.dateCreated DESC");
+
+							foreach($feeds as $feed) {
+								$feed->avatar = utf8_encode($feed->avatar);
+							}
+
+							$followed_posts = array_merge($followed_posts, $feeds);
+						}
+
+						$data['data']['feeds'] = $followed_posts;
+						
+						return response()->json($data, 200);
 						break;
 
 					
@@ -255,14 +310,14 @@ class PostController extends Controller
 					
 					case 'all':
 						
-						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as delivery_area, offer.shoppingPlace as shopping_place, offer.deliverySchedule as delivery_schedule, offer.transportMode as transport_mode, offer.capacity, offer.paymentMethod as payment_method, offer.caption, request.shoppingPlace as shopping_place, request.deliverySchedule as schedule, request.shoppingList as shopping_list, request.paymentMethod as payment_method, request.caption  FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE offer.shoppingPlace = $user_info->cityMunicipality OR request.shoppingPlace = $user_info->cityMunicipality ORDER BY post.dateCreated DESC");
+						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as offer_delivery_area, offer.shoppingPlace as offer_shopping_place, offer.deliverySchedule as offer_delivery_schedule, offer.transportMode as offer_transport_mode, offer.capacity as offer_capacity, offer.paymentMethod as offer_payment_method, offer.caption as offer_caption, request.shoppingPlace as request_shopping_place, request.deliverySchedule as request_delivery_schedule, request.paymentMethod as request_payment_method, request.caption as request_caption, shopping_list.text as items FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE offer.shoppingPlace = $user_info->cityMunicipality OR request.shoppingPlace = $user_info->cityMunicipality ORDER BY post.dateCreated DESC");
 
 						foreach($feeds as $feed) {
 							$feed->avatar = utf8_encode($feed->avatar);
 						}
 
 						$data['data']['feeds'] = $feeds;
-
+		
 						return response()->json($data, 200);
 						break;
 
