@@ -80,3 +80,4 @@ Route::post('/password/email',[forgotPasswordController::class, 'sendResetLinkEm
 Route::post('/password/reset',[resetPasswordController::class, 'reset'] );
 
 Route::get('user/feed', [PostController::class, 'getFeeds']);
+Route::put('post/{post_id}/edit', [PostController::class, 'editPost']);
