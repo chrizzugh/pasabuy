@@ -42,7 +42,7 @@
                 </span></button>
            </div>
          </div>
-            <div v-if="editVisible" class=" self-end mb-10 mr-4 items-center p-2 shadow-2xl rounded-xl absolute bg-white ">
+            <div v-if="editVisible" class=" self-end mb-10 mr-4 items-center p-2 shadow-inner rounded-xl absolute bg-white ">
                 <div class="flex cursor-pointer  space-x-2 items-center">
                   <span class="material-icons text-gray-400">
                   mode
