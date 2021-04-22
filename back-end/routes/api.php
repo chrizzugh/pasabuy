@@ -81,3 +81,4 @@ Route::post('/password/reset',[resetPasswordController::class, 'reset'] );
 
 Route::get('user/feed', [PostController::class, 'getFeeds']);
 Route::put('post/{post_id}/edit', [PostController::class, 'editPost']);
+Route::delete('post/(post_id}/delete', [PostController::class, 'deletePost']);

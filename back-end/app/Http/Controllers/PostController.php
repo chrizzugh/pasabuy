@@ -444,4 +444,24 @@ class PostController extends Controller
 				break;
 		}
     }
+
+    /**
+     *    [deletePost deletes post]
+     *    @author Al Vincent Musa
+     *    @param  Request $request [description]
+     *    @param  [type]  $post_id [description]
+     *    @return [type]           [description]
+     */
+    public function deletePost(Request $request, $post_id) {
+    	$user = Auth::user();
+
+		$post = Post::where('postNumber', '=', $post_id)->where('email', '=', $user->email)->firstOrFail();
+		$post->postDeleteStatus = 1;
+
+		DB::transaction(function() use ($post) {
+			$post->save();
+		});
+
+		return 200;
+    }
 }
