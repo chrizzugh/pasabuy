@@ -8,7 +8,7 @@
    <div class="flex items-center justify-center">
     <div class="inline-flex space-x-4 ssm:space-x-2  items-center vs:w-full ssm:w-full ssm:p-2 sm:w-full justify-center vs:p-4 p-6 bg-white shadow rounded-xl h-25">
         <img class="w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10 rounded-full" src="img/yami.jpg"/>
-        <button @click="togglePostModal" class="flex items-center justify-start text-base ssm:text-xs lvs:text-sm vs:text-xs outline-none leading-none text-gray-500 py-5 pl-6 bg-gray-100 rounded-full ssm:h-10 vs:h-12 h-14 w-448 ssm:w-full vs:w-full">
+        <button @click="togglePostModal" class="focus:outline-none flex items-center justify-start text-base ssm:text-xs lvs:text-sm vs:text-xs outline-none leading-none text-gray-500 py-5 pl-6 bg-gray-100 rounded-full ssm:h-10 vs:h-12 h-14 w-448 ssm:w-full vs:w-full">
         Post an order request</button>
     </div>
   </div>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div id="3dotmenu" class="vs:mt-1">
-            <button @click="edit1=!edit1" class="focus:outline-none">
+            <button @click="EditModal" class="focus:outline-none">
               <img class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto" src="img/3dot.svg"/>
             </button>
           <div class="flex w-full">
@@ -275,16 +275,26 @@ export default {
     },
     listener(){
       this.postModalVisible = false;
+      this.edit1 = false
     },
     listener2(){
       this.postModalVisible2 = false;
+      this.edit1 = false
     },
     listener3(){
       this.postModalVisible3 = false;
+      this.edit1 = false
     },
     listener4(){
       this.postSendModal = false;
+      this.edit1 = false
     },
+
+    EditModal(){
+      this.edit1 = !this.edit1
+    },
+
+
     showShareModal(){
       //without 3 dot menu when share post modal is open
       var container = $('#shopOrder-UserPost');

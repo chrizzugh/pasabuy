@@ -38,7 +38,7 @@
             </div>
           </div>
           <div id="3dotmenu" class="vs:mt-1">
-            <button @click="edit1=!edit1" class="focus:outline-none">
+            <button @click="EditModal" class="focus:outline-none">
               <img class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto" src="img/3dot.svg"/>
             </button>
            <div class="flex w-full">
@@ -253,10 +253,10 @@ export default {
     },
     togglePostModal1(){
       this.postModalVisible1 = !this.postModalVisible1
-      
     },
     togglePostModal2(){
       this.postModalVisible2 = !this.postModalVisible2
+      
       
     },
     toggleSendModal(){
@@ -269,21 +269,35 @@ export default {
     },
     listener(){
       this.postModalVisible = false;
+      this.edit1 = false
+      this.share= false
     },
     listener1(){
       this.postModalVisible1 = false;
+      this.edit1 = false  
+      this.share= false   
     },
     listener2(){
       this.postModalVisible2 = false;
+      this.edit1 = false
+      this.share= false
     },
     listener3(){
       this.postSendModal = false;
+      this.edit1 = false
+      this.share= false
     },
 
     closeOpen(){
       this.share=!this.share
+      this.edit1 = false
     },
 
+    EditModal(){
+      this.edit1 = !this.edit1
+      this.share= false
+    },
+    
     showShareModal(){
       ////without 3 dot menu when share post modal is open
       var container = $('#shopOffer-UserPost');

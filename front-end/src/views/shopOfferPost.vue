@@ -15,7 +15,7 @@
               delivery_dining  
               </span>
               <div class="sm:w-full">
-                    <button @click="dropdown1=!dropdown1" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">{{deliveryAddress}}</button>
+                    <button @click="dropdown1modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">{{deliveryAddress}}</button>
                     <div class="relative">
             <div v-if="dropdown1" class="absolute p-2 bg-white rounded-lg shadow-xl right-0 h-40 sm:w-full w-52">
             <div id="scroll1" class="flex-auto overflow-y-scroll  h-28">
@@ -85,13 +85,13 @@
               shopping_cart  
               </span>
               <div class="sm:w-full">
-                <button @click="dropdown4=!dropdown4" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 px-4 items-center py-2.5 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Shopping Place</button>
+                <button @click="dropdown4modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 px-4 items-center py-2.5 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Shopping Place</button>
                  <div class="relative">
             <div v-if="dropdown4" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52">
             <div class="flex flex-col w-full px-2 justify-start items-start">
-             <input type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Search for place" title="Shopping Place">
+             <input class="focus:outline-none" type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Search for place" title="Shopping Place">
             <div id="scroll1" class="flex px-2 flex-col overflow-y-scroll w-full h-24">
-            <ul id="myUL" class="space-y-1">
+            <ul id="myUL" class="space-y-1 text-sm tracking-wide leading-normal">
             <li><a href="#">Ayala</a></li>
             <li><a href="#">Disney Land</a></li>
             <li><a href="#">Dotcom Infinity</a></li>
@@ -121,13 +121,13 @@
               directions_car 
               </span>
               <div class="sm:w-full">
-                <button @click="dropdown3=!dropdown3" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Transport Mode</button>
+                <button @click="dropdown3modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Transport Mode</button>
               <div class="relative">
             <div v-if="dropdown3" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52">
             <div class="flex flex-col w-full px-2 justify-start items-start">
-             <input type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Mode of transport.." title="Transport Mode">
+             <input class="focus:outline-none" type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Mode of transport.." title="Transport Mode">
             <div id="scroll1" class="flex px-2 flex-col overflow-y-scroll w-full h-24">
-            <ul id="myUL" class="space-y-1">
+            <ul id="myUL" class="space-y-1 text-sm tracking-wide leading-normal">
             <li><a href="#">Spaceship</a></li>
             <li><a href="#">Cart Titan</a></li>
             <li><a href="#">Magic Broom</a></li>
@@ -140,7 +140,7 @@
             </div>
               </div>
               </div>
-              </div>
+               </div>
                  </div>
              </div>
 
@@ -157,7 +157,7 @@
               payments
               </span>
               <div class="sm:w-full">
-                    <button @click="dropdown2=!dropdown2" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Payment Method</button>
+                    <button @click="dropdown2modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Payment Method</button>
             <div class="relative">
             <div v-if="dropdown2" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52">
             <div class="flex flex-col w-full space-y-3 px-2 justify-start items-start">
@@ -217,33 +217,59 @@ export default {
             address4: "Maski Sain City"
         }
     },
-    methods:{
 
-        openAddModal(){
-            this.addAddress = !this.addAddress
-        },
+methods:{
+
+    openAddModal(){
+      this.addAddress = !this.addAddress
+    },
         
-        getAddressValue(){
-          this.deliveryAddress = this.address1 
-        },
+    getAddressValue(){
+      this.deliveryAddress = this.address1 
+    },
 
-        myFunction() {
-            var input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("myUL");
-            li = ul.getElementsByTagName("li");
-            for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName("a")[0];
-            txtValue = a.textContent || a.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                li[i].style.display = "";
-            } 
-            else {
-                li[i].style.display = "none";
-            }
-          }
-        },
+    myFunction() {
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+      a = li[i].getElementsByTagName("a")[0];
+      txtValue = a.textContent || a.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+      } 
+      else {
+      li[i].style.display = "none";
+      }
+    }
+  },
+
+   dropdown1modal(){
+      this.dropdown1=!this.dropdown1
+      this.dropdown2= false
+      this.dropdown3= false
+      this.dropdown4= false        
+    },
+    dropdown2modal(){
+      this.dropdown1= false
+      this.dropdown2= !this.dropdown2
+      this.dropdown3= false
+      this.dropdown4= false        
+    },
+    dropdown3modal(){
+      this.dropdown1= false
+      this.dropdown2= false
+      this.dropdown3= !this.dropdown3
+      this.dropdown4= false        
+    },
+    dropdown4modal(){
+      this.dropdown1= false
+      this.dropdown2= false
+      this.dropdown3= false
+      this.dropdown4= !this.dropdown4       
+    },
 },
 }
 </script>
@@ -268,6 +294,24 @@ export default {
 #button1{
     padding:0;
     margin:0;
+}
+
+#postMessge::-webkit-scrollbar-track
+{
+	border-radius: none;
+}
+#postMessage::-webkit-scrollbar
+{
+	width: 6px;
+}
+#postMessage::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: grey;
+}
+
+textarea{
+  resize: none;
 }
 
 #myUL {
