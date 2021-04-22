@@ -100,10 +100,17 @@
                     "
                   >
                     You :
-                    <strong>{{
+                     <strong v-if="hasPostNum(chatRoom.get_messages[chatRoom.get_messages.length - 1]
+                        .messageText) == -1">{{
                       chatRoom.get_messages[chatRoom.get_messages.length - 1]
                         .messageText
                     }}</strong>
+                    <strong v-else>
+                      {{
+                      parseString(chatRoom.get_messages[chatRoom.get_messages.length - 1]
+                        .messageText)[0].message
+                    }}
+                    </strong>
                   </span>
                   <span class="text-xs text-gray-400 truncate w-36" v-else>
                     {{
@@ -114,10 +121,17 @@
                       chatRoom.get_messages[chatRoom.get_messages.length - 1]
                         .get_message_sender.lastName
                     }}:
-                    <strong>{{
+                    <strong v-if="hasPostNum(chatRoom.get_messages[chatRoom.get_messages.length - 1]
+                        .messageText) == -1">{{
                       chatRoom.get_messages[chatRoom.get_messages.length - 1]
                         .messageText
                     }}</strong>
+                    <strong v-else>
+                      {{
+                       parseString(chatRoom.get_messages[chatRoom.get_messages.length - 1]
+                        .messageText)[0].message
+                    }}
+                    </strong>
                   </span>
                 </div>
                 <div
@@ -484,6 +498,25 @@
                           </div>
                         </div>
                       </div>
+                        <div class="flex items-end pr-10 mt-1">
+                          <img
+                            :src="msg.get_message_sender.profilePicture"
+                            class="rounded-lg h-8 w-8"
+                          />
+                          <div class="rounded-lg">
+                            <div
+                              class="ml-4 mr-10 p-3 bg-gray-100 text-sm rounded-lg"
+                            >
+                              <p>{{ msgPost.message }}</p>
+
+                              <span
+                                class="text-gray-500 pl-1"
+                                style="font-size: 10.5px"
+                                >{{ timestamp(msg.dateCreated) }}</span
+                              >
+                            </div>
+                          </div>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -610,6 +643,21 @@
                           </div>
                         </div>
                       </div>
+                      <div class="flex justify-end pr-10 mt-1">
+                          <div class="rounded-lg">
+                            <div
+                              class="ml-4 mr-10 p-3 bg-gray-100 text-sm rounded-lg"
+                            >
+                              <p>{{ msgPost.message }}</p>
+
+                              <span
+                                class="text-gray-500 pl-1"
+                                style="font-size: 10.5px"
+                                >{{ timestamp(msg.dateCreated) }}</span
+                              >
+                            </div>
+                          </div>
+                        </div>
                     </div>
 
                     <!----------------------------------------->
@@ -1296,6 +1344,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Navbar from "./Navbar";
 import api from "../api";
@@ -1376,18 +1425,19 @@ export default {
         store.dispatch("getChatRoom").then(() => {
           vm.getChatRooms();
         });
-        window.Echo.private("chat." + this.activeRoom).listen(
-          ".message.new",
-          () => {
-            console.log("listening...");
+        // window.Echo.private("chat." + this.activeRoom).listen(
+        //   ".message.new",
+        //   () => {
+        //     //optimize check if what is the return value, if itcontains transaction then get transaction and get chat rooms, otherwise get only chatroom
+        //     console.log("listening...");
             Axios.all([
               api.get('api/getTransaction'),
               api.get('api/getChatroom')
             ]).then(()=>{
               vm.getChatRooms();
             }) 
-          }
-        );
+        //   }
+        // );
       }
     },
     disconnect(oldval) {
@@ -1458,7 +1508,6 @@ export default {
         }
       }
       var i;
-      var j;
       //var x=0;
       for (i = 0; i < this.chatRooms.length; i++) {
         //setting the picture and name of the chatrooms
@@ -1467,17 +1516,13 @@ export default {
             this.chatRooms[i].get_email2.firstName +
             " " +
             this.chatRooms[i].get_email2.lastName;
-          this.chatRoomPic[i] =
-            "http://localhost:8000/storage/images/" +
-            this.chatRooms[i].get_email2.profilePicture;
+          this.chatRoomPic[i] =this.chatRooms[i].get_email2.profilePicture;
         } else {
           this.chatRoomNames[i] =
             this.chatRooms[i].get_email1.firstName +
             " " +
             this.chatRooms[i].get_email1.lastName;
-          this.chatRoomPic[i] =
-            "http://localhost:8000/storage/images/" +
-            this.chatRooms[i].get_email1.profilePicture;
+          this.chatRoomPic[i] =  this.chatRooms[i].get_email1.profilePicture;
         }
 
         //check if the auth user and passed email is on the list
@@ -1495,17 +1540,6 @@ export default {
               this.chatRooms[i].email1,
               this.chatRooms[i].email2
             );
-
-        if (this.chatRooms[i].get_messages.length != 0)
-          for (j = 0; j < this.chatRooms[i].get_messages.length; j++) {
-            this.chatRooms[i].get_messages[
-              j
-            ].get_message_sender.profilePicture =
-              "http://localhost:8000/storage/images/" +
-              this.chatRooms[i].get_messages[j].get_message_sender
-                .profilePicture;
-            console.log("get chat room");
-          }
       }
       if (this.activeRoom == null && this.chatRooms.length != 0)
         this.setRoom(
@@ -1554,13 +1588,13 @@ export default {
         params = this.$route.query.postNum.split("/?p=");
         var postNum = atob(params[0]);
         var email = atob(params[1]);
-        var message = atob(params[2]);
+        var requestData = { message:JSON.parse(atob(params[2]))}
         params = { userEmail: email };
         var transactionDetails = {
                   email: email,
                   postNumber: postNum,
                 };
-
+        console.log('request data', requestData.message)
         Axios
           .all([
             api.get("/sanctum/csrf-cookie"),
@@ -1568,16 +1602,12 @@ export default {
           ])
           .then((responseArr) => {
             var dataMessage = [];
-            var dataMessage1 = {
-              roomID: responseArr[1].data.messageRoomNumber,
-              message: message,
-            };
             var foundPost = this.posts.find((x) => x.postNumber === postNum); //find the passed post in the stored objects in vuex
 
             if (foundPost.offer_post != null) {
               dataMessage = {
                 roomID: responseArr[1].data.messageRoomNumber,
-                message: JSON.stringify(foundPost.offer_post),
+                message: JSON.stringify(requestData.message),
               };
               console.log(dataMessage);
             } else {
@@ -1590,7 +1620,6 @@ export default {
 
              Axios.all([
                 api.post("/api/sendMessage", dataMessage),
-                api.post("/api/sendMessage", dataMessage1),
                 api.post("/api/createTransaction", transactionDetails),
                 api.get("/api/getTransaction"),
                 api.get("/api/getChatroom")
@@ -1607,7 +1636,7 @@ export default {
 
     },
     hasPostNum(text) {
-      return text.search("postNumber");
+      return text.search("\"param\":\"this_is_a_parameter_post_message\"");
     },
     timestampSched(datetime) {
       var schedDate = new Date(datetime);

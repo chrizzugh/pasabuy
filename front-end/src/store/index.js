@@ -18,8 +18,13 @@ const store =  new Vuex.Store({
         userChatRooms:[],
         userLang:[],
         userTransactions:[],
+        userShippingAddress:[],
+        transportModes:[],
+        shoppingPlaces:[],  
         userInfo:[],
-        notAuthUserAddress:[]
+        notAuthUserAddress:[],
+        allShares:[]
+
 
 
 
@@ -30,7 +35,6 @@ const store =  new Vuex.Store({
         //syncrhonous
         setCurrentAuthUser(state,payload){
             state.authUser = payload;
-           
         },
         setCurrentPersonal(state,payload){
             state.authUserPersonal = payload;
@@ -44,9 +48,6 @@ const store =  new Vuex.Store({
         setUserAddress(state,payload){
             state.userAddress = payload;
          },
-        CREATE_POSTS(state,post){
-            state.posts.unshift(post)
-        },
         FETCH_POSTS(state,post){
             state.posts = post
         },
@@ -63,20 +64,31 @@ const store =  new Vuex.Store({
             state.userTransactions = []
             state.userTransactions = trans
         },
+        setUserShippingAddress(state,trans){
+            state.userShippingAddress = trans
+        },
+        setTransportModes(state,trans){
+            state.transportModes = trans
+        },
+        setShoppingPlaces(state,trans){
+            state.shoppingPlaces = trans
+        },
         setUserInfo(state,data){
             state.userInfo = data
         },
         setNotAuthUserAddress(state,data){
             state.notAuthUserAddress = data
         },
+        setAllShares(state,data){
+            state.allShares = data
+        },
     },
     actions:{
         async createPostOffer(state,post){
             return api
             .post('api/post/offer',post)
-            .then((res)=>{
-                let post = res.data
-                state.commit('CREATE_POSTS',post)
+            .then(()=>{
+              
             })
             .catch((error)=>{
                 console.log(error)
@@ -85,9 +97,8 @@ const store =  new Vuex.Store({
         async createPostRequest(state,post){
             return api
             .post('api/post/request',post)
-            .then((res)=>{
-                let post = res.data
-                state.commit('CREATE_POSTS',post)
+            .then(( )=>{
+             
             })
             .catch((error)=>{
                 console.log(error)
@@ -108,7 +119,7 @@ const store =  new Vuex.Store({
             return api
             .get('api/getPersonal')
             .then((res)=>{
-                res.data.profilePicture = 'http://localhost:8000/storage/images/'+res.data.profilePicture
+                
                 let user = res.data
                 state.commit('setCurrentPersonal',user)
             })
@@ -120,10 +131,6 @@ const store =  new Vuex.Store({
             return api
             .get('api/getPosts')
             .then((res)=>{
-                var i;
-                for(i=0;i<res.data.length;i++){
-                  res.data[i].user.profilePicture ='http://localhost:8000/storage/images/'+ res.data[i].user.profilePicture
-                }
                 let posts = res.data
                 state.commit('FETCH_POSTS',posts)
             })
@@ -198,15 +205,46 @@ const store =  new Vuex.Store({
                 console.log(error)
             })
         },
+        async getUserShippingAddress(state){
+            return api
+            .get('api/getShippingAddress')
+            .then((res)=>{
+                let addr = res.data
+                console.log('your addressese', addr)
+                state.commit('setUserShippingAddress',addr)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
+        async getTransportModes(state){
+            return api
+            .get('api/getTransportModes')
+            .then((res)=>{
+                let tra = res.data
+                state.commit('setTransportModes',tra)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
         async getUserInfo(state,ID){
             return api
             .get('api/getUserInfo',{params:{email:ID}})
             .then((res)=>{
-                res.data.profilePicture = 'http://localhost:8000/storage/images/'+res.data.profilePicture
                 let data = res.data
-                console.log('not auth user',ID)
-                console.log('not auth user',data)
                 state.commit('setUserInfo',data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
+        async getShoppingPlaces(state){
+            return api
+            .get('api/getShoppingPlaces')
+            .then((res)=>{
+                let data = res.data
+                state.commit('setShoppingPlaces',data)
             })
             .catch((error)=>{
                 console.log(error)
@@ -217,9 +255,18 @@ const store =  new Vuex.Store({
             .get('api/getNotAuthUserAddress',{params:{email:ID}})
             .then((res)=>{
                 let data = res.data
-                console.log('not auth address',ID)
-                console.log('not auth address',data)
                 state.commit('setNotAuthUserAddress',data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
+        async getAllShares(state){
+            return api
+            .get('api/getShares')
+            .then((res)=>{
+                let data = res.data
+                state.commit('setAllShares',data)
             })
             .catch((error)=>{
                 console.log(error)
@@ -237,8 +284,12 @@ const store =  new Vuex.Store({
         getRooms:(state) => state.userChatRooms,
         getUserLang:(state) => state.userLang,
         getUserTransactions:(state) => state.userTransactions,
+        getUserShippingAddress:(state) => state.userShippingAddress,
+        getTransportModes:(state) => state.transportModes,
+        getShoppingPlaces:(state) => state.shoppingPlaces,
         getUserInfo:(state) => state.userInfo,
         getNotAuthUserAddress:(state) => state.notAuthUserAddress,
+        getAllShares:(state) => state.allShares,
 
     }
 })

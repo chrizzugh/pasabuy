@@ -28,7 +28,6 @@ class PostController extends Controller
 
 		// validate data
 		$request->validate([
-            'email' => ['required', 'email', 'max:50'],
             'postIdentity' => ['required', 'max:100'],
             'postStatus' => ['required', 'string', 'max:50'],
             'deliveryArea' => ['required', 'max:500'],
@@ -57,6 +56,16 @@ class PostController extends Controller
 		$offer_post->paymentMethod = $request->paymentMethod;
 		$offer_post->caption = $request->caption;
 
+		//check if shopping place already exist in tbl_shoppingPlace
+		$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \''.$request->shoppingPlace.'\'');
+		if($shoppingPlace == null){
+			//save shopping place to tbl_shopping place
+		}
+		//check if transport mode already exist in tbl_transportMOde
+		$transport = DB::select('SELECT * from tbl_transportMode WHERE transportMode = \''.$request->transportMode.'\'');
+		if($transport == null){
+			//save transport mode to tbl_transportMode
+		}
 		// save to database
 		DB::transaction(function() use ($post, $offer_post) {
 
@@ -77,7 +86,6 @@ class PostController extends Controller
 
 		// validate data
 		$request->validate([
-			'email' => 'required|email',
 			'postIdentity' => 'required|string|max:100',
 			'postStatus' => 'required|string|max:50',
 			'deliveryArea' => 'required|string|max:500',
@@ -92,7 +100,7 @@ class PostController extends Controller
 
 		// post model
 		$post = new Post;
-		$post->email = $request->email;
+		$post->email = $user;
 		$post->postIdentity = $request->postIdentity;
 		$post->postStatus = $request->postStatus;
 
@@ -107,6 +115,12 @@ class PostController extends Controller
 		$request_post->caption = $request->caption;
 
 			// save to database
+		
+		//check if shopping place already exist in tbl_shoppingPlace
+		$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \''.$request->shoppingPlace.'\'');
+		if($shoppingPlace == null){
+			//save shopping place to tbl_shopping place
+		}
 		DB::transaction(function() use ($post, $request_post) {
 			$post->save();
 			$post->request_post()->save($request_post);
@@ -142,7 +156,7 @@ class PostController extends Controller
 
 		$user = Auth::user();
 		// $data = PasabuyUser::has('post')->with('post','post.offer_post','post.request_post')->get();
-		$data = Post::with('offer_post','request_post','user','request_post.shoppingList')->where('tbl_post.postDeleteStatus','=',0)->orderBy('tbl_post.dateCreated','desc')->get();
+		$data = Post::with('offer_post','request_post','user','request_post.shoppingList','share','share.user')->where('tbl_post.postDeleteStatus','=',0)->orderBy('tbl_post.dateCreated','desc')->get();
 
 		return response()->json($data);
 	}
@@ -150,12 +164,11 @@ class PostController extends Controller
 	public function getAllShares(Request $request)
 	{
 		# code...
-		$data = share::with('post','post.offer_post','post.request_post','user')->orderBy('dateCreated','desc')->get();
-		
-		foreach ($data as $convertingImage){ 
-			
-			$convertingImage->user->profilePicture = utf8_encode($convertingImage->user->profilePicture);
-		}
+		// $data = Post::has('share')->with('offer_post','request_post','user','request_post.shoppingList','share.user')->whereHas('share', function($query){
+        //     $query->where('shareDeleteStatus', 0)
+		// 	->orderBy('dateCreated', 'desc');
+        // })->get();
+		$data = share::with('post','post.offer_post','post.request_post','post.user','post.request_post.shoppingList','user')->where('shareDeleteStatus','=',0)->orderBy('dateCreated','desc')->get();
 
 		return response()->json($data);
 	}

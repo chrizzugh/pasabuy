@@ -52,7 +52,6 @@ api.interceptors.response.use(
             api.post('api/logout').then(()=>{
                 sessionStorage.clear();
                 window.location.reload();
-
             })
             break;
         case 429:
@@ -100,4 +99,6 @@ api.interceptors.response.use(
 //     cluster: 'ap1',
 //     client: client
 // });
+import './assets/css/tailwind.css'
+window.$ = window.jQuery = require('jquery');
 createApp(App).use(router).mount('#app')
