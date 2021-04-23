@@ -387,8 +387,8 @@ export default {
         paymentMethod:this.payment,
         message:this.message,
         deliverySchedule:this.sched,
-        param: 'this_is_a_parameter_post_message'
-        // shoppingListNumber: '1',
+        shoppingList: this.shoppingLists.filter((x)=>{return x.shoppingListNumber === '1'}),//only harcoded shopping list
+        param: 'this_is_a_parameter_post_message',
       }))
       // console.log('this is the requested data',this.requestData)
     },
@@ -447,6 +447,9 @@ export default {
     },
     shoppingPlaces() {
       return store.getters.getShoppingPlaces;
+    },
+    shoppingLists() {
+      return store.getters.getUserShoppingList;
     },
   },
 };

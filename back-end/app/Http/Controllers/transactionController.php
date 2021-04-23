@@ -9,6 +9,7 @@ use App\Models\userInformation;
 use App\Notifications\cancelledRequestNotification;
 use App\Notifications\confirmRequestNotification;
 use App\Notifications\declinedRequestNotification;
+use App\Notifications\UpdateRequestNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -106,5 +107,21 @@ class transactionController extends Controller
         else 
             return response()->json('not ok');
             
+    }
+    public function updateTransaction(Request $request)
+    {
+        # code...
+        $transaction = transaction::find($request->ID);
+        $transaction->transactionStatus = $request->status;
+        if($transaction->save()){
+            //find the right user to notify, in this case the owner of the post
+			$userToNotif = User::where('email',$request->userNotif)->get();
+			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
+			$userToNotif->notify(new UpdateRequestNotification($request->status,$request->postNumber));
+            return response()->json(["message"=>"Transaction succesfully updated."],201);
+        }
+        else 
+            return response()->json(["error"=>"Error updating transaction."],201);
+
     }
 }

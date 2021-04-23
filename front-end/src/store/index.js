@@ -23,7 +23,9 @@ const store =  new Vuex.Store({
         shoppingPlaces:[],  
         userInfo:[],
         notAuthUserAddress:[],
-        allShares:[]
+        allShares:[],
+        shoppingList:[]
+
 
 
 
@@ -81,6 +83,9 @@ const store =  new Vuex.Store({
         },
         setAllShares(state,data){
             state.allShares = data
+        },
+        setShoppingList(state,data){
+            state.shoppingList = data
         },
     },
     actions:{
@@ -272,6 +277,18 @@ const store =  new Vuex.Store({
                 console.log(error)
             })
         },
+        async getUserShoppingList(state){
+            return api
+            .get('api/getShoppingList')
+            .then((res)=>{
+                let data = res.data
+                console.log("shopping list", data)
+                state.commit('setShoppingList',data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
     },
     modules:{},
     getters:{
@@ -290,6 +307,8 @@ const store =  new Vuex.Store({
         getUserInfo:(state) => state.userInfo,
         getNotAuthUserAddress:(state) => state.notAuthUserAddress,
         getAllShares:(state) => state.allShares,
+        getUserShoppingList:(state) => state.shoppingList,
+
 
     }
 })

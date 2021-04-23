@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class SharedNotification extends Notification
+class UpdateRequestNotification extends Notification
 {
     use Queueable;
 
@@ -20,26 +20,42 @@ class SharedNotification extends Notification
      * @return void
      */
     public $postNumber;
-    public function __construct($postNumber)
+    public $status;
+    public function __construct($status,$postNumber)
     {
         //
         $this->postNumber = $postNumber;
+        $this->status = $status;
+
     }
 
- 
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
     public function via($notifiable)
     {
         return ['database','broadcast'];
     }
 
 
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
     public function toDatabase($notifiable)
     {
         $user = userInformation::where('email',Auth::user()->email)->get();
         return [
-            'sharer' => $user[0]->firstName.' '.$user[0]->lastName,
+            'updater' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
-            'sharerPic' =>  $user[0]->profilePicture,
+            'updaterPic' => $user[0]->profilePicture,
+            'status' => $this->status
+
         ];
     }
 
@@ -47,18 +63,12 @@ class SharedNotification extends Notification
     {
         $user = userInformation::where('email',Auth::user()->email)->get();
         return new BroadcastMessage([
-            'sharer' => $user[0]->firstName.' '.$user[0]->lastName,
+            'updater' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
-            'sharerPic' =>  $user[0]->profilePicture,
+            'updaterPic' => $user[0]->profilePicture,
+            'status' => $this->status
+            
         ]);
     }
-
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
 
 }

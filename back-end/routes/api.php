@@ -70,9 +70,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/addNewShipping', [addressController::class, 'addNewShipping']);
     Route::post('/editShipping', [addressController::class, 'editShipping']);
     Route::post('/confirmRequest', [transactionController::class, 'confirmRequest']);
+    Route::post('/updateTransaction', [transactionController::class, 'updateTransaction']);
+    Route::get('/getShoppingList', [PostController::class, 'getShoppingList']);
 
- 
- 
     
 });
 

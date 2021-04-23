@@ -320,5 +320,13 @@ class PostController extends Controller
 				break;
 		}
 	}
+	public function getShoppingList()
+	{
+		# code...
+		// $data = DB::select('SELECT * FROM tbl_shoppingList WHERE email = \''.Auth::user()->email.'\'');
+		// return $data[0];
+		$data = DB::table('tbl_shoppingList')->where('email','=',Auth::user()->email)->get();
+		return $data;
+	}
     
 }

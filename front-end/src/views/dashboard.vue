@@ -1425,7 +1425,7 @@
             for=""
             class="inline-block pl-2 text-sm tracking-wide align-text-top"
           >
-            {{orders.post.request_post.deliveryAddress}}
+            {{orders.transactionData.deliveryAddress}}
           </label>
         </div>
         </div>
@@ -1481,7 +1481,7 @@
             for=""
             class="inline-block pl-2 text-sm tracking-wide align-text-top"
           >
-          {{orders.post.request_post.deliveryAddress}}
+          {{orders.transactionData.deliveryAddress}}
           </label>
         </div>
         </div>
@@ -1897,6 +1897,9 @@ export default {
     },
     allShares() {
       return store.getters.getAllShares;
+    },
+    shoppingLists() {
+      return store.getters.getUserShoppingList;
     },
     // confirmedRequestOrders() {
     //  return store.getters.getUserTransactions.filter((x)=>{
