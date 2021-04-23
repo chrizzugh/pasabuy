@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class declinedRequestNotification extends Notification
+class confirmRequestNotification extends Notification
 {
     use Queueable;
 
@@ -48,10 +48,9 @@ class declinedRequestNotification extends Notification
     {
         $user = userInformation::where('email',Auth::user()->email)->get();
         return [
-            'decliner' => $user[0]->firstName.' '.$user[0]->lastName,
+            'accepter' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
-            'declinerPic' => $user[0]->profilePicture,
-
+            'accepterPic' =>  $user[0]->profilePicture,
         ];
     }
 
@@ -59,11 +58,10 @@ class declinedRequestNotification extends Notification
     {
         $user = userInformation::where('email',Auth::user()->email)->get();
         return new BroadcastMessage([
-            'decliner' => $user[0]->firstName.' '.$user[0]->lastName,
+            'accepter' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
-            'declinerPic' => $user[0]->profilePicture,
+            'accepterPic' => $user[0]->profilePicture,
 
-            
         ]);
     }
 

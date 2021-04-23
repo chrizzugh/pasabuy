@@ -1226,36 +1226,38 @@
           </span>
         </header>
         <hr />
+        <div v-for="orders in confirmedOrders" :key="orders.indexTransactionPost">
         <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
           <label for="" class="pt-2 pl-3 font-bold">
-            Transaction #{{ activeOrders.transactNo }}
+            Transaction #{{ orders.transactionNumber }}
           </label>
         </div>
 
         <div class="text-base bg-white rounded-b-xl">
-          <label for="" class="pl-6 font-normal text-gray-500"> 8 items </label>
+          <label for="" class="pl-6 font-normal text-gray-500"> 8  items  </label>
 
           <label
             for=""
             class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo"
           >
-            {{ activeOrders.stat }}
+            {{ orders.transactionStatus }}
           </label>
         </div>
 
-        <div
+        <div 
+          v-if="orders.post.email != user.email"
           class="relative z-0 flex items-center w-220 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
         >
           <button class="top-0 left-0 pl-2 rounded-full border-1">
             <img
               class="w-10 h-10 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              :src="orders.post.user.profilePicture"
               alt=""
             />
           </button>
           <div class="ml-2">
             <h5 class="text-sm font-bold">
-              {{ activeOrders.first_name }} {{ activeOrders.last_name }}
+              {{ orders.post.user.firstName }} {{ orders.post.user.lastName }}
               <span
                 class="inline-block text-blue-900 align-middle material-icons-round md-18"
               >
@@ -1280,7 +1282,50 @@
               chat
             </span>
             <router-link
-              to="/messages"
+              :to="'/messages/?ID=' + toEncrypt(orders.post.email)"
+              class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+            ></router-link>
+          </div>
+        </div>
+        <div
+          v-else
+          class="relative z-0 flex items-center w-220 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+        >
+          <button class="top-0 left-0 pl-2 rounded-full border-1">
+            <img
+              class="w-10 h-10 rounded-full"
+              :src="orders.transaction_sender.profilePicture"
+              alt=""
+            />
+          </button>
+          <div class="ml-2">
+            <h5 class="text-sm font-bold">
+              {{ orders.transaction_sender.firstName }} {{ orders.transaction_sender.lastName }}
+              <span
+                class="inline-block text-blue-900 align-middle material-icons-round md-18"
+              >
+                verified
+              </span>
+            </h5>
+
+            <p class="text-sm font-normal font-nunito">
+              <span class="inline-block align-middle"
+                >{{ activeOrders.rating }}
+              </span>
+              <span
+                class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+              >
+                star_rate
+              </span>
+            </p>
+          </div>
+
+          <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
+            <span class="inline-flex text-white align-middle material-icons">
+              chat
+            </span>
+            <router-link
+              :to="'/messages/?ID=' + toEncrypt(orders.transaction_sender.email)"
               class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
             ></router-link>
           </div>
@@ -1288,6 +1333,7 @@
         <div class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl">
           <a href="" class="float-right font-bold">View Full Details</a>
         </div>
+      </div>
       </div>
       <!-----------END OF ACTIVE ORDERS---------------->
 
@@ -1309,9 +1355,10 @@
           </span>
         </header>
         <hr />
+        <div v-for="orders in confirmedDeliveries" :key="orders.indexTransactionPost">
         <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
           <label for="" class="pt-2 pl-3 font-bold">
-            Transaction #{{ activeDeliveries.transNo }}
+            Transaction #{{ orders.transactionNumber }}
           </label>
         </div>
 
@@ -1322,23 +1369,24 @@
             for=""
             class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo"
           >
-            {{ activeDeliveries.stats }}
+            {{ orders.transactionStatus }}
           </label>
         </div>
 
+        <div v-if="orders.post.email != user.email">
         <div
           class="relative flex items-center w-220 z-0 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
         >
           <button class="top-0 left-0 pl-2 rounded-full border-1">
             <img
               class="w-10 h-10 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              :src="orders.post.user.profilePicture"
               alt=""
             />
           </button>
           <div class="ml-2">
             <h5 class="text-sm font-bold">
-              {{ activeDeliveries.firstName }} {{ activeDeliveries.lastName }}
+              {{ orders.post.user.firstName }} {{ orders.post.user.lastName }}
               <span
                 class="inline-block text-blue-900 align-middle material-icons-round md-18"
               >
@@ -1362,7 +1410,7 @@
               >chat</span
             >
             <router-link
-              to="/messages"
+              :to="'/messages'+ toEncrypt(orders.post.user.email)"
               class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
             ></router-link>
           </div>
@@ -1377,12 +1425,70 @@
             for=""
             class="inline-block pl-2 text-sm tracking-wide align-text-top"
           >
-            {{ activeDeliveries.address }}
+            {{orders.post.request_post.deliveryAddress}}
           </label>
+        </div>
+        </div>
+        <div v-else>
+        <div
+          class="relative flex items-center w-220 z-0 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+        >
+          <button class="top-0 left-0 pl-2 rounded-full border-1">
+            <img
+              class="w-10 h-10 rounded-full"
+              :src="orders.transaction_sender.profilePicture"
+              alt=""
+            />
+          </button>
+          <div class="ml-2">
+            <h5 class="text-sm font-bold">
+              {{ orders.transaction_sender.firstName }} {{ orders.transaction_sender.lastName }}
+              <span
+                class="inline-block text-blue-900 align-middle material-icons-round md-18"
+              >
+                verified
+              </span>
+            </h5>
+            <p class="text-sm font-normal font-nunito">
+              <span class="inline-block align-middle"
+                >{{ activeDeliveries.rate }}
+              </span>
+              <span
+                class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+              >
+                star_rate
+              </span>
+            </p>
+          </div>
+
+          <div class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2">
+            <span class="inline-flex text-white align-middle material-icons"
+              >chat</span
+            >
+            <router-link
+              :to="'/messages'+ toEncrypt(orders.transaction_sender.email)"
+              class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+            ></router-link>
+          </div>
+        </div>
+        <div class="p-2">
+          <span
+            class="inline-block pl-3 text-gray-500 align-top material-icons-round md-18"
+          >
+            room
+          </span>
+          <label
+            for=""
+            class="inline-block pl-2 text-sm tracking-wide align-text-top"
+          >
+          {{orders.post.request_post.deliveryAddress}}
+          </label>
+        </div>
         </div>
         <div class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl">
           <a href="" class="float-right font-bold">View Full Details</a>
         </div>
+      </div>
       </div>
       <!-----------END OF ACTIVE DELIVERIES---------------->
 
@@ -1789,12 +1895,44 @@ export default {
     posts() {
       return store.getters.getPosts;
     },
-     allShares() {
+    allShares() {
       return store.getters.getAllShares;
+    },
+    // confirmedRequestOrders() {
+    //  return store.getters.getUserTransactions.filter((x)=>{
+    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "request_post" && x.post.email == this.user.email
+    //   });
+    // },
+    // confirmedRequestDeliveries() {
+    //   return store.getters.getUserTransactions.filter((x)=>{
+    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "request_post" && x.post.email != this.user.email 
+    //   });
+    // },
+    // confirmedOfferOrders() {
+    //  return store.getters.getUserTransactions.filter((x)=>{
+    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "offer_post" && x.post.email != this.user.email
+    //   });
+    // },
+    // confirmedOfferDeliveries() {
+    //   return store.getters.getUserTransactions.filter((x)=>{
+    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "offer_post" && x.post.email == this.user.email 
+    //   });
+    // }
+    confirmedOrders() {
+     return store.getters.getUserTransactions.filter((x)=>{
+        return x.transactionStatus == "confirmed" &&  ((x.post.postIdentity == "request_post" && x.post.email == this.user.email) || (x.post.postIdentity == "offer_post" && x.post.email != this.user.email))
+      });
+    },
+    confirmedDeliveries() {
+      return store.getters.getUserTransactions.filter((x)=>{
+        return x.transactionStatus == "confirmed" &&  ((x.post.postIdentity == "request_post" && x.post.email != this.user.email) || (x.post.postIdentity == "offer_post" && x.post.email == this.user.email))
+      });
     },
   },
   mounted(){
     this.sortPosts()
+    console.log("your active orders = ", this.confirmedOrders)
+    console.log("your active deliveries = ", this.confirmedDeliveries)
   }
 };
 </script>

@@ -50,7 +50,7 @@ class cancelledRequestNotification extends Notification
         return [
             'canceller' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
-            'cancellerPic' =>  "http://localhost:8000/storage/images/".$user[0]->profilePicture,
+            'cancellerPic' =>  $user[0]->profilePicture,
         ];
     }
 
@@ -60,7 +60,7 @@ class cancelledRequestNotification extends Notification
         return new BroadcastMessage([
             'canceller' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
-            'cancellerPic' =>  "http://localhost:8000/storage/images/".$user[0]->profilePicture,
+            'cancellerPic' => $user[0]->profilePicture,
 
         ]);
     }

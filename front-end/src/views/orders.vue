@@ -114,6 +114,7 @@ lg:p-0
 </template>
 <script>
 import Nav from '../views/Navbar.vue'
+import store from "../store/index"
 export default {
   name: 'Order',
   components: {
@@ -145,7 +146,21 @@ methods:{
         this.  activeBtn= el;
         }
     },
+},
+mounted(){
+  console.log("all orders",this.allOrders)
+},
+computed:{
+  user() {
+      return store.getters.getUser;
+    },
+allOrders() {
+     return store.getters.getUserTransactions.filter((x)=>{
+        ((x.post.postIdentity == "request_post" && x.post.email == this.user.email) || (x.post.postIdentity == "offer_post" && x.post.email != this.user.email))
+      });
+    },
 }
+
 }
 </script>
 <style scoped>

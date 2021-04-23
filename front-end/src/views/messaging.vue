@@ -335,6 +335,13 @@
                     <span>Decline</span>
                   </button>
                   <button
+                   @click="
+                      acceptOffer(
+                        transaction.postNumber,
+                        transaction.indexTransactionPost,
+                        transaction.emailCustomerShopper
+                      )
+                    "
                     class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
                   >
                     <span>Accept</span>
@@ -1425,19 +1432,19 @@ export default {
         store.dispatch("getChatRoom").then(() => {
           vm.getChatRooms();
         });
-        // window.Echo.private("chat." + this.activeRoom).listen(
-        //   ".message.new",
-        //   () => {
-        //     //optimize check if what is the return value, if itcontains transaction then get transaction and get chat rooms, otherwise get only chatroom
-        //     console.log("listening...");
+        window.Echo.private("chat." + this.activeRoom).listen(
+          ".message.new",
+          (res) => {
+            //optimize check if what is the return value, if itcontains transaction then get transaction and get chat rooms, otherwise get only chatroom
+            console.log(res);
             Axios.all([
               api.get('api/getTransaction'),
               api.get('api/getChatroom')
             ]).then(()=>{
               vm.getChatRooms();
             }) 
-        //   }
-        // );
+          }
+        );
       }
     },
     disconnect(oldval) {
@@ -1590,10 +1597,7 @@ export default {
         var email = atob(params[1]);
         var requestData = { message:JSON.parse(atob(params[2]))}
         params = { userEmail: email };
-        var transactionDetails = {
-                  email: email,
-                  postNumber: postNum,
-                };
+        
         console.log('request data', requestData.message)
         Axios
           .all([
@@ -1602,6 +1606,7 @@ export default {
           ])
           .then((responseArr) => {
             var dataMessage = [];
+            var transactionDetails =[]
             var foundPost = this.posts.find((x) => x.postNumber === postNum); //find the passed post in the stored objects in vuex
 
             if (foundPost.offer_post != null) {
@@ -1609,15 +1614,24 @@ export default {
                 roomID: responseArr[1].data.messageRoomNumber,
                 message: JSON.stringify(requestData.message),
               };
+              transactionDetails = {
+                  email: email,
+                  postNumber: postNum,
+                  transactionData: requestData.message
+              }
               console.log(dataMessage);
             } else {
-              foundPost.request_post.unshift(requestData.message)
-              console.log('foundpost',foundPost.request_post)
+              foundPost.request_post['message'] = requestData.message.message
+              foundPost.request_post['param'] = requestData.message.param
               dataMessage = {
                 roomID: responseArr[1].data.messageRoomNumber,
                 message: JSON.stringify(foundPost.request_post),
               };
-              console.log(dataMessage);
+              transactionDetails = {
+                  email: email,
+                  postNumber: postNum,
+                  transactionData: foundPost.request_post
+              }
             }
 
              Axios.all([
@@ -1627,9 +1641,10 @@ export default {
                 api.get("/api/getChatroom")
 
              ]).then(responseArr=>{
-                console.log('transactions', responseArr[3].data)
-                store.commit('setUserTransactions',responseArr[3].data)
-                store.commit('FETCH_ROOMS',responseArr[4].data)
+                console.log('transactions', responseArr[2].data)
+                store.commit('setUserTransactions',responseArr[2].data)
+                store.commit('FETCH_ROOMS',responseArr[3].data)
+                this.getChatRooms()
                 var box = document.getElementById("journal-scroll");
                 box.scrollIntoView();
              })
@@ -1667,6 +1682,14 @@ export default {
     declineOffer(postNum, indexTransactionPost, user) {
       Axios.all([
         api.post("api/declineRequest", {postNumber: postNum,ID: indexTransactionPost,userNotif: user}),
+        api.get("/api/getTransaction"),
+      ]).then(resArr=>{
+        store.commit('setUserTransactions',resArr[1].data)
+      })
+    },
+    acceptOffer(postNum, indexTransactionPost, user) {
+      Axios.all([
+        api.post("api/confirmRequest", {postNumber: postNum,ID: indexTransactionPost,userNotif: user}),
         api.get("/api/getTransaction"),
       ]).then(resArr=>{
         store.commit('setUserTransactions',resArr[1].data)
@@ -1722,7 +1745,9 @@ export default {
       return store.getters.getPosts;
     },
     transactions() {
-      return store.getters.getUserTransactions;
+      return store.getters.getUserTransactions.filter((x)=>{
+        return x.transactionStatus == "pending"
+      });
     },
   },
 }; //end export default
