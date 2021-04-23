@@ -1513,33 +1513,40 @@
           <hr />
 
           <!--SHOPPING LIST-->
+          <div v-for="(userList,index) in shoppingLists" :key="index">
           <h3
             class="relative pt-2 pl-5 text-lg font-bold leading-loose tracking-wide"
           >
-            Shopping List 1
-            <editShopListModal v-if="editVisible" @closeModal="editlistener" />
+            Shopping List {{index +1}}
+            <editShopListModal v-if="editVisible && toggleeditShopListNum == userList.shoppingListNumber" @closeModal="editlistener" :list="userList.text.split(', ')" :index="index+1" :listNum="toggleeditShopListNum"/>
             <button
-              @click="toggleeditShopList"
+              @click="toggleeditShopListNum = userList.shoppingListNumber,toggleeditShopList()"
               class="absolute text-sm font-bold text-blue-700 right-7 top-4 focus:outline-none"
             >
               Edit
             </button>
           </h3>
+          
           <ul
             id="shop-list"
             class="overflow-hidden text-sm leading-relaxed text-gray-500 list-disc list-inside h-22 pl-9"
           >
-            <li v-for="shopList in shopList" :key="shopList.items">
-              {{ shopList.items }}
+            <li v-for="shopList in userList.text.split(', ')" :key="shopList">
+              {{ shopList }}
             </li>
           </ul>
-          <ShoppingList v-if="list" @closeListModal="listlistener" />
+          
+          <ShoppingList v-if="toggleList && toggleListNum == userList.shoppingListNumber " @closeListModal="toggleList=!toggleList" :list="userList.text.split(', ')" :index="index+1" />
+         
           <button
-            @click="toggleList"
+             v-if="userList.text.split(', ').length > 4"
+            @click="toggleList=!toggleList,toggleListNum =userList.shoppingListNumber "
             class="text-sm leading-loose pl-9 focus:outline-none"
           >
-            4 more items...
+            {{userList.text.split(', ').length - 4}} more items...
           </button>
+      
+           </div>
           <hr />
           <div class="items-center justify-center p-3 pl-4">
             <createShopList
@@ -1594,6 +1601,9 @@ export default {
       filter: false,
       filter2: false,
       createShopList: false,
+      toggleList :false,
+      toggleListNum :null,
+      toggleeditShopListNum:null,
       editOrderRequest: false,
       datePosted: "3 hours ago",
       datePosted1: "13 hours ago",

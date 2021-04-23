@@ -61,7 +61,8 @@ class PostController extends Controller
 		if($shoppingPlace == null){
 			//save shopping place to tbl_shopping place
 			DB::table('tbl_shoppingPlace')->insert([
-				'shoppingPlace' => $request->shoppingPlace
+				'shoppingPlace' => $request->shoppingPlace,
+				'shoppingPlaceNumber' => '112'.str_pad(DB::table('tbl_shoppingPlace')->count() +1,6,'0',STR_PAD_LEFT),
 			]);
 		}
 		//check if transport mode already exist in tbl_transportMOde
@@ -69,7 +70,8 @@ class PostController extends Controller
 		if($transport == null){
 			//save transport mode to tbl_transportMode
 			DB::table('tbl_transportMode')->insert([
-				'transportMode' => $request->transportMode
+				'transportMode' => $request->transportMode,
+				'transportNumber' => '116'.str_pad(DB::table('tbl_transportMode')->count() +1,6,'0',STR_PAD_LEFT),
 			]);
 		}
 		// save to database
@@ -128,6 +130,7 @@ class PostController extends Controller
 			//save shopping place to tbl_shopping place
 			DB::table('tbl_shoppingPlace')->insert([
 				'shoppingPlace' => $request->shoppingPlace,
+				'shoppingPlaceNumber' => '112'.str_pad(DB::table('tbl_shoppingPlace')->count() +1,6,'0',STR_PAD_LEFT),
 			]);
 		}
 		DB::transaction(function() use ($post, $request_post) {
@@ -319,14 +322,6 @@ class PostController extends Controller
 				# code...
 				break;
 		}
-	}
-	public function getShoppingList()
-	{
-		# code...
-		// $data = DB::select('SELECT * FROM tbl_shoppingList WHERE email = \''.Auth::user()->email.'\'');
-		// return $data[0];
-		$data = DB::table('tbl_shoppingList')->where('email','=',Auth::user()->email)->get();
-		return $data;
 	}
     
 }

@@ -13,7 +13,7 @@ use App\Http\Controllers\transactionController;
 use App\Http\Controllers\shoppingOffersController;
 use App\Http\Controllers\shoppingOrdersController;
 use App\Http\Controllers\reviewsController;
-
+use App\Http\Controllers\shoppingListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -71,7 +71,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/editShipping', [addressController::class, 'editShipping']);
     Route::post('/confirmRequest', [transactionController::class, 'confirmRequest']);
     Route::post('/updateTransaction', [transactionController::class, 'updateTransaction']);
-    Route::get('/getShoppingList', [PostController::class, 'getShoppingList']);
+    Route::get('/getShoppingList', [shoppingListController::class, 'getShoppingList']);
+    Route::post('/editList', [shoppingListController::class, 'editList']);
+
 
     
 });

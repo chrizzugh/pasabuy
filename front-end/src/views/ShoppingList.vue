@@ -6,7 +6,7 @@
   
               <!--Create Post section-->
               <h1 class="justify-center p-4 text-xl font-bold leading-normal text-center text-white rounded-t-xl bg-red-buttons vs:ml-0 font-nunito">
-                  Shopping List 1
+                  Shopping List {{index}}
                   <button @click.prevent="closeListModal" class="mb-1 ml-20 text-sm leading-none text-white vs:ml-10 focus:outline-none">
                   Close
                   </button>
@@ -17,7 +17,7 @@
                 <!--User Profile-->
                 <div class="inline-flex items-center justify-start mt-1 space-x-2">
                     <ul id="shop-list" class="text-base leading-relaxed text-black list-disc list-inside pl-9">
-                      <li v-for="item in items" :key="item.list" class="mb-1" >{{item.list}}</li>
+                      <li v-for="(item,index) in list" :key="index" class="mb-1" >{{item}}</li>
                     </ul>
                 </div>
                 <!--end-->
@@ -33,6 +33,7 @@
 <script>
 export default {
     el:'#shop-list',
+    props:['list','index'],
     data() {
     return {
      isVisible: true,

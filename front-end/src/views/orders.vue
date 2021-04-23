@@ -65,17 +65,23 @@
                 Transaction#{{ order.transactionNumber }}
               </p>
               <p
-                v-if="status == 'Confirmed'"
+                v-if="order.transactionStatus == 'confirmed'"
                 class="tracking-wider text-blue-700 bg-white text-xs ring-1 ring-blue-700 h-min w-18 self-center p-1 font-nunito font-bold"
               >
                 {{ order.transactionStatus }}
               </p>
               <p
-                v-else-if="status == 'Completed'"
+                v-else-if="order.transactionStatus == 'completed'"
                 class="tracking-wider text-green-700 bg-white text-xs ring-1 ring-green-700 h-min w-18 self-center p-1 font-nunito font-bold"
               >
                 {{ order.transactionStatus }}
               </p>
+              <p
+                  v-else
+                  class="text-center tracking-wider text-yellow-600 bg-white ring-1 ring-yellow-600 text-xs h-min w-18 self-center p-1 font-nunito font-bold"
+                >
+                  {{ order.transactionStatus }}
+                </p>
             </span>
             <span class="text-gray-500">Place on {{ timestamp(order.dateCreated) }}</span>
           </div>
@@ -309,6 +315,7 @@ export default {
             this.toggle_status=false
             this.updatingTransaction=null
             this.updatingPost=null
+            this.allOrders = this.orders
             VueSimpleAlert.alert(res.data.message, "Sucess", "success")
           })
         }).catch((error)=>{
@@ -323,6 +330,7 @@ export default {
             this.toggle_status=false
             this.updatingTransaction=null
             this.updatingPost=null
+            this.allOrders = this.orders
             VueSimpleAlert.alert(res.data.message, "Sucess", "success")
           })
           
