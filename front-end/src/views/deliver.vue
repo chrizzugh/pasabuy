@@ -26,9 +26,10 @@ xsm:w-max
               sm:w-10/12
              ">
     <div class="mt-3 
-    2xl:mr-3
-    xl:mr-3
-    lg:mr-3
+    2xl:mr-2
+    xl:mr-2
+    lg:mr-2
+    md:mr-2
     ">
     <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"  class=" focus:outline-none text-red-700 px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Deliveries</a></button>
   </div>
