@@ -363,6 +363,7 @@
                             v-if="postModalVisible1"
                             @closeModal1="listener1"
                             :post="post_info"
+                            @getSortPosts="sortPosts"
                           />
                           <button
                             @click="togglePostModal1"

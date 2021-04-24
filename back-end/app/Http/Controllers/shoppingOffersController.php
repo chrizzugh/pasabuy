@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\shoppingOffers;
 //use App\Models\Messages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class shoppingOffersController extends Controller
 {
@@ -37,12 +38,30 @@ class shoppingOffersController extends Controller
         $record->postNumber  = $request->postNumber ;
         $record->postStatus = $request->postStatus;
         $record->deliveryArea = $request->deliveryArea;
-        $record->shoppingPlace = $request->shoppingPlace;
         $record->deliverySchedule = $request->deliverySchedule;
-        $record->transportMode = $request->transportMode;
         $record->capacity = $request->capacity;
         $record->paymentMethod = $request->paymentMethod;
         $record->caption = $request->caption;
+        $record->shoppingPlace = $request->shoppingPlace;
+		$record->transportMode = $request->transportMode;
+        //check if shopping place already exist in tbl_shoppingPlace
+		$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \''.$request->shoppingPlace.'\'');
+		if($shoppingPlace == null){
+			//save shopping place to tbl_shopping place
+			DB::table('tbl_shoppingPlace')->insert([
+				'shoppingPlace' => $request->shoppingPlace,
+				'shoppingPlaceNumber' => '112'.str_pad(DB::table('tbl_shoppingPlace')->count() +1,6,'0',STR_PAD_LEFT),
+			]);
+		}
+		//check if transport mode already exist in tbl_transportMOde
+		$transport = DB::select('SELECT * from tbl_transportMode WHERE transportMode = \''.$request->transportMode.'\'');
+		if($transport == null){
+			//save transport mode to tbl_transportMode
+			DB::table('tbl_transportMode')->insert([
+				'transportMode' => $request->transportMode,
+				'transportModeNumber' => '116'.str_pad(DB::table('tbl_transportMode')->count() +1,6,'0',STR_PAD_LEFT),
+			]);
+		}
         $record->save();
         // return $record;
         // if($record->save()){

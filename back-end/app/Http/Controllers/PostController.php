@@ -29,19 +29,20 @@ class PostController extends Controller
 	 *    @param  Request $request [http request]
 	 *    @return Illumiinate\Http\Response           [json response]
 	 */
-	public function create_offer_post(Request $request) {
+	public function create_offer_post(Request $request)
+	{
 
 		// validate data
 		$request->validate([
-            'postIdentity' => ['required', 'max:100'],
-            'postStatus' => ['required', 'string', 'max:50'],
-            'deliveryArea' => ['required', 'max:500'],
-            'shoppingPlace' => ['required', 'max:2000'],
-            'deliverySchedule' => ['required', 'date'],
-            'transportMode' => ['required', 'max:200'],
-            'capacity' => ['required', 'max:100'],
-            'paymentMethod' => ['required', 'max:200'],
-            'caption' => ['required', 'max:200'],
+			'postIdentity' => ['required', 'max:100'],
+			'postStatus' => ['required', 'string', 'max:50'],
+			'deliveryArea' => ['required', 'max:500'],
+			'shoppingPlace' => ['required', 'max:2000'],
+			'deliverySchedule' => ['required', 'date'],
+			'transportMode' => ['required', 'max:200'],
+			'capacity' => ['required', 'max:100'],
+			'paymentMethod' => ['required', 'max:200'],
+			'caption' => ['required', 'max:200'],
 		]);
 
 		$user = Auth::User();
@@ -62,31 +63,31 @@ class PostController extends Controller
 		$offer_post->caption = $request->caption;
 
 		//check if shopping place already exist in tbl_shoppingPlace
-		$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \''.$request->shoppingPlace.'\'');
-		if($shoppingPlace == null){
+		$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \'' . $request->shoppingPlace . '\'');
+		if ($shoppingPlace == null) {
 			//save shopping place to tbl_shopping place
 			DB::table('tbl_shoppingPlace')->insert([
 				'shoppingPlace' => $request->shoppingPlace,
-				'shoppingPlaceNumber' => '112'.str_pad(DB::table('tbl_shoppingPlace')->count() +1,6,'0',STR_PAD_LEFT),
+				'shoppingPlaceNumber' => '112' . str_pad(DB::table('tbl_shoppingPlace')->count() + 1, 6, '0', STR_PAD_LEFT),
 			]);
 		}
 		//check if transport mode already exist in tbl_transportMOde
-		$transport = DB::select('SELECT * from tbl_transportMode WHERE transportMode = \''.$request->transportMode.'\'');
-		if($transport == null){
+		$transport = DB::select('SELECT * from tbl_transportMode WHERE transportMode = \'' . $request->transportMode . '\'');
+		if ($transport == null) {
 			//save transport mode to tbl_transportMode
 			DB::table('tbl_transportMode')->insert([
 				'transportMode' => $request->transportMode,
-				'transportModeNumber' => '116'.str_pad(DB::table('tbl_transportMode')->count() +1,6,'0',STR_PAD_LEFT),
+				'transportModeNumber' => '116' . str_pad(DB::table('tbl_transportMode')->count() + 1, 6, '0', STR_PAD_LEFT),
 			]);
 		}
 		// save to database
-		DB::transaction(function() use ($post, $offer_post) {
+		DB::transaction(function () use ($post, $offer_post) {
 
 			$post->save();
 			$post->offer_post()->save($offer_post);
 		});
 
-		return response()->json(['message' => 'Offer post created successfully.'],201);
+		return response()->json(['message' => 'Offer post created successfully.'], 201);
 	}
 
 	/**
@@ -95,7 +96,8 @@ class PostController extends Controller
 	 *    @param  Request $request [description]
 	 *    @return [type]           [description]
 	 */
-	public function create_request_post(Request $request) {
+	public function create_request_post(Request $request)
+	{
 
 		// validate data
 		$request->validate([
@@ -126,15 +128,15 @@ class PostController extends Controller
 		$request_post->shoppingListNumber = $request->shoppingListNumber;
 		$request_post->caption = $request->caption;
 
-			// save to database
-		
+		// save to database
+
 		//check if shopping place already exist in tbl_shoppingPlace
-		$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \''.$request->shoppingPlace.'\'');
-		if($shoppingPlace == null){
+		$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \'' . $request->shoppingPlace . '\'');
+		if ($shoppingPlace == null) {
 			//save shopping place to tbl_shopping place
 			DB::table('tbl_shoppingPlace')->insert([
 				'shoppingPlace' => $request->shoppingPlace,
-				'shoppingPlaceNumber' => '112'.str_pad(DB::table('tbl_shoppingPlace')->count() +1,6,'0',STR_PAD_LEFT),
+				'shoppingPlaceNumber' => '112' . str_pad(DB::table('tbl_shoppingPlace')->count() + 1, 6, '0', STR_PAD_LEFT),
 			]);
 		}
 		// $request_post->caption = $request->caption;
@@ -144,13 +146,14 @@ class PostController extends Controller
 		// $shopping_list->text = $request->shoppingList;
 
 		// DB::transaction(function() use ($post, $request_post, $shopping_list) {
-		DB::transaction(function() use ($post, $request_post) {
+		DB::transaction(function () use ($post, $request_post) {
 			$post->save();
 			$post->request_post()->save($request_post);
 			// RequestPost::find($request_post->indexOrderRequestPost)->shoppingList()->save($shopping_list);
-		}); 
-		
-		return response()->json([
+		});
+
+		return response()->json(
+			[
 				'message' => 'Request post created successfully.'
 			],
 			201
@@ -164,23 +167,26 @@ class PostController extends Controller
 	 *    @param  [type]  $userId  [description]
 	 *    @return [type]           [description]
 	 */
-	public function get_user_posts(Request $request) {
+	public function get_user_posts(Request $request)
+	{
 
 		$user = Auth::user();
 		$data = DB::select("SELECT * FROM tbl_post post, tbl_shoppingOfferPost offer_post, tbl_orderRequestPost request_post WHERE post.postNumber = offer_post.postNumber OR post.postNumber = request_post.postNumber AND post.postDeleteStatus = 0 AND post.email = ?", [$user->email]);
 
-		return response()->json([
+		return response()->json(
+			[
 				$data
 			],
 			200
 		);
 	}
 
-	public function getAllPosts(Request $request) {
+	public function getAllPosts(Request $request)
+	{
 
 		$user = Auth::user();
 		// $data = PasabuyUser::has('post')->with('post','post.offer_post','post.request_post')->get();
-		$data = Post::with('offer_post','request_post','user','request_post.shoppingList')->where('tbl_post.postDeleteStatus','=',0)->orderBy('tbl_post.dateCreated','desc')->get();
+		$data = Post::with('offer_post', 'request_post', 'user', 'request_post.shoppingList')->where('tbl_post.postDeleteStatus', '=', 0)->orderBy('tbl_post.dateCreated', 'desc')->get();
 
 		return response()->json($data);
 	}
@@ -189,14 +195,14 @@ class PostController extends Controller
 	{
 		# code...
 		// $data = Post::has('share')->with('offer_post','request_post','user','request_post.shoppingList','share.user')->whereHas('share', function($query){
-        //     $query->where('shareDeleteStatus', 0)
+		//     $query->where('shareDeleteStatus', 0)
 		// 	->orderBy('dateCreated', 'desc');
-        // })->get();
-		$data = share::with('post','post.offer_post','post.request_post','post.user','post.request_post.shoppingList','user')->where('shareDeleteStatus','=',0)->orderBy('dateCreated','desc')->get();
+		// })->get();
+		$data = share::with('post', 'post.offer_post', 'post.request_post', 'post.user', 'post.request_post.shoppingList', 'user')->where('shareDeleteStatus', '=', 0)->orderBy('dateCreated', 'desc')->get();
 
 		return response()->json($data);
 	}
-	
+
 	public function sharePost(Request $request)
 	{
 		# code...
@@ -205,23 +211,21 @@ class PostController extends Controller
 
 		$newShare = new share();
 		$newShare->sharerEmail = $user->email;
-		$newShare->shareNumber = share::count()+1;
+		$newShare->shareNumber = share::count() + 1;
 		$newShare->postNumber = $postNum;
-		if($newShare->save()){
+		if ($newShare->save()) {
 			//find the right user to notify, in this case the owner of the post
-			$userToNotif = Post::where('postNumber',$postNum)->get();
-			if($userToNotif[0]->email == $user->email){
-				return response()->json(["message"=>'You have successfully shared this post'],200);
+			$userToNotif = Post::where('postNumber', $postNum)->get();
+			if ($userToNotif[0]->email == $user->email) {
+				return response()->json(["message" => 'You have successfully shared this post'], 200);
 			}
-			$userToNotif = User::where('email',$userToNotif[0]->email)->get();
+			$userToNotif = User::where('email', $userToNotif[0]->email)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
 			$userToNotif->notify(new SharedNotification($postNum));
-			return response()->json(['message'=>'You have successfully shared this post'],200);
-		}else{
-			return response()->json(["Error"=>"An error occured"],500);
+			return response()->json(['message' => 'You have successfully shared this post'], 200);
+		} else {
+			return response()->json(["Error" => "An error occured"], 500);
 		}
-
-		
 	}
 
 
@@ -231,7 +235,8 @@ class PostController extends Controller
 	 *    @param  Request $request [description]
 	 *    @return [type]           [description]
 	 */
-	public function getFeeds(Request $request) {
+	public function getFeeds(Request $request)
+	{
 
 		// validate $request
 		$request->validate([
@@ -255,20 +260,20 @@ class PostController extends Controller
 		switch ($params['post_filter']) {
 
 			case 'following':
-				
+
 				switch ($params['post_type']) {
-					
+
 					case 'all':
 						$followed_emails1 = DB::select("SELECT email2 as email from tbl_follow WHERE email1 = '$user->email' AND email1FollowEmail2 = 1");
 						$followed_emails2 = DB::select("SELECT email1 as email from tbl_follow WHERE email2 = '$user->email' AND emaill2FollowEmail1 = 1");
-						$followed_emails = array_merge($followed_emails1, $followed_emails2);		
+						$followed_emails = array_merge($followed_emails1, $followed_emails2);
 
 						$followed_posts = [];
 
-						foreach($followed_emails as $followed_user) {
+						foreach ($followed_emails as $followed_user) {
 							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as offer_delivery_area, offer.shoppingPlace as offer_shopping_place, offer.deliverySchedule as offer_delivery_schedule, offer.transportMode as offer_transport_mode, offer.capacity, offer.paymentMethod as offer_payment_method, offer.caption as offer_caption, request.shoppingPlace as request_shopping_place, request.deliverySchedule as request_delivery_schedule, request.paymentMethod as request_payment_method, request.caption as request_caption, shopping_list.text as items FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE post.email = '$followed_user->email' AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
-							foreach($feeds as $feed) {
+							foreach ($feeds as $feed) {
 								$feed->avatar = utf8_encode($feed->avatar);
 							}
 
@@ -283,14 +288,14 @@ class PostController extends Controller
 					case 'offers':
 						$followed_emails1 = DB::select("SELECT email2 as email from tbl_follow WHERE email1 = '$user->email' AND email1FollowEmail2 = 1");
 						$followed_emails2 = DB::select("SELECT email1 as email from tbl_follow WHERE email2 = '$user->email' AND emaill2FollowEmail1 = 1");
-						$followed_emails = array_merge($followed_emails1, $followed_emails2);		
+						$followed_emails = array_merge($followed_emails1, $followed_emails2);
 
 						$followed_posts = [];
 
-						foreach($followed_emails as $followed_user) {
+						foreach ($followed_emails as $followed_user) {
 							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as delivery_area, offer.shoppingPlace as shopping_place, offer.deliverySchedule as schedule, offer.transportMode as transport_mode, offer.capacity, offer.paymentMethod as payment_method, offer.caption FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber WHERE post.email = '$followed_user->email' AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
-							foreach($feeds as $feed) {
+							foreach ($feeds as $feed) {
 								$feed->avatar = utf8_encode($feed->avatar);
 							}
 
@@ -298,21 +303,21 @@ class PostController extends Controller
 						}
 
 						$data['data']['feeds'] = $followed_posts;
-						
+
 						return response()->json($data, 200);
 						break;
 
 					case 'requests':
 						$followed_emails1 = DB::select("SELECT email2 as email from tbl_follow WHERE email1 = '$user->email' AND email1FollowEmail2 = 1");
 						$followed_emails2 = DB::select("SELECT email1 as email from tbl_follow WHERE email2 = '$user->email' AND emaill2FollowEmail1 = 1");
-						$followed_emails = array_merge($followed_emails1, $followed_emails2);		
+						$followed_emails = array_merge($followed_emails1, $followed_emails2);
 
 						$followed_posts = [];
 
-						foreach($followed_emails as $followed_user) {
+						foreach ($followed_emails as $followed_user) {
 							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, request.deliveryAddress as delivery_area, request.shoppingPlace as shopping_place, request.deliverySchedule as schedule, request.paymentMethod as payment_method, request.caption, shopping_list.text as items FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE post.email = '$followed_user->email' AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
-							foreach($feeds as $feed) {
+							foreach ($feeds as $feed) {
 								$feed->avatar = utf8_encode($feed->avatar);
 							}
 
@@ -320,11 +325,11 @@ class PostController extends Controller
 						}
 
 						$data['data']['feeds'] = $followed_posts;
-						
+
 						return response()->json($data, 200);
 						break;
 
-					
+
 					default:
 						# code...
 						break;
@@ -335,17 +340,17 @@ class PostController extends Controller
 			case 'nearby':
 
 				switch ($params['post_type']) {
-					
+
 					case 'all':
-						
+
 						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as offer_delivery_area, offer.shoppingPlace as offer_shopping_place, offer.deliverySchedule as offer_delivery_schedule, offer.transportMode as offer_transport_mode, offer.capacity as offer_capacity, offer.paymentMethod as offer_payment_method, offer.caption as offer_caption, request.shoppingPlace as request_shopping_place, request.deliverySchedule as request_delivery_schedule, request.paymentMethod as request_payment_method, request.caption as request_caption, shopping_list.text as items FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE offer.shoppingPlace = $user_info->cityMunicipality OR request.shoppingPlace = $user_info->cityMunicipality AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
-						foreach($feeds as $feed) {
+						foreach ($feeds as $feed) {
 							$feed->avatar = utf8_encode($feed->avatar);
 						}
 
 						$data['data']['feeds'] = $feeds;
-		
+
 						return response()->json($data, 200);
 						break;
 
@@ -353,7 +358,7 @@ class PostController extends Controller
 						// get nearby offers 
 						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as delivery_area, offer.shoppingPlace as shopping_place, offer.deliverySchedule as schedule, offer.transportMode as transport_mode, offer.capacity, offer.paymentMethod as payment_method, offer.caption FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber WHERE offer.shoppingPlace = $user_info->cityMunicipality AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
-						foreach($feeds as $feed) {
+						foreach ($feeds as $feed) {
 							$feed->avatar = utf8_encode($feed->avatar);
 						}
 
@@ -367,51 +372,52 @@ class PostController extends Controller
 						//get nearby requests
 						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, request.deliveryAddress as delivery_area, request.shoppingPlace as shopping_place, request.deliverySchedule as schedule, request.paymentMethod as payment_method, request.caption, shopping_list.text as items FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE request.shoppingPlace = $user_info->cityMunicipality AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
-						foreach($feeds as $feed) {
+						foreach ($feeds as $feed) {
 							$feed->avatar = utf8_encode($feed->avatar);
 						}
-						
+
 						$data['data']['feeds'] = $feeds;
 
 						dd($data);
-						
+
 						return response()->json($data, 200);
 						break;
 
-					
+
 					default:
 						# code...
 						break;
 				}
 
 				break;
-			
+
 			default:
 				# code...
 				break;
 		}
 	}
-    
-    /**
-     *    edit posts
-     *    @author Al Vincent Musa
-     *    @param  Request $request [description]
-     *    @return [type]           [description]
-     */
-    public function editPost(Request $request, $post_id) {
+
+	/**
+	 *    edit posts
+	 *    @author Al Vincent Musa
+	 *    @param  Request $request [description]
+	 *    @return [type]           [description]
+	 */
+	public function editPost(Request $request, $post_id)
+	{
 
 		// validate data
 		$request->validate([
-		    'postIdentity' => ['max:100'],
-		    'postStatus' => ['string', 'max:50'],
-		    'deliveryArea' => ['max:500'],
-		    'shoppingPlace' => ['max:2000'],
-		    'deliverySchedule' => ['date'],
-		    'transportMode' => ['max:200'],
-		    'capacity' => ['max:100'],
-		    'paymentMethod' => ['max:200'],
-		    'caption' => ['max:200'],
-		    'deliveryAddress' => ['string', 'max:500'],
+			'postIdentity' => ['max:100'],
+			'postStatus' => ['string', 'max:50'],
+			'deliveryArea' => ['max:500'],
+			'shoppingPlace' => ['max:2000'],
+			'deliverySchedule' => ['date'],
+			'transportMode' => ['max:200'],
+			'capacity' => ['max:100'],
+			'paymentMethod' => ['max:200'],
+			'caption' => ['max:200'],
+			'deliveryAddress' => ['string', 'max:500'],
 			'shoppingList' => ['string']
 		]);
 
@@ -421,7 +427,7 @@ class PostController extends Controller
 
 		switch ($request->postIdentity) {
 			case 'offer_post':
-				
+
 				$post->postIdentity = $request->postIdentity;
 				$post->postStatus = $request->postStatus;
 
@@ -434,7 +440,7 @@ class PostController extends Controller
 				$post->offer_post->paymentMethod = $request->paymentMethod;
 				$post->offer_post->caption = $request->caption;
 
-				DB::transaction(function() use ($post) {
+				DB::transaction(function () use ($post) {
 					$post->save();
 					$post->offer_post->save();
 				});
@@ -453,10 +459,18 @@ class PostController extends Controller
 				$post->request_post->deliverySchedule = $request->deliverySchedule;
 				$post->request_post->paymentMethod = $request->paymentMethod;
 				$post->request_post->caption = $request->caption;
+				//check if shopping place already exist in tbl_shoppingPlace
+				$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \'' . $request->shoppingPlace . '\'');
+				if ($shoppingPlace == null) {
+					//save shopping place to tbl_shopping place
+					DB::table('tbl_shoppingPlace')->insert([
+						'shoppingPlace' => $request->shoppingPlace,
+						'shoppingPlaceNumber' => '112' . str_pad(DB::table('tbl_shoppingPlace')->count() + 1, 6, '0', STR_PAD_LEFT),
+					]);
+				}
+				$post->shoppingList->shoppingListContent = $request->shoppingList;
 
-				$post->shoppingList->text = $request->shoppingList;
-
-				DB::transaction(function() use ($post) {
+				DB::transaction(function () use ($post) {
 					$post->save();
 					$post->request_post->save();
 					$post->shoppingList->save();
@@ -464,32 +478,33 @@ class PostController extends Controller
 
 				return 201;
 				break;
-			
+
 			default:
 				return response()->json([
 					'message' => 'propery postIdentity must have values offer_post or request_post.'
 				], 422);
 				break;
 		}
-    }
+	}
 
-    /**
-     *    [deletePost deletes post]
-     *    @author Al Vincent Musa
-     *    @param  Request $request [description]
-     *    @param  [type]  $post_id [description]
-     *    @return [type]           [description]
-     */
-    public function deletePost(Request $request, $post_id) {
-    	$user = Auth::user();
+	/**
+	 *    [deletePost deletes post]
+	 *    @author Al Vincent Musa
+	 *    @param  Request $request [description]
+	 *    @param  [type]  $post_id [description]
+	 *    @return [type]           [description]
+	 */
+	public function deletePost(Request $request, $post_id)
+	{
+		$user = Auth::user();
 
 		$post = Post::where('postNumber', '=', $post_id)->where('email', '=', $user->email)->firstOrFail();
 		$post->postDeleteStatus = 1;
 
-		DB::transaction(function() use ($post) {
+		DB::transaction(function () use ($post) {
 			$post->save();
 		});
 
 		return 200;
-    }
+	}
 }

@@ -53,7 +53,7 @@ class Post extends Model
         # code...
         return $this->hasMany(transaction::class,'postNumber','postNumber');
     }
-    // public function shoppingList() {
-    //     return $this->hasOneThrough(ShoppingList::class, RequestPost::class, 'postNumber', 'shoppingListNumber', 'postNumber', 'shoppingListNumber');
-    // }
+    public function shoppingList() {
+        return $this->hasOneThrough(ShoppingList::class, RequestPost::class, 'postNumber', 'shoppingListNumber', 'postNumber', 'shoppingListNumber');
+    }
 }
