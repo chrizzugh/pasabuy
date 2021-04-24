@@ -241,22 +241,59 @@
   </div>
   <!--end-->
 
+  
   <!--Select Shopping List button-->
   <div class="flex justify-center items-center ssm:px-2 mt-3 sm:px-2 vs:px-2">
     <button
+      @click="selectShoppingList=!selectShoppingList"
       class="inline-flex items-center justify-center p-4 bg-gray-100 rounded-full w-31.75 ssm:w-full vs:w-full h-14 ssm:h-10 vs:h-12"
     >
       <div class="flex space-x-2 items-center">
         <img class="w-6 h-full rounded-lg" src="img/add.svg" />
-        <p
+        <p v-if="selectedList ==null"
           class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900"
         >
           Select Shopping List
+        </p>
+        <p v-else
+          class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900"
+        >
+          Shopping list Number {{selectedList}}
         </p>
       </div>
     </button>
   </div>
   <!--end-->
+  <div v-if="selectShoppingList"  @click.self="closeModal()" class="z-50 bg-black bg-opacity-25 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+      <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 ssm:w-full vs:w-full" >
+      <div class="flex flex-row w-full justify-center items-center py-3">
+       <h1 class="text-gray-900 pr-10 se:pr-6 se:pl-14 ssm:pr-4 ssm:pl-14 pl-20 leading-normal ssm:text-sm vs:text-base lvs:text-xl text-xl font-bold">
+         Select Shopping List
+       </h1>
+       <button @click="closeModal()" class=" mt-2 focus:outline-none text-sm ssm:text-xs vs:text-xs lvs:text-sm mb-1 ssm:mb-2 leading-none text-indigo-900">
+         Close
+         </button>
+      </div>
+      <hr>
+      <p class="text-center text-red-500">{{listError}}</p>
+      <div class="flex flex-col space-y-3 mt-4 mb-4">
+        <div class="ml-5 flex w-full" v-for="(list,index) in shoppingLists" :key="index">
+          <label class="inline-flex items-center">
+            <input type="radio" class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4" name="accountType" :id="'list'+index" :value="list.shoppingListNumber">
+            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base">Shopping List {{index+1}}</span>
+          </label>
+        </div>
+      </div>
+      <hr>
+      <div class="flex mt-4 mb-4 items-center justify-center ssm:px-2 vs:px-2">
+        <button  @click="addShoppingList" >
+        <div class="inline-flex items-center justify-center px-4 py-2 bg-red-700 rounded-full ssm:h-8 h-10 w-88 ssm:w-full vs:w-full">
+          <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-normal text-center text-white">Add list</p>
+      </div>
+        </button>
+      </div>
+       </div>
+     </div>
 
   <!--Comment Section-->
   <div class="justify-center flex mt-3 ssm:px-2 vs:px-2 sm:px-2">
@@ -305,21 +342,42 @@ export default {
       Payments:['Cash on Delivery','Gcash','PayMaya','Online Banking'],
       caption:null,
       capacity:null,
-      sched:null
+      sched:null,
+      selectShoppingList:false,
+      selectedList:null,
+      listError:null
 
     };
   },
   methods: {
+    closeModal(){
+      if(this.selectedList != null){
+        this.selectShoppingList=!this.selectShoppingList
+      }
+    },
+    addShoppingList(){
+      for(var i=0;i<this.shoppingLists.length;i++){
+        if(document.getElementById('list'+i).checked){
+          this.selectedList = document.getElementById('list'+i).value
+          this.selectShoppingList=!this.selectShoppingList
+          console.log(this.selectedList)
+          this.listError=null
+        }
+      }
+      if(this.selectedList==null){
+        this.listError = "Please select a shopping list"
+      }
+    },
     submit(){
         var form ={
             postIdentity: 'request_post',
-            postStatus: 'Acccepting Orders',
+            postStatus: 'Accepting Offer',
             deliveryArea: this.deliveryAddress,
             shoppingPlace: this.shoppingPlace,
             deliverySchedule: this.sched,
             paymentMethod: this.payment,
             caption:this.caption,
-            shoppingList: '1' 
+            shoppingListNumber: this.selectedList
         }
       
         store.dispatch('createPostRequest',form).then(()=>{
@@ -380,6 +438,9 @@ export default {
     },
     transportModes() {
       return store.getters.getTransportModes;
+    },
+    shoppingLists() {
+      return store.getters.getUserShoppingList;
     },
     shoppingPlaces() {
       return store.getters.getShoppingPlaces;

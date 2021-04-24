@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Post;
 use App\Models\ShoppingList;
+use Illuminate\Support\Facades\Auth;
 use Webpatser\Uuid\Uuid;
 
 class RequestPost extends Model
@@ -31,7 +32,7 @@ class RequestPost extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->shoppingListNumber = (string) Uuid::generate(4);
+            $model->shoppingListNumber = '076-'.str_pad(Auth::user()->indexUserAuthentication,4,'0',STR_PAD_LEFT).'-'.str_pad(ShoppingList::count()+1,5,'0',STR_PAD_LEFT);
         });
     }
 

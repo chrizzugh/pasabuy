@@ -372,7 +372,7 @@ export default {
       }else{
         var form = {
         postIdentity: "offer_post",
-        postStatus: "Acccepting Orders",
+        postStatus: "Accepting Requests",
         deliveryArea: this.deliveryArea,
         shoppingPlace: this.shoppingPlace,
         deliverySchedule: this.sched,

@@ -5,6 +5,7 @@
        <h1 class="text-gray-900 pr-10 pl-20 ssm:pr-4 se:pr-6 se:pl-14 ssm:pl-14 ssm:text-sm leading-normal vs:text-base lvs:text-xl text-xl font-bold">
          Update Order Request
        </h1>
+
        <button @click.prevent="close3" class=" mt-2 focus:outline-none text-sm ssm:text-xs ssm:mb-2 vs:text-xs lvs:text-sm mb-1 leading-none text-indigo-900">
          Close
          </button>
@@ -42,6 +43,7 @@
 
 <script>
 export default {
+  props:['post'],
     data(){
         return {
         isVisible: true,

@@ -105,7 +105,7 @@ class PostController extends Controller
 			'shoppingPlace' => 'required|string|max:500',
 			'deliverySchedule' => 'required|date',
 			'paymentMethod' => 'required|string|max:200',
-			'shoppingList' => 'required',
+			'shoppingListNumber' => 'required',
 			'caption' => 'required|string|max:200',
 		]);
 
@@ -123,7 +123,7 @@ class PostController extends Controller
 		$request_post->shoppingPlace = $request->shoppingPlace;
 		$request_post->deliverySchedule = $request->deliverySchedule;
 		$request_post->paymentMethod = $request->paymentMethod;
-		$request_post->shoppingListNumber = $request->shoppingList;
+		$request_post->shoppingListNumber = $request->shoppingListNumber;
 		$request_post->caption = $request->caption;
 
 			// save to database
@@ -139,15 +139,15 @@ class PostController extends Controller
 		}
 		// $request_post->caption = $request->caption;
 
-		$shopping_list = new ShoppingList;
-		$shopping_list->email = $user;
-		$shopping_list->text = $request->shoppingList;
+		// $shopping_list = new ShoppingList;
+		// $shopping_list->email = $user;
+		// $shopping_list->text = $request->shoppingList;
 
-		DB::transaction(function() use ($post, $request_post, $shopping_list) {
-		// DB::transaction(function() use ($post, $request_post) {
+		// DB::transaction(function() use ($post, $request_post, $shopping_list) {
+		DB::transaction(function() use ($post, $request_post) {
 			$post->save();
 			$post->request_post()->save($request_post);
-			RequestPost::find($request_post->indexOrderRequestPost)->shoppingList()->save($shopping_list);
+			// RequestPost::find($request_post->indexOrderRequestPost)->shoppingList()->save($shopping_list);
 		}); 
 		
 		return response()->json([

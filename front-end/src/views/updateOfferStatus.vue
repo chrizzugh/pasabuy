@@ -42,6 +42,7 @@
 
 <script>
 export default {
+  props:['post'],
     data(){
         return {
         isVisible: true,

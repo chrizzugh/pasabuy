@@ -310,7 +310,7 @@
                           <UpdateOfferStatus
                             v-if="postModalVisible2"
                             @closeModal2="listener2"
-                            
+                            :post="post_info"
                           />
                           <button
                             @click="togglePostModal2"
@@ -374,9 +374,10 @@
                             </span>
                             Edit post
                           </button>
-                          <UpdateOfferStatus
+                          <UpdateOrderStatus
                             v-if="postModalVisible2"
-                            @closeModal2="listener2"
+                            @closeModal3="listener2"
+                            :post="post_info"
                           />
                           <button
                             @click="togglePostModal2"
@@ -403,17 +404,20 @@
                   <!--end-->
 
                   <!--section 2-->
-                  <div
-                    class="inline-flex items-center justify-start px-2 py-1 mt-4 space-x-2 bg-gray-100 rounded-full"
-                  >
-                    <span class="text-red-600 rounded-full material-icons">
-                      remove_circle_outline
-                    </span>
-                    <p
-                      class="items-center text-sm font-bold leading-none text-red-600 vs:text-xs ssm:text-xs lvs:text-sm"
-                    >
-                      {{ post_info.postStatus }}
-                    </p>
+                  <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full text-green-600" v-if="post_info.postStatus !== 'Accepting Requests' && post_info.postStatus !== 'Accepting Offer'">
+                    <span class="rounded-full material-icons text-red-600">
+                        remove_circle_outline
+                        </span>
+                    <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600">
+                        {{post_info.postStatus}}</p>
+                  </div>
+          
+                  <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full text-green-600" v-if="post_info.postStatus === 'Accepting Requests' || post_info.postStatus === 'Accepting Offer'">
+                    <span class="rounded-full material-icons">
+                        remove_circle_outline
+                        </span>
+                    <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center">
+                        {{post_info.postStatus}}</p>
                   </div>
                   <!--end-->
 
@@ -1576,6 +1580,7 @@ import editShopListModal from "./editShopListModal";
 import ShoppingList from "./ShoppingList";
 import createShopList from "./createShopList";
 import EditOrderRequest from "./EditOrderRequest";
+import UpdateOrderStatus from "./updateOrderStatus"
 import $ from "jquery";
 import VueSimpleAlert from "vue-simple-alert";
 import store from "../store/index";
@@ -1664,6 +1669,7 @@ export default {
     editShopListModal,
     EditOrderRequest,
     SendOffer,
+    UpdateOrderStatus
   },
   methods: {
     togglePostModal() {
@@ -1903,10 +1909,14 @@ export default {
       return store.getters.getPersonal;
     },
     posts() {
-      return store.getters.getPosts;
+       return store.getters.getPosts.filter((x)=>{
+        return x.postStatus == "Accepting Requests" || x.postStatus == "Accepting Offer"
+      });
     },
     allShares() {
-      return store.getters.getAllShares;
+      return store.getters.getAllShares.filter((x)=>{
+        return x.post.postStatus == "Accepting Requests" || x.post.postStatus == "Accepting Offer" 
+      });
     },
     shoppingLists() {
       return store.getters.getUserShoppingList;
@@ -1944,8 +1954,6 @@ export default {
   },
   mounted(){
     this.sortPosts()
-    console.log("your active orders = ", this.confirmedOrders)
-    console.log("your active deliveries = ", this.confirmedDeliveries)
   }
 };
 </script>

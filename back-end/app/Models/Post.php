@@ -8,6 +8,7 @@ use App\Models\PasabuyUser;
 use App\Models\OfferPost;
 use App\Models\RequestPost;
 use App\Models\ShoppingList;
+use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 
 class Post extends Model
@@ -24,7 +25,7 @@ class Post extends Model
 	{
         parent::boot();
         self::creating(function ($model) {
-            $model->postNumber = (string) Uuid::generate(4);
+            $model->postNumber = '080-'.Carbon::now('Asia/Manila')->format('dmyhhm').'-'.str_pad(Post::count()+1,4,'0',STR_PAD_LEFT);
         });
 	}
 
