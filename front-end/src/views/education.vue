@@ -12,6 +12,7 @@
                       2xl:w-97
                       lg:w-97
                     ">
+        
         <span class="  font-raleways font-bold grid grid-cols-2 "> 
         <p class="text-gray-500 uppercase">College</p>
        <span>
