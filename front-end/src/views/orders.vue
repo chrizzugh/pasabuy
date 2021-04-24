@@ -191,6 +191,9 @@ export default {
   components: {
     Nav,
   },
+   created: function () {
+    document.body.style.backgroundColor = "#EBEBEB";
+  },
   data(){
     return{
      
