@@ -25,37 +25,37 @@
              <span class="  font-raleways font-bold grid grid-cols-2 "> 
         <p class="text-gray-500">NAME</p>
         <span>
-        <p >{{personal.name}} {{personal.midname}} {{personal.lastname}}</p>
+        <p >{{firstname}} {{midname}} {{lastname}}</p>
        </span>
         </span>
         <span class=" font-raleways font-bold  grid grid-cols-2 ">
         <p class="text-gray-500">PHONE NUMBER</p>
         <span>
-        <p>{{personal.phone_number}}</p>
+        <p>{{phone_number}}</p>
         </span>
         </span>
          <span class=" font-raleways font-bold  grid grid-cols-2"> 
         <p class="text-gray-500">WORK</p>
         <span>
-        <p>{{personal.work}}</p>
+        <p>{{work}}</p>
         </span>
         </span>
         <span class=" font-raleways font-bold  grid grid-cols-2"> 
         <p class="text-gray-500">GENDER</p>
         <span>
-        <p>{{personal.gender}}</p>
+        <p>{{gender}}</p>
         </span>
         </span>
         <span class=" font-raleways font-bold  grid grid-cols-2"> 
         <p class="text-gray-500">BIRTHDAY</p>
         <span>
-        <p>{{personal.birdate}}</p>
+        <p>{{birdate}}</p>
         </span>
         </span>
          <span class=" font-raleways font-bold  grid grid-cols-2"> 
         <p class="text-gray-500">Language</p>
         <span>
-        <p>{{personal.language}}</p>
+        <p>{{language}}</p>
         </span>
          </span>
           </div>
@@ -83,17 +83,21 @@
           </div>
            
            <div class=" ">
-            <div class="flex flex-col px-4  space-y-4
+            <div class="flex flex-col   space-y-4
             ">
-                <div class="flex flex-col"><span class="ml-2">Firstname</span> <input id="f_name"   type="text" :value="personal.name" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2">Firstname</span> 
+                <input id="f_name"   type="text" :value="firstname" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                  </div>
-                <div class="flex flex-col"><span class="ml-2">Middlename</span> <input id="m_name" type="text" :value="personal.midname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2">Middlename</span> 
+                <input id="m_name" type="text" :value="midname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Lastname</span> <input id="l_name" type="text" :value="personal.lastname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2">Lastname</span> 
+                <input id="l_name" type="text" :value="lastname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Phone number </span> <input id="p_number" type="number" :value="personal.phone_number" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2">Phone number </span> 
+                <input id="p_number" type="number" :value="phone_number" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Work </span> <input id="work" type="text" :value="personal.work" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2">Work </span> <input id="work" type="text" :value="work" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
                 <span class="ml-2">Gender</span>
                 <div class=" space-x-4 ml-4">
@@ -106,9 +110,9 @@
                   <label for="female">Female</label>
                   </span>
               </div>
-                 <div class="flex flex-col "><span class="ml-2">Birthday</span>  <input  type="text" id="b_date"  :value="personal.birdate"   class="focus:outline-none rounded-xl w-full h-10 pl-2 bg-transparent bg-gray-200" 
+                 <div class="flex flex-col "><span class="ml-2">Birthday</span>  <input  type="text" id="b_date"  :value="birdate"   class="focus:outline-none rounded-xl w-full h-10 pl-2 bg-transparent bg-gray-200" 
                   ></div> 
-                <div class="flex flex-col"><span class="ml-2">Language: </span> <input type="text" id="language" :value="personal.language" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
+                <div class="flex flex-col"><span class="ml-2">Language</span> <input type="text" id="language" :value="language" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
              
             </div>
            <div class="flex justify-between mt-10 space-x-4 items-center">
@@ -121,30 +125,24 @@
     </div>
 
     </div>
-  
+    
 </template>
 <script>
-import Profile from './ProfileEdit.vue'
 export default {
-  
   name:'personal',
-  component:{
-   Profile,
-  },
+ 
 data(){
     return{
       toggle:false,
-     
       avatar:null,
-    disabled: 0,
-    hidden:false,
-    profile:'img/yami.jpg',
-    show:true,
-    show2:true,
-    edit2:false,
-    message:'yeah',
-    personal:  {
-      name:'Juan',
+      disabled: 0,
+      hidden:false,
+      profile:'img/yami.jpg',
+      show:true,
+      show2:true,
+      edit2:false,
+      message:'yeah',
+      firstname:'Juan',
       midname:'B',
       lastname:'Delacruz',
       phone_number:'09021050502',
@@ -152,21 +150,20 @@ data(){
       gender:'Male',
       language:'Bicol',
       birdate:'January,26 1999',
-    },
     }
   
 },
 methods:
     {
      save_data(){
-        this.personal.name=document.getElementById('f_name').value;
-        this.personal.midname=document.getElementById('m_name').value;
-        this.personal.lastname=document.getElementById('l_name').value;
-        this.personal.phone_number=document.getElementById('p_number').value;
-        this.personal.work=document.getElementById('work').value;
-        this.personal.birdate=document.getElementById('b_date').value;
-         this.personal.language=document.getElementById('language').value;
-        this.personal.gender=document.querySelector('input[name="gender"]:checked').value;
+        this.firstname=document.getElementById('f_name').value;
+        this.midname=document.getElementById('m_name').value;
+        this.lastname=document.getElementById('l_name').value;
+        this.phone_number=document.getElementById('p_number').value;
+        this.work=document.getElementById('work').value;
+        this.birdate=document.getElementById('b_date').value;
+         this.language=document.getElementById('language').value;
+        this.gender=document.querySelector('input[name="gender"]:checked').value;
         
      },
      change_profile(e){
