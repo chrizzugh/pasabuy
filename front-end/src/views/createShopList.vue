@@ -11,16 +11,21 @@
                 </h1>
                 <hr>
 
+                
                 <div class="items-center justify-center p-2">
-                    <input name="" id="" class="h-12 p-3 text-sm font-normal placeholder-gray-500 bg-gray-200 rounded-xl w-87 focus:outline-none" placeholder="Name your shopping list">
-
-                    <textarea name="" id="" class="h-20 p-3 mt-4 text-sm placeholder-gray-500 bg-gray-200 w-87 rounded-xl" placeholder="Enter your shopping list here..."></textarea>
+                    <p class="pb-3 text-sm">
+                        Shopping List {{listLength}}
+                    </p>
+     
+                <div id="userList" class="flex flex-wrap w-full py-5 overflow-hidden bg-gray-100 rounded-lg editable focus:outline-red-700" contenteditable="true">        
+                    <ul id="shoplist" class="pl-3 text-xs font-semibold leading-relaxed list-disc list-inside ">
+                        <li v-for="shopList in list" :key="shopList">{{shopList}}</li>
+                    </ul>
+                </div>
 
                 <div class="pt-3">
-                    <button class="w-full h-8 px-5 text-sm text-white transition-colors duration-150 bg-red-600 text-normal rounded-3xl focus:shadow-outline hover:bg-red-600">
-                        <a href="#">
-                            Save changes
-                        </a>
+                    <button @click="saveList" class="w-full h-8 px-5 text-base text-white transition-colors duration-150 bg-red-600 text-bold rounded-3xl focus:shadow-outline hover:bg-red-600">
+                        Save changes
                     </button>
                 </div>
             </div>
@@ -31,10 +36,16 @@
 </template>
 
 <script>
+import store from "../store/index"
+import api from "../api"
+import VueSimpleAlert from "vue-simple-alert";
 export default {
+    el:'#shoplist',
     data(){
         return {
         edit: true,
+        listLength:0,
+        list:['']
         }
         
     },
@@ -42,6 +53,33 @@ export default {
         closeshopList(){
             this.$emit('closeshopListModal')
         },
+         saveList(){
+            var list = document.getElementById('userList').getElementsByTagName("li")
+            var newList = ''
+            for(var i=0; i<list.length;i++){
+                console.log(list[i].outerText)
+                newList = newList+', '.concat(list[i].outerText)
+            }
+
+            var stringList = newList.substr(2)
+            console.log(stringList)
+
+            api.post('api/createList',{list:stringList}).then((res)=>{
+                store.dispatch('getUserShoppingList')
+                VueSimpleAlert.alert(res.data.message, "Success", "success")
+                this.$emit('closeshopListModal')
+            }).catch(errors=>{
+                VueSimpleAlert.alert(errors.response.data.list, "Invalid", "warning")
+            })
+        }
     },
+    mounted(){
+       this.listLength =  this.shoppingLists.length+1 
+    },
+    computed:{
+        shoppingLists() {
+            return store.getters.getUserShoppingList;
+        },
+    }
 }
 </script>

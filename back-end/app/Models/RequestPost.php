@@ -28,13 +28,13 @@ class RequestPost extends Model
     public $timestamps = false;
     public $primaryKey = 'indexOrderRequestPost';
 
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->shoppingListNumber = '076-'.str_pad(Auth::user()->indexUserAuthentication,4,'0',STR_PAD_LEFT).'-'.str_pad(ShoppingList::count()+1,5,'0',STR_PAD_LEFT);
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     self::creating(function ($model) {
+    //         $model->shoppingListNumber = '076-'.str_pad(Auth::user()->indexUserAuthentication,4,'0',STR_PAD_LEFT).'-'.str_pad(ShoppingList::count()+1,5,'0',STR_PAD_LEFT);
+    //     });
+    // }
 
     /**
      *    [post description]

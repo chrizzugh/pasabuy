@@ -73,6 +73,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/updateTransaction', [transactionController::class, 'updateTransaction']);
     Route::get('/getShoppingList', [shoppingListController::class, 'getShoppingList']);
     Route::post('/editList', [shoppingListController::class, 'editList']);
+    Route::post('/createList', [shoppingListController::class, 'createList']);
+
 
 
     
