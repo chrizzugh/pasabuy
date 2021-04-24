@@ -258,7 +258,7 @@
         <p v-else
           class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900"
         >
-          Shopping list Number {{selectedList}}
+        {{selectedList}}
         </p>
       </div>
     </button>
@@ -280,7 +280,7 @@
         <div class="ml-5 flex w-full" v-for="(list,index) in shoppingLists" :key="index">
           <label class="inline-flex items-center">
             <input type="radio" class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4" name="accountType" :id="'list'+index" :value="list.shoppingListNumber">
-            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base">Shopping List {{index+1}}</span>
+            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base" :id="'listSpan'+index" >{{list.shoppingListTitle}}</span>
           </label>
         </div>
       </div>
@@ -347,6 +347,7 @@ export default {
       selectedList:null,
       listError:null,
       selectedListNumber:null
+     
 
     };
   },
@@ -359,8 +360,8 @@ export default {
     addShoppingList(){
       for(var i=0;i<this.shoppingLists.length;i++){
         if(document.getElementById('list'+i).checked){
-          this.selectedList = i+1
           this.selectedListNumber =  document.getElementById('list'+i).value
+          this.selectedList = document.getElementById('listSpan'+i).innerHTML
           this.selectShoppingList=!this.selectShoppingList
           console.log(this.selectedList)
           this.listError=null

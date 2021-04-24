@@ -13,7 +13,7 @@
 
                 <div class="items-center justify-center p-2">
                     <p class="pb-3 text-sm">
-                        Shopping List {{index}}
+                         {{index}}
                     </p>
      
                 <div id="userList" class="flex flex-wrap w-full py-5 overflow-hidden bg-gray-100 rounded-lg editable focus:outline-red-700" contenteditable="true">        

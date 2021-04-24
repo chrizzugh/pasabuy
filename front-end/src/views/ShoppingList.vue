@@ -6,7 +6,7 @@
   
               <!--Create Post section-->
               <h1 class="justify-center p-4 text-xl font-bold leading-normal text-center text-white rounded-t-xl bg-red-buttons vs:ml-0 font-nunito">
-                  Shopping List {{index}}
+                {{index}}
                   <button @click.prevent="closeListModal" class="mb-1 ml-20 text-sm leading-none text-white vs:ml-10 focus:outline-none">
                   Close
                   </button>

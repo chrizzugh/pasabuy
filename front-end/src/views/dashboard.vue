@@ -584,7 +584,7 @@
                         >Shopping List
                         <label class="pl-3 text-gray-500"
                           >{{
-                            post_info.request_post.shopping_list.text.split(",")
+                            post_info.request_post.shopping_list.shoppingListContent.split(",")
                               .length
                           }}
                           items</label
@@ -598,7 +598,7 @@
                           <li
                             v-for="(
                               shoppingList, index
-                            ) in post_info.request_post.shopping_list.text.split(
+                            ) in post_info.request_post.shopping_list.shoppingListContent.split(
                               ','
                             )"
                             :key="index"
@@ -1066,7 +1066,7 @@
                               >Shopping List
                               <label class="pl-3 text-gray-500"
                                 >{{
-                                  post_info.post.request_post.shopping_list.text.split(
+                                  post_info.post.request_post.shopping_list.shoppingListContent.split(
                                     ","
                                   ).length
                                 }}
@@ -1081,7 +1081,7 @@
                                 <li
                                   v-for="(
                                     shoppingList, index
-                                  ) in post_info.post.request_post.shopping_list.text.split(
+                                  ) in post_info.post.request_post.shopping_list.shoppingListContent.split(
                                     ','
                                   )"
                                   :key="index"
@@ -1521,8 +1521,8 @@
           <h3
             class="relative pt-2 pl-5 text-lg font-bold leading-loose tracking-wide"
           >
-            Shopping List {{index +1}}
-            <editShopListModal v-if="editVisible && toggleeditShopListNum == userList.shoppingListNumber" @closeModal="editlistener" :list="userList.text.split(', ')" :index="index+1" :listNum="toggleeditShopListNum"/>
+            {{userList.shoppingListTitle}}
+            <editShopListModal v-if="editVisible && toggleeditShopListNum == userList.shoppingListNumber" @closeModal="editlistener" :list="userList.shoppingListContent.split(', ')" :index="userList.shoppingListTitle" :listNum="toggleeditShopListNum"/>
             <button
               @click="toggleeditShopListNum = userList.shoppingListNumber,toggleeditShopList()"
               class="absolute text-sm font-bold text-blue-700 right-7 top-4 focus:outline-none"
@@ -1535,19 +1535,19 @@
             id="shop-list"
             class="overflow-hidden text-sm leading-relaxed text-gray-500 list-disc list-inside h-22 pl-9"
           >
-            <li v-for="shopList in userList.text.split(', ')" :key="shopList">
+            <li v-for="shopList in userList.shoppingListContent.split(', ')" :key="shopList">
               {{ shopList }}
             </li>
           </ul>
           
-          <ShoppingList v-if="toggleList && toggleListNum == userList.shoppingListNumber " @closeListModal="toggleList=!toggleList" :list="userList.text.split(', ')" :index="index+1" />
+          <ShoppingList v-if="toggleList && toggleListNum == userList.shoppingListNumber " @closeListModal="toggleList=!toggleList" :list="userList.shoppingListContent.split(', ')" :index="userList.shoppingListNumber" />
          
           <button
-             v-if="userList.text.split(', ').length > 4"
+             v-if="userList.shoppingListContent.split(', ').length > 4"
             @click="toggleList=!toggleList,toggleListNum =userList.shoppingListNumber "
             class="text-sm leading-loose pl-9 focus:outline-none"
           >
-            {{userList.text.split(', ').length - 4}} more items...
+            {{userList.shoppingListContent.split(', ').length - 4}} more items...
           </button>
       
            </div>

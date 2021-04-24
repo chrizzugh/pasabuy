@@ -13,9 +13,7 @@
 
                 
                 <div class="items-center justify-center p-2">
-                    <p class="pb-3 text-sm">
-                        Shopping List {{listLength}}
-                    </p>
+                    <input name="" v-model="shopListName" class="h-12 p-3 text-sm font-normal placeholder-gray-500 bg-gray-200 rounded-xl w-87 focus:outline-none" placeholder="Name your shopping list">
      
                 <div id="userList" class="flex flex-wrap w-full py-5 overflow-hidden bg-gray-100 rounded-lg editable focus:outline-red-700" contenteditable="true">        
                     <ul id="shoplist" class="pl-3 text-xs font-semibold leading-relaxed list-disc list-inside ">
@@ -45,7 +43,8 @@ export default {
         return {
         edit: true,
         listLength:0,
-        list:['']
+        list:[''],
+        shopListName:null
         }
         
     },
@@ -64,7 +63,7 @@ export default {
             var stringList = newList.substr(2)
             console.log(stringList)
 
-            api.post('api/createList',{list:stringList}).then((res)=>{
+            api.post('api/createList',{list:stringList,listName:this.shopListName}).then((res)=>{
                 store.dispatch('getUserShoppingList')
                 VueSimpleAlert.alert(res.data.message, "Success", "success")
                 this.$emit('closeshopListModal')
