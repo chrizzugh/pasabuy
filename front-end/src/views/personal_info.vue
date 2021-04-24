@@ -85,38 +85,38 @@
            <div class=" ">
             <div class="flex flex-col   space-y-4
             ">
-                <div class="flex flex-col"><span class="ml-2">Firstname</span> 
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold text-sm">Firstname</span> 
                 <input id="f_name"   type="text" :value="firstname" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                  </div>
-                <div class="flex flex-col"><span class="ml-2">Middlename</span> 
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Middlename</span> 
                 <input id="m_name" type="text" :value="midname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Lastname</span> 
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Lastname</span> 
                 <input id="l_name" type="text" :value="lastname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Phone number </span> 
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Phone number </span> 
                 <input id="p_number" type="number" :value="phone_number" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Work </span> <input id="work" type="text" :value="work" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Work </span> <input id="work" type="text" :value="work" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <span class="ml-2">Gender</span>
+                <span class="ml-2 text-gray-500 font-bold  text-sm">Gender</span>
                 <div class=" space-x-4 ml-4">
                   <span class="space-x-2">
                   <span><input type="radio" value="Male" id="male" name="gender" /></span>
-                  <label for="male">Male</label>
+                  <label for="male ">Male</label>
                   </span>
                   <span class="space-x-2">
                   <span><input type="radio" value="Female" id="female" name="gender" /></span>
                   <label for="female">Female</label>
                   </span>
               </div>
-                 <div class="flex flex-col "><span class="ml-2">Birthday</span>  <input  type="text" id="b_date"  :value="birdate"   class="focus:outline-none rounded-xl w-full h-10 pl-2 bg-transparent bg-gray-200" 
+                 <div class="flex flex-col "><span class="ml-2 text-gray-500 font-bold  text-sm">Birthday</span>  <input  type="text" id="b_date"  :value="birdate"   class="focus:outline-none rounded-xl w-full h-10 pl-2 bg-transparent bg-gray-200" 
                   ></div> 
-                <div class="flex flex-col"><span class="ml-2">Language</span> <input type="text" id="language" :value="language" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Language</span> <input type="text" id="language" :value="language" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
              
             </div>
            <div class="flex justify-between mt-10 space-x-4 items-center">
-              <button @click="toggle=false" class="px-3 h-6 w-full bg-white ring-2 ring-black focus:outline-none   rounded-2xl">Cancel</button>
+              <button @click="toggle=false" class="px-3 h-6 w-full bg-white ring-1 ring-black focus:outline-none   rounded-2xl">Cancel</button>
               <button @click="toggle=false ,save_data()" class="px-5 bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Save</button>
             </div>
           </div>
