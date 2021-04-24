@@ -345,7 +345,8 @@ export default {
       sched:null,
       selectShoppingList:false,
       selectedList:null,
-      listError:null
+      listError:null,
+      selectedListNumber:null
 
     };
   },
@@ -358,7 +359,8 @@ export default {
     addShoppingList(){
       for(var i=0;i<this.shoppingLists.length;i++){
         if(document.getElementById('list'+i).checked){
-          this.selectedList = document.getElementById('list'+i).value
+          this.selectedList = i+1
+          this.selectedListNumber =  document.getElementById('list'+i).value
           this.selectShoppingList=!this.selectShoppingList
           console.log(this.selectedList)
           this.listError=null
@@ -377,7 +379,7 @@ export default {
             deliverySchedule: this.sched,
             paymentMethod: this.payment,
             caption:this.caption,
-            shoppingListNumber: this.selectedList
+            shoppingListNumber: this.selectedListNumber
         }
       
         store.dispatch('createPostRequest',form).then(()=>{

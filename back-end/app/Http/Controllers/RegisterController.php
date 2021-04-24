@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -112,7 +113,7 @@ class RegisterController extends Controller
         $userInfo->firstName = $request->firstName;
         $userInfo->lastName = $request->lastName;
         $userInfo->phoneNumber = $request->phoneNumber;
-        $userInfo->profilePicture = "defaultImage.png";
+        $userInfo->profilePicture = Storage::url('/images/'."defaultImage.png"); 
 
         if($userInfo->save()){
             $userAuth = new user();
