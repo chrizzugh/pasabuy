@@ -10,7 +10,7 @@ xsm:w-max
       xl:block xl:mt-24
     
       justify-center self-center  gap-y-5 mt-16 hidden ">
-      <p class="text-2xl  font-nunito font-bold uppercase">Deliveries</p>
+      <p class="text-2xl  font-nunito font-bold uppercase">orders</p>
 </div>
 <div class="mt-20 self-center px-2 w-full flex flex-col pb-4  
             2xl:flex-row   2xl:mt-0 2xl:self-center 2xl:justify-items-center  2xl:items-center
@@ -26,11 +26,12 @@ xsm:w-max
               sm:w-10/12
              ">
     <div class="mt-3 
-    2xl:mr-3
-    xl:mr-3
-    lg:mr-3
+    2xl:mr-2
+    xl:mr-2
+    lg:mr-2
+    md:mr-2
     ">
-    <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"  class=" focus:outline-none text-red-700 px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Deliveries</a></button>
+    <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"  class=" focus:outline-none text-red-700 px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Orders</a></button>
   </div>
   <div class="flex  items-center justify-between space-x-2">
   <button  @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }"  type="button"    class=" focus:outline-none text-green-150 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Complete</a></button>  
@@ -145,7 +146,7 @@ lg:p-0
           ">
             <div class="flex flex-row items-center  justify-between p-3">
             <p class="hidden lg:block 2xl:block xl:block"></p>
-            <p class="text-lg font-extrabold xl:ml-8 lg:ml-8 2xl:ml-8">Update Delivery Status</p>
+            <p class="text-lg font-extrabold xl:ml-8 lg:ml-8 2xl:ml-8">Update Order Status</p>
             <p class="font-bold text-blue-700 cursor-pointer left-10" @click="toggle_status=false"> Close</p>
           </div>
          <hr>
