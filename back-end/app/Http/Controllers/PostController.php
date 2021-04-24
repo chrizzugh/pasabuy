@@ -139,12 +139,12 @@ class PostController extends Controller
 		}
 		// $request_post->caption = $request->caption;
 
-		// $shopping_list = new ShoppingList;
-		// $shopping_list->email = $user;
-		// $shopping_list->text = $request->shoppingList;
+		$shopping_list = new ShoppingList;
+		$shopping_list->email = $user;
+		$shopping_list->text = $request->shoppingList;
 
-		// DB::transaction(function() use ($post, $request_post, $shopping_list) {
-		DB::transaction(function() use ($post, $request_post) {
+		DB::transaction(function() use ($post, $request_post, $shopping_list) {
+		// DB::transaction(function() use ($post, $request_post) {
 			$post->save();
 			$post->request_post()->save($request_post);
 			RequestPost::find($request_post->indexOrderRequestPost)->shoppingList()->save($shopping_list);
@@ -460,17 +460,15 @@ class PostController extends Controller
 					$post->save();
 					$post->request_post->save();
 					$post->shoppingList->save();
-				})
+				});
 
 				return 201;
 				break;
 			
 			default:
 				return response()->json([
-					'data' => [
-						'message': 'propery postIdentity must have values offer_post or request_post.'
-					]
-				], 200);
+					'message' => 'propery postIdentity must have values offer_post or request_post.'
+				], 422);
 				break;
 		}
     }
