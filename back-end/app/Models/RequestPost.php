@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Post;
+use App\Models\ShoppingList;
+use Webpatser\Uuid\Uuid;
 
 class RequestPost extends Model
 {
@@ -18,12 +20,20 @@ class RequestPost extends Model
     	'shoppingPlace',
     	'deliverySchedule',
     	'paymentMethod',
-    	'shoppingList',
+    	'shoppingListNumber',
     	'caption'
     ];
 
     public $timestamps = false;
     public $primaryKey = 'indexOrderRequestPost';
+
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->shoppingListNumber = (string) Uuid::generate(4);
+        });
+    }
 
     /**
      *    [post description]

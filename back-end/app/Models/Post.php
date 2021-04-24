@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\PasabuyUser;
 use App\Models\OfferPost;
 use App\Models\RequestPost;
+use App\Models\ShoppingList;
 use Webpatser\Uuid\Uuid;
 
 class Post extends Model
@@ -21,10 +22,10 @@ class Post extends Model
 
     public static function boot()
 	{
-    parent::boot();
-    self::creating(function ($model) {
-        $model->postNumber = (string) Uuid::generate(4);
-    });
+        parent::boot();
+        self::creating(function ($model) {
+            $model->postNumber = (string) Uuid::generate(4);
+        });
 	}
 
     public function offer_post() {
@@ -50,5 +51,8 @@ class Post extends Model
     {
         # code...
         return $this->hasMany(transaction::class,'postNumber','postNumber');
+    }
+    public function shoppingList() {
+        return $this->hasOneThrough(ShoppingList::class, RequestPost::class, 'postNumber', 'shoppingListNumber', 'postNumber', 'shoppingListNumber');
     }
 }
