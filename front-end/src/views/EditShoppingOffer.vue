@@ -38,21 +38,6 @@
 
         <!--Delivery information list-->
         <!--<form @submit.prevent='createOfferPost'>-->
-        <input
-          v-model="shop_info.offer_post.indexShoppingOfferPost"
-          type="hidden"
-          name="indexShoppingOfferPost"
-        />
-        <input
-          v-model="shop_info.offer_postpostNumber"
-          type="hidden"
-          name="postNumber"
-        />
-        <input
-          v-model="shop_info.offer_post.postStatus"
-          type="hidden"
-          name="postStatus"
-        />
         <div
           class="flex flex-col mt-1 sm:px-2 ssm:px-2 vs:px-2 justify-center items-center"
         >
@@ -73,7 +58,7 @@
                   "
                   class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
                 >
-                  {{ shop_info.offer_post.deliveryArea }}
+                  {{ shop_info.deliveryArea }}
                 </button>
               </div>
             </div>
@@ -184,7 +169,7 @@
                   placeholder="Search for place"
                   title="Shopping Place"
                   class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 px-4 items-center py-2.5 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
-                  v-model="shop_info.offer_post.shoppingPlace"
+                  v-model="shop_info.shoppingPlace"
                 />
                 <!-- {{shoppingPlace}} -->
                 <!-- </button> -->
@@ -235,10 +220,9 @@
                 <div
                   class="flex flex-col items-start justify-start h-full py-1.5 vs:w-full rounded-2xl"
                 >
-                  
                   <span>
                     <input
-                      v-model="shop_info.offer_post.deliverySchedule"
+                      v-model="shop_info.deliverySchedule"
                       name="deliverySchedule"
                       type="datetime-local"
                       class="ssm:text-xs block bg-gray-100 text-sm focus:outline-none leading-loose text-gray-900 w-44 sm:w-full vs:w-full h-auto"
@@ -266,7 +250,7 @@
                   v-on:keyup="myFunctionTM()"
                   placeholder="Mode of transport.."
                   title="Transport Mode"
-                  v-model="shop_info.offer_post.transportMode"
+                  v-model="shop_info.transportMode"
                 />
 
                 <div class="relative">
@@ -315,11 +299,11 @@
               >
                 <div
                   class="flex flex-col items-start justify-start w-full h-full py-1.5 rounded-2xl"
-                > 
+                >
                   <span>
                     <input
                       type="text"
-                      v-model="shop_info.offer_post.capacity"
+                      v-model="shop_info.capacity"
                       name="capacity"
                       class="ssm:text-xs block bg-gray-100 text-sm focus:outline-none leading-7 text-gray-900 w-44 sm:w-full vs:w-full h-auto"
                     />
@@ -342,7 +326,7 @@
                   "
                   class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
                 >
-                  {{ shop_info.offer_post.paymentMethod }}
+                  {{ shop_info.paymentMethod }}
                 </button>
                 <div class="relative">
                   <div
@@ -383,7 +367,7 @@
         <div class="justify-center flex ssm:px-2 mt-3 sm:px-2 vs:px-2">
           <textarea
             rows="3"
-            v-model="shop_info.offer_post.caption"
+            v-model="shop_info.caption"
             name="caption"
             class="p-4 bg-gray-100 shadow-sm text-sm ssm:text-xs vs:text-xs lvs:text-sm rounded-2xl rounded-md outline-none h-auto w-31.75 ssm:w-full vs:w-full"
             placeholder="Enter your post message here..."
@@ -414,12 +398,25 @@
 <script>
 import api from "../api";
 import store from "../store/index";
+import VueSimpleAlert from "vue-simple-alert";
 import moment from "moment";
-import VueSimpleAlert from "vue-simple-alert"
 export default {
   props: ["btnText"],
   created() {
-      api
+    this.shop_info.deliveryArea = this.btnText.offer_post.deliveryArea;
+    this.shop_info.caption = this.btnText.offer_post.caption;
+    this.shop_info.shoppingPlace = this.btnText.offer_post.shoppingPlace;
+    this.shop_info.capacity = this.btnText.offer_post.capacity;
+    this.shop_info.transportMode = this.btnText.offer_post.transportMode;
+    this.shop_info.deliverySchedule = moment(
+      this.btnText.offer_post.deliverySchedule
+    ).format("YYYY-MM-DDThh:mm");
+    this.shop_info.postStatus = this.btnText.offer_post.postStatus;
+    this.shop_info.postNumber = this.btnText.offer_post.postNumber;
+    this.shop_info.paymentMethod = this.btnText.offer_post.paymentMethod;
+    this.shop_info.indexShoppingOfferPost = this.btnText.offer_post.indexShoppingOfferPost;
+    console.log(this.shop_info);
+    api
       .get("/api/refProvince")
       .then((res) => {
         this.refProvince = res.data;
@@ -427,28 +424,12 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-    console.log(this.shop_info.offer_post.deliverySchedule);
-    this.shop_info.offer_post.deliverySchedule = moment(
-      this.shop_info.offer_post.deliverySchedule
-    ).format("YYYY-MM-DDThh:mm");
   },
   data() {
     return {
       isVisible: true,
       hidden: false,
-      delivery_info: {
-        delivery_area: "Banquerohan",
-        shopping_place: "SM City Legazpi",
-        schedule: "Tomorrow at 2 PM",
-        public_transit: "Public Transit",
-        capacity: "2 medium bags",
-        payment_method: "Payment First",
-        comment:
-          "Hi! I’ll be going to SM City Legazpi tomorrow. If there’s anyone who wants to pasabuy their groceries, I am willing to help out. Just send me a request!",
-        status: "No Longer Accepting Requests",
-      },
-      shop_info: this.btnText,
-      newshop_info: {
+      shop_info: {
         indexShoppingOfferPost: "",
         postNumber: "",
         postStatus: "",
@@ -475,7 +456,7 @@ export default {
       refBaranggay: [],
       newrefBaranggay: [],
       areaError: null,
-      deliveryAreaModal:false
+      deliveryAreaModal: false,
     };
   },
   methods: {
@@ -595,36 +576,36 @@ export default {
     //         })
     // },
     submit() {
-      var info = {
-        indexShoppingOfferPost: this.shop_info.offer_post
-          .indexShoppingOfferPost,
-        postNumber: this.shop_info.offer_post.postNumber,
-        postStatus: this.shop_info.offer_post.postStatus,
-        deliveryArea: this.shop_info.offer_post.deliveryArea,
-        shoppingPlace: this.shop_info.offer_post.shoppingPlace,
-        deliverySchedule: this.shop_info.offer_post.deliverySchedule,
-        transportMode: this.shop_info.offer_post.transportMode,
-        capacity: this.shop_info.offer_post.capacity,
-        paymentMethod: this.shop_info.offer_post.paymentMethod,
-        caption: this.shop_info.offer_post.caption,
-      };
+      //       var info = {
+      //     indexShoppingOfferPost: this.shop_info.indexShoppingOfferPost,
+      //     postNumber: this.shop_info.postNumber,
+      //     postStatus: this.shop_info.postStatus,
+      //     deliveryArea: this.shop_info.deliveryArea,
+      //     shoppingPlace: this.shop_info.shoppingPlace,
+      //     deliverySchedule: this.shop_info.deliverySchedule,
+      //     transportMode: this.shop_info.transportMode,
+      //     capacity: this.shop_info.offer_post,
+      //     paymentMethod: this.shop_info.paymentMethod,
+      //     caption: this.shop_info.caption,
+      //   };
       api
-        .post("/api/editshoppingoffers", info)
+        .post("/api/editshoppingoffers", this.shop_info)
         .then(() => {
           //this.user = res.data;
           //VueSimpleAlert.alert(res.data.message,"Success","success")
-        //this will get the updated version of posts state from the states
-          
+          //this will get the updated version of posts state from the states
+
           store.dispatch("getPosts").then(() => {
-          store.dispatch("getShoppingPlaces")
-          store.dispatch("getTransportModes")
-          this.$emit("closeModal1");
-        });
-        VueSimpleAlert.alert(
-          "Offer post created successfully",
-          "Sucess",
-          "success"
-        );
+            store.dispatch("getShoppingPlaces");
+            store.dispatch("getTransportModes");
+            this.$emit("getSortPosts");
+            this.$emit("closeModal1");
+            VueSimpleAlert.alert(
+            "Offer post created successfully",
+            "Sucess",
+            "success"
+          );
+          });
           // window.location.reload();
         })
         .catch((errors) => {
