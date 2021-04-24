@@ -324,6 +324,7 @@ export default {
       
         store.dispatch('createPostRequest',form).then(()=>{
             store.dispatch('getPosts').then(()=>{
+              store.dispatch("getShoppingPlaces")
               this.$parent.$emit('getSortPosts')
             })
             VueSimpleAlert.alert("Request post created successfully", "Sucess","success")

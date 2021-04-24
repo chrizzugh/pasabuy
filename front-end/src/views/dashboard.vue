@@ -432,7 +432,7 @@
                         <p
                           class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
                         >
-                          {{ post_info.offer_post.deliveryArea }}
+                          Delivering Anywhere in {{ post_info.offer_post.deliveryArea }}
                         </p>
                       </div>
                       <div class="flex py-2 space-x-2">
@@ -914,7 +914,7 @@
                               <p
                                 class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
                               >
-                                {{ post_info.post.offer_post.deliveryArea }}
+                               Delivering Anywhere in {{ post_info.post.offer_post.deliveryArea }}
                               </p>
                             </div>
                             <div class="flex py-2 space-x-2">

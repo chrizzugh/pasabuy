@@ -76,7 +76,7 @@ class PostController extends Controller
 			//save transport mode to tbl_transportMode
 			DB::table('tbl_transportMode')->insert([
 				'transportMode' => $request->transportMode,
-				'transportNumber' => '116'.str_pad(DB::table('tbl_transportMode')->count() +1,6,'0',STR_PAD_LEFT),
+				'transportModeNumber' => '116'.str_pad(DB::table('tbl_transportMode')->count() +1,6,'0',STR_PAD_LEFT),
 			]);
 		}
 		// save to database
