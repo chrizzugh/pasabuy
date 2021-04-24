@@ -12,27 +12,33 @@ xsm:w-max
       justify-center self-center  gap-y-5 mt-16 hidden ">
       <p class="text-2xl  font-nunito font-bold uppercase">Deliveries</p>
 </div>
-<div class="mt-20  px-3 w-full flex flex-col pb-10 
-            2xl:flex-row 2xl:px-0  2xl:mt-0 2xl:self-center 2xl:justify-items-center  2xl:items-center
-            lg:flex-row lg:px-0     lg:self-center lg:justify-items-center lg:mt-0
-            xl:flex-row xl:px-0    xl:self-center xl:justify-items-center xl:mt-0 
-            md:flex-row md:mt-24 md:pl-4 md:items-center sm:flex-row
-            space-y-3 self-center
-             2xl:w-6/12 
-              lg:w-6/12
-              xl:w-6/12
-              md:w-10/12
-              sm:w-max
+<div class="mt-20 self-center px-2 w-full flex flex-col pb-4  
+            2xl:flex-row   2xl:mt-0 2xl:self-center 2xl:justify-items-center  2xl:items-center
+            lg:flex-row     lg:self-center lg:justify-items-center lg:mt-0
+            xl:flex-row     xl:self-center xl:justify-items-center xl:mt-0 
+            md:flex-row md:mt-24 md:pl-4 md:items-center
+            sm:flex-row
+            space-y-3
+             2xl:w-6/12 2xl:px-0
+              lg:w-6/12 lg:px-0
+              xl:w-6/12 xl:px-0
+              md:w-10/12 md:px-0
+              sm:w-10/12
              ">
-    <div class="mt-3 mr-3">
+    <div class="mt-3 
+    2xl:mr-3
+    xl:mr-3
+    lg:mr-3
+    ">
     <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"  class=" focus:outline-none text-red-700 px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Deliveries</a></button>
   </div>
-  <div class="flex  items-center gap-x-2">
+  <div class="flex  items-center justify-between space-x-2">
   <button  @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }"  type="button"    class=" focus:outline-none text-green-150 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Complete</a></button>  
   <button   @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }"  type="button"   class=" focus:outline-none text-blue-700 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Confirmed</a></button>
   <button  @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }"  type="button"    class=" focus:outline-none text-yellow-600 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Cancelled</a></button>
   </div>
-</div><div class="p-5 w-full  flex flex-col space-y-4 items-center 
+</div>
+<div class="p-5 w-full  flex flex-col space-y-4 items-center 
 2xl:p-0
 xl:p-0
 lg:p-0
@@ -60,13 +66,16 @@ lg:p-0
             </p>
               </div>
             </span>
-            <span class="text-gray-500">Place on {{date}}</span>
+           
             </div>
             <div class="vs:flex-col vs:space-x-2"> 
              
-      <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status">Update</span>
+      <button v-if="selected=='Confirmed'" class="text-blue-600 font-bold focus:outline-none" @click="toggle_status=!toggle_status">Update</button>
+      <button v-else  class=" font-bold text-gray-400" disabled>Update</button>
+           
            </div>
          </div>
+          <span class="text-gray-500 mt-2">Place on {{date}},{{time}}</span>
        <div class="flex  items-start gap-x-8 my-3  flex-col
             2xl:items-center 2xl:flex-row
             xl:items-center  xl:flex-row
@@ -84,7 +93,7 @@ lg:p-0
               </span>
             </span>
             <!--chat button-->
-              <button class="  flex items-center gap-x-2  bg-green-150 rounded-2xl p-2">
+              <button class="  flex items-center gap-x-2 focus:outline-none  bg-green-150 rounded-2xl p-2">
                 <p class="material-icons text-white text-sm">chat</p>
                 <p class=" font-bold text-white text-sm "> Chat Shopper</p>
               </button>
@@ -150,8 +159,8 @@ lg:p-0
               </div>
             
           </div>
-           <div class="flex justify-between mt-4 px-5 text-2xlspace-x-4 items-center">
-             <button @click="toggle_status=false" class="px-4 bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Update</button>
+           <div class="flex justify-between mt-4  items-center">
+             <button @click="toggle_status=false,update_stat()" class="bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Update</button>
             </div>
           </div>
         </div>
@@ -159,7 +168,18 @@ lg:p-0
    
    
 </div>
- 
+<div class="text-left self-center
+  2xl:w-6/12 
+              lg:w-6/12
+              xl:w-6/12
+              md:w-10/12
+              sm:w-10/12
+ p-2 ">
+ <p class="text-gray-500 text-sm">
+        Privacy Policy-Cookies Policy-Terms and Conditions
+        Return and Refund Policy-PasaBuy   2021
+    </p>
+</div>
 </div>
 
 </template>
@@ -172,7 +192,7 @@ export default {
   },
   data(){
     return{
-      togglef:false,
+     
       toggle_status:false,
        activeBtn:0,
         name:'Yamete',
@@ -181,17 +201,31 @@ export default {
       { list: 'Pork' },
        { list: 'Pork' },
     ],
-    hide_selected:false,
+   
     order_number:'1234',
+    date:'February 23,2021',
+    time:'12:31 PM',
     selected: 'Confirmed',
-    options: [
-      { text: 'Completed', value: 'Completed' },
-      { text: 'Cancelled', value: 'Cancalled' },
-    ]
+    
     
 }
+},
+methods:{
+  update_stat(){
+    this.selected=document.querySelector('input[name="status"]:checked').value;
+   
+  },
+     isActive_function(el){
+     if(el=='btn1'){
+      this.  activeBtn= 0;
+    }
+    else {
+        this.  activeBtn= el;
+        }
+    },
 }
 }
+
 </script>
 <style scoped>
 .active{
