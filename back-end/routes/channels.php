@@ -19,6 +19,13 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     }
 });
 
+
+Broadcast::channel('pasaBUY_public_channel.{id}', function ($user, $id) {
+    if(Auth::check()){
+        return  ['id' => $user->indexUserAuthentication, 'email'=>$user->email];
+    }
+});
+
 Broadcast::channel('chat.{roomId}', function ($user, $roomId) {
     if(Auth::check()){
         return  ['id' => $user->indexUserAuthentication, 'email'=>$user->email];

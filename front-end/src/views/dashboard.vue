@@ -12,7 +12,11 @@
           class="w-full min-w-0 px-2 ssm:h-auto ssm:pb-6 vs:h-auto vs:pb-6 sm:pb-6 rounded-xl"
         >
           <!--Modal-->
-          <PostModal v-if="postModalVisible" @closeModal="listener"  @getSortPosts="sortPosts" />
+          <PostModal
+            v-if="postModalVisible"
+            @closeModal="listener"
+            @getSortPosts="sortPosts"
+          />
           <!--end-->
           <div class="flex items-center justify-center pt-16 dv:float-right">
             <div
@@ -197,926 +201,944 @@
           <!--user post-->
           <div v-for="(post_info, index) in sortedAllPosts" :key="index">
             <div v-if="post_info.indexShare == null">
-            <div
-              id="shopOffer-UserPost"
-              class="flex items-center justify-center pt-6 x-v:pt-2 dv:float-right"
-            >
               <div
-                id="changeBoxRadius"
-                class="h-auto p-6 space-x-4 bg-white shadow vs:p-4 mv:w-full ssm:p-2 ssm:w-full vs:w-full sm:w-full w-608 rounded-xl"
+                id="shopOffer-UserPost"
+                class="flex items-center justify-center pt-6 x-v:pt-2 dv:float-right"
               >
-                <div class="flex flex-col items-start justify-start">
-                  <!--section 1-->
-                  <div class="flex flex-row justify-between flex-grow w-full">
-                    <div class="inline-flex">
-                      <img
-                        class="rounded-full x-v:absolute w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10"
-                        :src="post_info.user.profilePicture"
-                      />
-                      <div
-                        class="flex flex-col items-start w-full px-4 vs:px-1 se:px-2 ssm:px-2"
-                      >
+                <div
+                  id="changeBoxRadius"
+                  class="h-auto p-6 space-x-4 bg-white shadow vs:p-4 mv:w-full ssm:p-2 ssm:w-full vs:w-full sm:w-full w-608 rounded-xl"
+                >
+                  <div class="flex flex-col items-start justify-start">
+                    <!--section 1-->
+                    <div class="flex flex-row justify-between flex-grow w-full">
+                      <div class="inline-flex">
+                        <img
+                          class="rounded-full x-v:absolute w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10"
+                          :src="post_info.user.profilePicture"
+                        />
                         <div
-                          class="flex mt-1 space-x-4 ssm:space-x-0 se:space-x-0 vs:space-x-1 sm:space-x-2"
+                          class="flex flex-col items-start w-full px-4 vs:px-1 se:px-2 ssm:px-2"
                         >
-                          <h5
-                            class="text-base font-bold leading-none text-gray-900 x-v:pl-10 vsv:text-xs ssm:text-sm vs:text-sm lvs:text-sm"
+                          <div
+                            class="flex mt-1 space-x-4 ssm:space-x-0 se:space-x-0 vs:space-x-1 sm:space-x-2"
                           >
-                            <button
-                              @click="setDispatches(post_info.user.email)"
+                            <h5
+                              class="text-base font-bold leading-none text-gray-900 x-v:pl-10 vsv:text-xs ssm:text-sm vs:text-sm lvs:text-sm"
                             >
-                              <router-link
-                                :to="
-                                  '/edit-profile/?ID=' +
-                                  toEncrypt(post_info.user.email)
-                                "
-                                >{{ post_info.user.firstName }}
-                                {{ post_info.user.lastName }}</router-link
+                              <button
+                                @click="setDispatches(post_info.user.email)"
                               >
+                                <router-link
+                                  :to="
+                                    '/edit-profile/?ID=' +
+                                    toEncrypt(post_info.user.email)
+                                  "
+                                  >{{ post_info.user.firstName }}
+                                  {{ post_info.user.lastName }}</router-link
+                                >
+                              </button>
+                              <span
+                                class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                              >
+                                verified
+                              </span>
+                              <label
+                                v-if="post_info.offer_post != null"
+                                class="pl-1 font-normal text-gray-500 align-top vs:font-light"
+                                >posted a shopping offer</label
+                              >
+                              <label
+                                v-if="post_info.request_post != null"
+                                class="pl-1 font-normal text-gray-500 align-top vs:font-light"
+                                >posted an order request</label
+                              >
+                            </h5>
+                          </div>
+                          <div
+                            class="vs:flex vs:w-full ssm:w-full ssm:flex vs:pb-2 x-v:ml-10"
+                          >
+                            <span
+                              class="text-sm leading-none text-gray-500 ssm:text-xs vs:text-xs lvs:text-sm"
+                              >{{ timestamp(post_info.dateCreated) }}</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        id="3dotmenu"
+                        class="vs:mt-1"
+                        v-if="
+                          post_info.email == user.email &&
+                          post_info.offer_post != null
+                        "
+                      >
+                        <button
+                          @click="
+                            edit1 = !edit1;
+                            edit2 = post_info.postNumber;
+                          "
+                          class="focus:outline-none"
+                        >
+                          <img
+                            class="w-6 h-auto vs:w-4 lvs:w-5 ssm:w-4"
+                            src="img/3dot.svg"
+                          />
+                        </button>
+                        <div class="flex w-full">
+                          <div
+                            v-if="edit1 && edit2 == post_info.postNumber"
+                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-95 md:right-5 xl:right-99.1 h-min w-30"
+                          >
+                            <EditShoppingOfferPostVue
+                              v-if="postModalVisible1"
+                              @closeModal1="listener1"
+                              :btnText="post_info"
+                              @getSortPosts="sortPosts"
+                            />
+                            <button
+                              @click="togglePostModal1"
+                              class="flex flex-row text-base vs:text-sm gap-x-2 focus:outline-none"
+                            >
+                              <span
+                                class="font-medium text-gray-500 material-icons vs:md-14"
+                              >
+                                mode
+                              </span>
+                              Edit post
                             </button>
-                            <span
-                              class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                            <UpdateOfferStatus
+                              v-if="postModalVisible2"
+                              @closeModal2="listener2"
+                              :post="post_info"
+                              @getSortPosts="sortPosts"
+                            />
+                            <button
+                              @click="togglePostModal2"
+                              class="flex flex-row text-base font-normal vs:text-sm focus:outline-none gap-x-2"
                             >
-                              verified
-                            </span>
-                            <label
-                              v-if="post_info.offer_post != null"
-                              class="pl-1 font-normal text-gray-500 align-top vs:font-light"
-                              >posted a shopping offer</label
+                              <span
+                                class="font-normal text-gray-500 material-icons vs:md-14"
+                              >
+                                autorenew
+                              </span>
+                              Update Status
+                            </button>
+                            <button
+                              class="flex flex-row text-base gap-x-2 vs:text-sm vs:md-14"
                             >
-                            <label
-                              v-if="post_info.request_post != null"
-                              class="pl-1 font-normal text-gray-500 align-top vs:font-light"
-                              >posted an order request</label
-                            >
-                          </h5>
+                              <span class="text-gray-500 material-icons"
+                                >delete</span
+                              >Delete
+                            </button>
+                          </div>
                         </div>
-                        <div
-                          class="vs:flex vs:w-full ssm:w-full ssm:flex vs:pb-2 x-v:ml-10"
+                      </div>
+                      <div
+                        id="3dotmenu"
+                        class="vs:mt-1"
+                        v-if="
+                          post_info.email == user.email &&
+                          post_info.request_post != null
+                        "
+                      >
+                        <button
+                          @click="
+                            edit1 = !edit1;
+                            edit2 = post_info.postNumber;
+                          "
+                          class="focus:outline-none"
                         >
+                          <img
+                            class="w-6 h-auto vs:w-4 lvs:w-5 ssm:w-4"
+                            src="img/3dot.svg"
+                          />
+                        </button>
+                        <div class="flex w-full">
+                          <div
+                            v-if="edit1 && edit2 == post_info.postNumber"
+                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-95 md:right-5 xl:right-99.1 h-min w-30"
+                          >
+                            <EditOrderRequest
+                              v-if="postModalVisible1"
+                              @closeModal1="listener1"
+                              :post="post_info"
+                              @getSortPosts="sortPosts"
+                            />
+                            <button
+                              @click="togglePostModal1"
+                              class="flex flex-row text-base vs:text-sm gap-x-2 focus:outline-none"
+                            >
+                              <span
+                                class="font-medium text-gray-500 material-icons vs:md-14"
+                              >
+                                mode
+                              </span>
+                              Edit post
+                            </button>
+                            <UpdateOrderStatus
+                              v-if="postModalVisible2"
+                              @closeModal3="listener2"
+                              :post="post_info"
+                              @getSortPosts="sortPosts"
+                            />
+                            <button
+                              @click="togglePostModal2"
+                              class="flex flex-row text-base font-normal vs:text-sm focus:outline-none gap-x-2"
+                            >
+                              <span
+                                class="font-normal text-gray-500 material-icons vs:md-14"
+                              >
+                                autorenew
+                              </span>
+                              Update Status
+                            </button>
+                            <button
+                              class="flex flex-row text-base gap-x-2 vs:text-sm vs:md-14"
+                            >
+                              <span class="text-gray-500 material-icons"
+                                >delete</span
+                              >Delete
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--end-->
+
+                    <!--section 2-->
+                    <div
+                      class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
+                      v-if="
+                        post_info.postStatus !== 'Accepting Requests' &&
+                        post_info.postStatus !== 'Accepting Offer'
+                      "
+                    >
+                      <span class="rounded-full material-icons text-red-600">
+                        remove_circle_outline
+                      </span>
+                      <p
+                        class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600"
+                      >
+                        {{ post_info.postStatus }}
+                      </p>
+                    </div>
+
+                    <div
+                      class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
+                      v-if="
+                        post_info.postStatus === 'Accepting Requests' ||
+                        post_info.postStatus === 'Accepting Offer'
+                      "
+                    >
+                      <span class="rounded-full material-icons">
+                        remove_circle_outline
+                      </span>
+                      <p
+                        class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center"
+                      >
+                        {{ post_info.postStatus }}
+                      </p>
+                    </div>
+                    <!--end-->
+
+                    <!--section 3-->
+                    <div
+                      class="flex items-center justify-start w-full mt-4 space-x-4 ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
+                      v-if="post_info.offer_post != null"
+                    >
+                      <div class="flex-col items-start w-full">
+                        <div class="flex space-x-2">
                           <span
-                            class="text-sm leading-none text-gray-500 ssm:text-xs vs:text-xs lvs:text-sm"
-                            >{{ timestamp(post_info.dateCreated) }}</span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
                           >
+                            delivery_dining
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            Delivering Anywhere in
+                            {{ post_info.offer_post.deliveryArea }}
+                          </p>
+                        </div>
+                        <div class="flex py-2 space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
+                          >
+                            alarm
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            {{
+                              timestampSched(
+                                post_info.offer_post.deliverySchedule
+                              )
+                            }}
+                          </p>
+                        </div>
+                        <div class="flex space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
+                          >
+                            shopping_bag
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            {{ post_info.offer_post.capacity }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="flex-col w-full ssm:py-2 vs:py-3">
+                        <div class="flex space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
+                          >
+                            shopping_cart
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            {{ post_info.offer_post.shoppingPlace }}
+                          </p>
+                        </div>
+                        <div class="flex py-2 space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
+                          >
+                            directions_car
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            {{ post_info.offer_post.transportMode }}
+                          </p>
+                        </div>
+                        <div class="flex space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
+                          >
+                            payments
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            {{ post_info.offer_post.paymentMethod }}
+                          </p>
                         </div>
                       </div>
                     </div>
+                    <!--end-->
+
+                    <!--section 3-->
                     <div
-                      id="3dotmenu"
-                      class="vs:mt-1"
-                      v-if="
-                        post_info.email == user.email &&
-                        post_info.offer_post != null
-                      "
+                      class="flex items-center justify-start w-full mt-4 space-x-4 ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
+                      v-if="post_info.request_post != null"
                     >
-                      <button
-                        @click="
-                          edit1 = !edit1;
-                          edit2 = post_info.postNumber;
-                        "
-                        class="focus:outline-none"
-                      >
-                        <img
-                          class="w-6 h-auto vs:w-4 lvs:w-5 ssm:w-4"
-                          src="img/3dot.svg"
-                        />
-                      </button>
-                      <div class="flex w-full">
-                        <div
-                          v-if="edit1 && edit2 == post_info.postNumber"
-                          class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-95 md:right-5 xl:right-99.1 h-min w-30"
-                        >
-                          <EditShoppingOfferPostVue
-                            v-if="postModalVisible1"
-                            @closeModal1="listener1"
-                            :btnText="post_info"
-                             @getSortPosts="sortPosts"
-                          />
-                          <button
-                            @click="togglePostModal1"
-                            class="flex flex-row text-base vs:text-sm gap-x-2 focus:outline-none"
+                      <div class="flex-col items-start w-full">
+                        <div class="flex space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
                           >
-                            <span
-                              class="font-medium text-gray-500 material-icons vs:md-14"
-                            >
-                              mode
-                            </span>
-                            Edit post
-                          </button>
-                          <UpdateOfferStatus
-                            v-if="postModalVisible2"
-                            @closeModal2="listener2"
-                            :post="post_info"
-                            @getSortPosts="sortPosts"
-                          />
-                          <button
-                            @click="togglePostModal2"
-                            class="flex flex-row text-base font-normal vs:text-sm focus:outline-none gap-x-2"
+                            delivery_dining
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
                           >
-                            <span
-                              class="font-normal text-gray-500 material-icons vs:md-14"
-                            >
-                              autorenew
-                            </span>
-                            Update Status
-                          </button>
-                          <button
-                            class="flex flex-row text-base gap-x-2 vs:text-sm vs:md-14"
+                            {{ post_info.request_post.deliveryAddress }}
+                          </p>
+                        </div>
+                        <div class="flex py-2 space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
                           >
-                            <span class="text-gray-500 material-icons"
-                              >delete</span
-                            >Delete
-                          </button>
+                            alarm
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            {{
+                              timestampSched(
+                                post_info.request_post.deliverySchedule
+                              )
+                            }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="flex-col w-full">
+                        <div class="flex space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
+                          >
+                            shopping_cart
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            {{ post_info.request_post.shoppingPlace }}
+                          </p>
+                        </div>
+                        <div class="flex py-2 space-x-2">
+                          <span
+                            class="w-6 h-6 text-red-600 rounded-full material-icons"
+                          >
+                            payments
+                          </span>
+                          <p
+                            class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            {{ post_info.request_post.paymentMethod }}
+                          </p>
                         </div>
                       </div>
                     </div>
+                    <!--end-->
+
+                    <!--section 4-->
                     <div
-                      id="3dotmenu"
-                      class="vs:mt-1"
-                      v-if="
-                        post_info.email == user.email &&
-                        post_info.request_post != null
-                      "
+                      class="flex items-center justify-start w-full p-2 mt-4 space-x-4 rounded-lg bg-gray-bgcolor ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
+                      v-if="post_info.request_post != null"
                     >
-                      <button
-                        @click="
-                          edit1 = !edit1;
-                          edit2 = post_info.postNumber;
-                        "
-                        class="focus:outline-none"
-                      >
-                        <img
-                          class="w-6 h-auto vs:w-4 lvs:w-5 ssm:w-4"
-                          src="img/3dot.svg"
-                        />
-                      </button>
-                      <div class="flex w-full">
-                        <div
-                          v-if="edit1 && edit2 == post_info.postNumber"
-                          class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-95 md:right-5 xl:right-99.1 h-min w-30"
-                        >
-                          <EditOrderRequest
-                            v-if="postModalVisible1"
-                            @closeModal1="listener1"
-                            :post="post_info"
-                            @getSortPosts="sortPosts"
-                          />
-                          <button
-                            @click="togglePostModal1"
-                            class="flex flex-row text-base vs:text-sm gap-x-2 focus:outline-none"
+                      <div class="flex-col items-start w-full">
+                        <span
+                          class="pb-2 text-base vs:text-sm vs:font-bold sm:text-sm sm:font-bold"
+                          >Shopping List
+                          <label class="pl-3 text-gray-500"
+                            >{{
+                              post_info.request_post.shopping_list.shoppingListContent.split(
+                                ","
+                              ).length
+                            }}
+                            items</label
                           >
-                            <span
-                              class="font-medium text-gray-500 material-icons vs:md-14"
+                        </span>
+                        <div class="flex-col">
+                          <ul
+                            id="shop-list"
+                            class="pl-3 text-sm leading-loose list-disc list-inside vs:text-xs vs:leading-relaxed vs:font-semibold sm:text-xs sm:leading-relaxed sm:font-semibold"
+                          >
+                            <li
+                              v-for="(
+                                shoppingList, index
+                              ) in post_info.request_post.shopping_list.shoppingListContent.split(
+                                ','
+                              )"
+                              :key="index"
                             >
-                              mode
-                            </span>
-                            Edit post
-                          </button>
-                          <UpdateOrderStatus
-                            v-if="postModalVisible2"
-                            @closeModal3="listener2"
-                            :post="post_info"
-                            @getSortPosts="sortPosts"
-                          />
-                          <button
-                            @click="togglePostModal2"
-                            class="flex flex-row text-base font-normal vs:text-sm focus:outline-none gap-x-2"
-                          >
-                            <span
-                              class="font-normal text-gray-500 material-icons vs:md-14"
-                            >
-                              autorenew
-                            </span>
-                            Update Status
-                          </button>
-                          <button
-                            class="flex flex-row text-base gap-x-2 vs:text-sm vs:md-14"
-                          >
-                            <span class="text-gray-500 material-icons"
-                              >delete</span
-                            >Delete
-                          </button>
+                              {{ shoppingList }}
+                            </li>
+                          </ul>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <!--end-->
-
-                  <!--section 2-->
-                  <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full text-green-600" v-if="post_info.postStatus !== 'Accepting Requests' && post_info.postStatus !== 'Accepting Offer'">
-                    <span class="rounded-full material-icons text-red-600">
-                        remove_circle_outline
-                        </span>
-                    <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600">
-                        {{post_info.postStatus}}</p>
-                  </div>
-          
-                  <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full text-green-600" v-if="post_info.postStatus === 'Accepting Requests' || post_info.postStatus === 'Accepting Offer'">
-                    <span class="rounded-full material-icons">
-                        remove_circle_outline
-                        </span>
-                    <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center">
-                        {{post_info.postStatus}}</p>
-                  </div>
-                  <!--end-->
-
-                  <!--section 3-->
-                  <div
-                    class="flex items-center justify-start w-full mt-4 space-x-4 ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
-                    v-if="post_info.offer_post != null"
-                  >
-                    <div class="flex-col items-start w-full">
-                      <div class="flex space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          delivery_dining
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          Delivering Anywhere in {{ post_info.offer_post.deliveryArea }}
-                        </p>
-                      </div>
-                      <div class="flex py-2 space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          alarm
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{
-                            timestampSched(
-                              post_info.offer_post.deliverySchedule
-                            )
-                          }}
-                        </p>
-                      </div>
-                      <div class="flex space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          shopping_bag
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{ post_info.offer_post.capacity }}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="flex-col w-full ssm:py-2 vs:py-3">
-                      <div class="flex space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          shopping_cart
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{ post_info.offer_post.shoppingPlace }}
-                        </p>
-                      </div>
-                      <div class="flex py-2 space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          directions_car
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{ post_info.offer_post.transportMode }}
-                        </p>
-                      </div>
-                      <div class="flex space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          payments
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{ post_info.offer_post.paymentMethod }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <!--end-->
-
-                  <!--section 3-->
-                  <div
-                    class="flex items-center justify-start w-full mt-4 space-x-4 ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
-                    v-if="post_info.request_post != null"
-                  >
-                    <div class="flex-col items-start w-full">
-                      <div class="flex space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          delivery_dining
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{ post_info.request_post.deliveryAddress }}
-                        </p>
-                      </div>
-                      <div class="flex py-2 space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          alarm
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{
-                            timestampSched(
-                              post_info.request_post.deliverySchedule
-                            )
-                          }}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="flex-col w-full">
-                      <div class="flex space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          shopping_cart
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{ post_info.request_post.shoppingPlace }}
-                        </p>
-                      </div>
-                      <div class="flex py-2 space-x-2">
-                        <span
-                          class="w-6 h-6 text-red-600 rounded-full material-icons"
-                        >
-                          payments
-                        </span>
-                        <p
-                          class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                        >
-                          {{ post_info.request_post.paymentMethod }}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <!--end-->
-
-                  <!--section 4-->
-                  <div
-                    class="flex items-center justify-start w-full p-2 mt-4 space-x-4 rounded-lg bg-gray-bgcolor ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
-                    v-if="post_info.request_post != null"
-                  >
-                    <div class="flex-col items-start w-full">
-                      <span
-                        class="pb-2 text-base vs:text-sm vs:font-bold sm:text-sm sm:font-bold"
-                        >Shopping List
-                        <label class="pl-3 text-gray-500"
-                          >{{
-                            post_info.request_post.shopping_list.shoppingListContent.split(",")
-                              .length
-                          }}
-                          items</label
-                        >
-                      </span>
-                      <div class="flex-col">
-                        <ul
-                          id="shop-list"
-                          class="pl-3 text-sm leading-loose list-disc list-inside vs:text-xs vs:leading-relaxed vs:font-semibold sm:text-xs sm:leading-relaxed sm:font-semibold"
-                        >
-                          <li
-                            v-for="(
-                              shoppingList, index
-                            ) in post_info.request_post.shopping_list.shoppingListContent.split(
-                              ','
-                            )"
-                            :key="index"
-                          >
-                            {{ shoppingList }}
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <!--section 4-->
-                  <!--section 4-->
-                  <div
-                    class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
-                    v-if="post_info.offer_post != null"
-                  >
-                    <p
-                      class="w-full h-auto text-sm leading-loose text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm vs:min-w-0 vs:px-2"
-                    >
-                      {{ post_info.offer_post.caption }}
-                    </p>
-                  </div>
-                  <div
-                    class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
-                    v-if="post_info.request_post != null"
-                  >
-                    <p
-                      class="w-full h-auto text-sm leading-loose text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm vs:min-w-0 vs:px-2"
-                    >
-                      {{ post_info.request_post.caption }}
-                    </p>
-                  </div>
-
-                  <!--section 4-->
-
-                  <!--section 5-->
-                  <div
-                    class="relative flex w-full pr-8 mt-4 space-x-6 justify-evenly vs:space-x-3 vs:min-w-0 vs:px-2 ssm:space-x-1 ssm:px-0 ssm:pr-0 vs:pr-0"
-                  >
-                
+                    <!--section 4-->
+                    <!--section 4-->
                     <div
-                      v-if="
-                        post_info.email != user.email &&
-                        post_info.offer_post != null
-                      "
+                      class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
+                      v-if="post_info.offer_post != null"
                     >
-                      <SendRequest
-                        v-if="
-                          postSendModal &&
-                          sendOfferOrRequestpostNum ==
-                            post_info.offer_post.postNumber
-                        "
-                        @closeSendRequest="listener3"
-                        :post="post_info"
-                      />
-                         
-                    </div>
-                   
-                    <div
-                      v-if="
-                        post_info.email != user.email &&
-                        post_info.request_post != null
-                      "
-                    >
-                      <SendOffer
-                        v-if="
-                          postSendModal &&
-                          sendOfferOrRequestpostNum ==
-                            post_info.request_post.postNumber
-                        "
-                        @closeSendOffer="listener3"
-                        :post="post_info"
-                      />
-                     
-                    </div>
-                    <button
-                      v-if="
-                        post_info.email != user.email &&
-                        post_info.offer_post != null
-                      "
-                      @click="
-                        toggleSendModal();
-                        sendOfferOrRequestpost = post_info.postIdentity;
-                        sendOfferOrRequestpostNum =
-                          post_info.offer_post.postNumber;
-                      "
-                      class="flex items-center space-x-2 focus:outline-none ssm:space-x-1"
-                    >
-                      <span
-                        class="pr-2 ssm:pr-0 material-icons md-24 ssm:md-18 xsm:md-18 vs:md-18"
-                      >
-                        send
-                      </span>
                       <p
-                        class="text-base font-bold leading-none text-gray-600 ssm:text-xs vs:text-xs lvs:text-sm"
+                        class="w-full h-auto text-sm leading-loose text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm vs:min-w-0 vs:px-2"
                       >
-                        Send Request
+                        {{ post_info.offer_post.caption }}
                       </p>
-                    </button>
-                    <button
-                      v-if="
-                        post_info.email != user.email &&
-                        post_info.request_post != null
-                      "
-                      @click="
-                        toggleSendModal();
-                        sendOfferOrRequestpost = post_info.postIdentity;
-                        sendOfferOrRequestpostNum =
-                          post_info.request_post.postNumber;
-                      "
-                      class="flex items-center space-x-2 focus:outline-none ssm:space-x-1"
+                    </div>
+                    <div
+                      class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
+                      v-if="post_info.request_post != null"
                     >
-                      <span
-                        class="pr-2 ssm:pr-0 material-icons md-24 ssm:md-18 xsm:md-18 vs:md-18"
-                      >
-                        send
-                      </span>
                       <p
-                        class="text-base font-bold leading-none text-gray-600 ssm:text-xs vs:text-xs lvs:text-sm"
+                        class="w-full h-auto text-sm leading-loose text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm vs:min-w-0 vs:px-2"
                       >
-                        Send Offer
+                        {{ post_info.request_post.caption }}
                       </p>
-                    </button>
-                    <router-link
-                      v-if="post_info.email != user.email"
-                      :to="'/messages/?ID=' + toEncrypt(post_info.user.email)"
+                    </div>
+
+                    <!--section 4-->
+
+                    <!--section 5-->
+                    <div
+                      class="relative flex w-full pr-8 mt-4 space-x-6 justify-evenly vs:space-x-3 vs:min-w-0 vs:px-2 ssm:space-x-1 ssm:px-0 ssm:pr-0 vs:pr-0"
                     >
+                      <div
+                        v-if="
+                          post_info.email != user.email &&
+                          post_info.offer_post != null
+                        "
+                      >
+                        <SendRequest
+                          v-if="
+                            postSendModal &&
+                            sendOfferOrRequestpostNum ==
+                              post_info.offer_post.postNumber
+                          "
+                          @closeSendRequest="listener3"
+                          :post="post_info"
+                        />
+                      </div>
+
+                      <div
+                        v-if="
+                          post_info.email != user.email &&
+                          post_info.request_post != null
+                        "
+                      >
+                        <SendOffer
+                          v-if="
+                            postSendModal &&
+                            sendOfferOrRequestpostNum ==
+                              post_info.request_post.postNumber
+                          "
+                          @closeSendOffer="listener3"
+                          :post="post_info"
+                        />
+                      </div>
                       <button
+                        v-if="
+                          post_info.email != user.email &&
+                          post_info.offer_post != null
+                        "
+                        @click="
+                          toggleSendModal();
+                          sendOfferOrRequestpost = post_info.postIdentity;
+                          sendOfferOrRequestpostNum =
+                            post_info.offer_post.postNumber;
+                        "
                         class="flex items-center space-x-2 focus:outline-none ssm:space-x-1"
                       >
-                        <span class="pr-2 ssm:pr-0 material-icons md-24">
-                          forum
+                        <span
+                          class="pr-2 ssm:pr-0 material-icons md-24 ssm:md-18 xsm:md-18 vs:md-18"
+                        >
+                          send
                         </span>
                         <p
                           class="text-base font-bold leading-none text-gray-600 ssm:text-xs vs:text-xs lvs:text-sm"
                         >
-                          Chat
+                          Send Request
                         </p>
                       </button>
-                    </router-link>
-                    <div>
                       <button
+                        v-if="
+                          post_info.email != user.email &&
+                          post_info.request_post != null
+                        "
                         @click="
-                          share1 = !share1;
-                          share2 = post_info.postNumber;
+                          toggleSendModal();
+                          sendOfferOrRequestpost = post_info.postIdentity;
+                          sendOfferOrRequestpostNum =
+                            post_info.request_post.postNumber;
                         "
                         class="flex items-center space-x-2 focus:outline-none ssm:space-x-1"
                       >
                         <span
-                          class="pr-2 x-v:pr-1 ssm:pr-0 material-icons md-24 x-v:md-16"
+                          class="pr-2 ssm:pr-0 material-icons md-24 ssm:md-18 xsm:md-18 vs:md-18"
                         >
-                          share
+                          send
                         </span>
                         <p
-                          class="text-base font-bold leading-none text-gray-500 ssm:text-xs vs:text-xs lvs:text-sm"
+                          class="text-base font-bold leading-none text-gray-600 ssm:text-xs vs:text-xs lvs:text-sm"
                         >
-                          Share
+                          Send Offer
                         </p>
                       </button>
-                      <div class="flex w-full">
-                        <div
-                          v-show="share2 == post_info.postNumber && share1"
-                          class="absolute z-30 py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-2 md:right-24 xl:right-91 h-min w-30"
+                      <router-link
+                        v-if="post_info.email != user.email"
+                        :to="'/messages/?ID=' + toEncrypt(post_info.user.email)"
+                      >
+                        <button
+                          class="flex items-center space-x-2 focus:outline-none ssm:space-x-1"
                         >
-                          <button
-                            @click="share(post_info.postNumber)"
-                            class="flex flex-row text-base gap-x-2 vs:text-sm ssm:text-sm xsm:text-sm focus:outline-none"
+                          <span class="pr-2 ssm:pr-0 material-icons md-24">
+                            forum
+                          </span>
+                          <p
+                            class="text-base font-bold leading-none text-gray-600 ssm:text-xs vs:text-xs lvs:text-sm"
                           >
-                            <span
-                              class="font-medium text-gray-500 material-icons x-v:md-16"
-                            >
-                              share
-                            </span>
-                            Share on Feed
-                          </button>
-                          <button
-                            class="flex flex-row py-2 text-base font-normal x-v:text-sm focus:outline-none gap-x-2"
+                            Chat
+                          </p>
+                        </button>
+                      </router-link>
+                      <div>
+                        <button
+                          @click="
+                            share1 = !share1;
+                            share2 = post_info.postNumber;
+                          "
+                          class="flex items-center space-x-2 focus:outline-none ssm:space-x-1"
+                        >
+                          <span
+                            class="pr-2 x-v:pr-1 ssm:pr-0 material-icons md-24 x-v:md-16"
                           >
-                            <span
-                              class="font-normal text-gray-500 material-icons x-v:md-16 x-v:inline-block x-v:align-top"
+                            share
+                          </span>
+                          <p
+                            class="text-base font-bold leading-none text-gray-500 ssm:text-xs vs:text-xs lvs:text-sm"
+                          >
+                            Share
+                          </p>
+                        </button>
+                        <div class="flex w-full">
+                          <div
+                            v-show="share2 == post_info.postNumber && share1"
+                            class="absolute z-30 py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-2 md:right-24 xl:right-91 h-min w-30"
+                          >
+                            <button
+                              @click="share(post_info.postNumber)"
+                              class="flex flex-row text-base gap-x-2 vs:text-sm ssm:text-sm xsm:text-sm focus:outline-none"
                             >
-                              link
-                            </span>
-                            Copy link to this post
-                          </button>
+                              <span
+                                class="font-medium text-gray-500 material-icons x-v:md-16"
+                              >
+                                share
+                              </span>
+                              Share on Feed
+                            </button>
+                            <button
+                              class="flex flex-row py-2 text-base font-normal x-v:text-sm focus:outline-none gap-x-2"
+                            >
+                              <span
+                                class="font-normal text-gray-500 material-icons x-v:md-16 x-v:inline-block x-v:align-top"
+                              >
+                                link
+                              </span>
+                              Copy link to this post
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <!--end-->
                   </div>
-                  <!--end-->
                 </div>
               </div>
             </div>
-            </div>
-              <!--Display Shared Post-->
+            <!--Display Shared Post-->
             <div v-else>
+              <div
+                class="pt-6 flex-col dv:float-right justify-center items-center"
+              >
                 <div
-                  class="pt-6 flex-col dv:float-right justify-center items-center"
+                  class="flex-col w-608 space-y-4 bg-white h-auto rounded-lg"
                 >
-                  <div
-                    class="flex-col w-608 space-y-4 bg-white h-auto rounded-lg"
-                  >
-                    <div class="flex pt-4 px-2 justify-between items-center">
-                      <div
-                        class="focus:outline-none flex items-center space-x-4"
+                  <div class="flex pt-4 px-2 justify-between items-center">
+                    <div class="focus:outline-none flex items-center space-x-4">
+                      <router-link
+                        :to="
+                          'profile-edit/?ID=' + toEncrypt(post_info.sharerEmail)
+                        "
+                        ><p class="text-base italic leading-none text-gray-900">
+                          <span class="font-bold"
+                            >{{ post_info.user.firstName }}
+                            {{ post_info.user.lastName }}</span
+                          >
+                          shared this post
+                        </p></router-link
                       >
-                        <router-link
-                          :to="
-                            'profile-edit/?ID=' + toEncrypt(post_info.sharerEmail)
-                          "
-                          ><p
-                            class="text-base italic leading-none text-gray-900"
-                          >
-                            <span class="font-bold"
-                              >{{ post_info.user.firstName }}
-                              {{ post_info.user.lastName }}</span
-                            >
-                            shared this post
-                          </p></router-link
-                        >
-                      </div>
                     </div>
-                    <div
-                      id="changeBoxRadius"
-                      class="h-auto p-6 space-x-4 bg-white shadow vs:p-4 mv:w-full ssm:p-2 ssm:w-full vs:w-full sm:w-full w-608 rounded-xl"
-                    >
-                      <div class="flex flex-col items-start justify-start">
-                        <!--section 1-->
-                        <div
-                          class="flex flex-row justify-between flex-grow w-full"
-                        >
-                          <div class="inline-flex">
-                            <img
-                              class="rounded-full x-v:absolute w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10"
-                              :src="post_info.post.user.profilePicture"
-                            />
+                  </div>
+                  <div
+                    id="changeBoxRadius"
+                    class="h-auto p-6 space-x-4 bg-white shadow vs:p-4 mv:w-full ssm:p-2 ssm:w-full vs:w-full sm:w-full w-608 rounded-xl"
+                  >
+                    <div class="flex flex-col items-start justify-start">
+                      <!--section 1-->
+                      <div
+                        class="flex flex-row justify-between flex-grow w-full"
+                      >
+                        <div class="inline-flex">
+                          <img
+                            class="rounded-full x-v:absolute w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10"
+                            :src="post_info.post.user.profilePicture"
+                          />
+                          <div
+                            class="flex flex-col items-start w-full px-4 vs:px-1 se:px-2 ssm:px-2"
+                          >
                             <div
-                              class="flex flex-col items-start w-full px-4 vs:px-1 se:px-2 ssm:px-2"
+                              class="flex mt-1 space-x-4 ssm:space-x-0 se:space-x-0 vs:space-x-1 sm:space-x-2"
                             >
-                              <div
-                                class="flex mt-1 space-x-4 ssm:space-x-0 se:space-x-0 vs:space-x-1 sm:space-x-2"
+                              <h5
+                                class="text-base font-bold leading-none text-gray-900 x-v:pl-10 vsv:text-xs ssm:text-sm vs:text-sm lvs:text-sm"
                               >
-                                <h5
-                                  class="text-base font-bold leading-none text-gray-900 x-v:pl-10 vsv:text-xs ssm:text-sm vs:text-sm lvs:text-sm"
+                                <button
+                                  @click="
+                                    setDispatches(post_info.post.user.email)
+                                  "
                                 >
-                                  <button
-                                    @click="setDispatches(post_info.post.user.email)"
+                                  <router-link
+                                    :to="
+                                      '/edit-profile/?ID=' +
+                                      toEncrypt(post_info.post.user.email)
+                                    "
+                                    >{{ post_info.post.user.firstName }}
+                                    {{
+                                      post_info.post.user.lastName
+                                    }}</router-link
                                   >
-                                    <router-link
-                                      :to="
-                                        '/edit-profile/?ID=' +
-                                        toEncrypt(post_info.post.user.email)
-                                      "
-                                      >{{ post_info.post.user.firstName }}
-                                      {{ post_info.post.user.lastName }}</router-link
-                                    >
-                                  </button>
-                                  <span
-                                    class="inline-block text-blue-900 align-middle material-icons-round md-18"
-                                  >
-                                    verified
-                                  </span>
-                                  <label
-                                    v-if="post_info.post.offer_post != null"
-                                    class="pl-1 font-normal text-gray-500 align-top vs:font-light"
-                                    >posted a shopping offer</label
-                                  >
-                                  <label
-                                    v-if="post_info.post.request_post != null"
-                                    class="pl-1 font-normal text-gray-500 align-top vs:font-light"
-                                    >posted an order request</label
-                                  >
-                                </h5>
-                              </div>
-                              <div
-                                class="vs:flex vs:w-full ssm:w-full ssm:flex vs:pb-2 x-v:ml-10"
-                              >
+                                </button>
                                 <span
-                                  class="text-sm leading-none text-gray-500 ssm:text-xs vs:text-xs lvs:text-sm"
-                                  >{{ timestamp(post_info.post.dateCreated) }}</span
+                                  class="inline-block text-blue-900 align-middle material-icons-round md-18"
                                 >
-                              </div>
+                                  verified
+                                </span>
+                                <label
+                                  v-if="post_info.post.offer_post != null"
+                                  class="pl-1 font-normal text-gray-500 align-top vs:font-light"
+                                  >posted a shopping offer</label
+                                >
+                                <label
+                                  v-if="post_info.post.request_post != null"
+                                  class="pl-1 font-normal text-gray-500 align-top vs:font-light"
+                                  >posted an order request</label
+                                >
+                              </h5>
                             </div>
-                          </div>
-                        </div>
-                        <!--end-->
-
-                        <!--section 2-->
-                        <div
-                          class="inline-flex items-center justify-start px-2 py-1 mt-4 space-x-2 bg-gray-100 rounded-full"
-                        >
-                          <span
-                            class="text-red-600 rounded-full material-icons"
-                          >
-                            remove_circle_outline
-                          </span>
-                          <p
-                            class="items-center text-sm font-bold leading-none text-red-600 vs:text-xs ssm:text-xs lvs:text-sm"
-                          >
-                            {{ post_info.post.postStatus }}
-                          </p>
-                        </div>
-                        <!--end-->
-
-                        <!--section 3-->
-                        <div
-                          class="flex items-center justify-start w-full mt-4 space-x-4 ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
-                          v-if="post_info.post.offer_post != null"
-                        >
-                          <div class="flex-col items-start w-full">
-                            <div class="flex space-x-2">
+                            <div
+                              class="vs:flex vs:w-full ssm:w-full ssm:flex vs:pb-2 x-v:ml-10"
+                            >
                               <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                delivery_dining
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                               Delivering Anywhere in {{ post_info.post.offer_post.deliveryArea }}
-                              </p>
-                            </div>
-                            <div class="flex py-2 space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                alarm
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{
-                                  timestampSched(
-                                    post_info.post.offer_post.deliverySchedule
-                                  )
-                                }}
-                              </p>
-                            </div>
-                            <div class="flex space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                shopping_bag
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{ post_info.post.offer_post.capacity }}
-                              </p>
-                            </div>
-                          </div>
-                          <div class="flex-col w-full ssm:py-2 vs:py-3">
-                            <div class="flex space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                shopping_cart
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{ post_info.post.offer_post.shoppingPlace }}
-                              </p>
-                            </div>
-                            <div class="flex py-2 space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                directions_car
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{ post_info.post.offer_post.transportMode }}
-                              </p>
-                            </div>
-                            <div class="flex space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                payments
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{ post_info.post.offer_post.paymentMethod }}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <!--end-->
-
-                        <!--section 3-->
-                        <div
-                          class="flex items-center justify-start w-full mt-4 space-x-4 ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
-                          v-if="post_info.post.request_post != null"
-                        >
-                          <div class="flex-col items-start w-full">
-                            <div class="flex space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                delivery_dining
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{ post_info.post.request_post.deliveryAddress }}
-                              </p>
-                            </div>
-                            <div class="flex py-2 space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                alarm
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{
-                                  timestampSched(
-                                    post_info.post.request_post.deliverySchedule
-                                  )
-                                }}
-                              </p>
-                            </div>
-                          </div>
-                          <div class="flex-col w-full">
-                            <div class="flex space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                shopping_cart
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{ post_info.post.request_post.shoppingPlace }}
-                              </p>
-                            </div>
-                            <div class="flex py-2 space-x-2">
-                              <span
-                                class="w-6 h-6 text-red-600 rounded-full material-icons"
-                              >
-                                payments
-                              </span>
-                              <p
-                                class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
-                              >
-                                {{ post_info.post.request_post.paymentMethod }}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <!--end-->
-
-                        <!--section 4-->
-                        <div
-                          class="flex items-center justify-start w-full p-2 mt-4 space-x-4 rounded-lg bg-gray-bgcolor ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
-                          v-if="post_info.post.request_post != null"
-                        >
-                          <div class="flex-col items-start w-full">
-                            <span
-                              class="pb-2 text-base vs:text-sm vs:font-bold sm:text-sm sm:font-bold"
-                              >Shopping List
-                              <label class="pl-3 text-gray-500"
+                                class="text-sm leading-none text-gray-500 ssm:text-xs vs:text-xs lvs:text-sm"
                                 >{{
-                                  post_info.post.request_post.shopping_list.shoppingListContent.split(
-                                    ","
-                                  ).length
-                                }}
-                                items</label
+                                  timestamp(post_info.post.dateCreated)
+                                }}</span
                               >
-                            </span>
-                            <div class="flex-col">
-                              <ul
-                                id="shop-list"
-                                class="pl-3 text-sm leading-loose list-disc list-inside vs:text-xs vs:leading-relaxed vs:font-semibold sm:text-xs sm:leading-relaxed sm:font-semibold"
-                              >
-                                <li
-                                  v-for="(
-                                    shoppingList, index
-                                  ) in post_info.post.request_post.shopping_list.shoppingListContent.split(
-                                    ','
-                                  )"
-                                  :key="index"
-                                >
-                                  {{ shoppingList }}
-                                </li>
-                              </ul>
                             </div>
                           </div>
                         </div>
-                        <!--section 4-->
-                        <!--section 4-->
-                        <div
-                          class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
-                          v-if="post_info.post.offer_post != null"
+                      </div>
+                      <!--end-->
+
+                      <!--section 2-->
+                      <div
+                        class="inline-flex items-center justify-start px-2 py-1 mt-4 space-x-2 bg-gray-100 rounded-full"
+                      >
+                        <span class="text-red-600 rounded-full material-icons">
+                          remove_circle_outline
+                        </span>
+                        <p
+                          class="items-center text-sm font-bold leading-none text-red-600 vs:text-xs ssm:text-xs lvs:text-sm"
                         >
-                          <p
-                            class="w-full h-auto text-sm leading-loose text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm vs:min-w-0 vs:px-2"
-                          >
-                            {{ post_info.post.offer_post.caption }}
-                          </p>
+                          {{ post_info.post.postStatus }}
+                        </p>
+                      </div>
+                      <!--end-->
+
+                      <!--section 3-->
+                      <div
+                        class="flex items-center justify-start w-full mt-4 space-x-4 ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
+                        v-if="post_info.post.offer_post != null"
+                      >
+                        <div class="flex-col items-start w-full">
+                          <div class="flex space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              delivery_dining
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              Delivering Anywhere in
+                              {{ post_info.post.offer_post.deliveryArea }}
+                            </p>
+                          </div>
+                          <div class="flex py-2 space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              alarm
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{
+                                timestampSched(
+                                  post_info.post.offer_post.deliverySchedule
+                                )
+                              }}
+                            </p>
+                          </div>
+                          <div class="flex space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              shopping_bag
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{ post_info.post.offer_post.capacity }}
+                            </p>
+                          </div>
                         </div>
-                        <div
-                          class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
-                          v-if="post_info.post.request_post != null"
+                        <div class="flex-col w-full ssm:py-2 vs:py-3">
+                          <div class="flex space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              shopping_cart
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{ post_info.post.offer_post.shoppingPlace }}
+                            </p>
+                          </div>
+                          <div class="flex py-2 space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              directions_car
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{ post_info.post.offer_post.transportMode }}
+                            </p>
+                          </div>
+                          <div class="flex space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              payments
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{ post_info.post.offer_post.paymentMethod }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <!--end-->
+
+                      <!--section 3-->
+                      <div
+                        class="flex items-center justify-start w-full mt-4 space-x-4 ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
+                        v-if="post_info.post.request_post != null"
+                      >
+                        <div class="flex-col items-start w-full">
+                          <div class="flex space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              delivery_dining
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{ post_info.post.request_post.deliveryAddress }}
+                            </p>
+                          </div>
+                          <div class="flex py-2 space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              alarm
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{
+                                timestampSched(
+                                  post_info.post.request_post.deliverySchedule
+                                )
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="flex-col w-full">
+                          <div class="flex space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              shopping_cart
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{ post_info.post.request_post.shoppingPlace }}
+                            </p>
+                          </div>
+                          <div class="flex py-2 space-x-2">
+                            <span
+                              class="w-6 h-6 text-red-600 rounded-full material-icons"
+                            >
+                              payments
+                            </span>
+                            <p
+                              class="py-1 text-sm leading-none text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm"
+                            >
+                              {{ post_info.post.request_post.paymentMethod }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <!--end-->
+
+                      <!--section 4-->
+                      <div
+                        class="flex items-center justify-start w-full p-2 mt-4 space-x-4 rounded-lg bg-gray-bgcolor ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
+                        v-if="post_info.post.request_post != null"
+                      >
+                        <div class="flex-col items-start w-full">
+                          <span
+                            class="pb-2 text-base vs:text-sm vs:font-bold sm:text-sm sm:font-bold"
+                            >Shopping List
+                            <label class="pl-3 text-gray-500"
+                              >{{
+                                post_info.post.request_post.shopping_list.shoppingListContent.split(
+                                  ","
+                                ).length
+                              }}
+                              items</label
+                            >
+                          </span>
+                          <div class="flex-col">
+                            <ul
+                              id="shop-list"
+                              class="pl-3 text-sm leading-loose list-disc list-inside vs:text-xs vs:leading-relaxed vs:font-semibold sm:text-xs sm:leading-relaxed sm:font-semibold"
+                            >
+                              <li
+                                v-for="(
+                                  shoppingList, index
+                                ) in post_info.post.request_post.shopping_list.shoppingListContent.split(
+                                  ','
+                                )"
+                                :key="index"
+                              >
+                                {{ shoppingList }}
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <!--section 4-->
+                      <!--section 4-->
+                      <div
+                        class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
+                        v-if="post_info.post.offer_post != null"
+                      >
+                        <p
+                          class="w-full h-auto text-sm leading-loose text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm vs:min-w-0 vs:px-2"
                         >
-                          <p
-                            class="w-full h-auto text-sm leading-loose text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm vs:min-w-0 vs:px-2"
-                          >
-                            {{ post_info.post.request_post.caption }}
-                          </p>
-                        </div>
+                          {{ post_info.post.offer_post.caption }}
+                        </p>
+                      </div>
+                      <div
+                        class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
+                        v-if="post_info.post.request_post != null"
+                      >
+                        <p
+                          class="w-full h-auto text-sm leading-loose text-gray-900 ssm:text-xs vs:text-xs lvs:text-sm vs:min-w-0 vs:px-2"
+                        >
+                          {{ post_info.post.request_post.caption }}
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
             <!--end-->
           </div>
@@ -1229,114 +1251,124 @@
           </span>
         </header>
         <hr />
-        <div v-for="orders in confirmedOrders" :key="orders.indexTransactionPost">
-        <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
-          <label for="" class="pt-2 pl-3 font-bold">
-            Transaction #{{ orders.transactionNumber }}
-          </label>
-        </div>
-
-        <div class="text-base bg-white rounded-b-xl">
-          <label for="" class="pl-6 font-normal text-gray-500"> 8  items  </label>
-
-          <label
-            for=""
-            class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo"
-          >
-            {{ orders.transactionStatus }}
-          </label>
-        </div>
-
-        <div 
-          v-if="orders.post.email != user.email"
-          class="relative z-0 flex items-center w-220 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
-        >
-          <button class="top-0 left-0 pl-2 rounded-full border-1">
-            <img
-              class="w-10 h-10 rounded-full"
-              :src="orders.post.user.profilePicture"
-              alt=""
-            />
-          </button>
-          <div class="ml-2">
-            <h5 class="text-sm font-bold">
-              {{ orders.post.user.firstName }} {{ orders.post.user.lastName }}
-              <span
-                class="inline-block text-blue-900 align-middle material-icons-round md-18"
-              >
-                verified
-              </span>
-            </h5>
-
-            <p class="text-sm font-normal font-nunito">
-              <span class="inline-block align-middle"
-                >{{ activeOrders.rating }}
-              </span>
-              <span
-                class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
-              >
-                star_rate
-              </span>
-            </p>
-          </div>
-
-          <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
-            <span class="inline-flex text-white align-middle material-icons">
-              chat
-            </span>
-            <router-link
-              :to="'/messages/?ID=' + toEncrypt(orders.post.email)"
-              class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
-            ></router-link>
-          </div>
-        </div>
         <div
-          v-else
-          class="relative z-0 flex items-center w-220 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+          v-for="orders in confirmedOrders"
+          :key="orders.indexTransactionPost"
         >
-          <button class="top-0 left-0 pl-2 rounded-full border-1">
-            <img
-              class="w-10 h-10 rounded-full"
-              :src="orders.transaction_sender.profilePicture"
-              alt=""
-            />
-          </button>
-          <div class="ml-2">
-            <h5 class="text-sm font-bold">
-              {{ orders.transaction_sender.firstName }} {{ orders.transaction_sender.lastName }}
-              <span
-                class="inline-block text-blue-900 align-middle material-icons-round md-18"
-              >
-                verified
-              </span>
-            </h5>
-
-            <p class="text-sm font-normal font-nunito">
-              <span class="inline-block align-middle"
-                >{{ activeOrders.rating }}
-              </span>
-              <span
-                class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
-              >
-                star_rate
-              </span>
-            </p>
+          <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
+            <label for="" class="pt-2 pl-3 font-bold">
+              Transaction #{{ orders.transactionNumber }}
+            </label>
           </div>
 
-          <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
-            <span class="inline-flex text-white align-middle material-icons">
-              chat
-            </span>
-            <router-link
-              :to="'/messages/?ID=' + toEncrypt(orders.transaction_sender.email)"
-              class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
-            ></router-link>
+          <div class="text-base bg-white rounded-b-xl">
+            <label for="" class="pl-6 font-normal text-gray-500">
+              8 items
+            </label>
+
+            <label
+              for=""
+              class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo"
+            >
+              {{ orders.transactionStatus }}
+            </label>
+          </div>
+
+          <div
+            v-if="orders.post.email != user.email"
+            class="relative z-0 flex items-center w-220 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+          >
+            <button class="top-0 left-0 pl-2 rounded-full border-1">
+              <img
+                class="w-10 h-10 rounded-full"
+                :src="orders.post.user.profilePicture"
+                alt=""
+              />
+            </button>
+            <div class="ml-2">
+              <h5 class="text-sm font-bold">
+                {{ orders.post.user.firstName }} {{ orders.post.user.lastName }}
+                <span
+                  class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                >
+                  verified
+                </span>
+              </h5>
+
+              <p class="text-sm font-normal font-nunito">
+                <span class="inline-block align-middle"
+                  >{{ activeOrders.rating }}
+                </span>
+                <span
+                  class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+                >
+                  star_rate
+                </span>
+              </p>
+            </div>
+
+            <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
+              <span class="inline-flex text-white align-middle material-icons">
+                chat
+              </span>
+              <router-link
+                :to="'/messages/?ID=' + toEncrypt(orders.post.email)"
+                class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+              ></router-link>
+            </div>
+          </div>
+          <div
+            v-else
+            class="relative z-0 flex items-center w-220 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+          >
+            <button class="top-0 left-0 pl-2 rounded-full border-1">
+              <img
+                class="w-10 h-10 rounded-full"
+                :src="orders.transaction_sender.profilePicture"
+                alt=""
+              />
+            </button>
+            <div class="ml-2">
+              <h5 class="text-sm font-bold">
+                {{ orders.transaction_sender.firstName }}
+                {{ orders.transaction_sender.lastName }}
+                <span
+                  class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                >
+                  verified
+                </span>
+              </h5>
+
+              <p class="text-sm font-normal font-nunito">
+                <span class="inline-block align-middle"
+                  >{{ activeOrders.rating }}
+                </span>
+                <span
+                  class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+                >
+                  star_rate
+                </span>
+              </p>
+            </div>
+
+            <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
+              <span class="inline-flex text-white align-middle material-icons">
+                chat
+              </span>
+              <router-link
+                :to="
+                  '/messages/?ID=' + toEncrypt(orders.transaction_sender.email)
+                "
+                class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+              ></router-link>
+            </div>
+          </div>
+          <div
+            class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl"
+          >
+            <a href="" class="float-right font-bold">View Full Details</a>
           </div>
         </div>
-        <div class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl">
-          <a href="" class="float-right font-bold">View Full Details</a>
-        </div>
-      </div>
       </div>
       <!-----------END OF ACTIVE ORDERS---------------->
 
@@ -1358,140 +1390,153 @@
           </span>
         </header>
         <hr />
-        <div v-for="orders in confirmedDeliveries" :key="orders.indexTransactionPost">
-        <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
-          <label for="" class="pt-2 pl-3 font-bold">
-            Transaction #{{ orders.transactionNumber }}
-          </label>
-        </div>
-
-        <div class="text-base bg-white rounded-b-xl">
-          <label for="" class="pl-6 font-normal text-gray-500"> 8 items </label>
-
-          <label
-            for=""
-            class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo"
-          >
-            {{ orders.transactionStatus }}
-          </label>
-        </div>
-
-        <div v-if="orders.post.email != user.email">
         <div
-          class="relative flex items-center w-220 z-0 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+          v-for="orders in confirmedDeliveries"
+          :key="orders.indexTransactionPost"
         >
-          <button class="top-0 left-0 pl-2 rounded-full border-1">
-            <img
-              class="w-10 h-10 rounded-full"
-              :src="orders.post.user.profilePicture"
-              alt=""
-            />
-          </button>
-          <div class="ml-2">
-            <h5 class="text-sm font-bold">
-              {{ orders.post.user.firstName }} {{ orders.post.user.lastName }}
-              <span
-                class="inline-block text-blue-900 align-middle material-icons-round md-18"
-              >
-                verified
-              </span>
-            </h5>
-            <p class="text-sm font-normal font-nunito">
-              <span class="inline-block align-middle"
-                >{{ activeDeliveries.rate }}
-              </span>
-              <span
-                class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
-              >
-                star_rate
-              </span>
-            </p>
+          <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
+            <label for="" class="pt-2 pl-3 font-bold">
+              Transaction #{{ orders.transactionNumber }}
+            </label>
           </div>
 
-          <div class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2">
-            <span class="inline-flex text-white align-middle material-icons"
-              >chat</span
+          <div class="text-base bg-white rounded-b-xl">
+            <label for="" class="pl-6 font-normal text-gray-500">
+              8 items
+            </label>
+
+            <label
+              for=""
+              class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo"
             >
-            <router-link
-              :to="'/messages'+ toEncrypt(orders.post.user.email)"
-              class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
-            ></router-link>
-          </div>
-        </div>
-        <div class="p-2">
-          <span
-            class="inline-block pl-3 text-gray-500 align-top material-icons-round md-18"
-          >
-            room
-          </span>
-          <label
-            for=""
-            class="inline-block pl-2 text-sm tracking-wide align-text-top"
-          >
-            {{orders.transactionData.deliveryAddress}}
-          </label>
-        </div>
-        </div>
-        <div v-else>
-        <div
-          class="relative flex items-center w-220 z-0 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
-        >
-          <button class="top-0 left-0 pl-2 rounded-full border-1">
-            <img
-              class="w-10 h-10 rounded-full"
-              :src="orders.transaction_sender.profilePicture"
-              alt=""
-            />
-          </button>
-          <div class="ml-2">
-            <h5 class="text-sm font-bold">
-              {{ orders.transaction_sender.firstName }} {{ orders.transaction_sender.lastName }}
-              <span
-                class="inline-block text-blue-900 align-middle material-icons-round md-18"
-              >
-                verified
-              </span>
-            </h5>
-            <p class="text-sm font-normal font-nunito">
-              <span class="inline-block align-middle"
-                >{{ activeDeliveries.rate }}
-              </span>
-              <span
-                class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
-              >
-                star_rate
-              </span>
-            </p>
+              {{ orders.transactionStatus }}
+            </label>
           </div>
 
-          <div class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2">
-            <span class="inline-flex text-white align-middle material-icons"
-              >chat</span
+          <div v-if="orders.post.email != user.email">
+            <div
+              class="relative flex items-center w-220 z-0 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
             >
-            <router-link
-              :to="'/messages'+ toEncrypt(orders.transaction_sender.email)"
-              class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
-            ></router-link>
+              <button class="top-0 left-0 pl-2 rounded-full border-1">
+                <img
+                  class="w-10 h-10 rounded-full"
+                  :src="orders.post.user.profilePicture"
+                  alt=""
+                />
+              </button>
+              <div class="ml-2">
+                <h5 class="text-sm font-bold">
+                  {{ orders.post.user.firstName }}
+                  {{ orders.post.user.lastName }}
+                  <span
+                    class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                  >
+                    verified
+                  </span>
+                </h5>
+                <p class="text-sm font-normal font-nunito">
+                  <span class="inline-block align-middle"
+                    >{{ activeDeliveries.rate }}
+                  </span>
+                  <span
+                    class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+                  >
+                    star_rate
+                  </span>
+                </p>
+              </div>
+
+              <div
+                class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2"
+              >
+                <span class="inline-flex text-white align-middle material-icons"
+                  >chat</span
+                >
+                <router-link
+                  :to="'/messages' + toEncrypt(orders.post.user.email)"
+                  class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+                ></router-link>
+              </div>
+            </div>
+            <div class="p-2">
+              <span
+                class="inline-block pl-3 text-gray-500 align-top material-icons-round md-18"
+              >
+                room
+              </span>
+              <label
+                for=""
+                class="inline-block pl-2 text-sm tracking-wide align-text-top"
+              >
+                {{ orders.transactionData.deliveryAddress }}
+              </label>
+            </div>
+          </div>
+          <div v-else>
+            <div
+              class="relative flex items-center w-220 z-0 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+            >
+              <button class="top-0 left-0 pl-2 rounded-full border-1">
+                <img
+                  class="w-10 h-10 rounded-full"
+                  :src="orders.transaction_sender.profilePicture"
+                  alt=""
+                />
+              </button>
+              <div class="ml-2">
+                <h5 class="text-sm font-bold">
+                  {{ orders.transaction_sender.firstName }}
+                  {{ orders.transaction_sender.lastName }}
+                  <span
+                    class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                  >
+                    verified
+                  </span>
+                </h5>
+                <p class="text-sm font-normal font-nunito">
+                  <span class="inline-block align-middle"
+                    >{{ activeDeliveries.rate }}
+                  </span>
+                  <span
+                    class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+                  >
+                    star_rate
+                  </span>
+                </p>
+              </div>
+
+              <div
+                class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2"
+              >
+                <span class="inline-flex text-white align-middle material-icons"
+                  >chat</span
+                >
+                <router-link
+                  :to="'/messages' + toEncrypt(orders.transaction_sender.email)"
+                  class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+                ></router-link>
+              </div>
+            </div>
+            <div class="p-2">
+              <span
+                class="inline-block pl-3 text-gray-500 align-top material-icons-round md-18"
+              >
+                room
+              </span>
+              <label
+                for=""
+                class="inline-block pl-2 text-sm tracking-wide align-text-top"
+              >
+                {{ orders.transactionData.deliveryAddress }}
+              </label>
+            </div>
+          </div>
+          <div
+            class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl"
+          >
+            <a href="" class="float-right font-bold">View Full Details</a>
           </div>
         </div>
-        <div class="p-2">
-          <span
-            class="inline-block pl-3 text-gray-500 align-top material-icons-round md-18"
-          >
-            room
-          </span>
-          <label
-            for=""
-            class="inline-block pl-2 text-sm tracking-wide align-text-top"
-          >
-          {{orders.transactionData.deliveryAddress}}
-          </label>
-        </div>
-        </div>
-        <div class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl">
-          <a href="" class="float-right font-bold">View Full Details</a>
-        </div>
-      </div>
       </div>
       <!-----------END OF ACTIVE DELIVERIES---------------->
 
@@ -1516,40 +1561,63 @@
           <hr />
 
           <!--SHOPPING LIST-->
-          <div v-for="(userList,index) in shoppingLists" :key="index">
-          <h3
-            class="relative pt-2 pl-5 text-lg font-bold leading-loose tracking-wide"
-          >
-            {{userList.shoppingListTitle}}
-            <editShopListModal v-if="editVisible && toggleeditShopListNum == userList.shoppingListNumber" @closeModal="editlistener" :list="userList.shoppingListContent.split(', ')" :index="userList.shoppingListTitle" :listNum="toggleeditShopListNum"/>
-            <button
-              @click="toggleeditShopListNum = userList.shoppingListNumber,toggleeditShopList()"
-              class="absolute text-sm font-bold text-blue-700 right-7 top-4 focus:outline-none"
+          <div v-for="(userList, index) in shoppingLists" :key="index">
+            <h3
+              class="relative pt-2 pl-5 text-lg font-bold leading-loose tracking-wide"
             >
-              Edit
+              {{ userList.shoppingListTitle }}
+              <editShopListModal
+                v-if="
+                  editVisible &&
+                  toggleeditShopListNum == userList.shoppingListNumber
+                "
+                @closeModal="editlistener"
+                :list="userList.shoppingListContent.split(', ')"
+                :index="userList.shoppingListTitle"
+                :listNum="toggleeditShopListNum"
+              />
+              <button
+                @click="
+                  (toggleeditShopListNum = userList.shoppingListNumber),
+                    toggleeditShopList()
+                "
+                class="absolute text-sm font-bold text-blue-700 right-7 top-4 focus:outline-none"
+              >
+                Edit
+              </button>
+            </h3>
+
+            <ul
+              id="shop-list"
+              class="overflow-hidden text-sm leading-relaxed text-gray-500 list-disc list-inside h-22 pl-9"
+            >
+              <li
+                v-for="shopList in userList.shoppingListContent.split(', ')"
+                :key="shopList"
+              >
+                {{ shopList }}
+              </li>
+            </ul>
+
+            <ShoppingList
+              v-if="toggleList && toggleListNum == userList.shoppingListNumber"
+              @closeListModal="toggleList = !toggleList"
+              :list="userList.shoppingListContent.split(', ')"
+              :index="userList.shoppingListNumber"
+            />
+
+            <button
+              v-if="userList.shoppingListContent.split(', ').length > 4"
+              @click="
+                (toggleList = !toggleList),
+                  (toggleListNum = userList.shoppingListNumber)
+              "
+              class="text-sm leading-loose pl-9 focus:outline-none"
+            >
+              {{ userList.shoppingListContent.split(", ").length - 4 }} more
+              items...
             </button>
-          </h3>
-          
-          <ul
-            id="shop-list"
-            class="overflow-hidden text-sm leading-relaxed text-gray-500 list-disc list-inside h-22 pl-9"
-          >
-            <li v-for="shopList in userList.shoppingListContent.split(', ')" :key="shopList">
-              {{ shopList }}
-            </li>
-          </ul>
-          
-          <ShoppingList v-if="toggleList && toggleListNum == userList.shoppingListNumber " @closeListModal="toggleList=!toggleList" :list="userList.shoppingListContent.split(', ')" :index="userList.shoppingListNumber" />
-         
-          <button
-             v-if="userList.shoppingListContent.split(', ').length > 4"
-            @click="toggleList=!toggleList,toggleListNum =userList.shoppingListNumber "
-            class="text-sm leading-loose pl-9 focus:outline-none"
-          >
-            {{userList.shoppingListContent.split(', ').length - 4}} more items...
-          </button>
-      
-           </div>
+          </div>
           <hr />
           <div class="items-center justify-center p-3 pl-4">
             <createShopList
@@ -1579,11 +1647,12 @@ import editShopListModal from "./editShopListModal";
 import ShoppingList from "./ShoppingList";
 import createShopList from "./createShopList";
 import EditOrderRequest from "./EditOrderRequest";
-import UpdateOrderStatus from "./updateOrderStatus"
+import UpdateOrderStatus from "./updateOrderStatus";
 import $ from "jquery";
 import VueSimpleAlert from "vue-simple-alert";
 import store from "../store/index";
 import moment from "moment";
+// import Axios from "axios"
 // import EditOrderRequest from "./EditOrderRequest"
 import api from "../api";
 import SendOffer from "./sendOffer.vue";
@@ -1605,9 +1674,9 @@ export default {
       filter: false,
       filter2: false,
       createShopList: false,
-      toggleList :false,
-      toggleListNum :null,
-      toggleeditShopListNum:null,
+      toggleList: false,
+      toggleListNum: null,
+      toggleeditShopListNum: null,
       editOrderRequest: false,
       datePosted: "3 hours ago",
       datePosted1: "13 hours ago",
@@ -1654,7 +1723,8 @@ export default {
       ],
       sendOfferOrRequestpost: null,
       sendOfferOrRequestpostNum: null,
-      sortedAllPosts:[]
+      sortedAllPosts: [],
+      filteringPosts:[]
     };
   },
   components: {
@@ -1668,7 +1738,7 @@ export default {
     editShopListModal,
     EditOrderRequest,
     SendOffer,
-    UpdateOrderStatus
+    UpdateOrderStatus,
   },
   methods: {
     togglePostModal() {
@@ -1691,12 +1761,11 @@ export default {
     },
     listener1() {
       this.postModalVisible1 = false;
-      this.edit1= !this.edit1
+      this.edit1 = !this.edit1;
     },
     listener2() {
       this.postModalVisible2 = false;
-      this.edit1= !this.edit1
-
+      this.edit1 = !this.edit1;
     },
     listener3() {
       this.postSendModal = false;
@@ -1728,10 +1797,9 @@ export default {
           VueSimpleAlert.alert(res.data.message, "Success", "success");
           console.log(res.data);
           this.share1 = false;
-          store.dispatch('getAllShares').then(()=>{
-            this.sortPosts()
-          })
-
+          store.dispatch("getAllShares").then(() => {
+            this.sortPosts();
+          });
         })
         .catch((error) => {
           VueSimpleAlert.alert("An error occured", "Error", "error");
@@ -1782,12 +1850,10 @@ export default {
         .clone()
         .css({ padding: "0", float: "none" });
       clonedContainer.find("#3dotmenu").remove();
-      clonedContainer
-        .find("#changeBoxRadius")
-        .css({
-          "border-top-left-radius": "0px",
-          "border-top-right-radius": "0px",
-        });
+      clonedContainer.find("#changeBoxRadius").css({
+        "border-top-left-radius": "0px",
+        "border-top-right-radius": "0px",
+      });
       $("display-header").find("#closeButton").remove();
       $("#display-footer").css({ padding: "0" }).remove();
       clonedContainer.appendTo(".display-body");
@@ -1801,16 +1867,9 @@ export default {
       $(".target").hide();
       this.share1 = !this.share1;
     },
-    getNearby() {
-      this.post_filter = "nearby";
-      api
-        .get("api/user/feed", {
-          params: { post_filter: this.post_filter, post_type: this.post_type },
-        })
-        .then((res) => {
-          console.log("nearby", res.data);
-        });
-    },
+    // getNearby() {
+    //   this.sortedAllPosts = this.filteringPosts.filter((x)=>{})
+    // },
     getFollowing() {
       this.post_filter = "following";
       api
@@ -1879,26 +1938,29 @@ export default {
       await store.dispatch("getNotAuthUserAddress", email);
       return;
     },
-    selectionSort(arr){
-      var minldx,temp,len = arr.length;
-        for(var i=0;i<len;i++){
-          minldx = i
-          for(var j=i+1;j<len;j++){
-            if(arr[j].dateCreated>arr[minldx].dateCreated){
-              minldx=j
-            }
+    selectionSort(arr) {
+      var minldx,
+        temp,
+        len = arr.length;
+      for (var i = 0; i < len; i++) {
+        minldx = i;
+        for (var j = i + 1; j < len; j++) {
+          if (arr[j].dateCreated > arr[minldx].dateCreated) {
+            minldx = j;
           }
-          temp = arr[i]
-          arr[i] = arr[minldx]
-          arr[minldx] = temp
         }
-        return arr
+        temp = arr[i];
+        arr[i] = arr[minldx];
+        arr[minldx] = temp;
+      }
+      return arr;
     },
-    sortPosts(){
-      var allPosts = this.posts.concat(this.allShares)
-      this.sortedAllPosts = this.selectionSort(allPosts)
-      console.log('sorted', this.sortedAllPosts)
-    }
+    sortPosts() {
+      var allPosts = this.posts.concat(this.allShares);
+      this.sortedAllPosts = this.selectionSort(allPosts);
+      this.filteringPosts = this.sortedAllPosts
+      console.log("sorted", this.sortedAllPosts);
+    },
   },
   computed: {
     user() {
@@ -1908,13 +1970,19 @@ export default {
       return store.getters.getPersonal;
     },
     posts() {
-       return store.getters.getPosts.filter((x)=>{
-        return x.postStatus == "Accepting Requests" || x.postStatus == "Accepting Offer"
+      return store.getters.getPosts.filter((x) => {
+        return (
+          x.postStatus == "Accepting Requests" ||
+          x.postStatus == "Accepting Offer"
+        );
       });
     },
     allShares() {
-      return store.getters.getAllShares.filter((x)=>{
-        return x.post.postStatus == "Accepting Requests" || x.post.postStatus == "Accepting Offer" 
+      return store.getters.getAllShares.filter((x) => {
+        return (
+          x.post.postStatus == "Accepting Requests" ||
+          x.post.postStatus == "Accepting Offer"
+        );
       });
     },
     shoppingLists() {
@@ -1927,7 +1995,7 @@ export default {
     // },
     // confirmedRequestDeliveries() {
     //   return store.getters.getUserTransactions.filter((x)=>{
-    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "request_post" && x.post.email != this.user.email 
+    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "request_post" && x.post.email != this.user.email
     //   });
     // },
     // confirmedOfferOrders() {
@@ -1937,23 +2005,48 @@ export default {
     // },
     // confirmedOfferDeliveries() {
     //   return store.getters.getUserTransactions.filter((x)=>{
-    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "offer_post" && x.post.email == this.user.email 
+    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "offer_post" && x.post.email == this.user.email
     //   });
     // }
     confirmedOrders() {
-     return store.getters.getUserTransactions.filter((x)=>{
-        return x.transactionStatus == "confirmed" &&  ((x.post.postIdentity == "request_post" && x.post.email == this.user.email) || (x.post.postIdentity == "offer_post" && x.post.email != this.user.email))
+      return store.getters.getUserTransactions.filter((x) => {
+        return (
+          x.transactionStatus == "confirmed" &&
+          ((x.post.postIdentity == "request_post" &&
+            x.post.email == this.user.email) ||
+            (x.post.postIdentity == "offer_post" &&
+              x.post.email != this.user.email))
+        );
       });
     },
     confirmedDeliveries() {
-      return store.getters.getUserTransactions.filter((x)=>{
-        return x.transactionStatus == "confirmed" &&  ((x.post.postIdentity == "request_post" && x.post.email != this.user.email) || (x.post.postIdentity == "offer_post" && x.post.email == this.user.email))
+      return store.getters.getUserTransactions.filter((x) => {
+        return (
+          x.transactionStatus == "confirmed" &&
+          ((x.post.postIdentity == "request_post" &&
+            x.post.email != this.user.email) ||
+            (x.post.postIdentity == "offer_post" &&
+              x.post.email == this.user.email))
+        );
       });
     },
   },
-  mounted(){
-    this.sortPosts()
-  }
+  mounted() {
+    this.sortPosts();
+    // window.Echo.private("pasaBUY_public_channel." + 123).notification(() => {
+    //   //get datas that are available publicly
+    //   Axios.all([
+    //     api.get('api/getPosts'),
+    //     api.get('api/getShares')        
+    //   ]).then(resArr=>{
+    //     store.commit('FETCH_POSTS',resArr[0].data).then(()=>{
+    //       store.commit('setAllShares',resArr[1].data).then(()=>{
+    //         this.sortPosts()
+    //       })
+    //     })
+    //   })
+    // });
+  },
 };
 </script>
 

@@ -1762,9 +1762,11 @@ export default {
         api.get("/api/getTransaction"),
         api.get("/api/getChatroom"),
       ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[2].data);
-        store.commit("FETCH_ROOMS", resArr[3].data);
-        this.getChatRooms()
+         store.commit("setUserTransactions", resArr[2].data).then(()=>{
+          store.commit("FETCH_ROOMS", resArr[3].data).then(()=>{
+            this.getChatRooms()
+          })
+        })
       });
     },
     declineOffer(postNum, indexTransactionPost, user) {
@@ -1782,9 +1784,12 @@ export default {
         api.get("/api/getTransaction"),
         api.get("/api/getChatroom"),
       ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[2].data);
-        store.commit("FETCH_ROOMS", resArr[3].data);
-        this.getChatRooms()
+        store.commit("setUserTransactions", resArr[2].data).then(()=>{
+          store.commit("FETCH_ROOMS", resArr[3].data).then(()=>{
+            this.getChatRooms()
+          })
+        })
+      
       });
     },
     acceptOffer(postNum, indexTransactionPost, user, postIdentity) {
@@ -1803,9 +1808,11 @@ export default {
         api.get("/api/getTransaction"),
         api.get("/api/getChatroom"),
       ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[2].data);
-        store.commit("FETCH_ROOMS", resArr[3].data);
-        this.getChatRooms()
+         store.commit("setUserTransactions", resArr[2].data).then(()=>{
+          store.commit("FETCH_ROOMS", resArr[3].data).then(()=>{
+            this.getChatRooms()
+          })
+        })
       });
     },
     // search(receiver,sender, myArray){

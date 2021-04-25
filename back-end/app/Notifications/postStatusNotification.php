@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class postStatusNotification extends Notification
 {
-    use Queueable;
-
+   
     use Queueable;
 
     /**

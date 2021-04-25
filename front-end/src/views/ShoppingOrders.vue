@@ -79,51 +79,75 @@
                   </div>
                 </div>
               </div>
-              <div id="3dotmenu" class="vs:mt-1">
-                <button @click="edit1 = !edit1" class="focus:outline-none">
-                  <img
-                    class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto"
-                    src="img/3dot.svg"
-                  />
-                </button>
-                <div class="flex w-full">
-                  <div
-                    v-if="edit1"
-                    class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-56 md:right-24 xl:right-91 h-min w-30"
-                  >
-                    <EditOrderRequest
-                      v-if="postModalVisible2"
-                      @closeModal2="listener2"
-                    />
-                    <button
-                      @click="togglePostModal2"
-                      class="flex flex-row gap-x-2 text-base focus:outline-none"
-                    >
-                      <span class="font-medium text-gray-500 material-icons">
-                        mode
-                      </span>
-                      Edit Post
-                    </button>
-                    <UpdateOrderStatus
-                      v-if="postModalVisible3"
-                      @closeModal3="listener3"
-                    />
-                    <button
-                      @click="togglePostModal3"
-                      class="flex flex-row text-base font-normal focus:outline-none gap-x-2"
-                    >
-                      <span class="font-normal text-gray-500 material-icons">
-                        autorenew
-                      </span>
-                      Update Status
-                    </button>
-                    <button class="flex flex-row gap-x-2 text-base">
-                      <span class="text-gray-500 material-icons">delete</span
-                      >Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <div
+                        id="3dotmenu"
+                        class="vs:mt-1"
+                        v-if="
+                          shoppingOrder_info.email == user.email &&
+                          shoppingOrder_info.request_post != null
+                        "
+                      >
+                        <button
+                          @click="
+                            edit1 = !edit1;
+                            edit2 = shoppingOrder_info.postNumber;
+                          "
+                          class="focus:outline-none"
+                        >
+                          <img
+                            class="w-6 h-auto vs:w-4 lvs:w-5 ssm:w-4"
+                            src="img/3dot.svg"
+                          />
+                        </button>
+                        <div class="flex w-full">
+                          <div
+                            v-if="edit1 && edit2 == shoppingOrder_info.postNumber"
+                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-56 md:right-24 xl:right-91 h-min w-30"
+                          >
+                            <EditOrderRequest
+                              v-if="postModalVisible3"
+                              @closeModal1="listener3"
+                              :post="shoppingOrder_info"
+                               
+                            />
+                            <button
+                              @click="togglePostModal3"
+                              class="flex flex-row text-base vs:text-sm gap-x-2 focus:outline-none"
+                            >
+                              <span
+                                class="font-medium text-gray-500 material-icons vs:md-14"
+                              >
+                                mode
+                              </span>
+                              Edit post
+                            </button>
+                            <UpdateOrderStatus
+                              v-if="postModalVisible2"
+                              @closeModal3="listener2"
+                              :post="shoppingOrder_info"
+                              
+                            />
+                            <button
+                              @click="togglePostModal2"
+                              class="flex flex-row text-base font-normal vs:text-sm focus:outline-none gap-x-2"
+                            >
+                              <span
+                                class="font-normal text-gray-500 material-icons vs:md-14"
+                              >
+                                autorenew
+                              </span>
+                              Update Status
+                            </button>
+                            <button
+                              class="flex flex-row text-base gap-x-2 vs:text-sm vs:md-14"
+                            >
+                              <span class="text-gray-500 material-icons"
+                                >delete</span
+                              >Delete
+                            </button>
+                          </div>
+                        </div>
+                      </div>
             </div>
             <!--end-->
 
