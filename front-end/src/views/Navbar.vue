@@ -218,21 +218,15 @@ export default {
           console.log(errors);
         });
     },
-    connectToNotif(){
-    window.Echo.private(
-      "App.Models.User." + this.user.indexUserAuthentication
-    ).notification((notification) => {
-      console.log("listening to notif", notification.type);
-      this.dispatches()
-    });
-  },
-  async dispatches() {
-    await store.dispatch("getUnreadNotifications");
-    await store.dispatch("getAllNotifications");
-    await store.dispatch("getUserTransactions");
-    await store.dispatch("getChatRoom");
-
-  },
+  
+    async dispatches(notification) {
+      if (notification == "App\\Notifications\\newTransactionNotification") {
+        await store.dispatch("getChatRoom");
+      }
+      await store.dispatch("getUnreadNotifications");
+      await store.dispatch("getAllNotifications");
+      await store.dispatch("getUserTransactions");
+    },
   },
   setup() {
     const currentRoute = computed(() => {
@@ -250,16 +244,26 @@ export default {
       timerId = setTimeout(func, delay);
     };
     store.dispatch("getChatRoom");
-    debounceFunction(this.connectToNotif,200);
+     window.Echo.private(
+        "App.Models.User." + this.user.indexUserAuthentication
+      ).notification((notification) => {
+        console.log("listening to notif", notification.type);
+        debounceFunction(this.dispatches(notification.type), 200);
+      });
+    // debounceFunction(this.connectToNotif, 200);
   },
-  
+
   computed: {
     // 'type','!=','App\Notifications\newTransactionNotification'
     unreadNotif() {
-      return store.getters.getUnreadNotif.filter((x)=>{return x.type !='App\\Notifications\\newTransactionNotification' });
+      return store.getters.getUnreadNotif.filter((x) => {
+        return x.type != "App\\Notifications\\newTransactionNotification";
+      });
     },
     unreadNotifChat() {
-      return store.getters.getUnreadNotif.filter((x)=>{return x.type =='App\\Notifications\\newTransactionNotification' });
+      return store.getters.getUnreadNotif.filter((x) => {
+        return x.type == "App\\Notifications\\newTransactionNotification";
+      });
     },
     user() {
       return store.getters.getUser;

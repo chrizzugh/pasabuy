@@ -306,8 +306,7 @@
                     @click="
                       cancelRequest(
                         transaction.postNumber,
-                        transaction.indexTransactionPost,
-                        transaction.post.postIdentity
+                        transaction.indexTransactionPost
                       )
                     "
                     class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
@@ -350,8 +349,7 @@
                       declineOffer(
                         transaction.postNumber,
                         transaction.indexTransactionPost,
-                        transaction.emailCustomerShopper,
-                        transaction.post.postIdentity
+                        transaction.emailCustomerShopper
                       )
                     "
                     class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
@@ -1750,7 +1748,7 @@ export default {
       data[0] = JSON.parse(string);
       return data;
     },
-    cancelRequest(postNum, indexTransactionPost,postIdentity) {
+    cancelRequest(postNum, indexTransactionPost) {
        var dataMessage = {
               roomID: this.activeRoom,
               message: JSON.stringify({param:"this_is_a_message_transaction", sender:this.userPersonal.firstName + ' '+this.userPersonal.lastName, receiver:this.activeName,status:'cancelled' }),
@@ -1758,16 +1756,18 @@ export default {
       Axios.all([
         api.post("api/cancelRequest", {
           postNumber: postNum,
-          ID: indexTransactionPost,
-          postIdentity: postIdentity
+          ID: indexTransactionPost
         }),
         api.post("/api/sendMessage", dataMessage),
         api.get("/api/getTransaction"),
+        api.get("/api/getChatroom"),
       ]).then((resArr) => {
         store.commit("setUserTransactions", resArr[2].data);
+        store.commit("FETCH_ROOMS", resArr[3].data);
+        this.getChatRooms()
       });
     },
-    declineOffer(postNum, indexTransactionPost, user,postIdentity) {
+    declineOffer(postNum, indexTransactionPost, user) {
        var dataMessage = {
               roomID: this.activeRoom,
               message: JSON.stringify({param:"this_is_a_message_transaction", sender:this.userPersonal.firstName + ' '+this.userPersonal.lastName, receiver:this.activeName,status:'declined' }),
@@ -1776,13 +1776,15 @@ export default {
         api.post("api/declineRequest", {
           postNumber: postNum,
           ID: indexTransactionPost,
-          userNotif: user,
-          postIdentity: postIdentity
+          userNotif: user
         }),
         api.post("/api/sendMessage",  dataMessage),
         api.get("/api/getTransaction"),
+        api.get("/api/getChatroom"),
       ]).then((resArr) => {
         store.commit("setUserTransactions", resArr[2].data);
+        store.commit("FETCH_ROOMS", resArr[3].data);
+        this.getChatRooms()
       });
     },
     acceptOffer(postNum, indexTransactionPost, user, postIdentity) {
@@ -1799,8 +1801,11 @@ export default {
         }),
         api.post("/api/sendMessage", dataMessage ),
         api.get("/api/getTransaction"),
+        api.get("/api/getChatroom"),
       ]).then((resArr) => {
         store.commit("setUserTransactions", resArr[2].data);
+        store.commit("FETCH_ROOMS", resArr[3].data);
+        this.getChatRooms()
       });
     },
     // search(receiver,sender, myArray){

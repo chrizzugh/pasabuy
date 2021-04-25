@@ -108,13 +108,14 @@ class transactionController extends Controller
 			$userToNotif->notify(new confirmRequestNotification($request->postNumber));
 
             if($request->postIdentity == "request_post"){
-                $transaction = transaction::with('post')->where('transactionStatus', 'pending')->where('postNumber', $request->postNmmber)->get();
+                $transaction = transaction::with('post')->where('transactionStatus', 'pending')->where('postNumber', $request->postNumber)->get();
                 if(!empty($transaction))
                 foreach($transaction as $trans){
                     $trans->transactionStatus = "Declined";
                     $trans->post->postStatus = "Order Taken";
                     $trans->save();
-                    $userToNotif = User::where('email',$transaction->emailCustomerShopper)->get();
+                    $trans->post->save();
+                    $userToNotif = User::where('email',$trans->emailCustomerShopper)->get();
                     $userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
                     $userToNotif->notify(new declinedRequestNotification($request->postNumber));
                 }
