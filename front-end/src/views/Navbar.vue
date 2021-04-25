@@ -261,10 +261,12 @@ export default {
     console.log(users)
     })
     .joining((user) => {
-        console.log(user);
+        store.commit('setOnlineUsers',user.email)
+        console.log(user.email, " is online");
     })
     .leaving((user) => {
-        console.log(user);
+        store.commit('removeFromOnlineUsers',user.email)
+        console.log(user.email, " leaved");
     })
     .listen('.post.new', () => {
         //

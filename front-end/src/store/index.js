@@ -24,10 +24,8 @@ const store =  new Vuex.Store({
         userInfo:[],
         notAuthUserAddress:[],
         allShares:[],
-        shoppingList:[]
-
-
-
+        shoppingList:[],
+        onlineUsers:[]
 
 
         // userEducation:[],
@@ -86,6 +84,13 @@ const store =  new Vuex.Store({
         },
         setShoppingList(state,data){
             state.shoppingList = data
+        },
+        setOnlineUsers(state,user){
+            state.onlineUsers.unshift(user)
+        },
+        removeFromOnlineUsers(state,user){
+            var index = state.onlineUsers.findIndex(c => c == user);
+            state.onlineUsers.splice(index, 1);
         },
     },
     actions:{
@@ -305,8 +310,7 @@ const store =  new Vuex.Store({
         getNotAuthUserAddress:(state) => state.notAuthUserAddress,
         getAllShares:(state) => state.allShares,
         getUserShoppingList:(state) => state.shoppingList,
-
-
+        getOnlineUsers:(state) => state.onlineUsers,
     }
 })
 

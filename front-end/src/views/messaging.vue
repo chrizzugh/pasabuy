@@ -77,6 +77,13 @@
               class="focus:bg-gray-200 relative w-full flex focus:outline-none justify-between items-center mt-2 p-2 hover:shadow-lg cursor-pointer transition"
             >
               <div class="flex ml-2">
+                <div v-if="ifOnline(chatRoom.email1, chatRoom.email2)">
+                <img
+                    src="/img/online.png"
+                    alt="sunil"
+                    class="rounded-sm h-2 w-2 pb-0 mt-3 mr-2"
+                  />
+                </div>
                 <img
                   :src="chatRoomPic[index]"
                   alt="sunil"
@@ -1350,6 +1357,7 @@
                 class="focus:bg-gray-200 relative w-full flex focus:outline-none justify-between items-center mt-2 p-2 hover:shadow-lg cursor-pointer transition"
               >
                 <div class="flex ml-2">
+                  
                   <img
                     :src="chatRoomPic[index]"
                     alt="sunil"
@@ -1574,8 +1582,10 @@ export default {
       this.connect();
     },
     room() {
-      console.log("room changed");
       this.getChatRooms();
+    },
+    onlineUsers() {
+      console.log(this.onlineUsers)
     },
   },
 
@@ -1966,6 +1976,23 @@ export default {
           this.getChatRooms();
       });
     },
+    ifOnline(email1,email2){
+      var authUser = this.authUser.email
+      var chatRoomEmail;
+      if(email1 != authUser){
+        chatRoomEmail = email1
+      }else{
+        chatRoomEmail = email2
+      }
+      var online = this.onlineUsers.find((m)=>{
+        return chatRoomEmail === m;
+      })
+      if(online!=null){
+        return true
+      }else{
+        return false
+      }
+    }
     // search(receiver,sender, myArray){
     //   for (var i=0; i < myArray.length; i++) {
     //       console.log(myArray[i].emailCustomerShopper ,'===' ,receiver, '&&',myArray[i].transactionReceiver,'===', sender )
@@ -2003,6 +2030,7 @@ export default {
   }, //end methods
   mounted() {
     this.getUrlQuery();
+    console.log(this.onlineUsers)
   },
   computed: {
     authUser() {
@@ -2022,6 +2050,9 @@ export default {
         return x.transactionStatus == "pending";
       });
     },
+    onlineUsers(){
+      return store.getters.getOnlineUsers
+    }
   },
 }; //end export default
 const add = document.querySelector("#add");
