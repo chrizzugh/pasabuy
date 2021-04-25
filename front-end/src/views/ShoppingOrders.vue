@@ -1,8 +1,7 @@
 <template>
-  <div class="bg-gray-100 pt-6 font-nunito">
     <!--post comment-->
     <div
-      class="h-screen ssm:h-auto ssm:pb-6 vs:h-auto vs:pb-6 sm:pb-6 w-full min-w-0 px-2"
+      class="flex flex-col  bg-gray-100 pt-6 font-nunito h-scrren ssm:h-auto pb-6 ssm:pb-6 vs:h-auto vs:pb-6 sm:pb-6 w-full min-w-0 px-2"
     >
       <!--Modal-->
       <div v-if="userID === user.email">
@@ -412,7 +411,6 @@
       </div>
       <!--end-->
     </div>
-  </div>
 </template>
 
 <script>
