@@ -106,6 +106,10 @@
                           chatRoom.get_messages[
                             chatRoom.get_messages.length - 1
                           ].messageText
+                        ) == -1 && hasTransactionMessage(
+                          chatRoom.get_messages[
+                            chatRoom.get_messages.length - 1
+                          ].messageText
                         ) == -1
                       "
                       >{{
@@ -113,7 +117,11 @@
                           .messageText
                       }}</strong
                     >
-                    <strong v-else>
+                    <strong v-else-if ="hasTransactionMessage(
+                          chatRoom.get_messages[
+                            chatRoom.get_messages.length - 1
+                          ].messageText
+                        ) == -1">
                       {{
                         parseString(
                           chatRoom.get_messages[
@@ -121,6 +129,21 @@
                           ].messageText
                         )[0].message
                       }}
+                    </strong>
+                     <strong v-else>
+                      You {{
+                        parseString(
+                          chatRoom.get_messages[
+                            chatRoom.get_messages.length - 1
+                          ].messageText
+                        )[0].status
+                      }} {{
+                        parseString(
+                          chatRoom.get_messages[
+                            chatRoom.get_messages.length - 1
+                          ].messageText
+                        )[0].receiver
+                      }}'s offer/post
                     </strong>
                   </span>
                   <span class="text-xs text-gray-400 truncate w-36" v-else>
@@ -138,6 +161,10 @@
                           chatRoom.get_messages[
                             chatRoom.get_messages.length - 1
                           ].messageText
+                        ) == -1 && hasTransactionMessage(
+                          chatRoom.get_messages[
+                            chatRoom.get_messages.length - 1
+                          ].messageText
                         ) == -1
                       "
                       >{{
@@ -145,7 +172,11 @@
                           .messageText
                       }}</strong
                     >
-                    <strong v-else>
+                    <strong v-else-if="hasTransactionMessage(
+                          chatRoom.get_messages[
+                            chatRoom.get_messages.length - 1
+                          ].messageText
+                        ) == -1">
                       {{
                         parseString(
                           chatRoom.get_messages[
@@ -153,6 +184,21 @@
                           ].messageText
                         )[0].message
                       }}
+                    </strong>
+                    <strong v-else>
+                      {{
+                        parseString(
+                          chatRoom.get_messages[
+                            chatRoom.get_messages.length - 1
+                          ].messageText
+                        )[0].receiver
+                      }}  {{
+                        parseString(
+                          chatRoom.get_messages[
+                            chatRoom.get_messages.length - 1
+                          ].messageText
+                        )[0].status
+                      }} your offer/post
                     </strong>
                   </span>
                 </div>
@@ -656,7 +702,7 @@
                       v-for="(msgPost, index) in parseString(msg.messageText)"
                       :key="index"
                     >
-                      <div class="flex justify-end mt-2 pr-10">
+                      <div class="flex justify-end mt-1 pr-10">
                         <div class="ml-32 bg-gray-100 text-sm rounded-lg">
                           <div
                             class="flex flex-col bg-gray-100 py-2 rounded-lg"
@@ -754,7 +800,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="flex justify-end pr-10 mt-1">
+                      <div class="flex justify-end pr-0 mt-1">
                         <div class="rounded-lg">
                           <div
                             class="ml-4 mr-10 p-3 bg-gray-100 text-sm rounded-lg"
@@ -780,7 +826,7 @@
           <div id="chatmsg"></div>
         </div>
 
-        <div v-if="attachment" class="sticky bottom-11">
+        <!-- <div v-if="attachment" class="sticky bottom-11">
           <div class="w-full bg-white bg-opacity-100 flex justify-start pt-2">
             <div class="flex items-center">
               <input
@@ -805,7 +851,7 @@
               >
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div
           class="w-pl-4 pr-4 mt-1 w-full absolute bottom-1 flex flex-cols justify-between items-center"
