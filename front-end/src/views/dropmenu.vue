@@ -67,7 +67,7 @@ export default {
     logout() {
       console.log("logout");
       window.Echo.leave("App.Models.User." + this.user.indexUserAuthentication);
-      // window.Echo.leave("pasaBUY_public_channel." + 123);
+      window.Echo.leave("public.123");
       api.post("api/logout").then(() => {
         sessionStorage.removeItem("vuex");
         sessionStorage.removeItem("isLoggedIn");

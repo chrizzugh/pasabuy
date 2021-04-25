@@ -185,7 +185,7 @@ import Notification from "./Notification.vue";
 import api from "../api";
 import store from "../store/index";
 import _ from "lodash";
-import Axios from "axios"
+import Axios from "axios";
 export default {
   name: "navBar",
   components: {
@@ -235,7 +235,16 @@ export default {
           store.commit("setNotifications", resArr[1].data),
           store.commit("setUserTransactions", resArr[2].data);
       });
-    }, 2000),
+    }, 1000),
+    debounceMethodGetPosts: _.debounce(() => {
+      Axios.all([
+        api.get("api/getPosts"),
+        api.get("api/getShares"),
+      ]).then((resArr) => {
+        store.commit("FETCH_POSTS", resArr[0].data),
+        store.commit("setAllShares", resArr[1].data)
+      });
+    }, 1000),
   },
   setup() {
     const currentRoute = computed(() => {
@@ -244,6 +253,28 @@ export default {
     return { currentRoute };
   },
   mounted() {
+
+    var roomId = 123
+    window.Echo.join(`public.${roomId}`)
+    .here((users) => {
+        //
+    console.log(users)
+    })
+    .joining((user) => {
+        console.log(user);
+    })
+    .leaving((user) => {
+        console.log(user);
+    })
+    .listen('.post.new', () => {
+        //
+      console.log("someone posted")
+      this.debounceMethodGetPosts();
+    })
+    .error((error) => {
+        console.error(error);
+    });
+
     window.Echo.private(
       "App.Models.User." + this.user.indexUserAuthentication
     ).notification((notification) => {

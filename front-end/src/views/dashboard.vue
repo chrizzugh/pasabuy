@@ -1740,6 +1740,14 @@ export default {
     SendOffer,
     UpdateOrderStatus,
   },
+  watch:{
+    posts(){
+      this.sortPosts()
+    },
+    allShares(){
+      this.sortPosts()
+    }
+  },
   methods: {
     togglePostModal() {
       this.postModalVisible = !this.postModalVisible;

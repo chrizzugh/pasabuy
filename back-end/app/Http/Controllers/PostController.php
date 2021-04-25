@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\newPostEvent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -87,6 +88,7 @@ class PostController extends Controller
 			$post->save();
 			$post->offer_post()->save($offer_post);
 		});
+        broadcast(new newPostEvent())->toOthers();
 
 		return response()->json(['message' => 'Offer post created successfully.'], 201);
 	}
@@ -153,6 +155,8 @@ class PostController extends Controller
 			// RequestPost::find($request_post->indexOrderRequestPost)->shoppingList()->save($shopping_list);
 		});
 
+        broadcast(new newPostEvent())->toOthers();
+
 		return response()->json(
 			[
 				'message' => 'Request post created successfully.'
@@ -215,6 +219,7 @@ class PostController extends Controller
 		$newShare->shareNumber = share::count() + 1;
 		$newShare->postNumber = $postNum;
 		if ($newShare->save()) {
+			broadcast(new newPostEvent())->toOthers();
 			//find the right user to notify, in this case the owner of the post
 			$userToNotif = Post::where('postNumber', $postNum)->get();
 			if ($userToNotif[0]->email == $user->email) {
@@ -445,6 +450,7 @@ class PostController extends Controller
 					$post->save();
 					$post->offer_post->save();
 				});
+				broadcast(new newPostEvent())->toOthers();
 
 				return 201;
 				break;
@@ -470,7 +476,7 @@ class PostController extends Controller
 					]);
 				}
 				$post->shoppingList->shoppingListContent = $request->shoppingList;
-
+				
 				DB::transaction(function () use ($post) {
 					$post->save();
 					$post->request_post->save();
@@ -514,7 +520,6 @@ class PostController extends Controller
 		# code...
 
 		$post = Post::where('postNumber', '=', $request->postNumber)->where('email', '=',  Auth::user()->email)->firstOrFail();
-
 
 		$transactionPost = transaction::with('Post')->where('transactionStatus','=', 'pending')->where('postNumber', $request->postNumber)->where('transactionReceiver', Auth::user()->email)->get();
 		
