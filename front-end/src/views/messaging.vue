@@ -306,7 +306,8 @@
                     @click="
                       cancelRequest(
                         transaction.postNumber,
-                        transaction.indexTransactionPost
+                        transaction.indexTransactionPost,
+                        transaction.post.postIdentity
                       )
                     "
                     class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
@@ -349,7 +350,8 @@
                       declineOffer(
                         transaction.postNumber,
                         transaction.indexTransactionPost,
-                        transaction.emailCustomerShopper
+                        transaction.emailCustomerShopper,
+                        transaction.post.postIdentity
                       )
                     "
                     class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
@@ -362,7 +364,7 @@
                         transaction.postNumber,
                         transaction.indexTransactionPost,
                         transaction.emailCustomerShopper,
-                        trasnsaction.post.postIdentity
+                        transaction.post.postIdentity
                       )
                     "
                     class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
@@ -411,7 +413,7 @@
               <div v-for="(msg, index) in chat.get_messages" :key="index">
                 <div v-if="msg.messageSender != authUser.email">
                   <!--your incoming messages-->
-                  <div v-if="hasPostNum(msg.messageText) == -1">
+                  <div v-if="hasPostNum(msg.messageText) == -1 && hasTransactionMessage(msg.messageText) == -1">
                     <div class="flex items-end pr-10 mt-1">
                       <img
                         :src="msg.get_message_sender.profilePicture"
@@ -430,6 +432,20 @@
                           >
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div v-else-if="hasTransactionMessage(msg.messageText) != -1">
+                    <div class="flex justify-center" v-for="(msgStatus,index) in parseString(msg.messageText)" :key="index"> 
+                        <div
+                          class="ml-4 mr-10 p-3 text-gray-400 text-sm"
+                        >
+                          <p v-if="msgStatus.sender == (this.userPersonal.firstName+' '+this.userPersonal.lastName)">
+                            You {{msgStatus.status}} {{msgStatus.receiver}}'s offer/request
+                          </p>
+                          <p v-else-if="msgStatus.receiver == (this.userPersonal.firstName+' '+this.userPersonal.lastName)">
+                            {{msgStatus.sender}} {{msgStatus.status}} your offer/request
+                          </p>
+                        </div>
                     </div>
                   </div>
                   <div v-else>
@@ -559,7 +575,7 @@
                 </div>
                 <div v-else>
                   <!--your outgoing messages-->
-                  <div v-if="hasPostNum(msg.messageText) == -1">
+                  <div v-if="hasPostNum(msg.messageText) == -1 && hasTransactionMessage(msg.messageText) == -1">
                     <div class="flex justify-end pr-10 mt-1">
                       <div
                         class="ml-32 pt-2 pl-4 pb-3 pr-4 text-sm bg-gray-100 rounded-lg"
@@ -572,6 +588,20 @@
                           {{ timestamp(msg.dateCreated) }}
                         </span>
                       </div>
+                    </div>
+                  </div>
+                  <div v-else-if="hasTransactionMessage(msg.messageText) != -1">
+                    <div class="flex justify-center" v-for="(msgStatus,index) in parseString(msg.messageText)" :key="index"> 
+                        <div
+                          class="ml-4 items-center mr-10 p-3  text-gray-400 text-sm "
+                        >
+                          <p v-if="msgStatus.sender == (this.userPersonal.firstName+' '+this.userPersonal.lastName)">
+                            You {{msgStatus.status}} {{msgStatus.receiver}}'s offer/request
+                          </p>
+                          <p v-else-if="msgStatus.receiver == (this.userPersonal.firstName+' '+this.userPersonal.lastName)">
+                            {{msgStatus.sender}} {{msgStatus.status}} your offer/request
+                          </p>
+                        </div>
                     </div>
                   </div>
                   <div v-else>
@@ -1701,6 +1731,9 @@ export default {
     hasPostNum(text) {
       return text.search('"param":"this_is_a_parameter_post_message"');
     },
+    hasTransactionMessage(text) {
+      return text.search('"param":"this_is_a_message_transaction"');
+    },
     timestampSched(datetime) {
       var schedDate = new Date(datetime);
       var dateToday = new Date();
@@ -1717,30 +1750,46 @@ export default {
       data[0] = JSON.parse(string);
       return data;
     },
-    cancelRequest(postNum, indexTransactionPost) {
+    cancelRequest(postNum, indexTransactionPost,postIdentity) {
+       var dataMessage = {
+              roomID: this.activeRoom,
+              message: JSON.stringify({param:"this_is_a_message_transaction", sender:this.userPersonal.firstName + ' '+this.userPersonal.lastName, receiver:this.activeName,status:'cancelled' }),
+            };
       Axios.all([
         api.post("api/cancelRequest", {
           postNumber: postNum,
           ID: indexTransactionPost,
+          postIdentity: postIdentity
         }),
+        api.post("/api/sendMessage", dataMessage),
         api.get("/api/getTransaction"),
       ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[1].data);
+        store.commit("setUserTransactions", resArr[2].data);
       });
     },
-    declineOffer(postNum, indexTransactionPost, user) {
+    declineOffer(postNum, indexTransactionPost, user,postIdentity) {
+       var dataMessage = {
+              roomID: this.activeRoom,
+              message: JSON.stringify({param:"this_is_a_message_transaction", sender:this.userPersonal.firstName + ' '+this.userPersonal.lastName, receiver:this.activeName,status:'declined' }),
+            };
       Axios.all([
         api.post("api/declineRequest", {
           postNumber: postNum,
           ID: indexTransactionPost,
           userNotif: user,
+          postIdentity: postIdentity
         }),
+        api.post("/api/sendMessage",  dataMessage),
         api.get("/api/getTransaction"),
       ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[1].data);
+        store.commit("setUserTransactions", resArr[2].data);
       });
     },
     acceptOffer(postNum, indexTransactionPost, user, postIdentity) {
+     var dataMessage = {
+              roomID: this.activeRoom,
+              message: JSON.stringify({param:"this_is_a_message_transaction", sender:this.userPersonal.firstName + ' '+this.userPersonal.lastName, receiver:this.activeName,status:'accepted' }),
+            };
       Axios.all([
         api.post("api/confirmRequest", {
           postNumber: postNum,
@@ -1748,9 +1797,10 @@ export default {
           userNotif: user,
           postIdentity: postIdentity
         }),
+        api.post("/api/sendMessage", dataMessage ),
         api.get("/api/getTransaction"),
       ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[1].data);
+        store.commit("setUserTransactions", resArr[2].data);
       });
     },
     // search(receiver,sender, myArray){
@@ -1795,6 +1845,9 @@ export default {
   computed: {
     authUser() {
       return store.getters.getUser;
+    },
+    userPersonal(){
+      return store.getters.getPersonal;
     },
     room() {
       return store.getters.getRooms;

@@ -109,6 +109,7 @@ class transactionController extends Controller
 
             if($request->postIdentity == "request_post"){
                 $transaction = transaction::with('post')->where('transactionStatus', 'pending')->where('postNumber', $request->postNmmber)->get();
+                if(!empty($transaction))
                 foreach($transaction as $trans){
                     $trans->transactionStatus = "Declined";
                     $trans->post->postStatus = "Order Taken";

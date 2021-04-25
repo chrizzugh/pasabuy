@@ -19,7 +19,7 @@ class NotificationController extends Controller
         // foreach (Auth::user()->unreadNotifications as $notification) {
         //     echo $notification;
         // }
-        return response()->json(Auth::user()->unreadNotifications->where('type','!=','App\Notifications\newTransactionNotification'));
+        return response()->json(Auth::user()->unreadNotifications);
     }
     public function readNotif()
     {

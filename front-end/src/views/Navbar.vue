@@ -50,6 +50,7 @@
             <div class="flex gap-x-4 py-4">
               <span class="material-icons cursor-pointer"> chat </span>
               <p class="text-gray-500">Messages</p>
+              <!-- <span class="text-red-500">{{ unreadNotifChat.length }}</span> -->
             </div></router-link
           >
           <div
@@ -65,7 +66,7 @@
               class="text-base font-bold leading-none tracking-wide text-gray-500 outline-none"
               >Notifications
             </span>
-            <span class="text-red-500">{{ unreadNotif }}</span>
+            <span class="text-red-500">{{ unreadNotif.length }}</span>
           </div>
         </div>
         <div class="flex mr-2 gap-x-5">
@@ -229,6 +230,8 @@ export default {
     await store.dispatch("getUnreadNotifications");
     await store.dispatch("getAllNotifications");
     await store.dispatch("getUserTransactions");
+    await store.dispatch("getChatRoom");
+
   },
   },
   setup() {
@@ -251,8 +254,12 @@ export default {
   },
   
   computed: {
+    // 'type','!=','App\Notifications\newTransactionNotification'
     unreadNotif() {
-      return store.getters.getUnreadNotif.length;
+      return store.getters.getUnreadNotif.filter((x)=>{return x.type !='App\\Notifications\\newTransactionNotification' });
+    },
+    unreadNotifChat() {
+      return store.getters.getUnreadNotif.filter((x)=>{return x.type =='App\\Notifications\\newTransactionNotification' });
     },
     user() {
       return store.getters.getUser;
