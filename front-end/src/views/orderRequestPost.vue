@@ -9,12 +9,12 @@
         <!--Delivery Information List-->
          <div class="flex flex-col mt-1 ssm:px-2 sm:px-2 justify-center items-center vs:px-2">
              <div class="flex flex-row ssm:flex-col ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               delivery_dining 
               </span>
-              <div class="sm:w-full">
-                    <button @click="dropdown1modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs ssm:pr-0 vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">{{deliveryAddress}}</button>
+              <div class=" vs:w-full sm:w-full">
+                    <button @click="dropdown1modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs ssm:pr-0 vs:w-full w-52 h-11 py-2.5 px-4 vs:px-3.5 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">{{deliveryAddress}}</button>
               <div class="relative">
             <div v-if="dropdown1" class="absolute p-2 bg-white rounded-lg shadow-xl right-0 h-40 sm:w-full w-52">
             <div id="scroll1" class="flex-auto overflow-y-scroll  h-28">
@@ -79,11 +79,11 @@
               </div>
                 </div>
                  
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               shopping_cart
               </span>
-              <div class="sm:w-full">
+              <div class="vs:w-full sm:w-full">
                 <button @click="dropdown4modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Shopping Place</button>
                 <div class="relative">
             <div v-if="dropdown4" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52">
@@ -108,18 +108,18 @@
              </div>
 
              <div class="flex flex-row pt-3 ssm:pt-2 ssm:flex-col ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               alarm
               </span>
                     <input class="focus:outline-none sm:w-full ssm:w-full ssm:h-auto ssm:text-xs flex vs:w-full w-52 h-11 py-2.5 px-4 items-center vs:pr-0 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500" placeholder="Schedule">
                 </div>
                  
-               <div class="flex space-x-2 sm:w-full">
+               <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               payments
               </span>
-              <div class="sm:w-full">
+              <div class="vs:w-full sm:w-full">
                 <button @click="dropdown2modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Payment Method</button>
               <div class="relative">
             <div v-if="dropdown2" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52">

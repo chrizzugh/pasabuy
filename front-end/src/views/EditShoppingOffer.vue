@@ -24,23 +24,23 @@
   <div class="flex flex-col mt-1  sm:px-2 ssm:px-2 vs:px-2 justify-center items-center">
       
       <div class="flex flex-row ssm:flex-col ssm:space-x-0 se:space-x-1 ssm:space-y-2 space-x-4 w-full justify-center">
-         <div class="flex flex-row space-x-2 sm:w-full ">
+         <div class="flex flex-row space-x-2 vs:w-full sm:w-full ">
              <span class="rounded-lg mt-1.5 material-icons text-red-700">
               delivery_dining
              </span>
               <div class="flex items-center justify-start sm:w-full ssm:px-2 ssm:h-auto ssm:w-full vs:w-full w-52 h-12 vs:h-12 px-4 vs:px-2 bg-gray-100 rounded-xl">
-             <div class="flex flex-col items-start justify-start h-full py-1.5 vs:w-full rounded-2xl">
+             <div class="flex flex-col items-start justify-start h-full py-1.5 rounded-2xl">
               <button @click="dropdown1modal" class=" focus:outline-none flex w-full flex-col">
                 <p class="text-xs font-semibold leading-none text-gray-500">Delivery Area</p>
                 <input style="cursor: pointer;" disabled type="text" id="input_name" v-model="delivery_info.delivery_area" class="ssm:text-xs block bg-gray-100 text-sm focus:outline-none leading-loose text-gray-900 w-44 sm:w-full vs:w-full h-auto">
               </button>
-            <div v-if="dropdown1" class="relative p-2 bg-white rounded-lg shadow-xl right-4 h-40 sm:w-full w-52">
-            <div id="scroll1" class="flex-auto overflow-y-scroll  h-28">
+            <div v-if="dropdown1" class="relative p-2 vs:p-1 bg-white rounded-lg shadow-xl right-4 vs:right-0 h-40 vs:w-full sm:w-full w-52">
+            <div id="scroll1" class="flex-auto overflow-y-scroll h-28">
               <div class="flex flex-col items-start space-y-1.5">
              <div @click="getAddressValue" class="flex flex-col w-full space-y-1 px-2" style="cursor: pointer;">
                  <p class="text-sm font-bold tracking-wide leading-none text-gray-900">Home Address</p>
                  <div class="flex-1 w-full px-2">
-                 <p class="text-sm tracking-wide leading-none text-gray-900">{{address1}}</p>
+                 <p class="text-sm tracking-wide leading-none text-gray-900">{{address2}}</p>
                  </div>
              </div>
              <hr class="flex w-full px-2">
@@ -71,8 +71,8 @@
               <span class="text-red-700 material-icons">
                 add_circle
               </span>
-              <div class="flex-1 w-full" >
-              <p class="text-sm font-bold tracking-wide leading-none text-red-700 ">Add New Shipping Address </p>
+              <div class="flex-1 w-full vs:px-2" >
+              <p class="text-sm font-bold tracking-wide leading-none text-red-700 ">Add <span class="vs:hidden">New Shipping Address</span> </p>
              </div>
              </div>
             <div @click.self="openAddModal" v-if="addAddress" class="z-50 bg-black bg-opacity-25 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
@@ -97,22 +97,22 @@
          </div>
          </div>
           
-         <div class="flex flex-row space-x-2 sm:w-full">
+         <div class="flex flex-row space-x-2 vs:w-full sm:w-full">
              <div>
               <span class="rounded-lg mt-1.5 material-icons text-red-700">
               shopping_cart
               </span>
              </div>
               <div class="flex items-center justify-start sm:w-full ssm:px-2 ssm:h-auto ssm:w-full vs:w-full w-52 h-12 vs:h-12 px-4 vs:px-2 bg-gray-100 rounded-xl">
-             <div class="flex flex-col items-start justify-start h-full py-1.5 vs:w-full rounded-2xl">
+             <div class="flex flex-col items-start justify-start h-full py-1.5 rounded-2xl">
               <button @click="dropdown4modal" style="cursor: pointer;" class=" focus:outline-none flex w-full flex-col">   
               <p class="text-xs font-semibold leading-none text-gray-500">Shopping Place</p>
               <input type="text" id="input_name" style="cursor: pointer;" disabled v-model="delivery_info.shopping_place" class="ssm:text-xs block bg-gray-100 text-sm focus:outline-none leading-loose text-gray-900 w-44 sm:w-full vs:w-full h-auto">
               </button>
-            <div v-if="dropdown4" class="relative py-3 bg-white rounded-lg shadow-xl right-4 h-35.1 sm:w-full w-52">
-            <div class="flex flex-col w-full px-2 justify-start items-start">
-             <input type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Search for place" title="Shopping Place" class="focus:outline-none">
-            <div id="scroll1" class="flex px-2 flex-col overflow-y-scroll w-full h-24">
+            <div v-if="dropdown4" class="relative py-3 vs:py-0 vs:p-2 bg-white rounded-lg shadow-xl right-4 vs:right-0 h-35.1 vs:w-full sm:w-full w-52">
+            <div class="flex flex-col w-full px-2 vs:px-0 justify-start items-start">
+             <input type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Search for place" title="Shopping Place" class="vs:text-sm focus:outline-none">
+            <div id="scroll1" class="flex px-2 vs:px-0 flex-col overflow-y-scroll w-full h-24">
             <ul id="myUL" class="space-y-1 text-sm tracking-wide leading-normal">
             <li><a href="#">Ayala</a></li>
             <li><a href="#">Disney Land</a></li>
@@ -131,7 +131,7 @@
       </div>
 
       <div class="flex flex-row pt-3 ssm:pt-2 ssm:flex-col ssm:space-x-0 se:space-x-1 ssm:space-y-2 space-x-4 w-full justify-center">
-        <div class="flex flex-row space-x-2 sm:w-full">
+        <div class="flex flex-row space-x-2 vs:w-full sm:w-full">
              <span class="rounded-lg mt-1.5 material-icons text-red-700">
              alarm
              </span>
@@ -143,20 +143,20 @@
          </div>
         </div>
          
-        <div class="flex flex-row space-x-2 sm:w-full ">
+        <div class="flex flex-row space-x-2 vs:w-full  sm:w-full ">
          <span class="rounded-lg mt-1.5 material-icons text-red-700">
          directions_car
          </span>
-         <div   class="inline-flex items-center justify-start w-52 sm:w-full ssm:px-2 ssm:h-auto ssm:w-full vs:w-full h-12 vs:h-12 px-4 vs:px-2  bg-gray-100 rounded-xl">
-          <div  class="inline-flex flex-col items-start justify-start w-full h-full py-1.5 rounded-2xl">
+         <div class="inline-flex items-center justify-start w-52 sm:w-full ssm:px-2 ssm:h-auto ssm:w-full vs:w-full h-12 vs:h-12 px-4 vs:px-2  bg-gray-100 rounded-xl">
+          <div class="inline-flex flex-col items-start justify-start w-full h-full py-1.5 rounded-2xl">
             <button @click="dropdown3modal" style="cursor: pointer;" class=" focus:outline-none flex w-full flex-col">
             <p class="text-xs font-semibold leading-none text-gray-500">Public Transit</p>
             <input style="cursor: pointer;" type="text" disabled id="input_name" v-model="delivery_info.public_transit" class="ssm:text-xs block bg-gray-100 text-sm focus:outline-none leading-loose text-gray-900 w-44 sm:w-full vs:w-full h-auto">
             </button>
-            <div  v-if="dropdown3" class=" relative py-3 bg-white rounded-lg shadow-xl right-4 h-35.1 sm:w-full w-52">
-            <div class="flex flex-col w-full px-2 justify-start items-start">
-             <input class="focus:outline-none" @click="func1(event)" type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Mode of transport.." title="Transport Mode">
-            <div id="scroll1" class="flex px-2 flex-col overflow-y-scroll w-full h-24">
+            <div  v-if="dropdown3" class=" relative py-3 vs:py-0 vs:p-2 bg-white rounded-lg shadow-xl right-4 vs:right-0 h-35.1 vs:w-full sm:w-full w-52">
+            <div class="flex flex-col w-full px-2 vs:px-0 justify-start items-start">
+             <input class="focus:outline-none vs:text-sm" @click="func1(event)" type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Mode of transport.." title="Transport Mode">
+            <div id="scroll1" class="flex px-2 vs:px-0 flex-col overflow-y-scroll w-full h-24">
             <ul id="myUL" class="space-y-1 text-sm tracking-wide leading-normal">
             <li><a href="#">Spaceship</a></li>
             <li><a href="#">Cart Titan</a></li>
@@ -176,7 +176,7 @@
      </div>
 
      <div class="flex flex-row pt-3 ssm:pt-2 ssm:flex-col se:space-x-1 ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
-        <div class="flex flex-row space-x-2 sm:w-full">
+        <div class="flex flex-row space-x-2 vs:w-full sm:w-full">
              <span class="rounded-lg mt-1.5 material-icons text-red-700">
              shopping_bag
              </span>
@@ -190,7 +190,7 @@
          </div>
         </div>
          
-        <div class="flex flex-row space-x-2 sm:w-full">
+        <div class="flex flex-row space-x-2 vs:w-full sm:w-full">
          <span class="rounded-lg mt-1.5 material-icons text-red-700">
          payments
          </span>
@@ -200,22 +200,22 @@
               <p class="text-xs font-semibold leading-none text-gray-500">Payment Method</p>
               <input style="cursor: pointer;" disabled type="text" id="input_name" v-model="delivery_info.payment_method" class="ssm:text-xs block bg-gray-100 focus:outline-none text-sm leading-7 text-gray-900 w-44 sm:w-full vs:w-full h-auto">
             </button>
-            <div v-if="dropdown2" class="relative py-3 bg-white rounded-lg shadow-xl h-35.1  sm:w-full right-4 w-52">
+            <div v-if="dropdown2" class="relative py-3 bg-white rounded-lg shadow-xl h-35.1 sm:w-full vs:w-full vs:right-0 right-4 w-52">
             <div class="flex flex-col w-full space-y-3 px-2 justify-start items-start">
-             <button class="flex w-full focus:outline-none justify-start items-start px-2">
-                <p class="text-sm tracking-wide leading-none text-gray-900">Cash on Delivery</p>
+             <button class="flex w-full focus:outline-none justify-start items-start  vs:justify-center vs:items-center px-2 vs:px-1">
+                <p class="text-sm vs:text-xs tracking-wide leading-none text-gray-900">Cash on Delivery</p>
             </button>
             <hr class="flex w-full">
-            <button class="flex w-full focus:outline-none justify-start items-start px-2">
-                <p class="text-sm tracking-wide leading-none text-gray-900">GCash</p>
+            <button class="flex w-full focus:outline-none justify-start vs:justify-center vs:items-center items-start px-2 vs:px-1">
+                <p class="text-sm vs:text-xs tracking-wide leading-none text-gray-900">GCash</p>
             </button>
             <hr class="flex w-full">
-            <button class="flex w-full focus:outline-none justify-start items-start px-2">
-                <p class="text-sm tracking-wide leading-none text-gray-900">PayMaya</p>
+            <button class="flex w-full focus:outline-none justify-start vs:justify-center vs:items-center items-start px-2 vs:px-1">
+                <p class="text-sm vs:text-xs tracking-wide leading-none text-gray-900">PayMaya</p>
             </button>
             <hr class="flex w-full">
-            <button class="flex w-full focus:outline-none justify-start items-start px-2">
-                <p class="text-sm tracking-wide leading-none text-gray-900">Online Banking</p>
+            <button class="flex w-full focus:outline-none justify-start vs:justify-center vs:items-centeritems-start px-2 vs:px-1">
+                <p class="text-sm vs:text-xs tracking-wide leading-none text-gray-900">Online Banking</p>
             </button>
             </div>
               </div>

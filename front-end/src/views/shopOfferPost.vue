@@ -10,52 +10,52 @@
         <!--Delivery information list-->
          <div class="flex flex-col mt-1 vs:mt-1 ssm:px-2 vs:px-2 sm:px-2 justify-center items-center">
              <div class="flex flex-row ssm:flex-col ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               delivery_dining  
               </span>
-              <div class="sm:w-full">
+              <div class=" vs:w-full sm:w-full">
                     <button @click="dropdown1modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">{{deliveryAddress}}</button>
                     <div class="relative">
-            <div v-if="dropdown1" class="absolute p-2 bg-white rounded-lg shadow-xl right-0 h-40 sm:w-full w-52">
-            <div id="scroll1" class="flex-auto overflow-y-scroll  h-28">
+            <div v-if="dropdown1" class="absolute p-2 bg-white rounded-lg shadow-xl right-0 h-40 sm:w-full vs:w-full w-52">
+            <div id="scroll1" class="flex-auto flex-grow-0 min-w-0 overflow-y-scroll vs:w-full h-28">
               <div class="flex flex-col items-start space-y-1.5">
-             <div @click="getAddressValue" class="flex flex-col w-full space-y-1 px-2" style="cursor: pointer;">
-                 <p class="text-sm font-bold tracking-wide leading-none text-gray-900">Home Address</p>
+              <div @click="getAddressValue" class="flex flex-col w-full space-y-1 px-2" style="cursor: pointer;">
+                 <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold tracking-wide leading-none text-gray-900">Home Address</p>
                  <div class="flex-1 w-full px-2">
-                 <p class="text-sm tracking-wide leading-none text-gray-900">{{address1}}</p>
+                 <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm tracking-wide leading-none text-gray-900">{{address2}}</p>
                  </div>
              </div>
              <hr class="flex w-full px-2">
              <div @click="getAddressValue" class="flex flex-col w-full space-y-1 px-2" style="cursor: pointer;">
-                 <p class="text-sm font-bold tracking-wide leading-none text-gray-900">Shipping Address 1</p>
+                 <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold tracking-wide leading-none text-gray-900">Shipping Address 1</p>
                  <div class="flex-1 w-full px-2">
-                 <p class="text-sm tracking-wide leading-none text-gray-900">{{address2}}</p>
+                 <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm tracking-wide leading-none text-gray-900">{{address2}}</p>
                  </div>
              </div>
              <hr class="flex w-full px-2">
              <div @click="getAddressValue" class="flex flex-col w-full space-y-1 px-2" style="cursor: pointer;">
-                 <p class="text-sm font-bold tracking-wide leading-none text-gray-900">Shipping Address 2</p>
+                 <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold tracking-wide leading-none text-gray-900">Shipping Address 2</p>
                  <div class="flex-1 w-full px-2">
-                 <p class="text-sm tracking-wide leading-none text-gray-900">{{address3}}</p>
+                 <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm tracking-wide leading-none text-gray-900">{{address3}}</p>
                  </div>
              </div>
              <hr class="flex w-full px-2">
              <div @click="getAddressValue" class="flex flex-col w-full space-y-1 px-2" style="cursor: pointer;">
-                 <p class="text-sm font-bold tracking-wide leading-none text-gray-900">Shipping Address 3</p>
+                 <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold tracking-wide leading-none text-gray-900">Shipping Address 3</p>
                  <div class="flex-1 w-full px-2">
-                 <p class="text-sm tracking-wide leading-none text-gray-900">{{address4}}</p>
+                 <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm tracking-wide leading-none text-gray-900">{{address4}}</p>
                  </div>
              </div>
              <hr>
             </div>
             </div> 
-             <div @click="addAddress=!addAddress" class="flex text-base items-center focus:outline-none p-2 space-x-1" style="cursor: pointer;">
+             <div @click="addAddress=!addAddress" class="flex text-base vs:text-xs ssm:text-xs lvs:text-sm  items-center focus:outline-none p-2 space-x-1" style="cursor: pointer;">
               <span class="text-red-700 material-icons">
                 add_circle
               </span>
-              <div class="flex-1 w-full" >
-              <p class="text-sm font-bold tracking-wide leading-none text-red-700 ">Add New Shipping Address </p>
+              <div class="flex-1 vs:px-2 w-full" >
+              <p class="text-sm font-bold tracking-wide leading-none text-red-700 ">Add <span class="vs:hidden">New Shipping Address</span> </p>
              </div>
              </div>
             <div @click.self="openAddModal" v-if="addAddress" class="z-50 bg-black bg-opacity-25 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
@@ -80,16 +80,16 @@
               </div>
                 </div>
                  
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               shopping_cart  
               </span>
-              <div class="sm:w-full">
+              <div class="vs:w-full sm:w-full">
                 <button @click="dropdown4modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 px-4 items-center py-2.5 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Shopping Place</button>
                  <div class="relative">
-            <div v-if="dropdown4" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52">
+            <div v-if="dropdown4" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full vs:w-full w-52">
             <div class="flex flex-col w-full px-2 justify-start items-start">
-             <input class="focus:outline-none" type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Search for place" title="Shopping Place">
+             <input class="focus:outline-none vs:text-sm" type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Search for place" title="Shopping Place">
             <div id="scroll1" class="flex px-2 flex-col overflow-y-scroll w-full h-24">
             <ul id="myUL" class="space-y-1 text-sm tracking-wide leading-normal">
             <li><a href="#">Ayala</a></li>
@@ -109,23 +109,23 @@
              </div>
 
              <div class="flex flex-row ssm:flex-col ssm:space-x-0 ssm:space-y-2 ssm:pt-2 pt-3 space-x-4 w-full justify-center">
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               alarm  
               </span>
                     <input class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500" placeholder="Schedule">
                 </div>
                  
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               directions_car 
               </span>
-              <div class="sm:w-full">
+              <div class="vs:w-full sm:w-full">
                 <button @click="dropdown3modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Transport Mode</button>
               <div class="relative">
-            <div v-if="dropdown3" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52">
+            <div v-if="dropdown3" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 vs:w-full sm:w-full w-52">
             <div class="flex flex-col w-full px-2 justify-start items-start">
-             <input class="focus:outline-none" type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Mode of transport.." title="Transport Mode">
+             <input class="focus:outline-none vs:text-sm" type="text" id="myInput" v-on:keyup="myFunction()" placeholder="Mode of transport.." title="Transport Mode">
             <div id="scroll1" class="flex px-2 flex-col overflow-y-scroll w-full h-24">
             <ul id="myUL" class="space-y-1 text-sm tracking-wide leading-normal">
             <li><a href="#">Spaceship</a></li>
@@ -145,36 +145,36 @@
              </div>
 
              <div class="flex flex-row ssm:flex-col ssm:space-x-0 ssm:space-y-2 ssm:pt-2 pt-3 space-x-4 w-full justify-center">
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               shopping_bag  
               </span>
                     <input class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500" placeholder="Capacity">
                 </div>
                  
-                <div class="flex space-x-2 sm:w-full">
+                <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               payments
               </span>
-              <div class="sm:w-full">
+              <div class="vs:w-full sm:w-full">
                     <button @click="dropdown2modal" class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500">Payment Method</button>
             <div class="relative">
-            <div v-if="dropdown2" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52">
+            <div v-if="dropdown2" class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 vs:w-full sm:w-full w-52">
             <div class="flex flex-col w-full space-y-3 px-2 justify-start items-start">
-             <button class="flex w-full focus:outline-none justify-start items-start px-2">
-                <p class="text-sm tracking-wide leading-none text-gray-900">Cash on Delivery</p>
+             <button class="flex vs:flex-1 w-full focus:outline-none justify-start items-start vs:px-1 px-2">
+                <p class="text-sm vs:text-xs tracking-wide leading-none text-gray-900">Cash on Delivery</p>
             </button>
             <hr class="flex w-full">
-            <button class="flex w-full focus:outline-none justify-start items-start px-2">
-                <p class="text-sm tracking-wide leading-none text-gray-900">GCash</p>
+            <button class="flex vs:flex-1 w-full focus:outline-none justify-start items-start vs:px-1 px-2">
+                <p class="text-sm vs:text-xs tracking-wide leading-none text-gray-900">GCash</p>
             </button>
             <hr class="flex w-full">
-            <button class="flex w-full focus:outline-none justify-start items-start px-2">
-                <p class="text-sm tracking-wide leading-none text-gray-900">PayMaya</p>
+            <button class="flex vs:flex-1 w-full focus:outline-none justify-start items-start vs:px-1  px-2">
+                <p class="text-sm vs:text-xs tracking-wide leading-none text-gray-900">PayMaya</p>
             </button>
             <hr class="flex w-full">
-            <button class="flex w-full focus:outline-none justify-start items-start px-2">
-                <p class="text-sm tracking-wide leading-none text-gray-900">Online Banking</p>
+            <button class="flex vs:flex-1 w-full focus:outline-none justify-start items-start vs:px-1 px-2">
+                <p class="text-sm vs:text-xs tracking-wide leading-none text-gray-900">Online Banking</p>
             </button>
             </div>
               </div>

@@ -442,13 +442,14 @@
 
     <!--Display Shared Post-->
     <div id="display-sharedPost" class="pt-6 flex-col dv:float-right justify-center items-center">
-<div id="display-content" class="flex-col w-608 space-y-4 bg-white h-auto rounded-lg">
-      <div id="display-header" class="flex pt-4 px-2 justify-between items-center">
+<div id="display-content" class="flex-col w-608 bg-white h-auto rounded-lg">
+      <div id="display-header" class="flex pt-4 px-2 py-4 justify-between items-center">
         <div class="focus:outline-none flex items-center space-x-4">
         <p @click="$router.push('edit-profile')" class="text-base italic leading-none text-gray-900"><span class="font-bold ">Asta Staria</span> shared this post</p>
         </div>
       </div>
-     <div id="fkmouse" class="display-body cursor-not-allowed"></div>
+      <hr class="w-full">
+     <div id="fkmouse" class="display-body py-0 cursor-not-allowed"></div>
 </div>
 </div>
 <!--end-->
@@ -840,7 +841,7 @@ export default {
       var container = $('#shopOffer-UserPost');
       var clonedContainer = container.clone().css({padding: '0', float: 'none'});
       clonedContainer.find('#3dotmenu').remove();
-      clonedContainer.find('#changeBoxRadius').css({"border-top-left-radius": "0px","border-top-right-radius": "0px"});
+      clonedContainer.find('#changeBoxRadius').css({"border-top-left-radius": "0px","border-top-right-radius": "0px", "box-shadow":"none"});
       $('display-header').find('#closeButton').remove();
       $('#display-footer').css({padding: '0'}).remove();
       clonedContainer.appendTo('.display-body')
