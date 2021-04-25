@@ -361,7 +361,8 @@
                       acceptOffer(
                         transaction.postNumber,
                         transaction.indexTransactionPost,
-                        transaction.emailCustomerShopper
+                        transaction.emailCustomerShopper,
+                        trasnsaction.post.postIdentity
                       )
                     "
                     class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
@@ -1739,12 +1740,13 @@ export default {
         store.commit("setUserTransactions", resArr[1].data);
       });
     },
-    acceptOffer(postNum, indexTransactionPost, user) {
+    acceptOffer(postNum, indexTransactionPost, user, postIdentity) {
       Axios.all([
         api.post("api/confirmRequest", {
           postNumber: postNum,
           ID: indexTransactionPost,
           userNotif: user,
+          postIdentity: postIdentity
         }),
         api.get("/api/getTransaction"),
       ]).then((resArr) => {
