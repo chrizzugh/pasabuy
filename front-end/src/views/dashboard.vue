@@ -464,18 +464,25 @@
             <div class="mb-6 bg-white shadow-md w-72 rounded-2xl">
               <header class="py-3 pl-4 text-sm font-semibold tracking-wide text-gray-500">
                 ACTIVE ORDERS
-                  <span class="inline-flex pl-20 pr-3 align-bottom material-icons-round md-18">
+                  <span v-if="or_shift>0" @click="prev_swap_order" class=" cursor-pointer inline-flex pl-20 pr-3 align-bottom material-icons-round md-18">
                     navigate_before
                 </span>
-                <span class="inline-flex align-bottom material-icons-round md-18">
+                <span v-else class="inline-flex cursor-pointer text-gray-300 pl-20 pr-3 align-bottom material-icons-round md-18">
+                    navigate_before
+                </span>
+                    
+
+                <span v-if="or_shift<activeOrders.length-1" @click="next_swap_order" class=" cursor-pointer inline-flex align-bottom material-icons-round md-18">
                     navigate_next
                 </span>
-
+                <span v-else class="inline-flex cursor-pointer text-gray-300 align-bottom material-icons-round md-18">
+                    navigate_next
+                </span>
               </header>
               <hr>
               <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
                 <label for="" class="pt-2 pl-3 font-bold">
-                 Transaction #{{ activeOrders.transactNo }}
+                 Transaction #{{ activeOrders[0].transactNo }}
                 </label>
               </div>
 
@@ -485,7 +492,7 @@
                 </label>
 
                 <label for="" class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo">
-                  {{ activeOrders.stat }}
+                  {{ activeOrders[0].stat }}
                 </label>
               </div>
 
@@ -494,7 +501,7 @@
                 <img class="w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
               </button>
               <div class="ml-2">
-                <h5 class="text-sm font-bold">{{ activeOrders.first_name }} {{ activeOrders.last_name }}
+                <h5 class="text-sm font-bold">{{ activeOrders[0].first_name }} {{ activeOrders[0].last_name }}
                   <span class="inline-block text-blue-900 align-middle material-icons-round md-18">
                     verified
                   </span>
@@ -502,7 +509,7 @@
                  </h5>
                  
                     <p class="text-sm font-normal font-nunito">
-                      <span class="inline-block align-middle">{{ activeOrders.rating }}
+                      <span class="inline-block align-middle">{{ activeOrders[0].rating }}
                       </span>
                       <span class="top-0 inline-block text-red-700 align-top material-icons-round md-20">
                           star_rate
@@ -530,18 +537,24 @@
             <div class="z-0 mb-6 bg-white w-72 rounded-xl vs:hidden xsm:hidden ssm:hidden">
               <header class="py-3 pl-4 text-sm font-semibold tracking-wide text-gray-500">
                 ACTIVE DELIVERIES
-                  <span class="inline-flex pl-16 pr-3 align-bottom material-icons-round md-18">
+                  <span v-if="shift>0"  @click="prev_swap_deliver()" class="select-none cursor-pointer inline-flex pl-16 pr-3 align-bottom material-icons-round md-18">
                     navigate_before
                 </span>
-                <span class="inline-flex align-bottom material-icons-round md-18">
-                    navigate_next
+                  <span v-else  class="select-none text-gray-300 cursor-pointer inline-flex pl-16 pr-3 align-bottom material-icons-round md-18">
+                    navigate_before
                 </span>
 
+                <span v-if="shift<activeDeliveries.length-1" @click="next_swap_deliver()" class="cursor-pointer select-none inline-flex align-bottom material-icons-round md-18">
+                    navigate_next
+                </span>
+                <span v-else class="cursor-pointer select-none text-gray-300 inline-flex align-bottom material-icons-round md-18">
+                    navigate_next
+                </span>
               </header>
               <hr>
               <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
                 <label for="" class="pt-2 pl-3 font-bold">
-                  Transaction #{{ activeDeliveries.transNo }}
+                  Transaction #{{ activeDeliveries[0].transNo }}
                 </label>
               </div>
 
@@ -551,7 +564,7 @@
                 </label>
 
                 <label for="" class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo">
-                  {{ activeDeliveries.stats }}
+                  {{ activeDeliveries[0].stats }}
                 </label>
               </div>
 
@@ -560,14 +573,14 @@
                 <img class="w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
               </button>
               <div class="ml-2 ">
-                <h5 class="text-sm font-bold">{{ activeDeliveries.firstName }} {{ activeDeliveries.lastName }}
+                <h5 class="text-sm font-bold">{{ activeDeliveries[0].firstName }} {{ activeDeliveries[0].lastName }}
                   <span class="inline-block text-blue-900 align-middle material-icons-round md-18">
                     verified
                   </span>
                  
                  </h5>
                  <p class="text-sm font-normal font-nunito">
-                      <span class="inline-block align-middle">{{ activeDeliveries.rate }}
+                      <span class="inline-block align-middle">{{ activeDeliveries[0].rate }}
                       </span>
                       <span class="top-0 inline-block text-red-700 align-top material-icons-round md-20">
                           star_rate
@@ -586,7 +599,7 @@
                       room
                     </span>
                     <label for="" class="inline-block pl-2 text-sm tracking-wide align-text-top">
-                      {{ activeDeliveries.address }}
+                      {{ activeDeliveries[0].address }}
                     </label>
                   </div>
                <div class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl">
@@ -652,6 +665,8 @@ export default {
     el:'#shop-list',
   data() {
     return {
+      shift:0,
+      or_shift:0,
       postModalVisible: false,
       postModalVisible1: false,
       postModalVisible2: false,
@@ -698,7 +713,7 @@ export default {
         comment: "Hi! If there's anyone who can help me and sabuy my groceries, I would greatly appreciate it. Send me an offer if you are willing. Thanks!",
         status: 'No Longer Accepting Requests'
       },
-      activeDeliveries:{
+      activeDeliveries:[{
         transNo: '61913174',
         address: 'Ligao',
         firstName: 'Hanbin',
@@ -706,16 +721,51 @@ export default {
         rate: '4.9',
         stats: "Confirmed"
       },
+      {
+        transNo: '61913175',
+        address: 'Ligazpi',
+        firstName: 'Hanbina',
+        lastName: 'Kim0',
+        rate: '4.9',
+        stats: "Confirmed"
+      },
+      {
+        transNo: '61913176',
+        address: 'Daraga',
+        firstName: 'Utetsu',
+        lastName: 'monk',
+        rate: '4.9',
+        stats: "Confirmed"
+      }
+      ],
 
-      activeOrders:{
+      activeOrders:[{
         transactNo: '1267643764',
         address: 'Legazpi',
         first_name:'Go Eun',
         last_name: 'Na',
         rating: '4.9',
+        stat:"Confirmed" 
+      },
+      {
+        transactNo: '1267643765',
+        address: 'Naga',
+        first_name:'Kyoko',
+        last_name: 'Hori',
+        rating: '4.9',
         stat:"Confirmed"
         
       },
+      {
+        transactNo: '1267643766',
+        address: 'Ginubatab',
+        first_name:'Erza',
+        last_name: 'Scarlet',
+        rating: '4.9',
+        stat:"Confirmed"
+        
+      }
+      ],
       
       shopList: [
       { items: 'Pork' },
@@ -755,6 +805,36 @@ export default {
     
   },
   methods:{
+    next_swap_order(){
+      let x=this.or_shift;
+      let y=this.activeOrders.length;
+      if(x<y-1){
+        [this.activeOrders[0],this.activeOrders[x+1]]=[this.activeOrders[x+1],this.activeOrders[0]];
+        this.or_shift++;
+      }
+    },
+    prev_swap_order(){
+      if(this.or_shift>0){
+        [this.activeOrders[0],this.activeOrders[this.or_shift]]=[this.activeOrders[this.or_shift],this.activeOrders[0]];
+        this.or_shift--;
+      }
+    },
+
+  next_swap_deliver(){
+      let x=this.shift;
+      let y=this.activeDeliveries.length;
+      if(x<y-1){
+        [this.activeDeliveries[0],this.activeDeliveries[x+1]]=[this.activeDeliveries[x+1],this.activeDeliveries[0]];
+        this.shift++;
+      }
+    },
+    prev_swap_deliver(){
+      if(this.shift>0){
+        [this.activeDeliveries[0],this.activeDeliveries[this.shift]]=[this.activeDeliveries[this.shift],this.activeDeliveries[0]];
+        this.shift--;
+      }
+    },
+
     togglePostModal(){
       this.postModalVisible = !this.postModalVisible
     },
