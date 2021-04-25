@@ -9,6 +9,7 @@ use App\Models\userInformation;
 use App\Notifications\cancelledRequestNotification;
 use App\Notifications\confirmRequestNotification;
 use App\Notifications\declinedRequestNotification;
+use App\Notifications\newTransactionNotification;
 use App\Notifications\UpdateRequestNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,9 @@ class transactionController extends Controller
         $newTransaction->emailCustomerShopper = Auth::user()->email;
 
         if($newTransaction->save()){
+            $userToNotif = User::where('email',$request->email)->get();
+			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
+			$userToNotif->notify(new newTransactionNotification($request->postNumber));
             return response()->json('ok');
         }else{
             return response()->json('not ok');

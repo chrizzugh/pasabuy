@@ -300,18 +300,57 @@
         <!--end-->
 
         <!--Select Shopping List button-->
-        <div class="flex items-center justify-center mt-4">
-          <button
-            class="inline-flex items-center justify-center p-4 bg-gray-100 rounded-full w-31.75 vs:w-26.5 h-11"
-          >
-            <div class="flex items-center space-x-2">
-              <img class="w-6 h-full rounded-lg" src="img/add.svg" />
-              <p class="text-sm font-extrabold leading-none text-gray-900">
-                Select Shopping List
-              </p>
-            </div>
-          </button>
+  <div class="flex justify-center items-center ssm:px-2 mt-3 sm:px-2 vs:px-2">
+    <button
+      @click="selectShoppingList=!selectShoppingList"
+      class="inline-flex items-center justify-center p-4 bg-gray-100 rounded-full w-31.75 ssm:w-full vs:w-full h-14 ssm:h-10 vs:h-12"
+    >
+      <div class="flex space-x-2 items-center">
+        <img class="w-6 h-full rounded-lg" src="img/add.svg" />
+        <p v-if="selectedList ==null"
+          class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900"
+        >
+          Select Shopping List
+        </p>
+        <p v-else
+          class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900"
+        >
+        {{selectedList}}
+        </p>
+      </div>
+    </button>
+  </div>
+  <!--end-->
+  <div v-if="selectShoppingList"  @click.self="closeModal()" class="z-50 bg-black bg-opacity-25 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+      <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 ssm:w-full vs:w-full" >
+      <div class="flex flex-row w-full justify-center items-center py-3">
+       <h1 class="text-gray-900 pr-10 se:pr-6 se:pl-14 ssm:pr-4 ssm:pl-14 pl-20 leading-normal ssm:text-sm vs:text-base lvs:text-xl text-xl font-bold">
+         Select Shopping List
+       </h1>
+       <button @click="closeModal()" class=" mt-2 focus:outline-none text-sm ssm:text-xs vs:text-xs lvs:text-sm mb-1 ssm:mb-2 leading-none text-indigo-900">
+         Close
+         </button>
+      </div>
+      <hr>
+      <p class="text-center text-red-500">{{listError}}</p>
+      <div class="flex flex-col space-y-3 mt-4 mb-4">
+        <div class="ml-5 flex w-full" v-for="(list,index) in shoppingLists" :key="index">
+          <label class="inline-flex items-center">
+            <input type="radio" class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4" name="accountType" :id="'list'+index" :value="list.shoppingListNumber">
+            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base" :id="'listSpan'+index" >{{list.shoppingListTitle}}</span>
+          </label>
         </div>
+      </div>
+      <hr>
+      <div class="flex mt-4 mb-4 items-center justify-center ssm:px-2 vs:px-2">
+        <button  @click="addShoppingList" >
+        <div class="inline-flex items-center justify-center px-4 py-2 bg-red-700 rounded-full ssm:h-8 h-10 w-88 ssm:w-full vs:w-full">
+          <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-normal text-center text-white">Add list</p>
+      </div>
+        </button>
+      </div>
+       </div>
+     </div>
         <!--end-->
 
         <!--Comment Section-->
@@ -370,24 +409,51 @@ export default {
       dropdown2: false,
       dropdown3: false,
       dropdown4: false,
-      deliveryAddress: "Delivery Area",
+      deliveryAddress: "Delivery Address",
       shoppingPlace: '',
       payment: "Payment Method",
       Payments:['Cash on Delivery','Gcash','PayMaya','Online Banking'],
       message:null,
       sched:null,
-      requestData:null
+      requestData:null,
+      selectShoppingList:false,
+      selectedList:null,
+      listError:null,
+      selectedListNumber:null
+
     };
   },
   methods: {
+    closeModal(){
+        this.selectShoppingList=!this.selectShoppingList
+      
+    },
+    addShoppingList(){
+      for(var i=0;i<this.shoppingLists.length;i++){
+        if(document.getElementById('list'+i).checked){
+          this.selectedListNumber =  document.getElementById('list'+i).value
+          this.selectedList = document.getElementById('listSpan'+i).innerHTML
+          this.selectShoppingList=!this.selectShoppingList
+          console.log(this.selectedList)
+          this.listError=null
+        }
+      }
+      if(this.selectedList==null){
+        this.listError = "Please select a shopping list"
+      }
+    },
     toEncryptData(){
+      var stringList = JSON.stringify(this.shoppingLists.filter((x)=>{return x.shoppingListNumber === this.selectedListNumber}))
+      stringList = stringList.replace('[', ' ')
+      stringList = stringList.replace(']', ' ')
+      
       return btoa(JSON.stringify({
         deliveryAddress:this.deliveryAddress,
         shoppingPlace:this.shoppingPlace,
         paymentMethod:this.payment,
         message:this.message,
         deliverySchedule:this.sched,
-        shoppingList: this.shoppingLists.filter((x)=>{return x.shoppingListNumber === '1'}),//only harcoded shopping list
+        shopping_list: stringList,
         param: 'this_is_a_parameter_post_message',
       }))
       // console.log('this is the requested data',this.requestData)

@@ -163,31 +163,15 @@
         <div class="bg-gray-200 py-1 px-3 rounded-2xl" v-if=" delivery.transactionData.shopping_list !=null">
           <div class="flex text-sm sm: space-x-2">
             <p>Shopping List</p>
-            <p class="text-gray-500">{{ delivery.transactionData.shopping_list.text.split(", ").length }}</p>
-            <p v-if=" delivery.transactionData.shopping_list.text.split(', ') > 1" class="text-gray-500">items</p>
+            <p class="text-gray-500">{{ delivery.transactionData.shopping_list.shoppingListContent.split(", ").length }}</p>
+            <p v-if=" delivery.transactionData.shopping_list.shoppingListContent.split(', ') > 1" class="text-gray-500">items</p>
             <p v-else class="text-gray-500">item</p>
           </div>
           <ul
             id="example-1"
             class="list-disc text-sm list-inside grid grid-cols-2 p-5"
           >
-            <li v-for="(item,index) in delivery.transactionData.shopping_list.text.split(', ')" :key="index">
-              {{ item }}
-            </li>
-          </ul>
-        </div>
-          <div class="bg-gray-200 py-1 px-3 rounded-2xl" v-else>
-          <div class="flex text-sm sm: space-x-2">
-            <p>Shopping List</p>
-            <p class="text-gray-500">{{ delivery.transactionData.shoppingList[0].text.split(', ').length }}</p>
-            <p v-if="delivery.transactionData.shoppingList[0].text.split(', ').length > 1" class="text-gray-500">items</p>
-            <p v-else class="text-gray-500">item</p>
-          </div>
-          <ul
-            id="example-1"
-            class="list-disc text-sm list-inside grid grid-cols-2 p-5"
-          >
-            <li v-for="(item,index) in delivery.transactionData.shoppingList[0].text.split(', ')" :key="index">
+            <li v-for="(item,index) in delivery.transactionData.shopping_list.shoppingListContent.split(', ')" :key="index">
               {{ item }}
             </li>
           </ul>

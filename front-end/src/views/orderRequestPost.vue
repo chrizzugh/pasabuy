@@ -353,9 +353,9 @@ export default {
   },
   methods: {
     closeModal(){
-      if(this.selectedList != null){
+       
         this.selectShoppingList=!this.selectShoppingList
-      }
+  
     },
     addShoppingList(){
       for(var i=0;i<this.shoppingLists.length;i++){

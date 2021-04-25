@@ -17,7 +17,8 @@ use App\Models\userAddress;
 use App\Notifications\SharedNotification;
 use App\Models\ShoppingList;
 use App\Models\Follower;
-
+use App\Models\transaction;
+use App\Notifications\postStatusNotification;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -506,5 +507,38 @@ class PostController extends Controller
 		});
 
 		return 200;
+	}
+
+	public function editPostStatus(Request $request)
+	{
+		# code...
+
+		$post = Post::where('postNumber', '=', $request->postNumber)->where('email', '=',  Auth::user()->email)->firstOrFail();
+
+
+		$transactionPost = transaction::with('Post')->where('transactionStatus','=', 'pending')->where('postNumber', $request->postNumber)->where('transactionReceiver', Auth::user()->email)->get();
+		
+		// return $transactionPost;
+		$post->postStatus = $request->status;
+
+		if ($post->save()) {
+			//check if there is a trhansaction
+			if (!empty($transactionPost)) {
+				//get the user with an existing pending transactions with this post to notify them aboutthe changing of post status
+				foreach ($transactionPost as $transaction) {
+					if($request->status === "Cancelled"){
+						$transaction->transactionStatus = "Cancelled";
+					}else{
+						$transaction->transactionStatus = "Declined";
+					}
+					$transaction->save();
+					$userToNotif = User::where('email', $transaction->emailCustomerShopper)->get();
+					$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
+					$userToNotif->notify(new postStatusNotification($request->status,$request->postNumber));
+				}
+			}
+			return response()->json(["message" => "Successfully changed an order status"], 201);
+		}
+		return response()->json(["error" => "Error in updating an order status"], 422);
 	}
 }

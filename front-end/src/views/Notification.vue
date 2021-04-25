@@ -52,6 +52,16 @@
                 <span class="text-xs text-gray-500">  {{timestamp(notif.created_at)}}</span>
                 </p>
               </div>
+              <div class="flex items-start px-4 py-3 -mx-2 border-b hover:bg-gray-100"
+                v-if="notif.type === postStatusNotif">
+                <img class="object-cover w-10 h-10 mx-1 rounded-full" :src="notif.data.userPic" alt="avatar">
+                <p class="pl-1 mx-2 text-sm text-gray-800">
+                <span class="font-bold" href="#">{{notif.data.user}}</span> 
+                <span class ="font-semibold"> has changed their post status to {{notif.data.status}}</span><br>
+                <router-link :to="'/orders/?postnum='+notif.data.postNumber" class="font-bold text-blue-500">View Order  </router-link>
+                <span class="text-xs text-gray-500">  {{timestamp(notif.created_at)}}</span>
+                </p>
+              </div>
             </div>
          
 </template>
@@ -69,6 +79,8 @@ export default {
       declinedRequestNotif: "App\\Notifications\\declinedRequestNotification",
       acceptRequestNotif: "App\\Notifications\\confirmRequestNotification",
       updateRequestNotif: "App\\Notifications\\UpdateRequestNotification",
+      postStatusNotif: "App\\Notifications\\postStatusNotification",
+
     }
   },
   methods:{

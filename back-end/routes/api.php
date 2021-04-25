@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getShoppingList', [shoppingListController::class, 'getShoppingList']);
     Route::post('/editList', [shoppingListController::class, 'editList']);
     Route::post('/createList', [shoppingListController::class, 'createList']);
+	Route::post('/editPostStatus', [PostController::class, 'editPostStatus']);
 
 
 

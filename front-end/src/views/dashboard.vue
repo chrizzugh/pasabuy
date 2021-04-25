@@ -26,12 +26,7 @@
                 @click="togglePostModal"
                 class="flex items-center justify-start py-5 pl-6 text-base leading-none text-gray-500 bg-gray-100 rounded-full outline-none md:w-full focus:outline-none lvs:text-sm vs:text-xs ssm:text-xs vs:h-12 ssm:h-10 h-14 w-448 vs:w-full ssm:w-full x-v:text-sm"
               >
-                Post a shopping offer
-                <span
-                  class="vs:hidden ssm:hidden sm:hidden xsm:hidden lg:mx-0 vsv:hidden"
-                >
-                  or an order request</span
-                >
+                Post a shopping offer or an order request
               </button>
             </div>
           </div>
@@ -312,6 +307,7 @@
                             v-if="postModalVisible2"
                             @closeModal2="listener2"
                             :post="post_info"
+                            @getSortPosts="sortPosts"
                           />
                           <button
                             @click="togglePostModal2"
@@ -380,6 +376,7 @@
                             v-if="postModalVisible2"
                             @closeModal3="listener2"
                             :post="post_info"
+                            @getSortPosts="sortPosts"
                           />
                           <button
                             @click="togglePostModal2"

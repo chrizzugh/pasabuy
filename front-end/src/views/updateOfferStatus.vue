@@ -13,34 +13,33 @@
       <div class="flex flex-col space-y-3 mt-4 mb-4">
         <div class="ml-5 flex w-full">
           <label class="inline-flex items-center">
-            <input type="radio" class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4" name="accountType" value="personal">
-            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base">Accepting Request</span>
+            <input type="radio" class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4" id="NLAR">
+            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base">No Longer Accepting Requests</span>
           </label>
         </div>
         <div class="ml-5 flex w-full">
           <label class="inline-flex items-center">
-            <input type="radio" class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4" name="accountType" value="personal">
-            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base">No Longer Accepting Request</span>
-          </label>
-        </div>
-        <div class="ml-5 flex w-full">
-          <label class="inline-flex items-center">
-            <input type="radio" class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4" name="accountType" value="personal">
-            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base">Cancelled</span>
+            <input type="radio" class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4" id="C">
+            <span class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base">Cancel Offer</span>
           </label>
         </div>
       </div>
       <hr>
       <div class="flex mt-4 mb-4 items-center justify-center ssm:px-2 vs:px-2">
+        <button @click="updateStatus">
         <div class="inline-flex items-center justify-center px-4 py-2 bg-red-700 rounded-full ssm:h-8 h-10 w-88 ssm:w-full vs:w-full">
           <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-normal text-center text-white">Update Status</p>
       </div>
+        </button>
       </div>
        </div>
      </div>
 </template>
 
 <script>
+import VueSimpleAlert from "vue-simple-alert";
+import store from "../store/index";
+import api from "../api"
 export default {
   props:['post'],
     data(){
@@ -53,6 +52,34 @@ export default {
         close2(){
             this.$emit('closeModal2')
         },
+         updateStatus() {
+ 
+      var NLAR = document.getElementById("NLAR").checked;
+      var C = document.getElementById("C").checked;
+
+      var status = null;
+     if (NLAR) {
+        status = "No Longer Accepting Requests";
+      } else if (C) {
+        status = "Cancelled";
+      }
+
+      api
+        .post("api/editPostStatus", {
+          status: status,
+          postNumber: this.post.postNumber,
+        })
+        .then((res) => {
+          console.log(res.data)
+          store.dispatch("getPosts").then(() => {
+            store.dispatch("getUserTransactions")
+            VueSimpleAlert.alert(res.data.message, "Success", "success");
+            this.$emit("getSortPosts");
+          });
+        }).catch(error=>{
+          VueSimpleAlert.alert(error.response.data.error, "Error", "error")
+        })
+    },
     }
 }
 </script>
