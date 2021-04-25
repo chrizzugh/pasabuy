@@ -203,7 +203,6 @@ const store =  new Vuex.Store({
             .get('api/getTransaction')
             .then((res)=>{
                 let transactions = res.data
-                console.log('your transactions', transactions)
                 state.commit('setUserTransactions',transactions)
             })
             .catch((error)=>{
@@ -215,7 +214,6 @@ const store =  new Vuex.Store({
             .get('api/getShippingAddress')
             .then((res)=>{
                 let addr = res.data
-                console.log('your addressese', addr)
                 state.commit('setUserShippingAddress',addr)
             })
             .catch((error)=>{
@@ -282,7 +280,6 @@ const store =  new Vuex.Store({
             .get('api/getShoppingList')
             .then((res)=>{
                 let data = res.data
-                console.log("shopping list", data)
                 state.commit('setShoppingList',data)
             })
             .catch((error)=>{

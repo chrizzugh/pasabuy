@@ -411,7 +411,12 @@
               <div v-for="(msg, index) in chat.get_messages" :key="index">
                 <div v-if="msg.messageSender != authUser.email">
                   <!--your incoming messages-->
-                  <div v-if="hasPostNum(msg.messageText) == -1 && hasTransactionMessage(msg.messageText) == -1">
+                  <div
+                    v-if="
+                      hasPostNum(msg.messageText) == -1 &&
+                      hasTransactionMessage(msg.messageText) == -1
+                    "
+                  >
                     <div class="flex items-end pr-10 mt-1">
                       <img
                         :src="msg.get_message_sender.profilePicture"
@@ -433,17 +438,35 @@
                     </div>
                   </div>
                   <div v-else-if="hasTransactionMessage(msg.messageText) != -1">
-                    <div class="flex justify-center" v-for="(msgStatus,index) in parseString(msg.messageText)" :key="index"> 
-                        <div
-                          class="ml-4 mr-10 p-3 text-gray-400 text-sm"
+                    <div
+                      class="flex justify-center"
+                      v-for="(msgStatus, index) in parseString(msg.messageText)"
+                      :key="index"
+                    >
+                      <div class="ml-4 mr-10 p-3 text-gray-400 text-sm">
+                        <p
+                          v-if="
+                            msgStatus.sender ==
+                            this.userPersonal.firstName +
+                              ' ' +
+                              this.userPersonal.lastName
+                          "
                         >
-                          <p v-if="msgStatus.sender == (this.userPersonal.firstName+' '+this.userPersonal.lastName)">
-                            You {{msgStatus.status}} {{msgStatus.receiver}}'s offer/request
-                          </p>
-                          <p v-else-if="msgStatus.receiver == (this.userPersonal.firstName+' '+this.userPersonal.lastName)">
-                            {{msgStatus.sender}} {{msgStatus.status}} your offer/request
-                          </p>
-                        </div>
+                          You {{ msgStatus.status }} {{ msgStatus.receiver }}'s
+                          offer/request
+                        </p>
+                        <p
+                          v-else-if="
+                            msgStatus.receiver ==
+                            this.userPersonal.firstName +
+                              ' ' +
+                              this.userPersonal.lastName
+                          "
+                        >
+                          {{ msgStatus.sender }} {{ msgStatus.status }} your
+                          offer/request
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div v-else>
@@ -573,7 +596,12 @@
                 </div>
                 <div v-else>
                   <!--your outgoing messages-->
-                  <div v-if="hasPostNum(msg.messageText) == -1 && hasTransactionMessage(msg.messageText) == -1">
+                  <div
+                    v-if="
+                      hasPostNum(msg.messageText) == -1 &&
+                      hasTransactionMessage(msg.messageText) == -1
+                    "
+                  >
                     <div class="flex justify-end pr-10 mt-1">
                       <div
                         class="ml-32 pt-2 pl-4 pb-3 pr-4 text-sm bg-gray-100 rounded-lg"
@@ -589,17 +617,37 @@
                     </div>
                   </div>
                   <div v-else-if="hasTransactionMessage(msg.messageText) != -1">
-                    <div class="flex justify-center" v-for="(msgStatus,index) in parseString(msg.messageText)" :key="index"> 
-                        <div
-                          class="ml-4 items-center mr-10 p-3  text-gray-400 text-sm "
+                    <div
+                      class="flex justify-center"
+                      v-for="(msgStatus, index) in parseString(msg.messageText)"
+                      :key="index"
+                    >
+                      <div
+                        class="ml-4 items-center mr-10 p-3 text-gray-400 text-sm"
+                      >
+                        <p
+                          v-if="
+                            msgStatus.sender ==
+                            this.userPersonal.firstName +
+                              ' ' +
+                              this.userPersonal.lastName
+                          "
                         >
-                          <p v-if="msgStatus.sender == (this.userPersonal.firstName+' '+this.userPersonal.lastName)">
-                            You {{msgStatus.status}} {{msgStatus.receiver}}'s offer/request
-                          </p>
-                          <p v-else-if="msgStatus.receiver == (this.userPersonal.firstName+' '+this.userPersonal.lastName)">
-                            {{msgStatus.sender}} {{msgStatus.status}} your offer/request
-                          </p>
-                        </div>
+                          You {{ msgStatus.status }} {{ msgStatus.receiver }}'s
+                          offer/request
+                        </p>
+                        <p
+                          v-else-if="
+                            msgStatus.receiver ==
+                            this.userPersonal.firstName +
+                              ' ' +
+                              this.userPersonal.lastName
+                          "
+                        >
+                          {{ msgStatus.sender }} {{ msgStatus.status }} your
+                          offer/request
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div v-else>
@@ -1414,6 +1462,7 @@ import api from "../api";
 import moment from "moment";
 import store from "../store/index";
 import Axios from "axios";
+import _ from "lodash";
 export default {
   components: {
     Navbar,
@@ -1478,62 +1527,52 @@ export default {
       }
       this.connect();
     },
+    room() {
+      console.log("room changed");
+      this.getChatRooms();
+    },
   },
 
   methods: {
     connect() {
-      var timerId;
-      var debounceFunction = function (func, delay) {
-        // Cancels the setTimeout method execution
-        clearTimeout(timerId);
-
-        // Executes the func after delay time.
-        timerId = setTimeout(func, delay);
-      };
-      console.log("connect");
       if (this.activeRoom != null) {
         // console.log("will connect to =====", this.activeRoom)
-        debounceFunction(this.connectToChatRoom(),200);
+        let vm = this;
+        vm.getChatRooms();
+        window.Echo.private("chat." + this.activeRoom).listen(
+          ".message.new",
+          (res) => {
+            //optimize check if what is the return value, if itcontains transaction then get transaction and get chat rooms, otherwise get only chatroom
+            if (this.hasPostNum(res.chatMessage.messageText)) {
+              this.debounceMethod(vm);
+            } else {
+              api.get("api/getChatroom").then(() => {
+                vm.getChatRooms();
+              });
+            }
+          }
+        );
       }
     },
+    debounceMethod: _.debounce((vm) => {
+      Axios.all([
+        api.get("api/getTransaction"),
+        api.get("api/getChatroom"),
+      ]).then((res) => {
+        // console.log(res[0].data)
+        store.commit("setUserTransactions", res[0].data),
+          store.commit("FETCH_ROOMS", res[1].data),
+          vm.getChatRooms();
+      });
+    }, 2000),
     disconnect(oldval) {
       window.Echo.leave("chat." + oldval);
     },
-    connectToChatRoom() {
-      let vm = this;
-      store.dispatch("getChatRoom").then(() => {
-        vm.getChatRooms();
-      });
-      window.Echo.private("chat." + this.activeRoom).listen(
-        ".message.new",
-        (res) => {
-          //optimize check if what is the return value, if itcontains transaction then get transaction and get chat rooms, otherwise get only chatroom
-          if (this.hasPostNum(res.chatMessage.messageText)) {
-            Axios.all([
-              api.get("api/getTransaction"),
-              api.get("api/getChatroom"),
-            ]).then((res) => {
-              // console.log(res[0].data)
-              store.commit("setUserTransactions", res[0].data);
-              store.commit("FETCH_ROOMS", res[1].data).then(() => {
-                vm.getChatRooms();
-              });
-            });
-          } else {
-            api.get("api/getChatroom").then(() => {
-              vm.getChatRooms();
-            });
-          }
-        }
-      );
-    },
-
     sendbtn() {
       if (this.message != "") {
         var dataMessage = { roomID: this.activeRoom, message: this.message };
         api.get("/sanctum/csrf-cookie").then(() => {
-          api.post("/api/sendMessage", dataMessage).then((res) => {
-            console.log("success, message sent.  ", res.data);
+          api.post("/api/sendMessage", dataMessage).then(() => {
             this.getChatRooms();
 
             this.message = "";
@@ -1554,7 +1593,6 @@ export default {
       this.recipient = name;
       this.activeEmail1 = email1;
       this.activeEmail2 = email2;
-      console.log("setroom");
     },
 
     backChat() {
@@ -1571,7 +1609,6 @@ export default {
     getChatRooms() {
       //filtering the message room where there are no message and not the active room if there is
       var z = 0;
-      console.log("this room in store", this.room);
       for (i = 0; i < this.room.length; i++) {
         if (this.room[i].get_messages.length == 0) {
           //means epmty messages on room
@@ -1654,17 +1691,32 @@ export default {
       else return moment(datetime).format("MMM DD, YYYY [at] h:mm a");
     },
     getUrlQuery() {
+      var tempRoom, temp;
+      var dataMessage = [];
+      var transactionDetails = [];
       if (this.$route.query.ID != null) {
         this.userQueryID = atob(this.$route.query.ID);
         let params = { userEmail: this.userQueryID };
-        Axios.all([
-          api.get("/sanctum/csrf-cookie"),
-          api.post("api/createChatRoom", params),
-          api.get("api/getChatroom"),
-        ]).then((responseArr) => {
-          store.commit("FETCH_ROOMS", responseArr[2]);
-          this.getChatRooms();
+
+        //check if the room exists
+        tempRoom = this.room;
+        temp;
+        temp = tempRoom.filter((x) => {
+          return x.email1 == params.userEmail || x.email2 == params.userEmail;
         });
+        //if null execute create chat room, if exists, set room an render rooms
+        if (temp.length == 0) {
+          Axios.all([
+            api.get("/sanctum/csrf-cookie"),
+            api.post("api/createChatRoom", params),
+            api.get("api/getChatroom"),
+          ]).then((responseArr) => {
+            store.commit("FETCH_ROOMS", responseArr[2].data);
+            this.getChatRooms();
+          });
+        } else {
+          this.getChatRooms();
+        }
       } else if (this.$route.query.postNum != null) {
         var params = [];
         params = this.$route.query.postNum.split("/?p=");
@@ -1677,17 +1729,62 @@ export default {
             requestData.message.shopping_list
           );
         }
-        Axios.all([
-          api.get("/sanctum/csrf-cookie"),
-          api.post("api/createChatRoom", params),
-        ]).then((responseArr) => {
-          var dataMessage = [];
-          var transactionDetails = [];
+        //check if the room exists
+        tempRoom = this.room;
+        temp;
+        temp = tempRoom.filter((x) => {
+          return x.email1 == params.userEmail || x.email2 == params.userEmail;
+        });
+        //if null execute create chat room, if exists, set room an render rooms
+        if (temp == 0) {
+          //if dont exists, create room
+          Axios.all([
+            api.get("/sanctum/csrf-cookie"),
+            api.post("api/createChatRoom", params),
+          ]).then((responseArr) => {
+            var foundPost = this.posts.find((x) => x.postNumber === postNum); //find the passed post in the stored objects in vuex
+            if (foundPost.offer_post != null) {
+              dataMessage = {
+                roomID: responseArr[1].data.messageRoomNumber,
+                message: JSON.stringify(requestData.message),
+              };
+              transactionDetails = {
+                email: email,
+                postNumber: postNum,
+                transactionData: requestData.message,
+              };
+            } else {
+              foundPost.request_post["message"] = requestData.message.message;
+              foundPost.request_post["param"] = requestData.message.param;
+              dataMessage = {
+                roomID: responseArr[1].data.messageRoomNumber,
+                message: JSON.stringify(foundPost.request_post),
+              };
+              transactionDetails = {
+                email: email,
+                postNumber: postNum,
+                transactionData: foundPost.request_post,
+              };
+            }
+            Axios.all([
+              api.post("/api/sendMessage", dataMessage),
+              api.post("/api/createTransaction", transactionDetails),
+              api.get("/api/getTransaction"),
+              api.get("/api/getChatroom"),
+            ]).then((responseArr) => {
+              store.commit("setUserTransactions", responseArr[2].data),
+                store.commit("FETCH_ROOMS", responseArr[3].data),
+                this.getChatRooms();
+            });
+          });
+        } else {
+          //otherwise, set room and send message and transaction
+          dataMessage = [];
+          transactionDetails = [];
           var foundPost = this.posts.find((x) => x.postNumber === postNum); //find the passed post in the stored objects in vuex
-          //requestData.message.shopping_list= requestData.message.shopping_list.substring(1, requestData.message.shopping_list.length-1)
           if (foundPost.offer_post != null) {
             dataMessage = {
-              roomID: responseArr[1].data.messageRoomNumber,
+              roomID: temp[0].messageRoomNumber,
               message: JSON.stringify(requestData.message),
             };
             transactionDetails = {
@@ -1695,12 +1792,11 @@ export default {
               postNumber: postNum,
               transactionData: requestData.message,
             };
-            console.log(dataMessage);
           } else {
             foundPost.request_post["message"] = requestData.message.message;
             foundPost.request_post["param"] = requestData.message.param;
             dataMessage = {
-              roomID: responseArr[1].data.messageRoomNumber,
+              roomID: temp[0].messageRoomNumber,
               message: JSON.stringify(foundPost.request_post),
             };
             transactionDetails = {
@@ -1709,21 +1805,19 @@ export default {
               transactionData: foundPost.request_post,
             };
           }
-
           Axios.all([
             api.post("/api/sendMessage", dataMessage),
             api.post("/api/createTransaction", transactionDetails),
             api.get("/api/getTransaction"),
             api.get("/api/getChatroom"),
           ]).then((responseArr) => {
-            console.log("transactions", responseArr[2].data);
-            store.commit("setUserTransactions", responseArr[2].data);
-            store.commit("FETCH_ROOMS", responseArr[3].data);
-            this.getChatRooms();
-            var box = document.getElementById("journal-scroll");
-            box.scrollIntoView();
+            store.commit("setUserTransactions", responseArr[2].data),
+              store.commit("FETCH_ROOMS", responseArr[3].data),
+              this.getChatRooms();
           });
-        });
+        }
+      } else {
+        this.getChatRooms();
       }
     },
     hasPostNum(text) {
@@ -1749,70 +1843,81 @@ export default {
       return data;
     },
     cancelRequest(postNum, indexTransactionPost) {
-       var dataMessage = {
-              roomID: this.activeRoom,
-              message: JSON.stringify({param:"this_is_a_message_transaction", sender:this.userPersonal.firstName + ' '+this.userPersonal.lastName, receiver:this.activeName,status:'cancelled' }),
-            };
+      var dataMessage = {
+        roomID: this.activeRoom,
+        message: JSON.stringify({
+          param: "this_is_a_message_transaction",
+          sender:
+            this.userPersonal.firstName + " " + this.userPersonal.lastName,
+          receiver: this.activeName,
+          status: "cancelled",
+        }),
+      };
       Axios.all([
         api.post("api/cancelRequest", {
           postNumber: postNum,
-          ID: indexTransactionPost
+          ID: indexTransactionPost,
         }),
         api.post("/api/sendMessage", dataMessage),
         api.get("/api/getTransaction"),
         api.get("/api/getChatroom"),
       ]).then((resArr) => {
-         store.commit("setUserTransactions", resArr[2].data).then(()=>{
-          store.commit("FETCH_ROOMS", resArr[3].data).then(()=>{
-            this.getChatRooms()
-          })
-        })
+        store.commit("setUserTransactions", resArr[2].data),
+          store.commit("FETCH_ROOMS", resArr[3].data),
+          this.getChatRooms();
       });
     },
     declineOffer(postNum, indexTransactionPost, user) {
-       var dataMessage = {
-              roomID: this.activeRoom,
-              message: JSON.stringify({param:"this_is_a_message_transaction", sender:this.userPersonal.firstName + ' '+this.userPersonal.lastName, receiver:this.activeName,status:'declined' }),
-            };
+      var dataMessage = {
+        roomID: this.activeRoom,
+        message: JSON.stringify({
+          param: "this_is_a_message_transaction",
+          sender:
+            this.userPersonal.firstName + " " + this.userPersonal.lastName,
+          receiver: this.activeName,
+          status: "declined",
+        }),
+      };
       Axios.all([
         api.post("api/declineRequest", {
           postNumber: postNum,
           ID: indexTransactionPost,
-          userNotif: user
+          userNotif: user,
         }),
-        api.post("/api/sendMessage",  dataMessage),
+        api.post("/api/sendMessage", dataMessage),
         api.get("/api/getTransaction"),
         api.get("/api/getChatroom"),
       ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[2].data).then(()=>{
-          store.commit("FETCH_ROOMS", resArr[3].data).then(()=>{
-            this.getChatRooms()
-          })
-        })
-      
+        store.commit("setUserTransactions", resArr[2].data),
+          store.commit("FETCH_ROOMS", resArr[3].data),
+          this.getChatRooms();
       });
     },
     acceptOffer(postNum, indexTransactionPost, user, postIdentity) {
-     var dataMessage = {
-              roomID: this.activeRoom,
-              message: JSON.stringify({param:"this_is_a_message_transaction", sender:this.userPersonal.firstName + ' '+this.userPersonal.lastName, receiver:this.activeName,status:'accepted' }),
-            };
+      var dataMessage = {
+        roomID: this.activeRoom,
+        message: JSON.stringify({
+          param: "this_is_a_message_transaction",
+          sender:
+            this.userPersonal.firstName + " " + this.userPersonal.lastName,
+          receiver: this.activeName,
+          status: "accepted",
+        }),
+      };
       Axios.all([
         api.post("api/confirmRequest", {
           postNumber: postNum,
           ID: indexTransactionPost,
           userNotif: user,
-          postIdentity: postIdentity
+          postIdentity: postIdentity,
         }),
-        api.post("/api/sendMessage", dataMessage ),
+        api.post("/api/sendMessage", dataMessage),
         api.get("/api/getTransaction"),
         api.get("/api/getChatroom"),
       ]).then((resArr) => {
-         store.commit("setUserTransactions", resArr[2].data).then(()=>{
-          store.commit("FETCH_ROOMS", resArr[3].data).then(()=>{
-            this.getChatRooms()
-          })
-        })
+        store.commit("setUserTransactions", resArr[2].data),
+          store.commit("FETCH_ROOMS", resArr[3].data),
+          this.getChatRooms();
       });
     },
     // search(receiver,sender, myArray){
@@ -1850,15 +1955,14 @@ export default {
     //   // return filtered
     // }
   }, //end methods
-  created() {
+  mounted() {
     this.getUrlQuery();
-    this.getChatRooms();
   },
   computed: {
     authUser() {
       return store.getters.getUser;
     },
-    userPersonal(){
+    userPersonal() {
       return store.getters.getPersonal;
     },
     room() {

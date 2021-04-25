@@ -1603,7 +1603,7 @@
               v-if="toggleList && toggleListNum == userList.shoppingListNumber"
               @closeListModal="toggleList = !toggleList"
               :list="userList.shoppingListContent.split(', ')"
-              :index="userList.shoppingListNumber"
+              :index="userList.shoppingListTitle"
             />
 
             <button
@@ -1790,12 +1790,10 @@ export default {
     },
     share(postNumber) {
       var shareData = { postNum: postNumber };
-      console.log(shareData);
       api
         .post("/api/share", shareData)
         .then((res) => {
           VueSimpleAlert.alert(res.data.message, "Success", "success");
-          console.log(res.data);
           this.share1 = false;
           store.dispatch("getAllShares").then(() => {
             this.sortPosts();
@@ -1925,7 +1923,6 @@ export default {
       var dateToday = new Date();
       var dateDiff = schedDate.getTime() - dateToday.getTime();
       dateDiff = dateDiff / (1000 * 3600 * 24);
-      console.log(dateDiff);
       if (dateDiff < 1 && dateDiff > 0)
         return moment(datetime).format("[Today at] h:mm a");
       else if (dateDiff >= 1 && dateDiff < 2)
@@ -1933,7 +1930,6 @@ export default {
       else return moment(datetime).format("[From] MMM DD, YYYY [at] h:mm a");
     },
     async setDispatches(email) {
-      console.log("dispatch this", email);
       await store.dispatch("getUserInfo", email);
       await store.dispatch("getNotAuthUserAddress", email);
       return;
@@ -1959,7 +1955,6 @@ export default {
       var allPosts = this.posts.concat(this.allShares);
       this.sortedAllPosts = this.selectionSort(allPosts);
       this.filteringPosts = this.sortedAllPosts
-      console.log("sorted", this.sortedAllPosts);
     },
   },
   computed: {

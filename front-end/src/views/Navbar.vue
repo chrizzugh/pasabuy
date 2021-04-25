@@ -184,6 +184,8 @@ import Dropdown from "./dropmenu.vue";
 import Notification from "./Notification.vue";
 import api from "../api";
 import store from "../store/index";
+import _ from "lodash";
+import Axios from "axios"
 export default {
   name: "navBar",
   components: {
@@ -218,15 +220,22 @@ export default {
           console.log(errors);
         });
     },
-  
-    async dispatches(notification) {
-      if (notification == "App\\Notifications\\newTransactionNotification") {
-        await store.dispatch("getChatRoom");
+    debounceMethod: _.debounce((notif) => {
+      if (notif == "App\\Notifications\\newTransactionNotification") {
+        api.get("api/getChatroom").then((res) => {
+          store.commit("FETCH_ROOMS", res.data);
+        });
       }
-      await store.dispatch("getUnreadNotifications");
-      await store.dispatch("getAllNotifications");
-      await store.dispatch("getUserTransactions");
-    },
+      Axios.all([
+        api.get("api/getUnreadNotifications"),
+        api.get("api/getNotifications"),
+        api.get("api/getTransaction"),
+      ]).then((resArr) => {
+        store.commit("setUnreadNotifications", resArr[0].data),
+          store.commit("setNotifications", resArr[1].data),
+          store.commit("setUserTransactions", resArr[2].data);
+      });
+    }, 2000),
   },
   setup() {
     const currentRoute = computed(() => {
@@ -235,26 +244,15 @@ export default {
     return { currentRoute };
   },
   mounted() {
-    var timerId;
-    var debounceFunction = function (func, delay) {
-      // Cancels the setTimeout method execution
-      clearTimeout(timerId);
-
-      // Executes the func after delay time.
-      timerId = setTimeout(func, delay);
-    };
-    store.dispatch("getChatRoom");
-     window.Echo.private(
-        "App.Models.User." + this.user.indexUserAuthentication
-      ).notification((notification) => {
-        console.log("listening to notif", notification.type);
-        debounceFunction(this.dispatches(notification.type), 200);
-      });
-    // debounceFunction(this.connectToNotif, 200);
+    window.Echo.private(
+      "App.Models.User." + this.user.indexUserAuthentication
+    ).notification((notification) => {
+      console.log("in the navbar", notification.type);
+      this.debounceMethod(notification.type);
+    });
   },
 
   computed: {
-    // 'type','!=','App\Notifications\newTransactionNotification'
     unreadNotif() {
       return store.getters.getUnreadNotif.filter((x) => {
         return x.type != "App\\Notifications\\newTransactionNotification";
