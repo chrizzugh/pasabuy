@@ -39,7 +39,7 @@
               </div>
             </div>
           </div>
-          <div id="3dotmenu" class="vs:mt-1">
+          <div v-if="userID === user.email" id="3dotmenu" class="vs:mt-1">
             <button @click="edit1=!edit1" class="focus:outline-none">
               <img class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto" src="img/3dot.svg"/>
             </button>

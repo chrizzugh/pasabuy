@@ -313,7 +313,7 @@ export default {
     submit(){
         var form ={
             postIdentity: 'request_post',
-            postStatus: 'Acccepting Orders',
+            postStatus: 'Accepting Request',
             deliveryArea: this.deliveryAddress,
             shoppingPlace: this.shoppingPlace,
             deliverySchedule: this.sched,

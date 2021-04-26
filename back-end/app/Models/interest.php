@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class reviews extends Model
+class interest extends Model
 {
     use HasFactory;
-    protected $table = 'tbl_reviews';
-    protected $primaryKey = 'indexReview ';
+    protected $table = 'tbl_interest';
+    protected $primaryKey = 'indexInterest';
+    public $timestamps = false;
 }

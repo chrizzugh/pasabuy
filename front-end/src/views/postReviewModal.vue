@@ -19,21 +19,21 @@
            <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/>
            <div class="flex flex-col justify-center items-center py-3">
              <div class="">
-               <span class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900">{{visitorUser}}</span>
+               <span class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900">{{account_infos.email}}</span>
                <!--check icon here-->
              </div>
              <div class="flex ssm:flex-col ssm:space-x-0 ssm:py-0 ssm:space-y-1">
                <div class="flex-col justify-center items-center">
                    <div @click="getStarValue" class="stars justify-center items-center">
-                       <input type="radio" id="five" name="rate" value="5">
+                       <input v-model="rate" type="radio" id="five" name="rate" value="5">
                        <label for="five"></label> 
-                       <input type="radio" id="four" name="rate" value="4">
+                       <input v-model="rate" type="radio" id="four" name="rate" value="4">
                        <label for="four"></label>
-                       <input type="radio" id="three" name="rate" value="3">
+                       <input v-model="rate" type="radio" id="three" name="rate" value="3">
                        <label for="three"></label>
-                       <input type="radio" id="two" name="rate" value="2">
+                       <input v-model="rate" type="radio" id="two" name="rate" value="2">
                        <label for="two"></label>
-                       <input type="radio" id="one" name="rate" value="1">
+                       <input v-model="rate" type="radio" id="one" name="rate" value="1">
                        <label for="one"></label>
                    </div>
                         <div class="w-full justify-center items-center flex">
@@ -45,16 +45,23 @@
          </div>
      </div>
      <div class="flex items-start justify-start ">
-       <textarea class="text-sm ssm:text-xs vs:text-xs focus:outline-none lvs:text-sm leading-normal text-gray-900 w-full px-6 py-4 bg-gray-100 rounded-xl h-auto w-full ssm:w-full vs:w-full sm:w-full" placeholder="Write a comment" style="resize:none;"></textarea>
+       <textarea v-model="feedback" class="text-sm ssm:text-xs vs:text-xs focus:outline-none lvs:text-sm leading-normal text-gray-900 w-full px-6 py-4 bg-gray-100 rounded-xl h-auto w-full ssm:w-full vs:w-full sm:w-full" placeholder="Write a comment" style="resize:none;"></textarea>
    </div>
    </div>    
 <!--end-->
+<!--Post button-->
+                    <div class="justify-center flex mt-3 pb-3 px-2 ">
+                        <button @click="submit" class="inline-flex items-center justify-center focus:outline-none px-4 py-2 bg-red-700 rounded-full w-31.75 ssm:w-full ssm:h-8 vs:w-full h-10">
+                            <p class="text-base ssm:text-sm vs:text-sm font-bold leading-normal text-center text-white">Post</p>
+                        </button>
+                    </div>
    </div>
    </div>
 </template>
 
 <script>
-
+import store from "../store/index";
+import api from '../api'
 export default {
 
     data(){
@@ -62,17 +69,51 @@ export default {
         value: '0',
         visitorUser: 'Asta Staria',
         maxStarRate: '5',
+        rate: '5',
+        feedback: '',
+        revieweeEmail: '',
+        reviewerEmail: '',
+        revieweeID: '',
+        reviewerID: '',
       }
+    },
+    computed:{
+      userPersonal() {
+        return store.getters.getPersonal;
+      },
+        account_infos(){
+          return store.getters.getUserInfo
+        },
     },
     methods: {
         close(){
             this.$emit('closeReviewModal')
         },
-
         getStarValue(){
           this.value=document.querySelector('input[name="rate"]:checked').value
         },
-  }
+        submit () {
+          
+            var info = {
+                revieweeID:this.account_infos.indexUserInformation,
+                reviewerID:this.userPersonal.indexUserInformation,
+                revieweeEmail:this.account_infos.email,
+                reviewerEmail:this.userPersonal.email,
+                rate:this.rate,
+                feedback:this.feedback,
+            }
+            api.post('/api/userReviews', info).then(()=>{
+            //this.user = res.data;
+            //VueSimpleAlert.alert(res.data.message,"Success","success")
+            //store.dispatch('getPosts')//this will get the updated version of posts state from the states
+            this.$emit('closeReviewModal  ')
+            //window.location.reload();
+            }).catch((errors) => {
+                console.log(errors)
+            })
+            //this.toggle=false;
+        },
+    }
 }
 </script>
 

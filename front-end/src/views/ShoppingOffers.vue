@@ -39,7 +39,7 @@
               </div>
             </div>
           </div>
-          <div class="vs:mt-1">
+          <div v-if="userID === user.email" class="vs:mt-1">
             <button @click="edit1=!edit1, shoppingOffer_postNumber = shoppingOffer_info.offer_post.indexShoppingOfferPost" class="focus:outline-none">
               <img class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto" src="img/3dot.svg"/>
             </button>
@@ -52,7 +52,7 @@
                </span>
                 Edit Post
               </button>
-             <UpdateOfferStatus v-if="postModalVisible2" @closeModal2="listener2"/>
+             <UpdateOfferStatus v-if="postModalVisible2&&shoppingOffer_postNumber==shoppingOffer_info.offer_post.indexShoppingOfferPost" :btnText="shoppingOffer_info" @closeModal2="listener2"/>
               <button  @click="togglePostModal2" class="flex flex-row font-normal text-base focus:outline-none gap-x-2">
                <span class="font-normal text-gray-500 material-icons">
                 autorenew
@@ -68,14 +68,14 @@
         <!--end-->
 
         <!--section 2-->
-        <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full text-green-600" v-if="shoppingOffer_info.postStatus !== 'Accepting Request'">
+        <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full text-green-600" v-if="shoppingOffer_info.postStatus != 'Accepting Request'">
           <span class="rounded-full material-icons text-red-600">
               remove_circle_outline
               </span>
           <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600">
               {{shoppingOffer_info.postStatus}}</p>
         </div>
-        <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full text-green-600" v-if="shoppingOffer_info.postStatus === 'Accepting Request'">
+        <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full text-green-600" v-if="shoppingOffer_info.postStatus == 'Accepting Request'">
           <span class="rounded-full material-icons">
               remove_circle_outline
               </span>
@@ -267,19 +267,15 @@ export default {
     },
     togglePostModal1(){
       this.postModalVisible1 = !this.postModalVisible1
-      
     },
     togglePostModal2(){
       this.postModalVisible2 = !this.postModalVisible2
-      
     },
     toggleSendModal(){
       this.postSendModal = !this.postSendModal
-      
     },
     toggleChatModal(){
       this.postChatModal = !this.postChatModal
-      
     },
     listener(){
       this.postModalVisible = false;
@@ -331,6 +327,7 @@ export default {
   },
   computed:{
     user(){
+      //console.log('user',this.store.getters.getPersonal)
       return store.getters.getPersonal
     },
     posts(){
@@ -338,8 +335,9 @@ export default {
     },
     shoppingOffer_infos(){
       return this.posts.filter((post) => {return (post.email ==  this.userID) && (post.offer_post != null)})//filtering only the offer posts opf the current user
-    }
+    },
   },
+  
   
 //   computed: {
 //     //  filterOffers: function() {
@@ -386,6 +384,5 @@ export default {
     left: 0;
     
 }
-
 
 </style>

@@ -12,7 +12,8 @@ use App\Http\Controllers\resetPasswordController;
 use App\Http\Controllers\transactionController;
 use App\Http\Controllers\shoppingOffersController;
 use App\Http\Controllers\shoppingOrdersController;
-use App\Http\Controllers\reviewsController;
+use App\Http\Controllers\reviewController;
+use App\Http\Controllers\interestController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
@@ -107,3 +108,6 @@ Route::get("shoppingorders",[shoppingOrdersController::class, 'listShoppingOrder
 //Route::put("editShoppingOffers",[shoppingOffersController::class, 'update']);
 Route::get("reviews",[reviewsController::class, 'listReviews']);
 Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode']);
+Route::get("/userinterest", [interestController::class, 'getInterest']);
+Route::get("/userSkills", [interestController::class, 'getSkills']);
+Route::post("/userReviews", [reviewController::class, 'saveReview']);
