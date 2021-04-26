@@ -71,7 +71,7 @@ lg:p-0
             </div>
             <div class="vs:flex-col vs:space-x-2"> 
              
-      <button v-if="selected=='Confirmed'" class="text-blue-600 font-bold focus:outline-none" @click="toggle_status=!toggle_status">Update</button>
+      <button v-if="selected=='Confirmed'" class=" font-bold focus:outline-none" @click="toggle_status=!toggle_status">Update</button>
       <button v-else  class=" font-bold text-gray-400" disabled>Update</button>
            
            </div>
@@ -216,8 +216,6 @@ export default {
     currenTime:'',
     currentDate:'',
     selected: 'Confirmed',
-    
-    
 }
 },
 methods:{
@@ -249,3 +247,4 @@ methods:{
   color:white;
 }
 </style>
+
