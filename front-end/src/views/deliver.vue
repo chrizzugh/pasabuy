@@ -4,7 +4,7 @@
 ssm:w-max
 xsm:w-max
  justify-center   font-nunito ">
-<div class="w-6/12  
+<div class="w-608
       2xl:block 2xl:mt-24
       lg:block lg:mt-24  lg:w-6/12
       xl:block xl:mt-24
@@ -19,9 +19,9 @@ xsm:w-max
             md:flex-row md:mt-24 md:pl-4 md:items-center
             sm:flex-row
             space-y-3
-             2xl:w-6/12 2xl:px-0
-              lg:w-6/12 lg:px-0
-              xl:w-6/12 xl:px-0
+             2xl:w-608 2xl:px-0
+              lg:w-608 lg:px-0
+              xl:w-608 xl:px-0
               md:w-10/12 md:px-0
               sm:w-10/12
              ">
@@ -45,9 +45,9 @@ xl:p-0
 lg:p-0
 ">
  <div class="flex flex-col justify-center self-center 
-              2xl:w-6/12 
-              lg:w-6/12
-              xl:w-6/12
+              2xl:w-608
+              lg:w-608
+              xl:w-608
               md:w-10/12
               sm:w-10/12
      w-full bg-white ring-1 ring-gray-300 p-5 rounded-2xl" >
@@ -101,6 +101,10 @@ lg:p-0
               <!--/chat button-->
             </div>
             
+        </div>
+        <div v-if="selected=='Completed'" class=" space-y-2 w-full p-4 ring-2 ring-gray-300 rounded-xl">
+              <p class="text-sm select-none">Transaction marked as completed on {{currentDate}},at {{currenTime}}</p>
+              <span class="flex flex-row"><p class=" text-gray-400">Would you like to review the shopper?</p><b class="cursor-pointer">Write a review.</b></span>
         </div>
         <div class=" grid grid-cols-2  p-5 gap-y-4 text-sm">
           <div class="flex gap-2"><span class="material-icons text-red-600 ">
@@ -170,9 +174,9 @@ lg:p-0
    
 </div>
 <div class="text-left self-center
-  2xl:w-6/12 
-              lg:w-6/12
-              xl:w-6/12
+  2xl:w-608
+              lg:w-608
+              xl:w-608
               md:w-10/12
               sm:w-10/12
  p-2 ">
@@ -209,6 +213,8 @@ export default {
     order_number:'1234',
     date:'February 23,2021',
     time:'12:31 PM',
+    currenTime:'',
+    currentDate:'',
     selected: 'Confirmed',
     
     
@@ -216,6 +222,9 @@ export default {
 },
 methods:{
   update_stat(){
+    let new_time=new Date();
+    this.currenTime=new_time.toLocaleTimeString();
+    this.currentDate=new_time.toDateString();
     this.selected=document.querySelector('input[name="status"]:checked').value;
    
   },
