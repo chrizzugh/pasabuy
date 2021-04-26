@@ -17,10 +17,21 @@
            </p>
           </div>
           <div class="inline-flex vs:mt-1 ssm:justify-start ssm:items-start vs:items-start vs:justify-start sm:mt-0 items-center justify-end">
+           <!--Button if user visited his/her own profile-->
+           <!--parent div below-->
            <div class="flex items-center justify-center ssm:pl-2 ssm:pr-2 vs:pl-6 vs:pr-6 pl-5 pr-4 bg-white bg-opacity-50 border-2 rounded-full border-gray-900">
             <button class="flex-1 text-base ssm:text-sm font-bold focus:outline-none tracking-wider leading-loose text-center text-gray-900">
-            <router-link to="/account-settings" > Edit Profile </router-link></button>
+            <router-link to="/account-settings" >Edit Profile</router-link></button>
            </div>
+           <!--end-->
+           
+           <!--Button if user visited other profile,-->
+           <!--Remove hidden class below  and add hidden class to the above parent div to show follow button and hide edit profile button-->
+           <div class="hidden followButton flex items-center justify-center ssm:pl-2 ssm:pr-2 vs:pl-6 vs:pr-6 w-32 bg-white-700 border-2 rounded-full border-red-500">
+            <button @click="followButton" class="followStatus flex-1 text-base ssm:text-sm font-bold focus:outline-none tracking-wider leading-loose text-center text-gray-900">{{followStatus}}</button>
+           </div>
+           <!--end-->
+          
           </div>
           </div>
          <div class="flex flex-col ssm:hidden vs:hidden">
@@ -121,6 +132,7 @@ import ShoppingOrders from './ShoppingOrders'
 import ShoppingReviews from './ShoppingReviews'
 import ShoppingAbout from './ShoppingAbout'
 import Followers from './followersModal'
+import $ from 'jquery'
 export default {
   data(){
         return{
@@ -132,6 +144,8 @@ export default {
             hide: false,
             available: false,
             activeBtn:0,
+            followStatus: "Follow",
+            followedStatus: "Followed",
             personal:  {
               firstname:'Yami',
               lastname:'Sukehiro',
@@ -188,6 +202,18 @@ export default {
         this.activeBtn= el;
         }
     },
+    followButton(){
+      $(".followButton").toggleClass("followed");
+
+      if(this.followStatus != this.followedStatus){
+        this.followStatus = this.followedStatus;
+      }
+      else{
+        this.followStatus = "Follow";
+      }
+
+      //add backend code if need
+    },
 }
 }
 </script>
@@ -198,5 +224,11 @@ export default {
 }
 .active button{
   color:red;
+}
+.followButton{
+  border-color: rgba(220, 20, 60, 1);
+}
+.followed {
+    background-color: rgba(220, 20, 60, 1);  
 }
 </style>
