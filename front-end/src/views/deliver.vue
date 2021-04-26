@@ -268,8 +268,8 @@ export default {
         this.activeBtn = el;
         this.allDeliveries = this.deliveries.filter((x) => {
           return (
-            x.transactionStatus == "cancelled" ||
-            x.transactionStatus == "declined"
+            x.transactionStatus == "cancelled" || x.transactionStatus == "Cancelled"||
+            x.transactionStatus == "declined" || x.transactionStatus == "Declined"
           );
         });
         console.log("cancelled ", this.allDeliveries);
