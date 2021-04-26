@@ -258,13 +258,19 @@ export default {
     window.Echo.join(`public.${roomId}`)
     .here((users) => {
         //
+    //set the users who's already online before you online
+    for(var i=0;i<users.length;i++){
+        store.commit('setOnlineUsers',users[i].email)
+    }
     console.log(users)
     })
     .joining((user) => {
+       //add the user who just logged in tpo online
         store.commit('setOnlineUsers',user.email)
         console.log(user.email, " is online");
     })
     .leaving((user) => {
+      //remove users who leave the channel to online
         store.commit('removeFromOnlineUsers',user.email)
         console.log(user.email, " leaved");
     })
