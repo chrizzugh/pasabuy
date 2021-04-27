@@ -9,7 +9,6 @@ use App\Models\OfferPost;
 use App\Models\RequestPost;
 use App\Models\ShoppingList;
 use Carbon\Carbon;
-use Webpatser\Uuid\Uuid;
 
 class Post extends Model
 {

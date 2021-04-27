@@ -6,8 +6,6 @@ use App\Events\newPostEvent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Webpatser\Uuid\Uuid;
-use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\OfferPost;
 use App\Models\PasabuyUser;
@@ -128,7 +126,7 @@ class PostController extends Controller
 		$request_post->shoppingPlace = $request->shoppingPlace;
 		$request_post->deliverySchedule = $request->deliverySchedule;
 		$request_post->paymentMethod = $request->paymentMethod;
-		$request_post->shoppingListNumber = $request->shoppingListNumber;
+		$request_post->shoppingListNumber = '076-'.str_pad(Auth::user()->indexUserAuthentication,4,'0',STR_PAD_LEFT).'-'.str_pad(ShoppingList::count()+1,5,'0',STR_PAD_LEFT);
 		$request_post->caption = $request->caption;
 
 		// save to database

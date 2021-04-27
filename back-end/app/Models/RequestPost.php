@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Post;
 use App\Models\ShoppingList;
 use Illuminate\Support\Facades\Auth;
-use Webpatser\Uuid\Uuid;
 
 class RequestPost extends Model
 {
