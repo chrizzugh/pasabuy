@@ -60,6 +60,7 @@ class transactionController extends Controller
         
         return response()->json($transaction);
     }
+
     public function cancelRequest(Request $request)
     {
           # code...

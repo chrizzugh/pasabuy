@@ -15,6 +15,9 @@ use App\Http\Controllers\shoppingOffersController;
 use App\Http\Controllers\shoppingOrdersController;
 use App\Http\Controllers\reviewsController;
 use App\Http\Controllers\shoppingListController;
+use App\Http\Controllers\reviewController;
+use App\Http\Controllers\interestController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -78,11 +81,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 	Route::post('/editPostStatus', [PostController::class, 'editPostStatus']);
 	Route::post('/followStatus', [followController::class, 'followStatus']);
 	Route::get('/getUserFollow', [followController::class, 'getUserFollow']);
-
-
-
-
-
+    Route::get("shoppingoffers",[shoppingOffersController::class, 'listShoppingOffers']);
+    //Route::post("shoppingoffers",[shoppingOffersController::class, 'addShoppingOffers']);
+    Route::post("/editshoppingoffers",[shoppingOffersController::class, 'editshoppingoffers']);
+    Route::get("shoppingorders",[shoppingOrdersController::class, 'listShoppingOrders']);
+    //Route::put("editShoppingOffers",[shoppingOffersController::class, 'update']);
+    Route::get("/getReviews",[reviewController::class, 'listReviews']);
+    Route::put('post/{post_id}/edit', [PostController::class, 'editPost']);
+    Route::delete('post/(post_id}/delete', [PostController::class, 'deletePost']);
+    Route::get("/userinterest", [interestController::class, 'getInterest']);
+    Route::get("/userSkills", [interestController::class, 'getSkills']);
+    Route::post("/userReviews", [reviewController::class, 'saveReview']);
 
     
 });
@@ -112,12 +121,6 @@ Route::post('/password/reset',[resetPasswordController::class, 'reset'] );
 
 Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode']);
 Route::get('user/feed', [PostController::class, 'getFeeds']);
-Route::get("shoppingoffers",[shoppingOffersController::class, 'listShoppingOffers']);
-//Route::post("shoppingoffers",[shoppingOffersController::class, 'addShoppingOffers']);
-Route::post("/editshoppingoffers",[shoppingOffersController::class, 'editshoppingoffers']);
-Route::get("shoppingorders",[shoppingOrdersController::class, 'listShoppingOrders']);
-//Route::put("editShoppingOffers",[shoppingOffersController::class, 'update']);
-Route::get("reviews",[reviewsController::class, 'listReviews']);
+
 Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode']);
-Route::put('post/{post_id}/edit', [PostController::class, 'editPost']);
-Route::delete('post/(post_id}/delete', [PostController::class, 'deletePost']);
+

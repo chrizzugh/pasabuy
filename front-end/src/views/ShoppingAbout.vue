@@ -135,13 +135,13 @@
               <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{basic_info.work}}</p>
             </div>
             <div class="inline-flex">
-              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{basic_info.gender}}</p>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{account_infos.gender}}</p>
             </div>
             <div class="inline-flex">
-              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{basic_info.birdate}}</p>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{timestamp(account_infos.birthDate)}}</p>
             </div>
             <div class="inline-flex">
-              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{basic_info.language}}</p>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{userLang.languages}}</p>
             </div>
           </div>
         </div>
@@ -169,17 +169,8 @@
           <!--end-->
         </div>
         <div class="flex-1 space-y-6 items-start justify-start w-full h-auto item-start space-x-4 mb-6">
-        <div class="ml-4 inline-flex flex-grow-0 items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Writing</p>
-        </div>
-        <div class="inline-flex flex-grow-0 items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Blogging</p>
-        </div>
-        <div class="inline-flex flex-grow-0 items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Painting</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Public speaking</p>
+        <div v-for="userSkill in userSkills" v-bind:key="userSkill.indexSkills" class="ml-4 inline-flex flex-grow-0 items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
+          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{ userSkill.skills }}</p>
         </div>
         </div>
         <hr class="border-gray-200 h-2 w-full">
@@ -196,30 +187,9 @@
           <!--end-->
         </div>
         <div class="flex-1 space-y-6 flex-row justify-start w-full h-auto item-start space-x-4">
-          <div class="ml-4 inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Writing</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Blogging</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Painting</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Coding</p>
-        </div>
-        <div class="vs:hidden inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Public speaking</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Sight-Seeing</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Travel</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-        <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Photography</p>
-        </div>
+          <div v-for="interest in interests" v-bind:key="interest.indexInterest" class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
+            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{ interest.interests }}</p>
+          </div>
         </div>
       </div>
       <hr class="border-gray-200 h-2 w-full">
@@ -270,12 +240,16 @@
 </div>
 </div>
 <!--About end-->
+<component :is="component" :userID="userID"/>
 </template>
 
 <script>
+import api from '../api'
 import EditSkillsModal from './profileEditSkillsModal'
 import EditInterestModal from './profileEditInterestModal'
 import EditVisitedPlaceModal from './profileEditVisitedPlaceModal'
+import store from "../store/index"
+import moment from 'moment'
 export default {
   data(){
     return{
@@ -299,6 +273,9 @@ export default {
             city:'Legaspi City',
             barangay:'Banquerohan'
           },
+      userID:null,
+      interests: [],
+      userSkills: [],
     }
   },
    components: {
@@ -319,13 +296,41 @@ export default {
     listener1(){
       this.postModalVisible1 = false;
   },
+  loadinterest(){
+      api.get("api/userinterest").then((data) => {this.interests = data.data; console.log("interest",this.interests)});
+      api.get("api/userSkills").then((data) => {this.userSkills = data.data; console.log("skills",this.userSkills)});
+    },
    toggleVisitedPlaceModal2(){
       this.postModalVisible2 = !this.postModalVisible2
     },
     listener2(){
       this.postModalVisible2 = false;
   },
-  }
+    timestamp(datetime){
+      return moment(datetime).format('LL');
+    }
+  },
+  mounted(){
+    this.userID =  atob(this.$route.query.ID)
+  },
+  computed:{
+    account_infos(){
+      return store.getters.getUserInfo
+    },
+    accountaddress(){
+      return store.getters.getNotAuthUserAddress
+    },
+    userPersonal(){
+      return store.getters.getPersonal
+    },
+    userLang(){
+      return store.getters.getUserLang
+    },
+  },
+  created(){
+    this.loadinterest();
+    //api.get("api/user").then((data) => {this.user_email = data.data.email; console.log("email",this.user_email)});
+  },
   
 }
 </script>

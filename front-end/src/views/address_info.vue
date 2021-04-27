@@ -616,7 +616,6 @@ export default {
       "shipping address ",
       this.userShippingAddresses
     );
-
     if( this.shippingAdd[0]!=null){
       this.Landmark = this.shippingAdd[0].landMark;
       this.House_number = this.shippingAdd[0].houseNumber;
