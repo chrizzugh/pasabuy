@@ -16,13 +16,11 @@
       v-if="isOpen"
       class="shadow-xl fixed bg-white space-y-2 h-auto w-30 ring-2 ring-gray-200 right-0 rounded-lg py-2 pl-2 pr-4 pt-2 mr-16 mt-2"
     >
-      <button @click="setDispatches(userPersonal.email)">
-        <router-link
-          :to="'/edit-profile/?ID=' + toEncrypt(userPersonal.email)"
-          class="flex flex-row gap-x-2 text-black"
-          ><span class="material-icons text-gray-500">account_circle</span
-          >Profile</router-link
-        >
+      <button
+        @click="setDispatches(userPersonal.email)"
+        class="flex flex-row gap-x-2 text-black"
+      >
+        <span class="material-icons text-gray-500">account_circle</span>Profile
       </button>
       <router-link to="/orders" class="flex flex-row gap-x-2 text-black">
         <span class="material-icons text-gray-500">shopping_bag</span
@@ -77,11 +75,17 @@ export default {
     toEncrypt(val) {
       return btoa(val);
     },
-    async setDispatches(email) {
-      console.log("dispatch this", email);
-      await store.dispatch("getUserInfo", email);
-      await store.dispatch("getNotAuthUserAddress", email);
-      return;
+    setDispatches(email) {
+      store.dispatch("getUserInfo", email).then(() => {
+        store.dispatch("getNotAuthUserAddress", email).then(() => {
+          store.dispatch("getUserFollow", email).then(() => {
+            this.$router.push({
+              name: "Profile",
+              query: { ID: this.toEncrypt(email) },
+            });
+          });
+        });
+      });
     },
   },
   computed: {

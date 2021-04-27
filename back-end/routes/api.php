@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\messageController;
 use App\Http\Controllers\userInformationController;
 use App\Http\Controllers\addressController;
+use App\Http\Controllers\followController;
 use App\Http\Controllers\forgotPasswordController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
@@ -75,6 +76,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/editList', [shoppingListController::class, 'editList']);
     Route::post('/createList', [shoppingListController::class, 'createList']);
 	Route::post('/editPostStatus', [PostController::class, 'editPostStatus']);
+	Route::post('/followStatus', [followController::class, 'followStatus']);
+	Route::get('/getUserFollow', [followController::class, 'getUserFollow']);
+
+
+
 
 
 

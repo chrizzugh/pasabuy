@@ -227,14 +227,8 @@
                               <button
                                 @click="setDispatches(post_info.user.email)"
                               >
-                                <router-link
-                                  :to="
-                                    '/edit-profile/?ID=' +
-                                    toEncrypt(post_info.user.email)
-                                  "
-                                  >{{ post_info.user.firstName }}
-                                  {{ post_info.user.lastName }}</router-link
-                                >
+                                {{ post_info.user.firstName }}
+                                {{ post_info.user.lastName }}
                               </button>
                               <span
                                 class="inline-block text-blue-900 align-middle material-icons-round md-18"
@@ -821,18 +815,15 @@
                 >
                   <div class="flex pt-4 px-2 justify-between items-center">
                     <div class="focus:outline-none flex items-center space-x-4">
-                      <router-link
-                        :to="
-                          'profile-edit/?ID=' + toEncrypt(post_info.sharerEmail)
-                        "
-                        ><p class="text-base italic leading-none text-gray-900">
+                      <button @click="setDispatches(post_info.post.user.email)">
+                        <p class="text-base italic leading-none text-gray-900">
                           <span class="font-bold"
                             >{{ post_info.user.firstName }}
                             {{ post_info.user.lastName }}</span
                           >
                           shared this post
-                        </p></router-link
-                      >
+                        </p>
+                      </button>
                     </div>
                   </div>
                   <div
@@ -863,16 +854,8 @@
                                     setDispatches(post_info.post.user.email)
                                   "
                                 >
-                                  <router-link
-                                    :to="
-                                      '/edit-profile/?ID=' +
-                                      toEncrypt(post_info.post.user.email)
-                                    "
-                                    >{{ post_info.post.user.firstName }}
-                                    {{
-                                      post_info.post.user.lastName
-                                    }}</router-link
-                                  >
+                                  {{ post_info.post.user.firstName }}
+                                  {{ post_info.post.user.lastName }}
                                 </button>
                                 <span
                                   class="inline-block text-blue-900 align-middle material-icons-round md-18"
@@ -1221,7 +1204,7 @@
                   </p>
                 </div>
               </div>
-              <hr class="w-full">
+              <hr class="w-full" />
               <div id="fkmouse" class="display-body cursor-not-allowed"></div>
             </div>
           </div>
@@ -1236,218 +1219,328 @@
     >
       <!-----------ACTIVE ORDERS---------------------->
       <div class="mb-6 bg-white shadow-md w-72 rounded-2xl">
-              <header class="py-3 pl-4 text-sm font-semibold tracking-wide text-gray-500">
-                ACTIVE ORDERS
-                  <span v-if="or_shift>0" @click="prev_swap_order" class=" cursor-pointer inline-flex pl-20 pr-3 align-bottom material-icons-round md-18">
-                    navigate_before
+        <header
+          class="py-3 pl-4 text-sm font-semibold tracking-wide text-gray-500"
+        >
+          ACTIVE ORDERS
+          <span
+            v-if="or_shift > 0"
+            @click="prev_swap_order"
+            class="cursor-pointer inline-flex pl-20 pr-3 align-bottom material-icons-round md-18"
+          >
+            navigate_before
+          </span>
+          <span
+            v-else
+            class="inline-flex cursor-pointer text-gray-300 pl-20 pr-3 align-bottom material-icons-round md-18"
+          >
+            navigate_before
+          </span>
+
+          <span
+            v-if="or_shift < activeOrders.length - 1"
+            @click="next_swap_order"
+            class="cursor-pointer inline-flex align-bottom material-icons-round md-18"
+          >
+            navigate_next
+          </span>
+          <span
+            v-else
+            class="inline-flex cursor-pointer text-gray-300 align-bottom material-icons-round md-18"
+          >
+            navigate_next
+          </span>
+        </header>
+        <hr />
+        <div v-if="confirmedOrders.length != 0">
+          <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
+            <label for="" class="pt-2 pl-3 font-bold">
+              Transaction #{{ confirmedOrders[0].transactionNumber }}
+            </label>
+          </div>
+
+          <div class="text-base bg-white rounded-b-xl">
+            <label for="" class="pl-6 font-normal text-gray-500">
+              8 items
+            </label>
+
+            <label
+              for=""
+              class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo"
+            >
+              {{ confirmedOrders[0].transactionStatus }}
+            </label>
+          </div>
+
+          <div
+            class="relative z-0 flex items-center w-220 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+            v-if="confirmedOrders[0].post.email != user.email"
+          >
+            <button class="top-0 left-0 pl-2 rounded-full border-1">
+              <img
+                class="w-10 h-10 rounded-full"
+                :src="confirmedOrders[0].post.user.profilePicture"
+                alt=""
+              />
+            </button>
+            <div class="ml-2">
+              <h5 class="text-sm font-bold">
+                {{ confirmedOrders[0].post.user.firstName }}
+                {{ confirmedOrders[0].post.user.lastName }}
+                <span
+                  class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                >
+                  verified
                 </span>
-                <span v-else class="inline-flex cursor-pointer text-gray-300 pl-20 pr-3 align-bottom material-icons-round md-18">
-                    navigate_before
+              </h5>
+
+              <p class="text-sm font-normal font-nunito">
+                <span class="inline-block align-middle"
+                  >{{ activeOrders[0].rating }}
                 </span>
-                    
-
-                <span v-if="or_shift<activeOrders.length-1" @click="next_swap_order" class=" cursor-pointer inline-flex align-bottom material-icons-round md-18">
-                    navigate_next
+                <span
+                  class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+                >
+                  star_rate
                 </span>
-                <span v-else class="inline-flex cursor-pointer text-gray-300 align-bottom material-icons-round md-18">
-                    navigate_next
-                </span>
-              </header>
-              <hr>
-              <div v-if="confirmedOrders.length!=0">
-              <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
-                <label for="" class="pt-2 pl-3 font-bold">
-                 Transaction #{{ confirmedOrders[0].transactionNumber }}
-                </label>
-              </div>
-
-              <div class="text-base bg-white rounded-b-xl">
-                <label for="" class="pl-6 font-normal text-gray-500 ">
-                  8 items
-                </label>
-
-                <label for="" class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo">
-                  {{ confirmedOrders[0].transactionStatus }}
-                </label>
-              </div>
-
-              <div class="relative z-0 flex items-center w-220  p-1.5 rounded-xl ml-2 bg-gray-bgcolor" v-if="confirmedOrders[0].post.email != user.email">
-              <button class="top-0 left-0 pl-2 rounded-full border-1">
-                <img class="w-10 h-10 rounded-full" :src="confirmedOrders[0].post.user.profilePicture" alt="">
-              </button>
-              <div class="ml-2">
-                <h5 class="text-sm font-bold">{{ confirmedOrders[0].post.user.firstName }} {{ confirmedOrders[0].post.user.lastName }}
-                  <span class="inline-block text-blue-900 align-middle material-icons-round md-18">
-                    verified
-                  </span>
-                 
-                 </h5>
-                 
-                    <p class="text-sm font-normal font-nunito">
-                      <span class="inline-block align-middle">{{ activeOrders[0].rating }}
-                      </span>
-                      <span class="top-0 inline-block text-red-700 align-top material-icons-round md-20">
-                          star_rate
-                        </span>
-                    </p>
-                  </div>
-                 
-
-                   <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
-                    <span class="inline-flex text-white align-middle material-icons">
-                       chat
-                    </span>
-                    <router-link :to="'/messages/?ID='+confirmedOrders[0].post.email" class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"></router-link>
-                  </div>  
-                  
-              </div>
-
-              <div class="relative z-0 flex items-center w-220  p-1.5 rounded-xl ml-2 bg-gray-bgcolor" v-else>
-              <button class="top-0 left-0 pl-2 rounded-full border-1">
-                <img class="w-10 h-10 rounded-full" :src="confirmedOrders[0].transaction_sender.profilePicture" alt="">
-              </button>
-              <div class="ml-2">
-                <h5 class="text-sm font-bold">{{ confirmedOrders[0].transaction_sender.firstName }} {{ confirmedOrders[0].transaction_sender.lastName }}
-                  <span class="inline-block text-blue-900 align-middle material-icons-round md-18">
-                    verified
-                  </span>
-                 
-                 </h5>
-                 
-                    <p class="text-sm font-normal font-nunito">
-                      <span class="inline-block align-middle">{{ activeOrders[0].rating }}
-                      </span>
-                      <span class="top-0 inline-block text-red-700 align-top material-icons-round md-20">
-                          star_rate
-                        </span>
-                    </p>
-                  </div>
-                 
-
-                   <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
-                    <span class="inline-flex text-white align-middle material-icons">
-                       chat
-                    </span>
-                    <router-link :to="'/messages/?ID='+confirmedOrders[0].transactionSender" class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"></router-link>
-                  </div>  
-                  
-              </div>
-               <div class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl">
-                 <a href="" class="float-right font-bold">View Full Details</a>
-              
-               </div>
-              </div>
-              <div v-else>
-                <p class="text-center"> No active Orders</p>
-              </div>
+              </p>
             </div>
+
+            <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
+              <span class="inline-flex text-white align-middle material-icons">
+                chat
+              </span>
+              <router-link
+                :to="'/messages/?ID=' + confirmedOrders[0].post.email"
+                class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+              ></router-link>
+            </div>
+          </div>
+
+          <div
+            class="relative z-0 flex items-center w-220 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+            v-else
+          >
+            <button class="top-0 left-0 pl-2 rounded-full border-1">
+              <img
+                class="w-10 h-10 rounded-full"
+                :src="confirmedOrders[0].transaction_sender.profilePicture"
+                alt=""
+              />
+            </button>
+            <div class="ml-2">
+              <h5 class="text-sm font-bold">
+                {{ confirmedOrders[0].transaction_sender.firstName }}
+                {{ confirmedOrders[0].transaction_sender.lastName }}
+                <span
+                  class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                >
+                  verified
+                </span>
+              </h5>
+
+              <p class="text-sm font-normal font-nunito">
+                <span class="inline-block align-middle"
+                  >{{ activeOrders[0].rating }}
+                </span>
+                <span
+                  class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+                >
+                  star_rate
+                </span>
+              </p>
+            </div>
+
+            <div class="absolute h-10 p-2 mr-2 rounded-full right-2 bg-success">
+              <span class="inline-flex text-white align-middle material-icons">
+                chat
+              </span>
+              <router-link
+                :to="'/messages/?ID=' + confirmedOrders[0].transactionSender"
+                class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+              ></router-link>
+            </div>
+          </div>
+          <div
+            class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl"
+          >
+            <a href="" class="float-right font-bold">View Full Details</a>
+          </div>
+        </div>
+        <div v-else>
+          <p class="text-center">No active Orders</p>
+        </div>
+      </div>
       <!-----------END OF ACTIVE ORDERS---------------->
 
       <!----------------------ACTIVE DELIVERIES--------------------------->
-      <div class="z-0 mb-6 bg-white w-72 rounded-xl vs:hidden xsm:hidden ssm:hidden">
-              <header class="py-3 pl-4 text-sm font-semibold tracking-wide text-gray-500">
-                ACTIVE DELIVERIES
-                  <span v-if="shift>0"  @click="prev_swap_deliver()" class="select-none cursor-pointer inline-flex pl-16 pr-3 align-bottom material-icons-round md-18">
-                    navigate_before
-                </span>
-                  <span v-else  class="select-none text-gray-300 cursor-pointer inline-flex pl-16 pr-3 align-bottom material-icons-round md-18">
-                    navigate_before
-                </span>
+      <div
+        class="z-0 mb-6 bg-white w-72 rounded-xl vs:hidden xsm:hidden ssm:hidden"
+      >
+        <header
+          class="py-3 pl-4 text-sm font-semibold tracking-wide text-gray-500"
+        >
+          ACTIVE DELIVERIES
+          <span
+            v-if="shift > 0"
+            @click="prev_swap_deliver()"
+            class="select-none cursor-pointer inline-flex pl-16 pr-3 align-bottom material-icons-round md-18"
+          >
+            navigate_before
+          </span>
+          <span
+            v-else
+            class="select-none text-gray-300 cursor-pointer inline-flex pl-16 pr-3 align-bottom material-icons-round md-18"
+          >
+            navigate_before
+          </span>
 
-                <span v-if="shift<confirmedDeliveries.length-1" @click="next_swap_deliver()" class="cursor-pointer select-none inline-flex align-bottom material-icons-round md-18">
-                    navigate_next
+          <span
+            v-if="shift < confirmedDeliveries.length - 1"
+            @click="next_swap_deliver()"
+            class="cursor-pointer select-none inline-flex align-bottom material-icons-round md-18"
+          >
+            navigate_next
+          </span>
+          <span
+            v-else
+            class="cursor-pointer select-none text-gray-300 inline-flex align-bottom material-icons-round md-18"
+          >
+            navigate_next
+          </span>
+        </header>
+        <hr />
+        <div v-if="confirmedDeliveries.length != 0">
+          <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
+            <label for="" class="pt-2 pl-3 font-bold">
+              Transaction #{{ confirmedDeliveries[0].transactionNumber }}
+            </label>
+          </div>
+
+          <div class="text-base bg-white rounded-b-xl">
+            <label for="" class="pl-6 font-normal text-gray-500">
+              8 items
+            </label>
+
+            <label
+              for=""
+              class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo"
+            >
+              {{ confirmedDeliveries[0].transactionStatus }}
+            </label>
+          </div>
+
+          <div
+            class="relative flex items-center w-220 z-0 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+            v-if="confirmedDeliveries[0].post.user.email != user.email"
+          >
+            <button class="top-0 left-0 pl-2 rounded-full border-1">
+              <img
+                class="w-10 h-10 rounded-full"
+                :src="confirmedDeliveries[0].post.user.profilePicture"
+                alt=""
+              />
+            </button>
+            <div class="ml-2">
+              <h5 class="text-sm font-bold">
+                {{ confirmedDeliveries[0].post.user.firstName }}
+                {{ confirmedDeliveries[0].post.user.lastName }}
+                <span
+                  class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                >
+                  verified
                 </span>
-                <span v-else class="cursor-pointer select-none text-gray-300 inline-flex align-bottom material-icons-round md-18">
-                    navigate_next
+              </h5>
+              <p class="text-sm font-normal font-nunito">
+                <span class="inline-block align-middle"
+                  >{{ activeDeliveries[0].rate }}
                 </span>
-              </header>
-              <hr>
-              <div v-if="confirmedDeliveries.length!=0">
-              <div class="px-2 pt-2 text-base bg-white rounded-b-xl">
-                <label for="" class="pt-2 pl-3 font-bold">
-                  Transaction #{{ confirmedDeliveries[0].transactionNumber }}
-                </label>
-              </div>
-
-              <div class="text-base bg-white rounded-b-xl">
-                <label for="" class="pl-6 font-normal text-gray-500 ">
-                  8 items
-                </label>
-
-                <label for="" class="float-right px-3 m-2 py-0.5 text-sm font-semibold border rounded-md border-waterloo text-waterloo">
-                  {{ confirmedDeliveries[0].transactionStatus }}
-                </label>
-              </div>
-
-              <div class="relative flex items-center w-220  z-0  p-1.5 rounded-xl ml-2 bg-gray-bgcolor" v-if="confirmedDeliveries[0].post.user.email != user.email">
-              <button class="top-0 left-0 pl-2 rounded-full border-1">
-                <img class="w-10 h-10 rounded-full" :src="confirmedDeliveries[0].post.user.profilePicture" alt="">
-              </button>
-              <div class="ml-2 ">
-                <h5 class="text-sm font-bold">{{ confirmedDeliveries[0].post.user.firstName }} {{ confirmedDeliveries[0].post.user.lastName }}
-                  <span class="inline-block text-blue-900 align-middle material-icons-round md-18">
-                    verified
-                  </span>
-                 
-                 </h5>
-                 <p class="text-sm font-normal font-nunito">
-                      <span class="inline-block align-middle">{{ activeDeliveries[0].rate }}
-                      </span>
-                      <span class="top-0 inline-block text-red-700 align-top material-icons-round md-20">
-                          star_rate
-                        </span>
-                    </p>
-                  </div>
-                 
-                   <div class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2">
-                    <span class="inline-flex text-white align-middle material-icons">chat</span>
-                    <router-link :to="'/messages/?ID='+confirmedDeliveries[0].post.email" class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"></router-link>
-                  </div>  
-                  
-              </div>
-              <div class="relative flex items-center w-220  z-0  p-1.5 rounded-xl ml-2 bg-gray-bgcolor" v-else>
-              <button class="top-0 left-0 pl-2 rounded-full border-1">
-                <img class="w-10 h-10 rounded-full" :src="confirmedDeliveries[0].transaction_sender.profilePicture" alt="">
-              </button>
-              <div class="ml-2 ">
-                <h5 class="text-sm font-bold">{{ confirmedDeliveries[0].transaction_sender.firstName }} {{ confirmedDeliveries[0].transaction_sender.lastName }}
-                  <span class="inline-block text-blue-900 align-middle material-icons-round md-18">
-                    verified
-                  </span>
-                 
-                 </h5>
-                 <p class="text-sm font-normal font-nunito">
-                      <span class="inline-block align-middle">{{ activeDeliveries[0].rate }}
-                      </span>
-                      <span class="top-0 inline-block text-red-700 align-top material-icons-round md-20">
-                          star_rate
-                        </span>
-                    </p>
-                  </div>
-                 
-                   <div class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2">
-                    <span class="inline-flex text-white align-middle material-icons">chat</span>
-                    <router-link :to="'/messages/?ID='+confirmedDeliveries[0].transaction_sender" class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"></router-link>
-                  </div>  
-                  
-              </div>
-              <div class="p-2">
-                    <span class="inline-block pl-3 text-gray-500 align-top material-icons-round md-18">
-                      room
-                    </span>
-                    <label for="" class="inline-block pl-2 text-sm tracking-wide align-text-top">
-                      {{ confirmedDeliveries[0].transactionData.deliveryAddress }}
-                    </label>
-                  </div>
-               <div class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl">
-                 <a href="" class="float-right font-bold">View Full Details</a>
-              
-               </div>
-              </div>
-              <div v-else>
-                <p class="text-center">No active Deliveries</p>
-              </div>
+                <span
+                  class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+                >
+                  star_rate
+                </span>
+              </p>
             </div>
+
+            <div class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2">
+              <span class="inline-flex text-white align-middle material-icons"
+                >chat</span
+              >
+              <router-link
+                :to="'/messages/?ID=' + confirmedDeliveries[0].post.email"
+                class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+              ></router-link>
+            </div>
+          </div>
+          <div
+            class="relative flex items-center w-220 z-0 p-1.5 rounded-xl ml-2 bg-gray-bgcolor"
+            v-else
+          >
+            <button class="top-0 left-0 pl-2 rounded-full border-1">
+              <img
+                class="w-10 h-10 rounded-full"
+                :src="confirmedDeliveries[0].transaction_sender.profilePicture"
+                alt=""
+              />
+            </button>
+            <div class="ml-2">
+              <h5 class="text-sm font-bold">
+                {{ confirmedDeliveries[0].transaction_sender.firstName }}
+                {{ confirmedDeliveries[0].transaction_sender.lastName }}
+                <span
+                  class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                >
+                  verified
+                </span>
+              </h5>
+              <p class="text-sm font-normal font-nunito">
+                <span class="inline-block align-middle"
+                  >{{ activeDeliveries[0].rate }}
+                </span>
+                <span
+                  class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
+                >
+                  star_rate
+                </span>
+              </p>
+            </div>
+
+            <div class="absolute h-10 p-2 mr-2 rounded-full bg-success right-2">
+              <span class="inline-flex text-white align-middle material-icons"
+                >chat</span
+              >
+              <router-link
+                :to="
+                  '/messages/?ID=' + confirmedDeliveries[0].transaction_sender
+                "
+                class="font-bold align-top cursor-pointer mmd:text-base mmd:inline-block"
+              ></router-link>
+            </div>
+          </div>
+          <div class="p-2">
+            <span
+              class="inline-block pl-3 text-gray-500 align-top material-icons-round md-18"
+            >
+              room
+            </span>
+            <label
+              for=""
+              class="inline-block pl-2 text-sm tracking-wide align-text-top"
+            >
+              {{ confirmedDeliveries[0].transactionData.deliveryAddress }}
+            </label>
+          </div>
+          <div
+            class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl"
+          >
+            <a href="" class="float-right font-bold">View Full Details</a>
+          </div>
+        </div>
+        <div v-else>
+          <p class="text-center">No active Deliveries</p>
+        </div>
+      </div>
       <!-----------END OF ACTIVE DELIVERIES---------------->
 
       <div
@@ -1570,8 +1663,8 @@ export default {
   el: "#shop-list",
   data() {
     return {
-      shift:0,
-      or_shift:0,
+      shift: 0,
+      or_shift: 0,
       postModalVisible: false,
       postModalVisible1: false,
       postModalVisible2: false,
@@ -1596,58 +1689,58 @@ export default {
       user_info: [],
       post_filter: "nearby",
       post_type: "all",
-      activeDeliveries:[{
-        transNo: '61913174',
-        address: 'Ligao',
-        firstName: 'Hanbin',
-        lastName: 'Kim',
-        rate: '4.9',
-        stats: "Confirmed"
-      },
-      {
-        transNo: '61913175',
-        address: 'Ligazpi',
-        firstName: 'Hanbina',
-        lastName: 'Kim0',
-        rate: '4.9',
-        stats: "Confirmed"
-      },
-      {
-        transNo: '61913176',
-        address: 'Daraga',
-        firstName: 'Utetsu',
-        lastName: 'monk',
-        rate: '4.9',
-        stats: "Confirmed"
-      }
+      activeDeliveries: [
+        {
+          transNo: "61913174",
+          address: "Ligao",
+          firstName: "Hanbin",
+          lastName: "Kim",
+          rate: "4.9",
+          stats: "Confirmed",
+        },
+        {
+          transNo: "61913175",
+          address: "Ligazpi",
+          firstName: "Hanbina",
+          lastName: "Kim0",
+          rate: "4.9",
+          stats: "Confirmed",
+        },
+        {
+          transNo: "61913176",
+          address: "Daraga",
+          firstName: "Utetsu",
+          lastName: "monk",
+          rate: "4.9",
+          stats: "Confirmed",
+        },
       ],
 
-      activeOrders:[{
-        transactNo: '1267643764',
-        address: 'Legazpi',
-        first_name:'Go Eun',
-        last_name: 'Na',
-        rating: '4.9',
-        stat:"Confirmed" 
-      },
-      {
-        transactNo: '1267643765',
-        address: 'Naga',
-        first_name:'Kyoko',
-        last_name: 'Hori',
-        rating: '4.9',
-        stat:"Confirmed"
-        
-      },
-      {
-        transactNo: '1267643766',
-        address: 'Ginubatab',
-        first_name:'Erza',
-        last_name: 'Scarlet',
-        rating: '4.9',
-        stat:"Confirmed"
-        
-      }
+      activeOrders: [
+        {
+          transactNo: "1267643764",
+          address: "Legazpi",
+          first_name: "Go Eun",
+          last_name: "Na",
+          rating: "4.9",
+          stat: "Confirmed",
+        },
+        {
+          transactNo: "1267643765",
+          address: "Naga",
+          first_name: "Kyoko",
+          last_name: "Hori",
+          rating: "4.9",
+          stat: "Confirmed",
+        },
+        {
+          transactNo: "1267643766",
+          address: "Ginubatab",
+          first_name: "Erza",
+          last_name: "Scarlet",
+          rating: "4.9",
+          stat: "Confirmed",
+        },
       ],
       shopList: [
         { items: "Pork" },
@@ -1672,7 +1765,7 @@ export default {
       sendOfferOrRequestpost: null,
       sendOfferOrRequestpostNum: null,
       sortedAllPosts: [],
-      filteringPosts:[]
+      filteringPosts: [],
     };
   },
   components: {
@@ -1688,40 +1781,52 @@ export default {
     SendOffer,
     UpdateOrderStatus,
   },
-  watch:{
-    posts(){
-      this.sortPosts()
+  watch: {
+    posts() {
+      this.sortPosts();
     },
-    allShares(){
-      this.sortPosts()
-    }
+    allShares() {
+      this.sortPosts();
+    },
   },
   methods: {
-    next_swap_order(){
-      let x=this.or_shift;
-      let y=this.confirmedOrders.length;
-      if(x<y-1){
-        [this.confirmedOrders[0],this.confirmedOrders[x+1]]=[this.confirmedOrders[x+1],this.confirmedOrders[0]];
+    next_swap_order() {
+      let x = this.or_shift;
+      let y = this.confirmedOrders.length;
+      if (x < y - 1) {
+        [this.confirmedOrders[0], this.confirmedOrders[x + 1]] = [
+          this.confirmedOrders[x + 1],
+          this.confirmedOrders[0],
+        ];
         this.or_shift++;
       }
     },
-    prev_swap_order(){
-      if(this.or_shift>0){
-        [this.confirmedOrders[0],this.confirmedOrders[this.or_shift]]=[this.confirmedOrders[this.or_shift],this.confirmedOrders[0]];
+    prev_swap_order() {
+      if (this.or_shift > 0) {
+        [this.confirmedOrders[0], this.confirmedOrders[this.or_shift]] = [
+          this.confirmedOrders[this.or_shift],
+          this.confirmedOrders[0],
+        ];
         this.or_shift--;
       }
     },
-  next_swap_deliver(){
-      let x=this.shift;
-      let y=this.confirmedDeliveries.length;
-      if(x<y-1){
-        [this.confirmedDeliveries[0],this.confirmedDeliveries[x+1]]=[this.confirmedDeliveries[x+1],this.confirmedDeliveries[0]];
+    next_swap_deliver() {
+      let x = this.shift;
+      let y = this.confirmedDeliveries.length;
+      if (x < y - 1) {
+        [this.confirmedDeliveries[0], this.confirmedDeliveries[x + 1]] = [
+          this.confirmedDeliveries[x + 1],
+          this.confirmedDeliveries[0],
+        ];
         this.shift++;
       }
     },
-    prev_swap_deliver(){
-      if(this.shift>0){
-        [this.confirmedDeliveries[0],this.confirmedDeliveries[this.shift]]=[this.confirmedDeliveries[this.shift],this.confirmedDeliveries[0]];
+    prev_swap_deliver() {
+      if (this.shift > 0) {
+        [this.confirmedDeliveries[0], this.confirmedDeliveries[this.shift]] = [
+          this.confirmedDeliveries[this.shift],
+          this.confirmedDeliveries[0],
+        ];
         this.shift--;
       }
     },
@@ -1834,7 +1939,7 @@ export default {
       clonedContainer.find("#changeBoxRadius").css({
         "border-top-left-radius": "0px",
         "border-top-right-radius": "0px",
-        "box-shadow":"none"
+        "box-shadow": "none",
       });
       $("display-header").find("#closeButton").remove();
       $("#display-footer").css({ padding: "0" }).remove();
@@ -1913,10 +2018,17 @@ export default {
         return moment(datetime).format("[Tommorow at] h:mm a");
       else return moment(datetime).format("[From] MMM DD, YYYY [at] h:mm a");
     },
-    async setDispatches(email) {
-      await store.dispatch("getUserInfo", email);
-      await store.dispatch("getNotAuthUserAddress", email);
-      return;
+    setDispatches(email) {
+      store.dispatch("getUserInfo", email).then(() => {
+        store.dispatch("getNotAuthUserAddress", email).then(() => {
+          store.dispatch("getUserFollow", email).then(() => {
+            this.$router.push({
+              name: "Profile",
+              query: { ID: this.toEncrypt(email) },
+            });
+          });
+        });
+      });
     },
     selectionSort(arr) {
       var minldx,
@@ -1938,7 +2050,7 @@ export default {
     sortPosts() {
       var allPosts = this.posts.concat(this.allShares);
       this.sortedAllPosts = this.selectionSort(allPosts);
-      this.filteringPosts = this.sortedAllPosts
+      this.filteringPosts = this.sortedAllPosts;
     },
   },
   computed: {
@@ -2012,12 +2124,12 @@ export default {
   },
   mounted() {
     this.sortPosts();
-    console.log('orders',this.confirmedOrders)
+    console.log("orders", this.confirmedOrders);
     // window.Echo.private("pasaBUY_public_channel." + 123).notification(() => {
     //   //get datas that are available publicly
     //   Axios.all([
     //     api.get('api/getPosts'),
-    //     api.get('api/getShares')        
+    //     api.get('api/getShares')
     //   ]).then(resArr=>{
     //     store.commit('FETCH_POSTS',resArr[0].data).then(()=>{
     //       store.commit('setAllShares',resArr[1].data).then(()=>{

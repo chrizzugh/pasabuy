@@ -25,7 +25,9 @@ const store =  new Vuex.Store({
         notAuthUserAddress:[],
         allShares:[],
         shoppingList:[],
-        onlineUsers:[]
+        onlineUsers:[],
+        userFollow:[]
+
 
 
         // userEducation:[],
@@ -91,6 +93,9 @@ const store =  new Vuex.Store({
         removeFromOnlineUsers(state,user){
             var index = state.onlineUsers.findIndex(c => c == user);
             state.onlineUsers.splice(index, 1);
+        },
+        setUserFollow(state,data){
+            state.userFollow = data
         },
     },
     actions:{
@@ -291,6 +296,18 @@ const store =  new Vuex.Store({
                 console.log(error)
             })
         },
+        async getUserFollow(state,ID){
+            return api
+            .get('api/getUserFollow',{params:{email:ID}})
+            .then((res)=>{
+                let data = res.data
+                console.log("follow table",data)
+                state.commit('setUserFollow',data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
     },
     modules:{},
     getters:{
@@ -311,6 +328,8 @@ const store =  new Vuex.Store({
         getAllShares:(state) => state.allShares,
         getUserShoppingList:(state) => state.shoppingList,
         getOnlineUsers:(state) => state.onlineUsers,
+        getUserFollow:(state) => state.userFollow,
+
     }
 })
 

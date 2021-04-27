@@ -45,17 +45,17 @@
                   </router-link>
                 </button>
               </div>
-
-              <div
-                class="followButton flex items-center justify-center ssm:pl-2 ssm:pr-2 vs:pl-6 vs:pr-6 w-32 bg-white-700 border-2 rounded-full border-red-500"
+            </div>
+            <div
+              v-if="account_infos.email != authUser.email"
+              class="followButton flex items-center justify-center ssm:pl-2 ssm:pr-2 vs:pl-6 vs:pr-6 w-32 bg-white-700 border-2 rounded-full border-red-500"
+            >
+              <button
+                @click="followButton"
+                class="followStatus flex-1 text-base ssm:text-sm font-bold focus:outline-none tracking-wider leading-loose text-center text-gray-900"
               >
-                <button
-                  @click="followButton"
-                  class="followStatus flex-1 text-base ssm:text-sm font-bold focus:outline-none tracking-wider leading-loose text-center text-gray-900"
-                >
-                  {{ followStatus }}
-                </button>
-              </div>
+                {{ followStatus }}
+              </button>
             </div>
           </div>
           <div class="flex flex-col ssm:hidden vs:hidden">
@@ -64,7 +64,7 @@
                 class="flex space-x-2 vs:justify-start vs:items-start items-center justify-center"
               >
                 <p class="text-base font-bold leading-none text-gray-900">
-                  {{ account_info.countFollowing }}
+                  {{ following.length }}
                 </p>
                 <button
                   class="focus:outline-none text-base leading-none text-gray-900"
@@ -74,7 +74,7 @@
               </div>
               <div class="flex space-x-2 items-start justify-start h-4">
                 <p class="w-1/5 text-base font-bold leading-none text-gray-900">
-                  {{ account_info.countFollowers }}
+                  {{ followers.length}}
                 </p>
                 <button
                   @click="togglePostModal3"
@@ -212,7 +212,8 @@ import ShoppingReviews from "./ShoppingReviews";
 import ShoppingAbout from "./ShoppingAbout";
 import Followers from "./followersModal";
 import store from "../store/index";
-import $ from "jquery"
+import $ from "jquery";
+import api from "../api"
 export default {
   data() {
     return {
@@ -235,6 +236,17 @@ export default {
   },
   mounted() {
     this.userID = atob(this.$route.query.ID);
+    console.log('following', this.following)
+    console.log('followers', this.followers)
+    var status = this.followers.filter((x)=>{
+      return (x.email1.email === this.authUser.email) || (x.email2.email === this.authUser.email) 
+    })
+    console.log("status, ", status)
+    if(status.length === 0){
+      this.followStatus = "Follow"
+    }else{
+      this.followStatus = "Unfollow"
+    }
   },
   computed: {
     account_infos() {
@@ -245,6 +257,26 @@ export default {
     },
     authUser() {
       return store.getters.getUser;
+    },
+    followers() {
+      return store.getters.getUserFollow.filter((x)=>{
+        if(x.email1.email == this.account_infos.email){
+          return x.email2FollowEmail1 == 1
+        }
+        else if(x.email2.email == this.account_infos.email){
+          return x.email1FollowEmail2 == 1
+        }
+      });
+    },
+    following() {
+       return store.getters.getUserFollow.filter((x)=>{
+         if(x.email1.email == this.account_infos.email){
+          return x.email1FollowEmail2 == 1
+        }
+        else if(x.email2.email == this.account_infos.email){
+          return x.email2FollowEmail1 == 1
+        }
+      });
     },
   },
 
@@ -291,8 +323,15 @@ export default {
       } else {
         this.followStatus = "Follow";
       }
-
       //add backend code if need
+      var followData = {
+        email: this.account_infos.email,
+        status: this.followStatus,
+      };
+      api.post("api/followStatus", followData).then(() => {
+        store.dispatch("getUserFollow")
+        console.log("follow/unfollow done")
+      });
     },
   },
 };
@@ -304,5 +343,11 @@ export default {
 }
 .active button {
   color: red;
+}
+.followButton {
+  border-color: rgba(220, 20, 60, 1);
+}
+.followed {
+  background-color: rgba(220, 20, 60, 1);
 }
 </style>
