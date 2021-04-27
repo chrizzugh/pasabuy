@@ -17,6 +17,7 @@ import forgotPassVerify from '../views/forgotPassVerify.vue'
 import verifyemail from '../views/verifyemail.vue'
 import Shopping_List from '../views/shopping_list.vue'
 import Notifications from '../views/mobile_notification.vue'
+import HelpCenterCreateAcc from '../views/helpCenter.vue'
 
 const routes = [
   {
@@ -126,6 +127,12 @@ const routes = [
     path: '/notification',
     name: 'Notification',
     component: Notifications
+  },
+
+  {
+    path: '/Help-Center-Create-Account',
+    name: 'HelpCenterCreateAcc',
+    component: HelpCenterCreateAcc
   },
 
 ]
