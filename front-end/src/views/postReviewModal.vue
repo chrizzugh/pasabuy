@@ -19,7 +19,7 @@
            <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/>
            <div class="flex flex-col justify-center items-center py-3">
              <div class="">
-               <span class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900">{{account_infos.email}}</span>
+               <span class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900">{{account_infos.firstName}} {{account_infos.lastName}}</span>
                <!--check icon here-->
              </div>
              <div class="flex ssm:flex-col ssm:space-x-0 ssm:py-0 ssm:space-y-1">
@@ -61,6 +61,7 @@
 
 <script>
 import store from "../store/index";
+import VueSimpleAlert from 'vue-simple-alert'
 import api from '../api'
 export default {
 
@@ -69,7 +70,7 @@ export default {
         value: '0',
         visitorUser: 'Asta Staria',
         maxStarRate: '5',
-        rate: '5',
+        rate: '',
         feedback: '',
         revieweeEmail: '',
         reviewerEmail: '',
@@ -93,26 +94,31 @@ export default {
           this.value=document.querySelector('input[name="rate"]:checked').value
         },
         submit () {
-          
+          this.$emit('closeReviewModal')
             var info = {
                 revieweeID:this.account_infos.indexUserInformation,
                 reviewerID:this.userPersonal.indexUserInformation,
                 revieweeEmail:this.account_infos.email,
                 reviewerEmail:this.userPersonal.email,
-                rate:this.rate,
+                rate:this.value,
                 feedback:this.feedback,
             }
             api.post('/api/userReviews', info).then(()=>{
+              this.dispatches()
+              VueSimpleAlert.alert("Offer post created successfully", "Sucess","success")
+                this.$parent.$emit('closeReviewModal')
             //this.user = res.data;
             //VueSimpleAlert.alert(res.data.message,"Success","success")
             //store.dispatch('getPosts')//this will get the updated version of posts state from the states
-            this.$emit('closeReviewModal  ')
             //window.location.reload();
             }).catch((errors) => {
                 console.log(errors)
             })
             //this.toggle=false;
         },
+        async dispatches() {
+          await store.dispatch("getAllReviews");
+        }
     }
 }
 </script>

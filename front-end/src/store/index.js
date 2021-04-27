@@ -23,8 +23,8 @@ const store =  new Vuex.Store({
         shoppingPlaces:[],  
         userInfo:[],
         notAuthUserAddress:[],
-        allShares:[]
-
+        allShares:[],
+        allReviews: []
 
 
 
@@ -82,6 +82,9 @@ const store =  new Vuex.Store({
         setAllShares(state,data){
             state.allShares = data
         },
+        setAllReviews(state,data){
+            state.allReviews = data
+        }
     },
     actions:{
         async createPostOffer(state,post){
@@ -272,6 +275,17 @@ const store =  new Vuex.Store({
                 console.log(error)
             })
         },
+        async getAllReviews(state){
+            return api
+            .get('api/getReviews')
+            .then((res)=>{
+                let data = res.data
+                state.commit('setAllReviews',data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
     },
     modules:{},
     getters:{
@@ -290,7 +304,7 @@ const store =  new Vuex.Store({
         getUserInfo:(state) => state.userInfo,
         getNotAuthUserAddress:(state) => state.notAuthUserAddress,
         getAllShares:(state) => state.allShares,
-
+        getAllReviews:(state) => state.allReviews,
     }
 })
 

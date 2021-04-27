@@ -106,7 +106,7 @@ Route::get("shoppingoffers",[shoppingOffersController::class, 'listShoppingOffer
 Route::post("/editshoppingoffers",[shoppingOffersController::class, 'editshoppingoffers']);
 Route::get("shoppingorders",[shoppingOrdersController::class, 'listShoppingOrders']);
 //Route::put("editShoppingOffers",[shoppingOffersController::class, 'update']);
-Route::get("reviews",[reviewsController::class, 'listReviews']);
+Route::get("/getReviews",[reviewController::class, 'listReviews']);
 Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode']);
 Route::get("/userinterest", [interestController::class, 'getInterest']);
 Route::get("/userSkills", [interestController::class, 'getSkills']);

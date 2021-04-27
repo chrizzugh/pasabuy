@@ -10,15 +10,21 @@ use Illuminate\Http\Request;
 
 class reviewController extends Controller
 {
-    function listReviews(){
-        return reviews::all();
-        //return tbl_shoppingofferposts::All();
-        // $data = shoppingOffers::with('posts','posts.user')
+    public function listReviews(){
+        // return reviews::all();
+        // return tbl_shoppingofferposts::All();
+        // $data = reviews::with('user','posts.user')
         // ->whereHas('posts', function($query){
         //     $query->where('email', Auth::user()->email);
         // })->join('tbl_post', 'tbl_shoppingOfferPost.postNumber', '=', 'tbl_post.postNumber')
         // ->orderBy('tbl_post.dateCreated', 'desc')->get();
         // return $data;
+
+        $data = reviews::with('userreviewee', 'userreviewer')
+        ->orderBy('tbl_reviews.created_at','desc')
+        ->get();
+
+		return response()->json($data);
     }
 
     public function saveReview(Request $request){
