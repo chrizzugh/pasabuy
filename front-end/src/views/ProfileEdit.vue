@@ -74,7 +74,7 @@
               </div>
               <div class="flex space-x-2 items-start justify-start h-4">
                 <p class="w-1/5 text-base font-bold leading-none text-gray-900">
-                  {{ followers.length}}
+                  {{ followers.length }}
                 </p>
                 <button
                   @click="togglePostModal3"
@@ -213,7 +213,7 @@ import ShoppingAbout from "./ShoppingAbout";
 import Followers from "./followersModal";
 import store from "../store/index";
 import $ from "jquery";
-import api from "../api"
+import api from "../api";
 export default {
   data() {
     return {
@@ -236,16 +236,18 @@ export default {
   },
   mounted() {
     this.userID = atob(this.$route.query.ID);
-    console.log('following', this.following)
-    console.log('followers', this.followers)
-    var status = this.followers.filter((x)=>{
-      return (x.email1.email === this.authUser.email) || (x.email2.email === this.authUser.email) 
-    })
-    console.log("status, ", status)
-    if(status.length === 0){
-      this.followStatus = "Follow"
-    }else{
-      this.followStatus = "Unfollow"
+    var status = this.followers.filter((x) => {
+      return (
+        x.email1.email === this.authUser.email ||
+        x.email2.email === this.authUser.email
+      );
+    });
+    console.log("status, ", status);
+    if (status.length === 0) {
+      this.followStatus = "Follow";
+    } else {
+      this.followStatus = "Unfollow";
+      $(".followButton").toggleClass("followed");
     }
   },
   computed: {
@@ -259,22 +261,20 @@ export default {
       return store.getters.getUser;
     },
     followers() {
-      return store.getters.getUserFollow.filter((x)=>{
-        if(x.email1.email == this.account_infos.email){
-          return x.email2FollowEmail1 == 1
-        }
-        else if(x.email2.email == this.account_infos.email){
-          return x.email1FollowEmail2 == 1
+      return store.getters.getUserFollow.filter((x) => {
+        if (x.email1.email == this.account_infos.email) {
+          return x.email2FollowEmail1 == 1;
+        } else if (x.email2.email == this.account_infos.email) {
+          return x.email1FollowEmail2 == 1;
         }
       });
     },
     following() {
-       return store.getters.getUserFollow.filter((x)=>{
-         if(x.email1.email == this.account_infos.email){
-          return x.email1FollowEmail2 == 1
-        }
-        else if(x.email2.email == this.account_infos.email){
-          return x.email2FollowEmail1 == 1
+      return store.getters.getUserFollow.filter((x) => {
+        if (x.email1.email == this.account_infos.email) {
+          return x.email1FollowEmail2 == 1;
+        } else if (x.email2.email == this.account_infos.email) {
+          return x.email2FollowEmail1 == 1;
         }
       });
     },
@@ -317,20 +317,23 @@ export default {
     },
     followButton() {
       $(".followButton").toggleClass("followed");
-
-      if (this.followStatus != this.followedStatus) {
-        this.followStatus = this.followedStatus;
-      } else {
-        this.followStatus = "Follow";
-      }
       //add backend code if need
       var followData = {
         email: this.account_infos.email,
         status: this.followStatus,
       };
       api.post("api/followStatus", followData).then(() => {
-        store.dispatch("getUserFollow")
-        console.log("follow/unfollow done")
+        store.dispatch("getUserFollow",this.account_infos.email).then(() => {
+          console.log(this.followStatus, this.followedStatus);
+          if (this.followStatus != this.followedStatus) {
+            this.followStatus = this.followedStatus;
+          } else {
+            this.followStatus = "Follow";
+          }
+          console.log("following", this.following);
+          console.log("followers", this.followers);
+        });
+        console.log("follow/unfollow done");
       });
     },
   },
