@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Follow;
+use App\Models\User;
 use App\Models\userInformation;
+use App\Notifications\followNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +32,10 @@ class followController extends Controller
             $followData->email1FollowEmail2 = 1;
             $followData->email1FollowEmail2_date = Carbon::now("Asia/Manila");
             $followData->save();
+
+            $userToNotif = User::where('email', $request->email)->get();
+            $userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
+            $userToNotif->notify(new followNotification());
             return 201;
         }
         if ($request->status === "Follow") {
@@ -38,10 +44,16 @@ class followController extends Controller
                 $followData->email1FollowEmail2 = 1;
                 $followData->email1FollowEmail2_date = Carbon::now("Asia/Manila");
                 $followData->save();
+                $userToNotif = User::where('email',$followData->email2)->get();
+                $userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
+                $userToNotif->notify(new followNotification());
             } else {
                 $followData->email2FollowEmail1 = 1;
                 $followData->email2FollowEmail1_date = Carbon::now("Asia/Manila");
                 $followData->save();
+                $userToNotif = User::where('email',$followData->email1)->get();
+                $userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
+                $userToNotif->notify(new followNotification());
             }
         } else {
             if ($followData->email1 === Auth::user()->email) {
