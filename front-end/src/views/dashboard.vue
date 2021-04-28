@@ -48,20 +48,20 @@
               >
                 <button
                   type="button"
-                  class="mr-4 vs:mr-2 inline-flex ssm:float-left 2xl:w-50 ssm:px-0 justify-around px-3 py-1.5 text-sm font-bold text-black align-bottom bg-white vsv:text-xs vs:text-xs ssm:text-xs font-nunito border border-gray-300 rounded-full shadow-sm w-44 sm:w-full mv-filterbutton1 hover:bg-gray-50 focus:outline-none"
+                  class="mr-4 vs:mr-2 inline-flex ssm:float-left 2xl:w-50 ssm:px-0 justify-around px-3 py-1.5 text-sm font-bold text-black align-bottom bg-white vsv:text-xs vs:text-xs ssm:text-xs font-nunito border border-gray-300 rounded-full shadow-sm w-50 sm:w-full mv-filterbutton1 hover:bg-gray-50 focus:outline-none"
                   id="options-menu x-v:text-sm"
                   @click="filter = !filter"
                 >
                   <span
                     class="pr-1 mt-0.5 ssm:pr-0 x-v:mt-0 align-bottom material-icons-round md-24 vsv:pr-0.5"
                   >
-                    view_stream
+                    {{ filter1Logo }}
                   </span>
                   <label
                     for=""
                     class="pt-1 vs:py-1 se:py-1.5 cursor-pointer se:text-xs x-v:text-sm"
                   >
-                    All Posts</label
+                    {{ filter1Value }}</label
                   >
                   <span
                     class="pt-1 x-v:pt-0.5 ssm:pl-0 vsv:pl-1 pl-2 text-gray-500 align-middle md-24 material-icons"
@@ -86,7 +86,12 @@
                       <label for=""> POST TYPE</label>
                     </a>
                     <a
-                      @click="getAll"
+                      @click="
+                        (filter = !filter),
+                          (filter1Value = 'All Posts'),
+                          (filter1Logo = 'view_stream'),
+                          changeFilter()
+                      "
                       href="#"
                       class="block px-4 py-2 text-sm text-gray-900"
                       role="menuitem"
@@ -99,7 +104,12 @@
                       <label for="" class="cursor-pointer"> All Posts</label>
                     </a>
                     <a
-                      @click="getOffer"
+                      @click="
+                        (filter = !filter),
+                          (filter1Value = 'Shopping Offer'),
+                          (filter1Logo = 'delivery_dining'),
+                          changeFilter()
+                      "
                       href="#"
                       class="block px-4 py-2 text-sm text-gray-900"
                       role="menuitem"
@@ -111,7 +121,12 @@
                       >Shopping Offer</a
                     >
                     <a
-                      @click="getRequests"
+                      @click="
+                        (filter = !filter),
+                          (filter1Value = 'Order Requests'),
+                          (filter1Logo = 'shopping_bag'),
+                          changeFilter()
+                      "
                       href="#"
                       class="block px-4 py-2 text-sm hover:text-gray-900"
                       role="menuitem"
@@ -135,13 +150,13 @@
                   <span
                     class="pt-1 pr-2 lvs:pr-1 se:pt-0.5 se:pl-1 se:pr-0 vs:pl-2 align-middle vvs:pr-1 material-icons x-v:pt-0"
                   >
-                    people_alt
+                    {{ filter2Logo }}
                   </span>
                   <label
                     for=""
                     class="pt-1 vs:py-1 cursor-pointer se:text-xs vs:text-sm"
                   >
-                    Following Only</label
+                    {{ filter2Value }}</label
                   >
                   <span
                     class="pt-1 pl-2 vs:pl-0 se:pt-0.5 x-v:pt-0.5 text-gray-500 align-middle vvs:pl-1 md-24 x-v:md-18 material-icons"
@@ -166,19 +181,12 @@
                       <label for=""> POST FROM</label></a
                     >
                     <a
-                      @click="getFollowing"
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-600"
-                      role="menuitem"
-                      ><span class="pr-2 align-bottom material-icons">
-                        people_alt
-                      </span>
-                      <label for="" class="pt-1 text-gray-900 cursor-pointer">
-                        Following Only</label
-                      ></a
-                    >
-                    <a
-                      @click="getNearby"
+                      @click="
+                        (filter2 = !filter2),
+                          (filter2Value = 'Nearby'),
+                          (filter2Logo = 'near_me'),
+                          changeFilter()
+                      "
                       href="#"
                       class="block px-4 py-2 text-sm text-gray-600"
                       role="menuitem"
@@ -187,6 +195,23 @@
                       </span>
                       <label for="" class="pt-1 text-gray-900 cursor-pointer">
                         Nearby</label
+                      ></a
+                    >
+                    <a
+                      @click="
+                        (filter2 = !filter2),
+                          (filter2Value = 'Following Only'),
+                          (filter2Logo = 'people_alt'),
+                          changeFilter()
+                      "
+                      href="#"
+                      class="block px-4 py-2 text-sm text-gray-600"
+                      role="menuitem"
+                      ><span class="pr-2 align-bottom material-icons">
+                        people_alt
+                      </span>
+                      <label for="" class="pt-1 text-gray-900 cursor-pointer">
+                        Following Only</label
                       ></a
                     >
                   </div>
@@ -889,41 +914,41 @@
                       </div>
                       <!--end-->
 
-                       <!--section 2-->
-                    <div
-                      class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
-                      v-if="
-                        post_info.post.postStatus !== 'Accepting Requests' &&
-                        post_info.post.postStatus !== 'Accepting Offer'
-                      "
-                    >
-                      <span class="rounded-full material-icons text-red-600">
-                        remove_circle_outline
-                      </span>
-                      <p
-                        class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600"
+                      <!--section 2-->
+                      <div
+                        class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
+                        v-if="
+                          post_info.post.postStatus !== 'Accepting Requests' &&
+                          post_info.post.postStatus !== 'Accepting Offer'
+                        "
                       >
-                        {{ post_info.post.postStatus }}
-                      </p>
-                    </div>
+                        <span class="rounded-full material-icons text-red-600">
+                          remove_circle_outline
+                        </span>
+                        <p
+                          class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600"
+                        >
+                          {{ post_info.post.postStatus }}
+                        </p>
+                      </div>
 
-                    <div
-                      class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
-                      v-if="
-                        post_info.post.postStatus === 'Accepting Requests' ||
-                        post_info.post.postStatus === 'Accepting Offer'
-                      "
-                    >
-                      <span class="rounded-full material-icons">
-                        remove_circle_outline
-                      </span>
-                      <p
-                        class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center"
+                      <div
+                        class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
+                        v-if="
+                          post_info.post.postStatus === 'Accepting Requests' ||
+                          post_info.post.postStatus === 'Accepting Offer'
+                        "
                       >
-                        {{ post_info.post.postStatus }}
-                      </p>
-                    </div>
-                    <!--end-->
+                        <span class="rounded-full material-icons">
+                          remove_circle_outline
+                        </span>
+                        <p
+                          class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center"
+                        >
+                          {{ post_info.post.postStatus }}
+                        </p>
+                      </div>
+                      <!--end-->
 
                       <!--section 3-->
                       <div
@@ -1787,6 +1812,10 @@ export default {
       sendOfferOrRequestpostNum: null,
       sortedAllPosts: [],
       filteringPosts: [],
+      filter2Value: "Nearby",
+      filter1Value: "All Posts",
+      filter1Logo: "view_stream",
+      filter2Logo: "near_me",
     };
   },
   components: {
@@ -1978,45 +2007,158 @@ export default {
     // getNearby() {
     //   this.sortedAllPosts = this.filteringPosts.filter((x)=>{})
     // },
-    getFollowing() {
-      this.post_filter = "following";
-      api
-        .get("api/user/feed", {
-          params: { post_filter: this.post_filter, post_type: this.post_type },
-        })
-        .then((res) => {
-          console.log("following", res.data);
-        });
-    },
-    getAll() {
-      this.post_type = "all";
-      api
-        .get("api/user/feed", {
-          params: { post_filter: this.post_filter, post_type: this.post_type },
-        })
-        .then((res) => {
-          console.log("all", res.data);
-        });
-    },
-    getOffers() {
-      this.post_type = "offers";
-      api
-        .get("api/user/feed", {
-          params: { post_filter: this.post_filter, post_type: this.post_type },
-        })
-        .then((res) => {
-          console.log("offers", res.data);
-        });
-    },
-    getRequests() {
-      this.post_type = "requests";
-      api
-        .get("api/user/feed", {
-          params: { post_filter: this.post_filter, post_type: this.post_type },
-        })
-        .then((res) => {
-          console.log("req", res.data);
-        });
+
+    changeFilter() {
+      var i;
+      if (this.filter1Value === "All Posts") {
+        if (this.filter2Value === "Nearby") {
+          // all posts nearby
+          this.sortedAllPosts = this.filteringPosts.filter((x) => {
+            if (x.indexShare == null) {
+              //for posts
+              if (x.postIdentity == "offer_post") {
+                return x.offer_post.deliveryArea.includes(
+                  this.userHomeAddress.province
+                );
+              } else {
+                return x.request_post.deliveryAddress.includes(
+                  this.userHomeAddress.province
+                );
+              }
+            } else {
+              //for shared posts
+              if (x.post.postIdentity == "offer_post") {
+                return x.post.offer_post.deliveryArea.includes(
+                  this.userHomeAddress.province
+                );
+              } else {
+                return x.post.request_post.deliveryAddress.includes(
+                  this.userHomeAddress.province
+                );
+              }
+            }
+          });
+        } else {
+          //all posts following
+          this.sortedAllPosts = this.filteringPosts.filter((x) => {
+            if (x.indexShare == null) {
+              //for posts
+              for (i = 0; i < this.authfollowing.length; i++) {
+                if (this.authfollowing[i].email1.email === this.user.email) {
+                  return x.email === this.authfollowing[i].email2.email;
+                } else {
+                  return x.email === this.authfollowing[i].email1.email;
+                }
+              }
+            } else {
+              //for shares
+              for (i = 0; i < this.authfollowing.length; i++) {
+                if (this.authfollowing[i].email1.email === this.user.email) {
+                  return x.sharerEmail === this.authfollowing[i].email2.email;
+                } else {
+                  return x.sharerEmail === this.authfollowing[i].email1.email;
+                }
+              }
+            }
+          });
+        }
+      } else if (this.filter1Value === "Shopping Offer") {
+        if (this.filter2Value === "Nearby") {
+          // shopping offer nearby
+          this.sortedAllPosts = this.filteringPosts.filter((x) => {
+            if (x.indexShare == null) {
+              //for posts
+              if (x.postIdentity == "offer_post") {
+                return x.offer_post.deliveryArea.includes(
+                  this.userHomeAddress.province
+                );
+              }
+            } else {
+              //for shared posts
+              if (x.post.postIdentity == "offer_post") {
+                return x.post.offer_post.deliveryArea.includes(
+                  this.userHomeAddress.province
+                );
+              }
+            }
+          });
+        } else {
+          //shopping offer following
+          this.sortedAllPosts = this.filteringPosts.filter((x) => {
+            if (x.indexShare == null) {
+              //for posts
+              if (x.postIdentity === "offer_post") {
+                for (i = 0; i < this.authfollowing.length; i++) {
+                  if (this.authfollowing[i].email1.email === this.user.email) {
+                    return x.email === this.authfollowing[i].email2.email;
+                  } else {
+                    return x.email === this.authfollowing[i].email1.email;
+                  }
+                }
+              }
+            } else {
+              //for shares
+              if (x.post.postIdentity === "offer_post") {
+                for (i = 0; i < this.authfollowing.length; i++) {
+                  if (this.authfollowing[i].email1.email === this.user.email) {
+                    return x.sharerEmail === this.authfollowing[i].email2.email;
+                  } else {
+                    return x.sharerEmail === this.authfollowing[i].email1.email;
+                  }
+                }
+              }
+            }
+          });
+        }
+      }else if (this.filter1Value === "Order Requests") {
+        if (this.filter2Value === "Nearby") {
+          // shopping offer nearby
+          this.sortedAllPosts = this.filteringPosts.filter((x) => {
+            if (x.indexShare == null) {
+              //for posts
+              if (x.postIdentity == "request_post") {
+                return x.request_post.deliveryAddress.includes(
+                  this.userHomeAddress.province
+                );
+              }
+            } else {
+              //for shared posts
+              if (x.post.postIdentity == "request_post") {
+                return x.post.request_post.deliveryAddress.includes(
+                  this.userHomeAddress.province
+                );
+              }
+            }
+          });
+        } else {
+          //shopping offer following
+          this.sortedAllPosts = this.filteringPosts.filter((x) => {
+            if (x.indexShare == null) {
+              //for posts
+              if (x.postIdentity === "request_post") {
+                for (i = 0; i < this.authfollowing.length; i++) {
+                  if (this.authfollowing[i].email1.email === this.user.email) {
+                    return x.email === this.authfollowing[i].email2.email;
+                  } else {
+                    return x.email === this.authfollowing[i].email1.email;
+                  }
+                }
+              }
+            } else {
+              //for shares
+              if (x.post.postIdentity === "request_post") {
+                for (i = 0; i < this.authfollowing.length; i++) {
+                  if (this.authfollowing[i].email1.email === this.user.email) {
+                    return x.sharerEmail === this.authfollowing[i].email2.email;
+                  } else {
+                    return x.sharerEmail === this.authfollowing[i].email1.email;
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
     },
     timestamp(datetime) {
       var postedDate = new Date(datetime);
@@ -2100,26 +2242,15 @@ export default {
     shoppingLists() {
       return store.getters.getUserShoppingList;
     },
-    // confirmedRequestOrders() {
-    //  return store.getters.getUserTransactions.filter((x)=>{
-    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "request_post" && x.post.email == this.user.email
-    //   });
-    // },
-    // confirmedRequestDeliveries() {
-    //   return store.getters.getUserTransactions.filter((x)=>{
-    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "request_post" && x.post.email != this.user.email
-    //   });
-    // },
-    // confirmedOfferOrders() {
-    //  return store.getters.getUserTransactions.filter((x)=>{
-    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "offer_post" && x.post.email != this.user.email
-    //   });
-    // },
-    // confirmedOfferDeliveries() {
-    //   return store.getters.getUserTransactions.filter((x)=>{
-    //     return x.transactionStatus == "confirmed" &&  x.post.postIdentity == "offer_post" && x.post.email == this.user.email
-    //   });
-    // }
+    authfollowing() {
+      return store.getters.getAuthUserFollow.filter((x) => {
+        if (x.email1.email == this.user.email) {
+          return x.email1FollowEmail2 == 1;
+        } else if (x.email2.email == this.user.email) {
+          return x.email2FollowEmail1 == 1;
+        }
+      });
+    },
     confirmedOrders() {
       return store.getters.getUserTransactions.filter((x) => {
         return (
@@ -2142,23 +2273,13 @@ export default {
         );
       });
     },
+    userHomeAddress() {
+      return store.getters.getAddress;
+    },
   },
   mounted() {
     this.sortPosts();
-    console.log("orders", this.confirmedOrders);
-    // window.Echo.private("pasaBUY_public_channel." + 123).notification(() => {
-    //   //get datas that are available publicly
-    //   Axios.all([
-    //     api.get('api/getPosts'),
-    //     api.get('api/getShares')
-    //   ]).then(resArr=>{
-    //     store.commit('FETCH_POSTS',resArr[0].data).then(()=>{
-    //       store.commit('setAllShares',resArr[1].data).then(()=>{
-    //         this.sortPosts()
-    //       })
-    //     })
-    //   })
-    // });
+    this.changeFilter();
   },
 };
 </script>

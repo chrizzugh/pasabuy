@@ -171,6 +171,7 @@ export default {
       await store.dispatch("getAllShares");
       await store.dispatch("getUserShoppingList");
       await store.dispatch("getAllReviews");
+      await store.dispatch("getAuthUserFollow",this.dataForm.email);
     },
   },
 

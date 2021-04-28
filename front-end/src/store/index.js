@@ -27,7 +27,9 @@ const store = new Vuex.Store({
         shoppingList: [],
         onlineUsers: [],
         userFollow: [],
-        allReviews: []
+        allReviews: [],
+        authUserFollow: []
+
 
 
 
@@ -100,6 +102,9 @@ const store = new Vuex.Store({
         },
         setAllReviews(state,data){
             state.allReviews = data
+        },
+        setAuthUserFollow(state,data){
+            state.authUserFollow = data
         }
     },
     actions: {
@@ -309,6 +314,15 @@ const store = new Vuex.Store({
                     state.commit('setUserFollow', data)
                 })
         },
+        async getAuthUserFollow(state, ID) {
+            return api
+                .get('api/getUserFollow', { params: { email: ID } })
+                .then((res) => {
+                    let data = res.data
+                    console.log("follow table", data)
+                    state.commit('setAuthUserFollow', data)
+                })
+        },
         async getAllReviews(state) {
             return api
                 .get('api/getReviews')
@@ -342,6 +356,8 @@ const store = new Vuex.Store({
         getOnlineUsers: (state) => state.onlineUsers,
         getUserFollow: (state) => state.userFollow,
         getAllReviews:(state) => state.allReviews,
+        getAuthUserFollow: (state) => state.authUserFollow,
+
     }
 })
 
