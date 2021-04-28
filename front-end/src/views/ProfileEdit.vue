@@ -67,10 +67,17 @@
                   {{ following.length }}
                 </p>
                 <button
-                  class="focus:outline-none text-base leading-none text-gray-900"
+                  @click="toggleFollowingModal"
+                  class="focus:outline-none ssm:text-sm vs:text-base text-base leading-none text-gray-900"
                 >
                   Following
                 </button>
+                <Followers
+                  v-if="followingModalVisible"
+                  @closeModal3="listener3"
+                  :followStatus ="'following'"
+                  :follow="following" 
+                />
               </div>
               <div class="flex space-x-2 items-start justify-start h-4">
                 <p class="w-1/5 text-base font-bold leading-none text-gray-900">
@@ -83,7 +90,7 @@
                   Followers
                 </button>
                 <!--Modal-->
-                <Followers v-if="postModalVisible3" @closeModal3="listener3" />
+                <Followers v-if="postModalVisible3" @closeModal3="listener3" :followStatus ="'followers'" :follow="followers" />
                 <!--end-->
               </div>
             </div>
@@ -126,19 +133,21 @@
           <p
             class="text-base ssm:text-sm vs:text-base font-bold leading-none text-gray-900"
           >
-            {{ account_info.countFollowing }}
+            {{ following.length }}
           </p>
           <button
+            @click="toggleFollowingModal"
             class="focus:outline-none ssm:text-sm vs:text-base text-base leading-none text-gray-900"
           >
             Following
           </button>
+          <Followers v-if="followingModalVisible" @closeModal3="listener3" />
         </div>
         <div class="flex space-x-2 items-start justify-start h-4">
           <p
             class="text-base ssm:text-sm vs:text-base font-bold leading-none text-gray-900"
           >
-            {{ account_info.countFollowers }}
+            {{ followers.length }}
           </p>
           <button
             @click="togglePostModal3"
@@ -232,6 +241,7 @@ export default {
       userID: null,
       followStatus: "Follow",
       followedStatus: "Unfollow",
+      followingModalVisible: false,
     };
   },
   mounted() {
@@ -305,9 +315,14 @@ export default {
     togglePostModal3() {
       this.postModalVisible3 = !this.postModalVisible3;
     },
+    toggleFollowingModal() {
+      this.followingModalVisible = !this.followingModalVisible;
+    },
     listener3() {
       this.postModalVisible3 = false;
+      this.followingModalVisible = false;
     },
+
     isActive_function(el) {
       if (el == "btn1") {
         this.activeBtn = 0;
@@ -323,7 +338,7 @@ export default {
         status: this.followStatus,
       };
       api.post("api/followStatus", followData).then(() => {
-        store.dispatch("getUserFollow",this.account_infos.email).then(() => {
+        store.dispatch("getUserFollow", this.account_infos.email).then(() => {
           console.log(this.followStatus, this.followedStatus);
           if (this.followStatus != this.followedStatus) {
             this.followStatus = this.followedStatus;
