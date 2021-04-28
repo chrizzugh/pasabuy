@@ -26,25 +26,20 @@
               </div>
                   <div class="items-align-left text-align-left pb-2 "> <!---- grid grid-cols-2 divide-x ---->
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            <button @click="toggle" class="hover:bg-crimsonRed-100 focus:outline-none text-sm font-nunito leading-none text-black mb-5 mt-5 ml-5">Creating an Account</button>
+                            <button @click="toggle" class="hover:bg-crimsonRed-100 focus:outline-none duration-150 text-sm font-nunito leading-none text-black mb-5 mt-5 ml-5">Creating an Account</button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="hover:bg-crimsonRed-100 focus:outline-none text-sm font-nunito leading-none  text-black mb-5  ml-5">Navigating Pasabuy</button>
+                            <button @click ="toggle2" class="hover:bg-crimsonRed-100 focus:outline-none duration-150 text-sm font-nunito leading-none  text-black mb-5  ml-5">Navigating Pasabuy</button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="hover:bg-crimsonRed-100 focus:outline-none text-sm font-nunito leading-none  text-gray-900 mb-5  ml-5">Managing Your Profile</button>
+                            <button @click="toggle3" class="hover:bg-crimsonRed-100 focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 mb-5  ml-5">Managing Your Profile</button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="hover:bg-crimsonRed-100 focus:outline-none text-sm font-nunito leading-none  text-gray-900 ml-5">Expanding Your Connections</button>
+                            <button @click="toggle4" class="hover:bg-crimsonRed-100 focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5">Expanding Your Connections</button>
                         </div>
                   </div>
           </div><!--End-->
-          <!---texts-->
-          <div class="">
-
-          </div>
-
-
+          
           </div><!---End of card -->
 
 <!--FOOTER-->
