@@ -19,29 +19,36 @@
 
 <!----card start---->
       <div id="helpCenterCreateAcc" class="items-center flex justify-center w-full mt-10  pb-10 bg-transparent px-3 ">
+        <!---Option Buttons--->
           <div class=" overflow-hidden bg-white shadow-md w-full rounded-xl lg:w-97 2xl:w-97 xl:w-97 md:w-97 sm:w-97">
-              <div class="px-10 py-16 text-align-left">
-                  <h1 class="mt-0 font-bold text-2xl">Help Center</h1>
+              <div class=" text-align-left"> <!-- px-10 py-16 -->
+                  <h1 class="font-bold text-2xl mb-5 mt-5 ml-3">Help Center</h1>
               </div>
-                  <div class="items-align-left text-align-left pb-2 ">
+                  <div class="items-align-left text-align-left pb-2 "> <!---- grid grid-cols-2 divide-x ---->
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            <button @click="toggle" class="hover:bg-crimsonRed-100 focus:outline-none text-sm ssm:text-xs vs:text-xs ssm:font-normal font-nunito leading-none text-black ">Creating an Account</button>
-                            </div>
-                            <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="hover:bg-crimsonRed-100 focus:outline-none text-sm ssm:text-xs vs:text-xs ssm:font-normal font-nunito leading-none  text-black ">Navigating Pasabuy</button>
-                            </div>
-                            <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="hover:bg-crimsonRed-100 focus:outline-none text-sm ssm:text-xs vs:text-xs ssm:font-normal font-nunito leading-none  text-gray-900 ">Managing Your Profile</button>
-                            </div>
-                            <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="hover:bg-crimsonRed-100 focus:outline-none text-sm ssm:text-xs vs:text-xs ssm:font-normal font-nunito leading-none  text-gray-900 ">Expanding Your Connections</button>
+                            <button @click="toggle" class="hover:bg-crimsonRed-100 focus:outline-none text-sm font-nunito leading-none text-black mb-5 mt-5 ml-5">Creating an Account</button>
+                        </div>
+                        <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
+                            <button @click ="toggle2" class="hover:bg-crimsonRed-100 focus:outline-none text-sm font-nunito leading-none  text-black mb-5  ml-5">Navigating Pasabuy</button>
+                        </div>
+                        <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
+                            <button @click="toggle3" class="hover:bg-crimsonRed-100 focus:outline-none text-sm font-nunito leading-none  text-gray-900 mb-5  ml-5">Managing Your Profile</button>
+                        </div>
+                        <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
+                            <button @click="toggle4" class="hover:bg-crimsonRed-100 focus:outline-none text-sm font-nunito leading-none  text-gray-900 ml-5">Expanding Your Connections</button>
                         </div>
                   </div>
+          </div><!--End-->
+          <!---texts-->
+          <div class="">
+
           </div>
-      </div><!---End -->
+
+
+          </div><!---End of card -->
 
 <!--FOOTER-->
-        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille">
+        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-crimsonRed"> <!---change to pb-5---->
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
                 <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
@@ -84,7 +91,6 @@
     </footer>  <!---end of footer---->
 </template>
 
-
 <style>
     #journal-scroll::-webkit-scrollbar {
         width: 5px;
@@ -117,6 +123,8 @@ import CreateAccount from './helpCreateAcc'
 import NavigatingPasabuy from './helpNavAcc'
 import ManagingYourProfile from './helpManageProfile'
 import ExpandingYourConnection from './helpExpandCon'
+import $ from 'jquery'
+
 export default {
   data(){
         return{
@@ -124,9 +132,10 @@ export default {
             component2: "NavigatingPasabuy",
             component3: "ManagingYourProfile",
             component4: "ExpandingYourConnection",
-            isOpen:false,
+            isOpen: false,
             isClick: false,
-            activeBtn:0
+            activeBtn: 0,
+            show: false
         }
     },
   
@@ -158,6 +167,21 @@ export default {
         this.activeBtn= el;
         }
     },
+    selectButton(){
+      $(".notSelected").toggleClass("isSelected");
+    }
   }
 }
 </script>
+<style scoped>
+
+.active button{
+  color:red;
+}
+.notSelected{
+  border-color: rgba(220, 20, 60, 1);
+}
+.isSelected {
+    background-color: rgba(220, 20, 60, 1);  
+}
+</style>
