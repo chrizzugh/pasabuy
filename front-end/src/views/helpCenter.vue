@@ -48,7 +48,7 @@
           </div><!---End of card -->
 
 <!--FOOTER-->
-        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-crimsonRed"> <!---change to pb-5---->
+        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille"> <!---change to pb-5---->
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
                 <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
