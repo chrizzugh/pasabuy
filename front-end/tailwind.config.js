@@ -29,7 +29,7 @@ module.exports = {
          'dv':{'min': '1024px'},
       },
       colors:{
-        crimsonRed: '#CD0F0F',
+        bastille: '#1E1825',
         red:{
           500: '#EF4444',
           700: '#E50F0F',
