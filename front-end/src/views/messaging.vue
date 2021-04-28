@@ -1906,7 +1906,7 @@ export default {
           sender:
             this.userPersonal.firstName + " " + this.userPersonal.lastName,
           receiver: this.activeName,
-          status: "cancelled",
+          status: "Cancelled",
         }),
       };
       Axios.all([
@@ -1931,7 +1931,7 @@ export default {
           sender:
             this.userPersonal.firstName + " " + this.userPersonal.lastName,
           receiver: this.activeName,
-          status: "declined",
+          status: "Declined",
         }),
       };
       Axios.all([
@@ -1957,7 +1957,7 @@ export default {
           sender:
             this.userPersonal.firstName + " " + this.userPersonal.lastName,
           receiver: this.activeName,
-          status: "accepted",
+          status: "Accepted",
         }),
       };
       Axios.all([

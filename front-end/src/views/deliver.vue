@@ -63,13 +63,13 @@
               </p>
               <div>
                 <p
-                  v-if=" delivery.transactionStatus  == 'completed'"
+                  v-if=" delivery.transactionStatus  == 'Completed'"
                   class="text-center tracking-wider text-green-150 ring-1 ring-green-150 bg-white text-xs h-min w-18 self-center p-1 font-nunito font-bold"
                 >
                   {{ delivery.transactionStatus }}
                 </p>
                 <p
-                  v-else-if=" delivery.transactionStatus  == 'confirmed'"
+                  v-else-if=" delivery.transactionStatus  == 'Confirmed'"
                   class="text-center tracking-wider text-blue-700 ring-1 ring-blue-700 bg-gray-200 text-xs h-min w-18 self-center p-1 font-nunito font-bold"
                 >
                   {{  delivery.transactionStatus  }}
@@ -84,10 +84,10 @@
             </span>
             <span class="text-gray-500">Place on {{ timestamp(delivery.dateCreated) }}</span>
           </div>
-          <div class="vs:flex-col vs:space-x-2" v-if="delivery.transactionStatus=='confirmed' && delivery.post.email != user.email"> 
+          <div class="vs:flex-col vs:space-x-2" v-if="delivery.transactionStatus=='Confirmed' && delivery.post.email != user.email"> 
               <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status, setDataToSave(delivery.post.email,delivery.indexTransactionPost,delivery.postNumber)">Update</span>
            </div>
-           <div class="vs:flex-col vs:space-x-2" v-else-if="delivery.transactionStatus=='confirmed'"> 
+           <div class="vs:flex-col vs:space-x-2" v-else-if="delivery.transactionStatus=='Confirmed'"> 
               <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status, setDataToSave(delivery.transaction_sender.email,delivery.indexTransactionPost,delivery.postNumber)">Update</span>
            </div>
           </div>
@@ -276,13 +276,13 @@ export default {
       } else if (el == "btn3") {
         this.activeBtn = el;
         this.allDeliveries = this.deliveries.filter((x) => {
-          return x.transactionStatus == "confirmed";
+          return x.transactionStatus == "Confirmed";
         });
         console.log("confirmed ", this.allDeliveries);
       } else if (el == "btn2") {
         this.activeBtn = el;
         this.allDeliveries = this.deliveries.filter((x) => {
-          return x.transactionStatus == "completed";
+          return x.transactionStatus == "Completed";
         });
         console.log("completed ", this.allDeliveries);
       } else {
@@ -315,7 +315,7 @@ export default {
         api
           .post("api/updateTransaction", {
             userNotif: this.userNotif,
-            status: "completed",
+            status: "Completed",
             ID: this.updatingTransaction,
             postNumber: this.updatingPost,
           })
@@ -335,7 +335,7 @@ export default {
         api
           .post("api/updateTransaction", {
             userNotif: this.userNotif,
-            status: "cancelled",
+            status: "Cancelled",
             ID: this.updatingTransaction,
             postNumber: this.updatingPost,
           })

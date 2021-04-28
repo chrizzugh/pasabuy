@@ -65,13 +65,13 @@
                 Transaction#{{ order.transactionNumber }}
               </p>
               <p
-                v-if="order.transactionStatus == 'confirmed'"
+                v-if="order.transactionStatus == 'Confirmed'"
                 class="tracking-wider text-blue-700 bg-white text-xs ring-1 ring-blue-700 h-min w-18 self-center p-1 font-nunito font-bold"
               >
                 {{ order.transactionStatus }}
               </p>
               <p
-                v-else-if="order.transactionStatus == 'completed'"
+                v-else-if="order.transactionStatus == 'Completed'"
                 class="tracking-wider text-green-700 bg-white text-xs ring-1 ring-green-700 h-min w-18 self-center p-1 font-nunito font-bold"
               >
                 {{ order.transactionStatus }}
@@ -85,10 +85,10 @@
             </span>
             <span class="text-gray-500">Place on {{ timestamp(order.dateCreated) }}</span>
           </div>
-           <div class="vs:flex-col vs:space-x-2" v-if="order.transactionStatus=='confirmed' && order.post.email != user.email"> 
+           <div class="vs:flex-col vs:space-x-2" v-if="order.transactionStatus=='Confirmed' && order.post.email != user.email"> 
               <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status, setDataToSave(order.post.email,order.indexTransactionPost,order.postNumber)">Update</span>
            </div>
-           <div class="vs:flex-col vs:space-x-2" v-else-if="order.transactionStatus=='confirmed'"> 
+           <div class="vs:flex-col vs:space-x-2" v-else-if="order.transactionStatus=='Confirmed'"> 
               <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status, setDataToSave(order.transaction_sender.email,order.indexTransactionPost,order.postNumber)">Update</span>
            </div>
         </div>
@@ -254,15 +254,15 @@ export default {
     isActive_function(el) {
       if (el == "btn4") {
         this.activeBtn = el;
-        this.allOrders = this.orders.filter((x)=>{return x.transactionStatus == "cancelled" ||  x.transactionStatus == "declined" })
+        this.allOrders = this.orders.filter((x)=>{return x.transactionStatus == "Cancelled" ||  x.transactionStatus == "Declined" })
         console.log("cancelled ", this.allOrders)
       } else if(el =="btn3"){
         this.activeBtn = el;
-        this.allOrders = this.orders.filter((x)=>{return x.transactionStatus == "confirmed"})
+        this.allOrders = this.orders.filter((x)=>{return x.transactionStatus == "Confirmed"})
         console.log("confirmed ", this.allOrders)
       }else if(el =="btn2"){
         this.activeBtn = el;
-        this.allOrders = this.orders.filter((x)=>{return x.transactionStatus == "completed"})
+        this.allOrders = this.orders.filter((x)=>{return x.transactionStatus == "Completed"})
         console.log("completed ", this.allOrders)
       } else{
         this.activeBtn = 0;
@@ -291,7 +291,7 @@ export default {
       var complete = document.getElementById('complete').checked
       var cancel = document.getElementById('cancel').checked
       if(complete){
-        api.post('api/updateTransaction',{userNotif:this.userNotif,status:"completed", ID:this.updatingTransaction, postNumber: this.updatingPost}).then((res)=>{
+        api.post('api/updateTransaction',{userNotif:this.userNotif,status:"Completed", ID:this.updatingTransaction, postNumber: this.updatingPost}).then((res)=>{
           store.dispatch('getUserTransactions').then(()=>{
             this.toggle_status=false
             this.updatingTransaction=null
@@ -306,7 +306,7 @@ export default {
        
       }else if(cancel) {
         
-        api.post('api/updateTransaction',{userNotif:this.userNotif,status:"cancelled", ID:this.updatingTransaction, postNumber: this.updatingPost}).then((res)=>{
+        api.post('api/updateTransaction',{userNotif:this.userNotif,status:"Cancelled", ID:this.updatingTransaction, postNumber: this.updatingPost}).then((res)=>{
           store.dispatch('getUserTransactions').then(()=>{
             this.toggle_status=false
             this.updatingTransaction=null

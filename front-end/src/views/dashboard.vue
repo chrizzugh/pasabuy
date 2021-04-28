@@ -815,7 +815,7 @@
                 >
                   <div class="flex pt-4 px-2 justify-between items-center">
                     <div class="focus:outline-none flex items-center space-x-4">
-                      <button @click="setDispatches(post_info.post.user.email)">
+                      <button @click="setDispatches(post_info.sharerEmail)">
                         <p class="text-base italic leading-none text-gray-900">
                           <span class="font-bold"
                             >{{ post_info.user.firstName }}
@@ -889,20 +889,41 @@
                       </div>
                       <!--end-->
 
-                      <!--section 2-->
-                      <div
-                        class="inline-flex items-center justify-start px-2 py-1 mt-4 space-x-2 bg-gray-100 rounded-full"
+                       <!--section 2-->
+                    <div
+                      class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
+                      v-if="
+                        post_info.post.postStatus !== 'Accepting Requests' &&
+                        post_info.post.postStatus !== 'Accepting Offer'
+                      "
+                    >
+                      <span class="rounded-full material-icons text-red-600">
+                        remove_circle_outline
+                      </span>
+                      <p
+                        class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600"
                       >
-                        <span class="text-red-600 rounded-full material-icons">
-                          remove_circle_outline
-                        </span>
-                        <p
-                          class="items-center text-sm font-bold leading-none text-red-600 vs:text-xs ssm:text-xs lvs:text-sm"
-                        >
-                          {{ post_info.post.postStatus }}
-                        </p>
-                      </div>
-                      <!--end-->
+                        {{ post_info.post.postStatus }}
+                      </p>
+                    </div>
+
+                    <div
+                      class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
+                      v-if="
+                        post_info.post.postStatus === 'Accepting Requests' ||
+                        post_info.post.postStatus === 'Accepting Offer'
+                      "
+                    >
+                      <span class="rounded-full material-icons">
+                        remove_circle_outline
+                      </span>
+                      <p
+                        class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center"
+                      >
+                        {{ post_info.post.postStatus }}
+                      </p>
+                    </div>
+                    <!--end-->
 
                       <!--section 3-->
                       <div
@@ -2102,7 +2123,7 @@ export default {
     confirmedOrders() {
       return store.getters.getUserTransactions.filter((x) => {
         return (
-          x.transactionStatus == "confirmed" &&
+          x.transactionStatus == "Confirmed" &&
           ((x.post.postIdentity == "request_post" &&
             x.post.email == this.user.email) ||
             (x.post.postIdentity == "offer_post" &&
@@ -2113,7 +2134,7 @@ export default {
     confirmedDeliveries() {
       return store.getters.getUserTransactions.filter((x) => {
         return (
-          x.transactionStatus == "confirmed" &&
+          x.transactionStatus == "Confirmed" &&
           ((x.post.postIdentity == "request_post" &&
             x.post.email != this.user.email) ||
             (x.post.postIdentity == "offer_post" &&

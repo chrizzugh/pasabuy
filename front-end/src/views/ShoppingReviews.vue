@@ -99,9 +99,9 @@
      <!-- <div class="flex pb-6"> -->
      <div v-if="transactions.length && user.email!=profile.email" class="flex pb-6">
     <div class="inline-flex space-x-4 ssm:space-x-2 items-center vs:w-full sm:w-full ssm:w-full ssm:p-2 justify-center vs:p-4 p-6 bg-white shadow rounded-xl">
-        <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/>
+        <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" :src="user.profilePicture"/>
         <button @click="togglePostModal" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500 py-5 pl-6 bg-gray-100 rounded-full vs:h-12 ssm:h-10 h-14 w-448 vs:w-full ssm:w-full">
-        Post a review for Yami...</button>
+        Post a review for {{profile.firstName}} {{profile.lastName}}</button>
         
     </div>
   </div>
@@ -112,7 +112,7 @@
         <div class="flex flex-col ">
           <div class="flex flex-grow space-x-4 flex-wrap flex-row w-full justify-between">
             <div class="flex">
-              <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/>
+              <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" :src="review.userreviewer.profilePicture"/>
               <div class="flex flex-col items-start px-4">
                 <div class="space-x-8">
                   <span class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900">{{review.userreviewer.firstName}} {{review.userreviewer.lastName}}</span>
@@ -140,7 +140,7 @@
                   </div>
                    </div>
                    <div class="inline-flex">
-                    <span class="text-sm ssm:text-xs vs:text-xs lvs:text-sm mt-0.5leading-none text-gray-500">{{timestamp(review.created_at)}}</span>
+                    <span class="text-sm ssm:text-xs vs:text-xs lvs:text-sm mt-0.5leading-none text-gray-500">{{timestamp(review.dateCreated)}}</span>
                    </div>
                 </div>
               </div>

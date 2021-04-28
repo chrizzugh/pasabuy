@@ -66,7 +66,7 @@ class transactionController extends Controller
           # code...
  
         $transaction = transaction::find($request->ID);
-        $transaction->transactionStatus = "cancelled";
+        $transaction->transactionStatus = "Cancelled";
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = Post::where('postNumber',$request->postNumber)->get();
@@ -84,7 +84,7 @@ class transactionController extends Controller
           # code...
  
         $transaction = transaction::find($request->ID);
-        $transaction->transactionStatus = "declined";
+        $transaction->transactionStatus = "Declined";
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = User::where('email',$request->userNotif)->get();
@@ -101,7 +101,7 @@ class transactionController extends Controller
           # code...
  
         $transaction = transaction::find($request->ID);
-        $transaction->transactionStatus = "confirmed";
+        $transaction->transactionStatus = "Confirmed";
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = User::where('email',$request->userNotif)->get();
