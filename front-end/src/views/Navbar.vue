@@ -4,7 +4,7 @@
   <div class=" w-full bg-gray-800 text-gray-100 flex justify-between ">
     <!-- logo -->
     <!-- mobile menu button -->
-    <nav class=" z-40 h-20 bg-red-700 w-full  fixed flex items-center justify-between font-nunito p-0 
+    <nav class=" z-40 h-20 bg-red-buttons w-full  fixed flex items-center justify-between font-nunito p-0 
   2xl:bg-white 2xl:shadow-md
   xl:bg-white  xl:shadow-md
   lg:bg-white  lg:shadow-md
