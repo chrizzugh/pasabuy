@@ -1,7 +1,7 @@
 <template>
     <div class="flex">
   <!-- mobile menu bar -->
-  <div class="  bg-gray-800 text-gray-100 flex justify-between ">
+  <div class=" w-full bg-gray-800 text-gray-100 flex justify-between ">
     <!-- logo -->
     <!-- mobile menu button -->
     <nav class=" z-40 h-20 bg-red-700 w-full  fixed flex items-center justify-between font-nunito p-0 
@@ -14,18 +14,18 @@
        <button class="material-icons 2xl:hidden xl:hidden lg:hidden ml-4 text-white block" @click="toggle_event()"> menu</button>
       <p class="uppercase font-bold 2xl:hidden xl:hidden lg:hidden block text-white h-full">{{currentRoute}}</p>
       <div class="flex items-center">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-20 h-16 hidden 2xl:block xl:block lg:block">
+        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 hidden 2xl:block xl:block lg:block">
         <h1 class="absolute text-xl font-black tracking-widest top-6 left-16 font-raleway
           2xl:text-red-700 xl:text-red-700 lg:text-red-700
          hidden 2xl:block xl:block lg:block ">pasaBUY</h1>
       </div>
        </div>
        <img v-if="currentRoute=='' " src="/img/pasaBUYwhiteLogo.png" class=" 2xl:hidden xl:hidden lg:hidden block"/>
-      <div class=" hidden  
+      <div class=" hidden 
       2xl:flex 2xl:ml-60 
-      xl:flex xl:ml-72 xl:mr-16
-      lg:flex lg:justify-between lg:gap-x-0 lg:ml-28 lg:px-3   lg:w-6/12
-      w-6/12 
+      xl:flex xl:ml-72 
+      lg:flex lg:ml-48 lg:space-x-0 lg:px-3   lg:w-97
+      w-608
       justify-center items-center font-bold gap-x-10 text-gray-500 ">
      <router-link to="/dashboard"> 
      <div class="flex gap-x-4 py-4">
@@ -60,7 +60,7 @@
           xl:flex
           lg:flex
          ">
-        <input type="search" class="w-auto focus:outline-none vs:w-28 text-black  pl-3 rounded-2xl h-10" placeholder="Search">
+        <input type="search" class=" focus:outline-none  text-black lg:w-28 pl-3 rounded-2xl h-5" placeholder="Search">
         <button class="material-icons mr-2 text-gray-400 w-full" >
           <router-link to="/search"> search</router-link></button>
         </div>
@@ -158,6 +158,10 @@
       <p class="text-gray-500">Log Out</p>   
       </div></router-link>
     </nav>
+     <p class="text-gray-500 text-sm">
+        Privacy Policy-Cookies Policy-Terms and Conditions
+        Return and Refund Policy-PasaBuy   2021
+    </p>
   </div>
 
 
@@ -206,22 +210,22 @@ export default {
  background-color: rgba(236, 233, 233, 0.705);
 }
 .router-link-active .mobile p{
-  color:red;
+  color:#CD0F0F;
 }
 .router-link-active{
-  color:red;
+  color:#CD0F0F;
 }
 .router-link-active{
-  color:red;
-  border-bottom: 5px solid red;
+  color:#CD0F0F;
+  border-bottom: 5px solid #CD0F0F;
 }
 .router-link-active p{
-  color:red;
+  color:#CD0F0F;
 }
 .active_notif #notif{
- color:red;
+ color:#CD0F0F;
 }
 .active_notif #btn_notif{
- color:red;
+ color:#CD0F0F;
 }
 </style>
