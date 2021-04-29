@@ -92,6 +92,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("/userinterest", [interestController::class, 'getInterest']);
     Route::get("/userSkills", [interestController::class, 'getSkills']);
     Route::post("/userReviews", [reviewController::class, 'saveReview']);
+    Route::delete("/clearNotif", [NotificationController::class, 'clearNotif']);
+
 
     
 });

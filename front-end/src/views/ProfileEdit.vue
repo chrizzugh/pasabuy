@@ -133,7 +133,7 @@
           <p
             class="text-base ssm:text-sm vs:text-base font-bold leading-none text-gray-900"
           >
-            {{ following.length }}
+          {{ following.length }}
           </p>
           <button
             @click="toggleFollowingModal"
@@ -141,7 +141,7 @@
           >
             Following
           </button>
-          <Followers v-if="followingModalVisible" @closeModal3="listener3" />
+          <Followers v-if="followingModalVisible" @closeModal3="listener3" :followStatus ="'following'" :follow="following"/>
         </div>
         <div class="flex space-x-2 items-start justify-start h-4">
           <p
@@ -156,7 +156,7 @@
             Followers
           </button>
           <!--Modal-->
-          <Followers v-if="postModalVisible3" @closeModal3="listener3" />
+          <Followers v-if="postModalVisible3" @closeModal3="listener3" :followStatus ="'followers'" :follow="followers"/>
           <!--end-->
         </div>
       </div>

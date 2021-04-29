@@ -1,5 +1,5 @@
 <template>
-  <!--notification 2-->
+  <!--notifications-->
   <div v-for="(notif, index) in allNotifications" :key="index">
     <div
       class="flex items-start px-4 py-3 -mx-2 border-b hover:bg-gray-100"
@@ -163,6 +163,7 @@
 // import api from "../api"
 import moment from "moment";
 import store from "../store/index";
+import api from "../api"
 export default {
   data() {
     return {
@@ -192,5 +193,15 @@ export default {
       return store.getters.getAllNotif;
     },
   },
+  created(){
+    api
+        .post("/api/readNotif")
+        .then(() => {
+          store.dispatch("getUnreadNotifications");
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+  }
 };
 </script>

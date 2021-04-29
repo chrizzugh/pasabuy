@@ -55,7 +55,6 @@
           >
           <div
             class="flex gap-x-4 py-4 cursor-pointer items-center"
-            @click="notif()"
             :class="{ active_notif: activeBtn }"
           >
             <span id="notif" class="text-gray-500 material-icons \">
@@ -93,12 +92,14 @@
           class="fixed hidden xl:block lg:block pb-24 2xl:block overflow-y-auto top-20 h-full right-60 pt-2 bg-white rounded-lg shadow-lg left--1"
           style="min-width: 370px"
         >
+        <div class="flex justify-between">
           <h1
             class="mt-4 mb-4 ml-4 text-black font-bold border-b align-text-leftCorner cursor-pointer"
           >
             Notifications
           </h1>
-
+          <button @click ="clearNotif" class="mt-4 mb-4 mr-4  text-blue-500">Clear Notifications</button>
+          </div>
           <Notification />
         </div>
       </nav>
@@ -132,14 +133,15 @@
           <div class="mobile rounded-2xl items-center flex h-10 space-x-2 pl-2">
             <span class="material-icons"> notifications </span>
             <p class="text-gray-500">Notifications</p>
+             <span class="text-red-500">{{ unreadNotif.length }}</span>
           </div></router-link
         >
-        <router-link to="/edit-profile" class="rounded-2xl">
+        <button @click="setDispatches(userPersonal.email)" class="rounded-2xl mt-4">
           <div class="mobile rounded-2xl items-center flex h-10 pl-2 space-x-2">
             <span class="material-icons"> account_circle </span>
             <p class="text-gray-500">Profile</p>
           </div>
-        </router-link>
+        </button>
         <hr />
         <router-link to="/orders" class="rounded-2xl">
           <div
@@ -167,11 +169,11 @@
             <p class="text-gray-500">Account Settings</p>
           </div></router-link
         >
-        <router-link to="/" class="rounded-2xl">
+        <button  @click="logout" class="rounded-2xl">
           <div class="mobile rounded-2xl items-center flex h-10 space-x-2 pl-2">
             <span class="material-icons"> logout </span>
             <p class="text-gray-500">Log Out</p>
-          </div></router-link
+          </div></button
         >
       </nav>
     </div>
@@ -211,14 +213,7 @@ export default {
     notif() {
       this.activeBtn = !this.activeBtn;
       this.show = !this.show;
-      api
-        .post("/api/readNotif")
-        .then(() => {
-          store.dispatch("getUnreadNotifications");
-        })
-        .catch((errors) => {
-          console.log(errors);
-        });
+      
     },
     debounceMethod: _.debounce((notif) => {
       if (notif == "App\\Notifications\\newTransactionNotification") {
@@ -245,6 +240,36 @@ export default {
         store.commit("setAllShares", resArr[1].data)
       });
     }, 1000),
+    clearNotif(){
+      api.delete('api/clearNotif/').then(()=>{
+         store.dispatch("getAllNotifications");
+      })
+    },
+     setDispatches(email) {
+      store.dispatch("getUserInfo", email).then(() => {
+        store.dispatch("getNotAuthUserAddress", email).then(() => {
+          store.dispatch("getUserFollow", email).then(() => {
+            this.$router.push({
+              name: "Profile",
+              query: { ID: this.toEncrypt(email) },
+            });
+          });
+        });
+      });
+    },
+    logout() {
+      console.log("logout");
+      window.Echo.leave("App.Models.User." + this.user.indexUserAuthentication);
+      window.Echo.leave("public.123");
+      api.post("api/logout").then(() => {
+        sessionStorage.removeItem("vuex");
+        sessionStorage.removeItem("isLoggedIn");
+        this.$router.push({ name: "Home" });
+      });
+    },
+      toEncrypt(val) {
+      return btoa(val);
+    },
   },
   setup() {
     const currentRoute = computed(() => {
@@ -257,7 +282,6 @@ export default {
     var roomId = 123
     window.Echo.join(`public.${roomId}`)
     .here((users) => {
-        //
     //set the users who's already online before you online
     for(var i=0;i<users.length;i++){
         store.commit('setOnlineUsers',users[i].email)
@@ -304,6 +328,9 @@ export default {
     },
     user() {
       return store.getters.getUser;
+    },
+    userPersonal() {
+      return store.getters.getPersonal;
     },
   },
 };
