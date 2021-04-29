@@ -11,7 +11,7 @@
         </div>
         <div class="w-full">
           <div v-if="isOpen" class="shadow-xl fixed bg-white space-y-2  h-auto w-30 ring-2 ring-gray-200 right-0 rounded-lg py-2 pl-4 pr-4 pt-2 mr-16 mt-2">
-            <router-link to="/dashboard"  class="flex flex-row gap-x-2 text-black">Go to Pasabuy<span class="material-icons text-gray-500">Launch</span></router-link>
+            <router-link to="/dashboard"  class="flex flex-row gap-x-2 text-black">Go to Pasabuy<span class="material-icons text-gray-500">launch</span></router-link>
             <router-link to="/"  class="flex flex-row gap-x-2 text-black">Log out</router-link>
         </div>
         </div>
@@ -20,26 +20,28 @@
 <!----card start---->
       <div id="helpCenterCreateAcc" class="items-center flex justify-center w-full mt-10  pb-10 bg-transparent px-3 ">
         <!---Option Buttons--->
-          <div class=" overflow-hidden bg-white shadow-md w-full rounded-xl lg:w-97 2xl:w-97 xl:w-97 md:w-97 sm:w-97">
-              <div class=" text-align-left"> <!-- px-10 py-16 -->
-                  <h1 class="font-bold text-2xl mb-5 mt-5 ml-3">Help Center</h1>
-              </div>
-                  <div class="items-align-left text-align-left pb-2 "> <!---- grid grid-cols-2 divide-x ---->
+          <div class=" overflow-hidden bg-white shadow-md w-full rounded-xl lg:w-97 2xl:w-97 xl:w-97 md:w-97 sm:w-97"> <!-- parent card box--->
+              <div class="bg-transparent"> <!---child1 card box-->
+                  <div class=" text-align-left"> 
+                    <h1 class="font-bold text-2xl mb-5 mt-5 ml-3">Help Center</h1>
+                  </div>
+                  <div class="items-align-left text-align-left pb-2 ">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            <button @click="toggle" class="hover:bg-crimsonRed-100 focus:outline-none duration-150 text-sm font-nunito leading-none text-black mb-5 mt-5 ml-5">Creating an Account</button>
+                            <button @click="toggle" class="rounded-full w-24 bg-crimsonRed hover:bg-crimsonRed-300 focus:outline-none duration-150 text-sm font-nunito leading-none text-black mb-5 mt-5 ml-5">Creating an Account</button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="hover:bg-crimsonRed-100 focus:outline-none duration-150 text-sm font-nunito leading-none  text-black mb-5  ml-5">Navigating Pasabuy</button>
+                            <button @click ="toggle2" class="rounded-full w-24 bg-crimsonRed hover:bg-crimsonRed-300 focus:outline-none duration-150 text-sm font-nunito leading-none  text-black mb-5  ml-5">Navigating Pasabuy</button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="hover:bg-crimsonRed-100 focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 mb-5  ml-5">Managing Your Profile</button>
+                            <button @click="toggle3" class="rounded-full w-24 bg-crimsonRed hover:bg-crimsonRed-300 focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 mb-5  ml-5">Managing Your Profile</button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="hover:bg-crimsonRed-100 focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5">Expanding Your Connections</button>
+                            <button @click="toggle4" class="rounded-full w-24 bg-crimsonRed hover:bg-crimsonRed-300 focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5">Expanding Your Connections</button>
                         </div>
                   </div>
+              </div>
           </div><!--End-->
-          
+    <component :is="component" />
           </div><!---End of card -->
 
 <!--FOOTER-->
@@ -127,6 +129,7 @@ export default {
             component2: "NavigatingPasabuy",
             component3: "ManagingYourProfile",
             component4: "ExpandingYourConnection",
+
             isOpen: false,
             isClick: false,
             activeBtn: 0,
@@ -138,6 +141,13 @@ export default {
     document.body.style.backgroundColor = "rgb(235,235,235)";
   },
 
+  components:{
+    CreateAccount,
+    NavigatingPasabuy,
+    ManagingYourProfile,
+    ExpandingYourConnection,
+  },
+
   methods:{
     toggle(){
       if(this.component != CreateAccount)
@@ -145,15 +155,15 @@ export default {
     },
     toggle2(){
       if(this.component != NavigatingPasabuy)
-        this.component = NavigatingPasabuy;
+        this.component = this.component2;
     },
     toggle3(){
-       if(this.component != ManagingYourProfile)
-        this.component = ManagingYourProfile;
+       if(this.component != NavigatingPasabuy)
+        this.component = this.component3;
     },
     toggle4(){
-      if(this.component != ExpandingYourConnection)
-        this.component = ExpandingYourConnection;
+      if(this.component != NavigatingPasabuy)
+        this.component = this.component4;
     },
     isActive_function(el){
      if(el=='btn1'){
@@ -170,13 +180,17 @@ export default {
 </script>
 <style scoped>
 
+.active {
+  color:rgba(220, 20, 60, 1);  
+}
 .active button{
-  color:red;
+  color:rgba(220, 20, 60, 1);
 }
 .notSelected{
-  border-color: rgba(220, 20, 60, 1);
+  background-color: rgba(220, 20, 60, 1);
 }
 .isSelected {
-    background-color: rgba(220, 20, 60, 1);  
+  background-color:rgba(220, 20, 60, 1);
+  /* rgb(255, 190, 203);  */
 }
 </style>
