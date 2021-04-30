@@ -39,28 +39,44 @@
               <!---left---->
               <div class="bg-transparent  w-full "> <!---child1 card box-->
                   <div class=" text-align-left"> 
-                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Privacy Policy</h1>
-                    <p class="justify">This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use 
-                      the Service and tells You about Your privacy rights and how the law protects You.</p>
-                    <p class="justify">We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. 
-                      This Privacy Policy has been created with the help of the Privacy Policy Generator.</p>
+                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Terms and Conditions</h1>
+                    <p class="justify">Please read these terms and conditions carefully before using Our Service.</p>
                   </div>
                   <div class=" pb-2 w-full px-3 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
                             <button @click="toggle" class="rounded-full w-full bg-gray-100 px-3 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none  py-2 mb-2"><a class="text-black">Interpretation and Definitions</a></button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Collecting and Using Your Personal Data</a></button>
+                            <button @click ="toggle2" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Acknowledgment</a></button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
                             <button @click="toggle3" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Links to Other Websites</a></button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2"><a class="text-black">Children's Privacy</a></button>
+                            <button @click="toggle4" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2"><a class="text-black">Termination</a></button>
                         </div>
                         <div @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" >
-                            <button @click="toggle5" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Changes to this Privacy Policy</button>
+                            <button @click="toggle5" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Limitation of Liability</button>
                         </div>
+                        <div @click=" isActive_function('btn6')" :class="{active: activeBtn === 'btn6' }" >
+                            <button @click="toggle6" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">"AS IS" and "AS AVAILABLE" Disclaimer</button>
+                        </div>
+                        <div @click=" isActive_function('btn7')" :class="{active: activeBtn === 'btn7' }" >
+                            <button @click="toggle7" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Governing Law</button>
+                        </div>
+                        <div @click=" isActive_function('btn8')" :class="{active: activeBtn === 'btn8' }" >
+                            <button @click="toggle8" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Disputes Resolution</button>
+                        </div>
+                        <div @click=" isActive_function('btn9')" :class="{active: activeBtn === 'btn9' }" >
+                            <button @click="toggle9" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Severability and Waiver</button>
+                        </div>
+                        <div @click=" isActive_function('btn10')" :class="{active: activeBtn === 'btn10' }" >
+                            <button @click="toggle10" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Translation Interpretation</button>
+                        </div>
+                        <div @click=" isActive_function('btn11')" :class="{active: activeBtn === 'btn11' }" >
+                            <button @click="toggle11" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Changes to These Terms and Conditions</button>
+                        </div>
+
 
                   </div>
                   <div class="w-full text-align-left justify">
@@ -157,20 +173,37 @@
 </style>
 
 <script>
-import PolicyChanges from './privacyPolicyChanges'
-import ChildrenPolicy from './privacyPolicyChildren'
-import CollectingData from './privacyPolicyCollecting'
-import InterpretationAndDefinitions from './privacyPolicyInterpAndDef'
-import ExpandingYourConnection from './privacyPolicyLink'
+import Acknowledgment from './termsAndConAcknowledgement'
+import ChangesToTheseTermsAndConditions from './termsAndConChanges'
+import Disclaimer from './termsAndConDisclaimer'
+import InterpretationAndDefinitions from './termsAndConInterpAndDef'
+import DisputesResolution from './termsAndConDisputes'
+import GoverningLaw from './termsAndConLaw'
+import LimitationOfLiability from './termsAndConLimitation'
+import LinksToOtherWebsites from './termsAndConLinks'
+import Termination from './termsAndConTermination'
+import TranslationInterpretation from './termsAndConTranslation'
+import SeverabilityAndWaiver from './termsAndConWaiver'
+
+
+
 import $ from 'jquery'
 export default {
   data(){
         return{
             component: "InterpretationAndDefinitions",
-            component2: "CollectingData",
-            component3: "ExpandingYourConnection",
-            component4: "ChildrenPolicy",
-            component5: "PolicyChanges",
+            component2: "Acknowledgment",
+            component3: "LinksToOtherWebsites",
+            component4: "Termination",
+            component5: "LimitationOfLiability",
+            component6: "Disclaimer",
+            component7: "GoverningLaw",
+            component8: "DisputesResolution",
+            component9: "SeverabilityAndWaiver",
+            component10: "TranslationInterpretation",
+            component11: "ChangesToTheseTermsAndConditions",
+            
+
             isOpen: false,
             isClick: false,
             activeBtn: 0,
@@ -182,11 +215,18 @@ export default {
     document.body.style.backgroundColor = "rgb(235,235,235)";
   },
   components:{
-      InterpretationAndDefinitions,
-      CollectingData,
-      ExpandingYourConnection,
-      ChildrenPolicy,
-      PolicyChanges,
+        InterpretationAndDefinitions,
+        Acknowledgment,
+        LinksToOtherWebsites,
+        Termination,
+        LimitationOfLiability,
+        Disclaimer,
+        GoverningLaw,
+        SeverabilityAndWaiver,
+        TranslationInterpretation,
+        ChangesToTheseTermsAndConditions,
+        DisputesResolution,
+
   },
   methods:{
     toggle(){
@@ -209,6 +249,31 @@ export default {
       if(this.component != CollectingData)
         this.component = this.component5;
     },
+    toggle6(){
+      if(this.component != CollectingData)
+        this.component = this.component6;
+    },
+    toggle7(){
+      if(this.component != CollectingData)
+        this.component = this.component7;
+    },
+    toggle8(){
+      if(this.component != CollectingData)
+        this.component = this.component8;
+    },
+    toggle9(){
+      if(this.component != CollectingData)
+        this.component = this.component9;
+    },
+    toggle10(){
+      if(this.component != CollectingData)
+        this.component = this.component10;
+    },
+    toggle11(){
+      if(this.component != CollectingData)
+        this.component = this.component11;
+    },
+
     isActive_function(el){
      if(el=='btn1'){
       this.activeBtn= 0;

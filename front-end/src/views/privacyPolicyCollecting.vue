@@ -75,7 +75,6 @@
 
                             </div>
                     </div>
-<!-------DITO START MAG AYOS-------------->
                     <div class="flex">
                         <h1 class="text-2xl">Tracking Technologies and Cookies</h1>
                         <button @click="isOpen3=!isOpen3" class="font-bold">

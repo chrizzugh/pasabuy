@@ -39,35 +39,31 @@
               <!---left---->
               <div class="bg-transparent  w-full "> <!---child1 card box-->
                   <div class=" text-align-left"> 
-                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Privacy Policy</h1>
-                    <p class="justify">This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use 
-                      the Service and tells You about Your privacy rights and how the law protects You.</p>
-                    <p class="justify">We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. 
-                      This Privacy Policy has been created with the help of the Privacy Policy Generator.</p>
+                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Return and Refund Policy</h1>
+                        <p class="justify">Thank you for shopping at pasaBUY.</p>
+                        <p class="justify">If, for any reason, You are not completely satisfied with a purchase We invite You to review our policy on refunds and returns. 
+                            This Return and Refund Policy has been created with the help of the Return and Refund Policy Generator.</p>
+                        <p class="justify">The following terms are applicable for any products that You purchased with Us.</p>
                   </div>
                   <div class=" pb-2 w-full px-3 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
                             <button @click="toggle" class="rounded-full w-full bg-gray-100 px-3 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none  py-2 mb-2"><a class="text-black">Interpretation and Definitions</a></button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Collecting and Using Your Personal Data</a></button>
+                            <button @click ="toggle2" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Your Order Cancellation Rights</a></button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Links to Other Websites</a></button>
+                            <button @click="toggle3" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Conditions for Returns</a></button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2"><a class="text-black">Children's Privacy</a></button>
+                            <button @click="toggle4" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2"><a class="text-black">Returning Goods</a></button>
                         </div>
                         <div @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" >
-                            <button @click="toggle5" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Changes to this Privacy Policy</button>
+                            <button @click="toggle5" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Gifts</button>
                         </div>
-
                   </div>
-                  <div class="w-full text-align-left justify">
-                                <p class="justify">Our Service may contain links to other websites that are not operated by Us. If You click on a third party link, 
-                                    You will be directed to that third party's site. We strongly advise You to review the Privacy Policy of every site You visit.</p>
-                                <p class="justify">We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
-                    </div>
+
+                  
                     <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Contact Us</h1>
                       <div class="w-full text-align-left justify">
                                 <p class="justify">If you have any questions about this Privacy Policy, You can contact us:</p>
@@ -157,20 +153,26 @@
 </style>
 
 <script>
-import PolicyChanges from './privacyPolicyChanges'
-import ChildrenPolicy from './privacyPolicyChildren'
-import CollectingData from './privacyPolicyCollecting'
-import InterpretationAndDefinitions from './privacyPolicyInterpAndDef'
-import ExpandingYourConnection from './privacyPolicyLink'
+import InterpretationAndDefinitions from './termsAndConInterpAndDef'
+import YourOrderCancellationRights from './termsAndConDisputes'
+import ConditionsforReturns from './termsAndConLaw'
+import ReturningGoods from './termsAndConLimitation'
+import Gifts from './termsAndConLinks'
+
+
+
 import $ from 'jquery'
 export default {
   data(){
         return{
             component: "InterpretationAndDefinitions",
-            component2: "CollectingData",
-            component3: "ExpandingYourConnection",
-            component4: "ChildrenPolicy",
-            component5: "PolicyChanges",
+            component2: "YourOrderCancellationRights",
+            component3: "ConditionsforReturns",
+            component4: "ReturningGoods",
+            component5: "Gifts",
+           
+            
+
             isOpen: false,
             isClick: false,
             activeBtn: 0,
@@ -182,11 +184,12 @@ export default {
     document.body.style.backgroundColor = "rgb(235,235,235)";
   },
   components:{
-      InterpretationAndDefinitions,
-      CollectingData,
-      ExpandingYourConnection,
-      ChildrenPolicy,
-      PolicyChanges,
+        InterpretationAndDefinitions,
+        YourOrderCancellationRights,
+        ConditionsforReturns,
+        ReturningGoods,
+        Gifts,
+
   },
   methods:{
     toggle(){
@@ -209,6 +212,7 @@ export default {
       if(this.component != CollectingData)
         this.component = this.component5;
     },
+
     isActive_function(el){
      if(el=='btn1'){
       this.activeBtn= 0;
