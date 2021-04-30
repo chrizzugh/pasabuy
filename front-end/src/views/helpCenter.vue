@@ -1,48 +1,55 @@
 <template class=" bg-gray-bgcolor font-nunito">
 
 <!----nav bar--->
-      <nav class="flex items-center shadow-md bg-white">
+<!------navigation--->
+  <nav class="flex items-center shadow-md bg-white sticky top-0">
         <img src="/img/pasaBUYLogoOnly.png" class="w-20 h-16 block">
-        <h1 class="absolute text-xl font-black tracking-widest  left-16 font-raleway text-red-buttons block">pasaBUY</h1>
-        <div class="border-black items-align-right justify justify-right">
+        <h1 class="absolute text-xl font-black tracking-widest left-20 font-raleway text-red-buttons block">pasaBUY</h1>
+        
+        <div class="border-black items-align-right justify justify-right absolute right-0">
           <button @click="isOpen=!isOpen" class=" focus:outline-none h-10 w-10 border-2 rounded-full border-red-700 items-right justify-right">
-          <img class="h-9.7 w-10 rounded-full " src="/img/yami.jpg">
+          <img class="h-9.7 w-10 rounded-full" src="/img/yami.jpg">
           </button>
         </div>
+        
         <div class="w-full">
           <div v-if="isOpen" class="shadow-xl fixed bg-white space-y-2  h-auto w-30 ring-2 ring-gray-200 right-0 rounded-lg py-2 pl-4 pr-4 pt-2 mr-16 mt-2">
             <router-link to="/dashboard"  class="flex flex-row gap-x-2 text-black">Go to Pasabuy<span class="material-icons text-gray-500">launch</span></router-link>
             <router-link to="/"  class="flex flex-row gap-x-2 text-black">Log out</router-link>
+          </div>
         </div>
-        </div>
-      </nav> <!----end of nav bar--->
+  </nav> <!----end of nav bar--->
 
-<!----card start---->
-      <div id="helpCenterCreateAcc" class="items-center flex justify-center w-full mt-10  pb-10 bg-transparent px-3 ">
+  <!------->
+    <div class="flex justify-center flex w-full my-8 mx-3" style="min-height:420px">
+      <div id="helpCenterCreateAcc" class="w-3/12 bg-white rounded-l-md pl-3 ">
         <!---Option Buttons--->
-          <div class=" overflow-hidden bg-white shadow-md w-full rounded-xl lg:w-97 2xl:w-97 xl:w-97 md:w-97 sm:w-97"> <!-- parent card box--->
+          <div class=" overflow-hidden flex justify-start"> <!-- parent card box--->
+              
+              <!---left---->
               <div class="bg-transparent"> <!---child1 card box-->
                   <div class=" text-align-left"> 
-                    <h1 class="font-bold text-2xl mb-5 mt-5 ml-3">Help Center</h1>
+                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Help Center</h1>
                   </div>
-                  <div class="items-align-left text-align-left pb-2 ">
+                  <div class="w-4/5 items-align-left pb-2 ">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            <button @click="toggle" class="rounded-full w-24 bg-crimsonRed hover:bg-crimsonRed-300 focus:outline-none duration-150 text-sm font-nunito leading-none text-black mb-5 mt-5 ml-5">Creating an Account</button>
+                            <button @click="toggle" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none text-black ml-5 py-2 mb-2">Creating an Account</button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="rounded-full w-24 bg-crimsonRed hover:bg-crimsonRed-300 focus:outline-none duration-150 text-sm font-nunito leading-none  text-black mb-5  ml-5">Navigating Pasabuy</button>
+                            <button @click ="toggle2" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-black ml-5 py-2 mb-2">Navigating Pasabuy</button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="rounded-full w-24 bg-crimsonRed hover:bg-crimsonRed-300 focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 mb-5  ml-5">Managing Your Profile</button>
+                            <button @click="toggle3" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2 mb-2">Managing Your Profile</button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="rounded-full w-24 bg-crimsonRed hover:bg-crimsonRed-300 focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5">Expanding Your Connections</button>
+                            <button @click="toggle4" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Expanding Your Connections</button>
                         </div>
+
                   </div>
               </div>
-          </div><!--End-->
-    <component :is="component" />
-          </div><!---End of card -->
+          </div><!--End--></div>
+     <div class="w-2/5 bg-gray-100 rounded-r-md pr-8 pl-2"><component :is="component" /></div>
+    </div>
 
 <!--FOOTER-->
         <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille"> <!---change to pb-5---->
@@ -86,6 +93,8 @@
                 </div>
             </div>    
     </footer>  <!---end of footer---->
+      
+
 </template>
 
 <style>
