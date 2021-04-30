@@ -18,6 +18,7 @@ import verifyemail from '../views/verifyemail.vue'
 import Shopping_List from '../views/shopping_list.vue'
 import Notifications from '../views/mobile_notification.vue'
 import HelpCenterCreateAcc from '../views/helpCenter.vue'
+import privacyPolicy from '../views/privacyPolicy.vue'
 
 const routes = [
   {
@@ -133,6 +134,12 @@ const routes = [
     path: '/Help-Center-Create-Account',
     name: 'HelpCenterCreateAcc',
     component: HelpCenterCreateAcc
+  },
+  
+  {
+    path: '/privacy-policy',
+    name: 'privacyPolicy',
+    component: privacyPolicy
   },
 
 ]
