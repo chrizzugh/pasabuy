@@ -2,11 +2,11 @@
 
 <!----nav bar--->
 <!------navigation--->
-  <nav class="flex items-center shadow-md bg-white sticky top-0">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-20 h-16 block">
-        <h1 class="absolute text-xl font-black tracking-widest left-20 font-raleway text-red-buttons block">pasaBUY</h1>
+  <nav class=" w-full flex items-center shadow-md bg-white  sticky top-0 ">
+        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 block">
+        <h1 class="absolute text-xl font-black tracking-widest left-16 font-raleway text-red-buttons block">pasaBUY</h1>
         
-        <div class="border-black items-align-right justify justify-right absolute right-0">
+        <div class="border-black items-align-right justify justify-right absolute right-3">
           <button @click="isOpen=!isOpen" class=" focus:outline-none h-10 w-10 border-2 rounded-full border-red-700 items-right justify-right">
           <img class="h-9.7 w-10 rounded-full" src="/img/yami.jpg">
           </button>
@@ -21,36 +21,54 @@
   </nav> <!----end of nav bar--->
 
   <!------->
-    <div class="flex justify-center flex w-full my-8 mx-3" style="min-height:420px">
-      <div id="helpCenterCreateAcc" class="w-3/12 bg-white rounded-l-md pl-3 ">
+  <div class="flex justify-center
+  xl:mt-10 xl:mb-20
+  2xl:mt-10 2xl:mb-20
+  lg:mt-10 lg:mb-20
+  ">
+    <div class="flex justify-center self-center
+    2xl:w-3/5
+    xl:w-3/5
+    lg:w-3/5
+      w-full h-98" >
+      <div id="helpCenterCreateAcc" class="w-full 
+      2xl:w-2/4
+      xl:w-2/4  bg-white rounded-l-md  ">
         <!---Option Buttons--->
-          <div class=" overflow-hidden flex justify-start"> <!-- parent card box--->
+          <div class=" overflow-hidden   flex justify-start"> <!-- parent card box--->
               
               <!---left---->
-              <div class="bg-transparent"> <!---child1 card box-->
+              <div class="bg-transparent  w-full "> <!---child1 card box-->
                   <div class=" text-align-left"> 
                     <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Help Center</h1>
                   </div>
-                  <div class="w-4/5 items-align-left pb-2 ">
+                  <div class=" pb-2 w-full px-3
+                   flex flex-col justify-center
+                   2xl:pr-20 2xl:pl-3 
+                   xl:pr-20 xl:pl-3
+                   lg:pr-20 lg:pl-3  
+                   ">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            <button @click="toggle" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none text-black ml-5 py-2 mb-2">Creating an Account</button>
+                            <button @click="toggle" class="rounded-full w-full bg-gray-100 px-3 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none  py-2 mb-2"><a class="text-black">Creating an Account</a></button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-black ml-5 py-2 mb-2">Navigating Pasabuy</button>
+                            <button @click ="toggle2" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Navigating Pasabuy</a></button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2 mb-2">Managing Your Profile</button>
+                            <button @click="toggle3" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Managing Your Profile </a></button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Expanding Your Connections</button>
+                            <button @click="toggle4" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2"><a class="text-black">Expanding Your Connections </a></button>
                         </div>
 
                   </div>
               </div>
           </div><!--End--></div>
-     <div class="w-2/5 bg-gray-100 rounded-r-md pr-8 pl-2"><component :is="component" /></div>
+     <div class="w-full bg-gray-100 rounded-r-md pr-8 pl-2 overflow-auto"><component :is="component" /></div>
     </div>
 
+  </div>
+    
 <!--FOOTER-->
         <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille"> <!---change to pb-5---->
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
@@ -191,9 +209,14 @@ export default {
 
 .active {
   color:rgba(220, 20, 60, 1);  
+  background-color: #CD0F0F, 100%;
 }
 .active button{
-  color:rgba(220, 20, 60, 1);
+   background-color: currentColor;
+   height: 40px;
+}
+.active a{
+  color:white;
 }
 .notSelected{
   background-color: rgba(220, 20, 60, 1);
