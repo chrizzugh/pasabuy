@@ -76,6 +76,7 @@
                 </div>
               </div>
             </div>
+            <!--- 3 dots, show only for owner of post-->
             <div v-if="userID === user.email" class="vs:mt-1">
               <button
                 @click="
@@ -108,7 +109,9 @@
                     :btnText="shoppingOffer_info"
                     @closeModal1="listener1"
                   />
+                  <!-- show only if the post is accepting requests-->
                   <button
+                    v-if="shoppingOffer_info.postStatus == 'Accepting Requests'"
                     @click="togglePostModal1"
                     class="flex flex-row gap-x-2 text-base focus:outline-none"
                   >
@@ -123,11 +126,12 @@
                       shoppingOffer_postNumber ==
                         shoppingOffer_info.offer_post.indexShoppingOfferPost
                     "
-                    :btnText="shoppingOffer_info"
+                    :post="shoppingOffer_info"
                     @closeModal2="listener2"
                   />
                   <button
                     @click="togglePostModal2"
+                    v-if="shoppingOffer_info.postStatus == 'Accepting Requests'"
                     class="flex flex-row font-normal text-base focus:outline-none gap-x-2"
                   >
                     <span class="font-normal text-gray-500 material-icons">
@@ -135,7 +139,10 @@
                     </span>
                     Update Status
                   </button>
-                  <button class="flex flex-row gap-x-2 text-base">
+                  <button
+                    @click="deletePost(shoppingOffer_info.postNumber)"
+                    class="flex flex-row gap-x-2 text-base"
+                  >
                     <span class="text-gray-500 material-icons">delete</span
                     >Delete
                   </button>
@@ -148,7 +155,7 @@
           <!--section 2-->
           <div
             class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
-            v-if="shoppingOffer_info.postStatus != 'Accepting Request'"
+            v-if="shoppingOffer_info.postStatus != 'Accepting Requests'"
           >
             <span class="rounded-full material-icons text-red-600">
               remove_circle_outline
@@ -161,7 +168,7 @@
           </div>
           <div
             class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
-            v-if="shoppingOffer_info.postStatus == 'Accepting Request'"
+            v-if="shoppingOffer_info.postStatus == 'Accepting Requests'"
           >
             <span class="rounded-full material-icons">
               remove_circle_outline
@@ -413,8 +420,8 @@ import PostModal from "./PostModal";
 import UpdateOfferStatus from "./updateOfferStatus";
 import SendRequest from "./sendRequest";
 import moment from "moment";
-import api from "../api"
-import VueSimpleAlert from "vue-simple-alert"
+import api from "../api";
+import VueSimpleAlert from "vue-simple-alert";
 export default {
   props: ["userID"],
   data() {
@@ -525,6 +532,11 @@ export default {
           VueSimpleAlert.alert("An error occured", "Error", "error");
           console.log(error);
         });
+    },
+    deletePost(postNum) {
+      api.delete("api/post/" + postNum + "/delete").then(() => {
+        store.dispatch("getPosts").then(() => {});
+      });
     },
   },
   // created(){

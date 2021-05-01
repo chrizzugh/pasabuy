@@ -70,7 +70,7 @@
                   <span
                     class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-500"
                     >{{
-                      timestamp(shoppingOrder_info.request_post.dateCreated)
+                      timestamp(shoppingOrder_info.dateCreated)
                     }}</span
                   >
                 </div>
@@ -108,6 +108,7 @@
                   />
                   <button
                     @click="togglePostModal3"
+                    v-if="shoppingOrder_info.postStatus == 'Accepting Offer'"
                     class="flex flex-row text-base vs:text-sm gap-x-2 focus:outline-none"
                   >
                     <span
@@ -124,6 +125,7 @@
                   />
                   <button
                     @click="togglePostModal2"
+                    v-if="shoppingOrder_info.postStatus == 'Accepting Offer'"
                     class="flex flex-row text-base font-normal vs:text-sm focus:outline-none gap-x-2"
                   >
                     <span
@@ -134,6 +136,7 @@
                     Update Status
                   </button>
                   <button
+                    @click="deletePost(shoppingOrder_info.postNumber)"
                     class="flex flex-row text-base gap-x-2 vs:text-sm vs:md-14"
                   >
                     <span class="text-gray-500 material-icons">delete</span
@@ -148,10 +151,7 @@
           <!--section 2-->
           <div
             class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
-            v-if="
-              shoppingOrder_info.postStatus !== 'Accepting Requests' &&
-              shoppingOrder_info.postStatus !== 'Accepting Offer'
-            "
+            v-if="shoppingOrder_info.postStatus !== 'Accepting Offer'"
           >
             <span class="rounded-full material-icons text-red-600">
               remove_circle_outline
@@ -165,10 +165,7 @@
 
           <div
             class="inline-flex mt-4 items-center space-x-2 justify-start px-2 py-1 bg-gray-100 rounded-full text-green-600"
-            v-if="
-              shoppingOrder_info.postStatus === 'Accepting Requests' ||
-              shoppingOrder_info.postStatus === 'Accepting Offer'
-            "
+            v-if="shoppingOrder_info.postStatus === 'Accepting Offer'"
           >
             <span class="rounded-full material-icons">
               remove_circle_outline
@@ -204,7 +201,7 @@
                   class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1"
                 >
                   {{
-                    timestamp(shoppingOrder_info.request_post.deliverySchedule)
+                    timestampSched(shoppingOrder_info.request_post.deliverySchedule)
                   }}
                 </p>
               </div>
@@ -424,8 +421,8 @@ import EditOrderRequest from "./EditOrderRequest";
 import UpdateOrderStatus from "./updateOrderStatus";
 import SendRequest from "./sendRequest";
 import moment from "moment";
-import api from "../api"
-import VueSimpleAlert from "vue-simple-alert"
+import api from "../api";
+import VueSimpleAlert from "vue-simple-alert";
 export default {
   props: ["userID"],
   data() {
@@ -511,7 +508,7 @@ export default {
         return moment(datetime).format("[Tommorow at] h:mm a");
       else return moment(datetime).format("[From] MMM DD, YYYY [at] h:mm a");
     },
-    timestamp(datetime) {
+     timestamp(datetime) {
       var postedDate = new Date(datetime);
       var dateToday = new Date();
       var dateDiff = dateToday.getTime() - postedDate.getTime();
@@ -539,6 +536,11 @@ export default {
     },
     toEncrypt(val) {
       return btoa(val);
+    },
+    deletePost(postNum) {
+      api.delete("api/post/" + postNum + "/delete").then(() => {
+        store.dispatch("getPosts").then(() => {});
+      });
     },
   },
   // created(){
