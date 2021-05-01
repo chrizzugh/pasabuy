@@ -5,12 +5,8 @@
         <img src="/img/pasaBUYLogoOnly.png" class="w-20 h-16 block">
         </router-link>
         <h1 class="absolute text-xl font-black tracking-widest  left-16 font-raleway
-          text-red-buttons block
-          
-           ">pasaBUY</h1>
+          text-red-buttons block">pasaBUY</h1>
       </div>
-
-
     <div id="signup" class="flex items-center justify-center   pb-10  px-4">
       <div class="w-full my-12 overflow-hidden text-center bg-white shadow-md flex-grow-1 rounded-xl
       xl:w-2/5 lg:w-2/5 2xl:w-2/5 
@@ -36,8 +32,11 @@
                 <div class="mb-6">
                     <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" value="" />
                 </div>
-                <div class="mb-10">
-                    <input aria-label="Phone Number" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" value="" />
+                <div class="mb-10 flex">
+                    <div class="flex">
+                        <img class="h-11 w-10 absolute left-0" src="img/Philippines-Flag.svg ">
+                        <input aria-label="Phone Number" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" value="" />
+                    </div>
                 </div>
                 <div class="flex flex-col  
                 md:flex-row md:justify-between md:space-x-6
