@@ -342,6 +342,7 @@
                               Update Status
                             </button>
                             <button
+                              @click ="deletePost(post_info.postNumber)"
                               class="flex flex-row text-base gap-x-2 vs:text-sm vs:md-14"
                             >
                               <span class="text-gray-500 material-icons"
@@ -411,6 +412,7 @@
                               Update Status
                             </button>
                             <button
+                             @click ="deletePost(post_info.postNumber)"
                               class="flex flex-row text-base gap-x-2 vs:text-sm vs:md-14"
                             >
                               <span class="text-gray-500 material-icons"
@@ -2215,6 +2217,13 @@ export default {
       this.sortedAllPosts = this.selectionSort(allPosts);
       this.filteringPosts = this.sortedAllPosts;
     },
+    deletePost(postNUm){
+      api.delete('post/'+postNum+'/delete').then(()=>{
+        store.dispatch('getPosts').then(()=>{
+          this.sortPosts()
+        })
+      })
+    }
   },
   computed: {
     user() {
