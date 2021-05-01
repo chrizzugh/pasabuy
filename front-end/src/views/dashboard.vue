@@ -2217,7 +2217,7 @@ export default {
       this.sortedAllPosts = this.selectionSort(allPosts);
       this.filteringPosts = this.sortedAllPosts;
     },
-    deletePost(postNUm){
+    deletePost(postNum){
       api.delete('post/'+postNum+'/delete').then(()=>{
         store.dispatch('getPosts').then(()=>{
           this.sortPosts()
