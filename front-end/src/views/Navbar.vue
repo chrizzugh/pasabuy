@@ -55,6 +55,7 @@
           >
           <div
             class="flex gap-x-4 py-4 cursor-pointer items-center"
+            @click="notif"
             :class="{ active_notif: activeBtn }"
           >
             <span id="notif" class="text-gray-500 material-icons \">
@@ -136,10 +137,10 @@
              <span class="text-red-500">{{ unreadNotif.length }}</span>
           </div></router-link
         >
-        <button @click="setDispatches(userPersonal.email)" class="rounded-2xl mt-4">
+        <button @click="setDispatches(userPersonal.email)" class="rounded-2xl">
           <div class="mobile rounded-2xl items-center flex h-10 pl-2 space-x-2">
             <span class="material-icons"> account_circle </span>
-            <p class="text-gray-500">Profile</p>
+            <p class="text-gray-500 font-bold">Profile</p>
           </div>
         </button>
         <hr />
@@ -172,7 +173,7 @@
         <button  @click="logout" class="rounded-2xl">
           <div class="mobile rounded-2xl items-center flex h-10 space-x-2 pl-2">
             <span class="material-icons"> logout </span>
-            <p class="text-gray-500">Log Out</p>
+            <p class="text-gray-500 font-bold">Log Out</p>
           </div></button
         >
       </nav>
@@ -213,7 +214,6 @@ export default {
     notif() {
       this.activeBtn = !this.activeBtn;
       this.show = !this.show;
-      
     },
     debounceMethod: _.debounce((notif) => {
       if (notif == "App\\Notifications\\newTransactionNotification") {

@@ -33,6 +33,10 @@ class NotificationController extends Controller
     public function clearNotif()
     {
         # code...
-        Auth::user()->notifications->delete();
+       $data = Auth::user()->notifications;
+
+       foreach($data as $notif){
+            $notif->delete();
+       }
     }
 }

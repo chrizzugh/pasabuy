@@ -46,8 +46,6 @@ class addressController extends Controller
              'house_number' => ['required'],
              'province' => ['required'],
              'city' => ['required'],
-             'barangay' => ['required'],
-             'landmark' => ['required']
         ]);
         //updating userinfo table
         $userEmail = Auth::User()->email;
@@ -80,8 +78,6 @@ class addressController extends Controller
              'house_number' => ['required'],
              'province' => ['required'],
              'city' => ['required'],
-             'barangay' => ['required'],
-             'landmark' => ['required'],
              
         ]);
         //updating userinfo table
@@ -115,8 +111,6 @@ class addressController extends Controller
              'house_number' => ['required'],
              'province' => ['required'],
              'city' => ['required'],
-             'barangay' => ['required'],
-             'landmark' => ['required'],
 
         ]);
         //updating userinfo table

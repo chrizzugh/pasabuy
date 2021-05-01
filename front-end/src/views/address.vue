@@ -8,7 +8,7 @@
     <div id="address" class="flex items-center justify-center w-full h-screen pt-16 pb-10 bg-gray-bgcolor">
       <div class="w-2/5 my-12 overflow-hidden text-center bg-white shadow-md vs:w-10/12 lg:w-6/12 md:w-7/12 sm:w-9/12 ssm:w-10/12 flex-grow-1 rounded-xl">
         <div class="px-10 py-16">
-          <h1 class="space-x-1 space-y-1 text-2xl font-bold">Add your shipping address</h1>
+          <h1 class="space-x-1 space-y-1 text-2xl font-bold">Add your Home address</h1>
             <p class="text-center text-red-700">{{errors}} </p>
             <div action="#" class="space-y-3">
               <div class="w-full">

@@ -79,8 +79,6 @@ class RegisterController extends Controller
     function postAddress(Request $request){
 
         $validator=Validator::make($request->all(),[
-            'landMark' => ['required'],
-            'houseNumber' => ['required'],
             'province' => ['required'],
             'barangay' => ['required'],
             'cityMunicipality' => ['required'],
