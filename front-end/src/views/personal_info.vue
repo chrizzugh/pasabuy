@@ -229,6 +229,7 @@ methods:{
       this.profile=URL.createObjectURL(file);
       const data = new FormData();
       data.append('photo', file);
+      console.log('image',data)
       api.post('/api/updateProfilePic',data).then((res)=>{
         this.dispatchThis().then(()=>{
           VueSimpleAlert.alert(res.data.message,"Success","success")

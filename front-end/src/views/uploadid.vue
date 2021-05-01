@@ -142,8 +142,7 @@ data(){
         back_image:'',
         icon_front:'img/id-front.svg',
         icon_back:'img/id-back.svg',
-         data_back: new FormData(),
-        data_front: new FormData(),
+        registrationData: new FormData(),
         filename:null,
         filename2:null,
         file_front:'',
@@ -154,7 +153,7 @@ methods:{
     filechange(e){
         const file_front=e.target.files[0]
         this.front_image=URL.createObjectURL(file_front);
-        this.data_front.append('front_image', file_front );
+        this.registrationData.append('front_image', file_front );
         this.icon_front=null;
         this.browse1=null;
         this.filename=file_front.name;
@@ -173,7 +172,7 @@ methods:{
     filechange_back(e){
         const file_back=e.target.files[0]
         this.back_image=URL.createObjectURL(file_back);
-        this.data_back.append('back_image', file_back);
+        this.registrationData.append('back_image', file_back);
         this.icon_back=null;
         this.browse2=null;
         this.filename2=file_back.name;
@@ -193,7 +192,17 @@ methods:{
             var dataform = {personal:JSON.parse(localStorage.getItem('personal')), account:JSON.parse(localStorage.getItem('account')), address: JSON.parse(localStorage.getItem('address')) }
 
             console.log('mail=',dataform.personal.email)
-            api.post('/api/register', {data_front:this.data_front,data_back:this.data_back,email:dataform.personal.email, password:dataform.account.password, firstName:dataform.personal.firstName, lastName:dataform.personal.lastName, phoneNumber:dataform.personal.phoneNumber, landMark:dataform.address.landMark, houseNumber:dataform.address.houseNumber, province:dataform.address.province,barangay:dataform.address.barangay, cityMunicipality:dataform.address.cityMunicipality}).then((res)=>{
+            this.registrationData.append('email',dataform.personal.email)
+            this.registrationData.append( 'password',dataform.account.password)
+            this.registrationData.append( 'firstName',dataform.personal.firstName)
+            this.registrationData.append( 'lastName',dataform.personal.lastName)
+            this.registrationData.append( 'phoneNumber',dataform.personal.phoneNumber)
+            this.registrationData.append( 'landMark',dataform.address.landMark)
+            this.registrationData.append( 'houseNumber',dataform.address.houseNumber)
+            this.registrationData.append( 'province',dataform.address.province)
+            this.registrationData.append('barangay',dataform.address.barangay)
+            this.registrationData.append('cityMunicipality',dataform.address.cityMunicipality)
+            api.post('/api/register',this.registrationData).then((res)=>{
                  console.log(res.data);
                  if(res){
                      this.dispatches().then(()=>{//wait for the dispatches to finish
