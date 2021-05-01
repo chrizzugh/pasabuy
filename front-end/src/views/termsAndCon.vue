@@ -173,7 +173,7 @@
 </style>
 
 <script>
-import Acknowledgment from './termsAndConAcknowledgement'
+import Acknowledgment from './termsAndConAcknowledgment'
 import ChangesToTheseTermsAndConditions from './termsAndConChanges'
 import Disclaimer from './termsAndConDisclaimer'
 import InterpretationAndDefinitions from './termsAndConInterpAndDef'
