@@ -6,8 +6,6 @@ use App\Events\newPostEvent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Webpatser\Uuid\Uuid;
-use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\OfferPost;
 use App\Models\PasabuyUser;
@@ -110,7 +108,8 @@ class PostController extends Controller
 			'shoppingPlace' => 'required|string|max:500',
 			'deliverySchedule' => 'required|date',
 			'paymentMethod' => 'required|string|max:200',
-			'shoppingListNumber' => 'required',
+			'shoppingListTitle' => 'required|string',
+			'shoppingListContent' => 'required|string',
 			'caption' => 'required|string|max:200',
 		]);
 
@@ -128,8 +127,15 @@ class PostController extends Controller
 		$request_post->shoppingPlace = $request->shoppingPlace;
 		$request_post->deliverySchedule = $request->deliverySchedule;
 		$request_post->paymentMethod = $request->paymentMethod;
-		$request_post->shoppingListNumber = $request->shoppingListNumber;
+		$request_post->shoppingListTitle = $request->shoppingListTitle;
+		$request_post->shoppingListContent = $request->shoppingListContent;
 		$request_post->caption = $request->caption;
+
+		$shopping_list = new shoppingList;
+		$shopping_list->shoppingListNumber = '076-'.str_pad(Auth::user()->indexUserAuthentication,4,'0',STR_PAD_LEFT).'-'.str_pad(ShoppingList::count()+1,5,'0',STR_PAD_LEFT);
+		$shopping_list->email = $user;
+		$shopping_list->shoppingListTitle = $request->shoppingListTitle;
+		$shopping_list->shoppingListContent = $request->shoppingListContent;
 
 		// save to database
 
@@ -142,17 +148,11 @@ class PostController extends Controller
 				'shoppingPlaceNumber' => '112' . str_pad(DB::table('tbl_shoppingPlace')->count() + 1, 6, '0', STR_PAD_LEFT),
 			]);
 		}
-		// $request_post->caption = $request->caption;
 
-		// $shopping_list = new ShoppingList;
-		// $shopping_list->email = $user;
-		// $shopping_list->text = $request->shoppingList;
-
-		// DB::transaction(function() use ($post, $request_post, $shopping_list) {
-		DB::transaction(function () use ($post, $request_post) {
+		DB::transaction(function () use ($post, $request_post, $shopping_list) {
 			$post->save();
 			$post->request_post()->save($request_post);
-			// RequestPost::find($request_post->indexOrderRequestPost)->shoppingList()->save($shopping_list);
+			$shopping_list->save();
 		});
 
         broadcast(new newPostEvent())->toOthers();
@@ -277,7 +277,7 @@ class PostController extends Controller
 						$followed_posts = [];
 
 						foreach ($followed_emails as $followed_user) {
-							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as offer_delivery_area, offer.shoppingPlace as offer_shopping_place, offer.deliverySchedule as offer_delivery_schedule, offer.transportMode as offer_transport_mode, offer.capacity, offer.paymentMethod as offer_payment_method, offer.caption as offer_caption, request.shoppingPlace as request_shopping_place, request.deliverySchedule as request_delivery_schedule, request.paymentMethod as request_payment_method, request.caption as request_caption, shopping_list.text as items FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE post.email = '$followed_user->email' AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
+							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as offer_delivery_area, offer.shoppingPlace as offer_shopping_place, offer.deliverySchedule as offer_delivery_schedule, offer.transportMode as offer_transport_mode, offer.capacity, offer.paymentMethod as offer_payment_method, offer.caption as offer_caption, request.shoppingPlace as request_shopping_place, request.deliverySchedule as request_delivery_schedule, request.paymentMethod as request_payment_method, request.caption as request_caption, request.shoppingListTitle as request_shopping_list_title, request.shoppingListContent as shopping_list_content FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber WHERE post.email = '$followed_user->email' AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
 							foreach ($feeds as $feed) {
 								$feed->avatar = utf8_encode($feed->avatar);
@@ -321,7 +321,7 @@ class PostController extends Controller
 						$followed_posts = [];
 
 						foreach ($followed_emails as $followed_user) {
-							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, request.deliveryAddress as delivery_area, request.shoppingPlace as shopping_place, request.deliverySchedule as schedule, request.paymentMethod as payment_method, request.caption, shopping_list.text as items FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE post.email = '$followed_user->email' AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
+							$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, request.deliveryAddress as delivery_area, request.shoppingPlace as shopping_place, request.deliverySchedule as schedule, request.paymentMethod as payment_method, request.caption, request.shoppingListTitle, request.shoppingListContent FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber WHERE post.email = '$followed_user->email' AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
 							foreach ($feeds as $feed) {
 								$feed->avatar = utf8_encode($feed->avatar);
@@ -349,7 +349,7 @@ class PostController extends Controller
 
 					case 'all':
 
-						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as offer_delivery_area, offer.shoppingPlace as offer_shopping_place, offer.deliverySchedule as offer_delivery_schedule, offer.transportMode as offer_transport_mode, offer.capacity as offer_capacity, offer.paymentMethod as offer_payment_method, offer.caption as offer_caption, request.shoppingPlace as request_shopping_place, request.deliverySchedule as request_delivery_schedule, request.paymentMethod as request_payment_method, request.caption as request_caption, shopping_list.text as items FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE offer.shoppingPlace = $user_info->cityMunicipality OR request.shoppingPlace = $user_info->cityMunicipality AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
+						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, offer.deliveryArea as offer_delivery_area, offer.shoppingPlace as offer_shopping_place, offer.deliverySchedule as offer_delivery_schedule, offer.transportMode as offer_transport_mode, offer.capacity as offer_capacity, offer.paymentMethod as offer_payment_method, offer.caption as offer_caption, request.shoppingPlace as request_shopping_place, request.deliverySchedule as request_delivery_schedule, request.paymentMethod as request_payment_method, request.caption as request_caption, request.shoppingListTitle, request.shoppingListContent FROM tbl_post post INNER JOIN tbl_userInformation author ON author.email = post.email LEFT JOIN tbl_shoppingOfferPost offer ON post.postNumber = offer.postNumber LEFT JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber WHERE offer.shoppingPlace = $user_info->cityMunicipality OR request.shoppingPlace = $user_info->cityMunicipality AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
 						foreach ($feeds as $feed) {
 							$feed->avatar = utf8_encode($feed->avatar);
@@ -376,7 +376,7 @@ class PostController extends Controller
 
 					case 'requests':
 						//get nearby requests
-						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, request.deliveryAddress as delivery_area, request.shoppingPlace as shopping_place, request.deliverySchedule as schedule, request.paymentMethod as payment_method, request.caption, shopping_list.text as items FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber LEFT JOIN tbl_shoppingList shopping_list ON shopping_list.shoppingListNumber = request.shoppingListNumber WHERE request.shoppingPlace = $user_info->cityMunicipality AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
+						$feeds = DB::select("SELECT author.email, author.firstName as first_name, author.lastName as last_name, author.profilePicture as avatar, post.postNumber as id, post.postStatus as status, post.postIdentity as identity, request.deliveryAddress as delivery_area, request.shoppingPlace as shopping_place, request.deliverySchedule as schedule, request.paymentMethod as payment_method, request.caption, request.shoppingListTitle, request.shoppingListContent FROM tbl_userInformation author INNER JOIN tbl_post post ON author.email = post.email INNER JOIN tbl_orderRequestPost request ON post.postNumber = request.postNumber WHERE request.shoppingPlace = $user_info->cityMunicipality AND post.postDeleteStatus = 0 ORDER BY post.dateCreated DESC");
 
 						foreach ($feeds as $feed) {
 							$feed->avatar = utf8_encode($feed->avatar);
@@ -424,7 +424,8 @@ class PostController extends Controller
 			'paymentMethod' => ['max:200'],
 			'caption' => ['max:200'],
 			'deliveryAddress' => ['string', 'max:500'],
-			'shoppingList' => ['string']
+			'shoppingListTitle' => ['string'],
+			'shoppingListContent' => ['string']
 		]);
 
 		$user = Auth::user();
@@ -465,7 +466,10 @@ class PostController extends Controller
 				$post->request_post->shoppingPlace = $request->shoppingPlace;
 				$post->request_post->deliverySchedule = $request->deliverySchedule;
 				$post->request_post->paymentMethod = $request->paymentMethod;
+				$post->request_post->shoppingListTitle = $request->shoppingListTitle;
+				$post->request_post->shoppingListContent = $request->shoppingListContent;
 				$post->request_post->caption = $request->caption;
+
 				//check if shopping place already exist in tbl_shoppingPlace
 				$shoppingPlace = DB::select('SELECT * from tbl_shoppingPlace WHERE shoppingPlace = \'' . $request->shoppingPlace . '\'');
 				if ($shoppingPlace == null) {
@@ -480,7 +484,6 @@ class PostController extends Controller
 				DB::transaction(function () use ($post) {
 					$post->save();
 					$post->request_post->save();
-					$post->shoppingList->save();
 				});
 
 				return 201;

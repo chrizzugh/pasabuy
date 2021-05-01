@@ -9,7 +9,6 @@ use App\Models\OfferPost;
 use App\Models\RequestPost;
 use App\Models\ShoppingList;
 use Carbon\Carbon;
-use Webpatser\Uuid\Uuid;
 
 class Post extends Model
 {
@@ -53,7 +52,7 @@ class Post extends Model
         # code...
         return $this->hasMany(transaction::class,'postNumber','postNumber');
     }
-    public function shoppingList() {
-        return $this->hasOneThrough(ShoppingList::class, RequestPost::class, 'postNumber', 'shoppingListNumber', 'postNumber', 'shoppingListNumber');
-    }
+    // public function shoppingList() {
+    //     return $this->hasOneThrough(ShoppingList::class, RequestPost::class, 'postNumber', 'shoppingListNumber', 'postNumber', 'shoppingListNumber');
+    // }
 }
