@@ -384,12 +384,12 @@ export default {
         }
       
         store.dispatch('createPostRequest',form).then(()=>{
+            this.$parent.$emit('closeModal')
             store.dispatch('getPosts').then(()=>{
               store.dispatch("getShoppingPlaces")
               this.$parent.$emit('getSortPosts')
             })
             VueSimpleAlert.alert("Request post created successfully", "Sucess","success")
-            this.$parent.$emit('closeModal')
         })
     },
     openAddModal() {

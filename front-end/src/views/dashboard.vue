@@ -1836,9 +1836,11 @@ export default {
   watch: {
     posts() {
       this.sortPosts();
+      this.changeFilter()
     },
     allShares() {
       this.sortPosts();
+      this.changeFilter()
     },
   },
   methods: {
@@ -1939,6 +1941,7 @@ export default {
           this.share1 = false;
           store.dispatch("getAllShares").then(() => {
             this.sortPosts();
+            this.changeFilter()
           });
         })
         .catch((error) => {
@@ -2218,11 +2221,13 @@ export default {
       this.filteringPosts = this.sortedAllPosts;
     },
     deletePost(postNum){
-      api.delete('post/'+postNum+'/delete').then(()=>{
+      api.delete('api/post/'+postNum+'/delete').then(()=>{
         store.dispatch('getPosts').then(()=>{
           this.sortPosts()
+          this.changeFilter()
         })
       })
+
     }
   },
   computed: {

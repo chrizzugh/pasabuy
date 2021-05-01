@@ -108,8 +108,7 @@ class PostController extends Controller
 			'shoppingPlace' => 'required|string|max:500',
 			'deliverySchedule' => 'required|date',
 			'paymentMethod' => 'required|string|max:200',
-			'shoppingListTitle' => 'required|string',
-			'shoppingListContent' => 'required|string',
+			'shoppingListNumber' => 'required',
 			'caption' => 'required|string|max:200',
 		]);
 
@@ -127,15 +126,16 @@ class PostController extends Controller
 		$request_post->shoppingPlace = $request->shoppingPlace;
 		$request_post->deliverySchedule = $request->deliverySchedule;
 		$request_post->paymentMethod = $request->paymentMethod;
-		$request_post->shoppingListTitle = $request->shoppingListTitle;
-		$request_post->shoppingListContent = $request->shoppingListContent;
+		$request_post->shoppingListNumber = $request->shoppingListNumber;
+		// $request_post->shoppingListTitle = $request->shoppingListTitle;
+		// $request_post->shoppingListContent = $request->shoppingListContent;
 		$request_post->caption = $request->caption;
 
-		$shopping_list = new shoppingList;
-		$shopping_list->shoppingListNumber = '076-'.str_pad(Auth::user()->indexUserAuthentication,4,'0',STR_PAD_LEFT).'-'.str_pad(ShoppingList::count()+1,5,'0',STR_PAD_LEFT);
-		$shopping_list->email = $user;
-		$shopping_list->shoppingListTitle = $request->shoppingListTitle;
-		$shopping_list->shoppingListContent = $request->shoppingListContent;
+		// $shopping_list = new shoppingList;
+		// $shopping_list->shoppingListNumber = '076-'.str_pad(Auth::user()->indexUserAuthentication,4,'0',STR_PAD_LEFT).'-'.str_pad(ShoppingList::count()+1,5,'0',STR_PAD_LEFT);
+		// $shopping_list->email = $user;
+		// $shopping_list->shoppingListTitle = $request->shoppingListTitle;
+		// $shopping_list->shoppingListContent = $request->shoppingListContent;
 
 		// save to database
 
@@ -149,10 +149,12 @@ class PostController extends Controller
 			]);
 		}
 
-		DB::transaction(function () use ($post, $request_post, $shopping_list) {
+		// DB::transaction(function () use ($post, $request_post, $shopping_list) {
+		DB::transaction(function () use ($post, $request_post) {
+
 			$post->save();
 			$post->request_post()->save($request_post);
-			$shopping_list->save();
+			// $shopping_list->save();
 		});
 
         broadcast(new newPostEvent())->toOthers();

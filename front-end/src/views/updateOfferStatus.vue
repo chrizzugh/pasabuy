@@ -56,7 +56,7 @@ export default {
     data(){
         return {
         isVisible: true,
-        shop_info: this.btnText,
+        shop_info: this.post,
         }
     },
     

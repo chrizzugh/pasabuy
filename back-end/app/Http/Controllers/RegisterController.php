@@ -133,30 +133,28 @@ class RegisterController extends Controller
                 $userAddress->barangay = $request->barangay;
                 $userAddress->cityMunicipality = $request->cityMunicipality;
 
-                $userAddress->save();
+                if ($userAddress->save()) {
+                    $user = new userid;
+                    if (($request->file('front_image') != NULL) && ($request->file('back_image') != NULL)) {
+                        $user->email = $request->email;
+                        $image = $request->file('front_image');
+                        $file_name = $request->file('front_image')->hashName();
+                        $image_resize = Image::make($image->getRealPath());
+                        $image_resize->save(public_path('storage\images\\' . $request->indexUserInformation . '\\' . $file_name))->fit(500, 500);
 
 
+                        $user->IDFrontPicture = Storage::url('/images/' . $request->indexUserInformation . '/' . $file_name);
 
-                $user = new userid;
-                if (($request->file('front_image') != NULL) && ($request->file('back_image')!= NULL)) {
-                    $user->email = $request->email;
-                    $image = $request->file('front_image');
-                    $file_name = $request->file('front_image')->hashName();
-                    $image_resize = Image::make($image->getRealPath());
-                    $image_resize->save(public_path('storage\images\\' . $request->indexUserInformation . '\\' . $file_name))->fit(500, 500);
+                        $image = $request->file('back_image');
+                        $file_name = $request->file('back_image')->hashName();
+                        $image_resize = Image::make($image->getRealPath());
+                        $image_resize->save(public_path('storage\images\\' . $request->indexUserInformation . '\\' . $file_name))->fit(500, 500);
 
-
-                    $user->IDFrontPicture = Storage::url('/images/' . $request->indexUserInformation . '/' . $file_name);
-
-                    $image = $request->file('back_image');
-                    $file_name = $request->file('back_image')->hashName();
-                    $image_resize = Image::make($image->getRealPath());
-                    $image_resize->save(public_path('storage\images\\' . $request->indexUserInformation . '\\' . $file_name))->fit(500, 500);
-
-                    $user->IDBackPicture = Storage::url('/images/' . $request->indexUserInformation . '/' . $file_name);
+                        $user->IDBackPicture = Storage::url('/images/' . $request->indexUserInformation . '/' . $file_name);
 
 
-                    $user->save();
+                        $user->save();
+                    }
                 }
 
                 Auth::login($userAuth);

@@ -338,6 +338,7 @@ export default {
         status: this.followStatus,
       };
       api.post("api/followStatus", followData).then(() => {
+        store.dispatch("getAuthUserFollow")
         store.dispatch("getUserFollow", this.account_infos.email).then(() => {
           console.log(this.followStatus, this.followedStatus);
           if (this.followStatus != this.followedStatus) {

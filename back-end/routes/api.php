@@ -88,7 +88,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Route::put("editShoppingOffers",[shoppingOffersController::class, 'update']);
     Route::get("/getReviews",[reviewController::class, 'listReviews']);
     Route::put('post/{post_id}/edit', [PostController::class, 'editPost']);
-    Route::delete('post/(post_id}/delete', [PostController::class, 'deletePost']);
+    Route::delete('post/{post_id}/delete', [PostController::class, 'deletePost']);
     Route::get("/userinterest", [interestController::class, 'getInterest']);
     Route::get("/userSkills", [interestController::class, 'getSkills']);
     Route::post("/userReviews", [reviewController::class, 'saveReview']);

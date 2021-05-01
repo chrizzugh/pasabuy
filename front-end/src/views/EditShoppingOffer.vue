@@ -514,7 +514,7 @@ export default {
         this.selectedBrgy = "";
       }
 
-      this.shop_info.offer_post.deliveryArea =
+      this.shop_info.deliveryArea =
         document.getElementById("Province").options[
           document.getElementById("Province").selectedIndex
         ].text +

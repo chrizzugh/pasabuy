@@ -383,6 +383,7 @@ export default {
       };
       console.log(form);
       store.dispatch("createPostOffer", form).then(() => {
+        this.$parent.$emit("closeModal");
         store.dispatch("getPosts").then(() => {
           store.dispatch("getShoppingPlaces")
           store.dispatch("getTransportModes")
@@ -393,7 +394,6 @@ export default {
           "Sucess",
           "success"
         );
-        this.$parent.$emit("closeModal");
       });
       }
       
