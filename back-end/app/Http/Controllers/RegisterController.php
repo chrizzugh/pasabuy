@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\emailConfirmation;
 use App\Models\User;
 use App\Models\userAddress;
+use App\Models\userid;
 use App\Models\userInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,7 @@ class RegisterController extends Controller
             'firstName' => ['required','regex:/^[a-zA-Z ]+$/'],
             'lastName' => ['required','regex:/^[a-zA-Z ]+$/'],
             'email' => ['required','email','unique:tbl_userAuthentication'],
-            'phoneNumber' => ['required','numeric','digits:11'],
+            'phoneNumber' => ['required'],
             'password' => ['required',
                             'min:8',
                             'confirmed',
@@ -79,7 +80,6 @@ class RegisterController extends Controller
     function postAddress(Request $request){
 
         $validator=Validator::make($request->all(),[
-            'landMark' => ['required'],
             'houseNumber' => ['required'],
             'province' => ['required'],
             'barangay' => ['required'],
@@ -130,6 +130,36 @@ class RegisterController extends Controller
                 $userAddress->cityMunicipality = $request->cityMunicipality;
                 
                 $userAddress->save();
+
+                  # code...
+        $validator=Validator::make($request->all(),[
+            'front_image' => 'file|image',
+            'back_image' => 'file|image',
+        ]);
+        if($validator->fails()) {
+            return response()->json($validator->errors(),422);
+        }
+        
+        $user = userid::where('email',$request->email)->first();
+        if($request->file('front_image')!=NULL){
+        $image = $request->file('front_image');
+        $file_name = $request->file('front_image')->hashName();
+        $image_resize = Image::make($image->getRealPath());              
+        $image_resize->save(public_path('storage\images\\'.$request->indexUserInformation.'\\' .$file_name))->fit(500,500);
+    
+    
+        $user->IDFrontPicture = Storage::url('/images/'.$request->indexUserInformation.'/'.$file_name);
+    
+        $image = $request->file('back_image');
+        $file_name = $request->file('back_image')->hashName();
+        $image_resize = Image::make($image->getRealPath());              
+        $image_resize->save(public_path('storage\images\\' .$request->indexUserInformation.'\\'.$file_name))->fit(500,500);
+    
+        $user->IDBackPicture = Storage::url('/images/'.$request->indexUserInformation.'/'.$file_name);
+        
+                
+                $user->save();
+            }   
 
                 Auth::login($userAuth);
                 

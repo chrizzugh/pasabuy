@@ -43,7 +43,7 @@
                         <div class="flex  flex-col justify-center overflow-hidden items-center  h-32">
                         <img :src="front_image" class="w-full " />
                        <img id="front_img" :src="icon_front" class="w-16 cursor-pointer">  
-                       <label for="front_id"> <span class="text-black">{{browse1}}</span>   </label> 
+                       <label for="front_id"> <span class="text-black" @change="filechange">{{browse1}}</span>   </label> 
                         </div>
                             <div class="w-28 mt-">
                                 <p class=" text-sm  w-full overflow-x-auto">{{filename}}</p> 
@@ -69,7 +69,7 @@
                         <div class="flex  flex-col justify-center overflow-hidden items-center  h-32">
                         <img :src="back_image" class="w-full " />
                        <img id="front_img" :src="icon_back" class="w-16 cursor-pointer">  
-                       <label for="back_id"> <span class="text-black">{{browse2}}</span>   </label> 
+                       <label for="back_id"> <span class="text-black" @change="filechange_back">{{browse2}}</span>   </label> 
                         </div>
                             <div class="w-28 mt-">
                                 <p class=" text-sm  w-full overflow-x-auto">{{filename2}}</p> 
@@ -142,17 +142,22 @@ data(){
         back_image:'',
         icon_front:'img/id-front.svg',
         icon_back:'img/id-back.svg',
+         data_back: new FormData(),
+        data_front: new FormData(),
         filename:null,
         filename2:null,
+        file_front:'',
+        file_back:'',
     }
 },
 methods:{
     filechange(e){
-        const file=e.target.files[0]
-        this.front_image=URL.createObjectURL(file);
+        const file_front=e.target.files[0]
+        this.front_image=URL.createObjectURL(file_front);
+        this.data_front.append('front_image', file_front );
         this.icon_front=null;
         this.browse1=null;
-        this.filename=file.name;
+        this.filename=file_front.name;
         this.delete1="Delete";
         this.edit1="Edit";
     },
@@ -166,11 +171,12 @@ methods:{
     },
     //back id
     filechange_back(e){
-        const file=e.target.files[0]
-        this.back_image=URL.createObjectURL(file);
+        const file_back=e.target.files[0]
+        this.back_image=URL.createObjectURL(file_back);
+        this.data_back.append('back_image', file_back);
         this.icon_back=null;
         this.browse2=null;
-        this.filename2=file.name;
+        this.filename2=file_back.name;
         this.delete2="Delete";
         this.edit2="Edit";
     },
@@ -187,7 +193,7 @@ methods:{
             var dataform = {personal:JSON.parse(localStorage.getItem('personal')), account:JSON.parse(localStorage.getItem('account')), address: JSON.parse(localStorage.getItem('address')) }
 
             console.log('mail=',dataform.personal.email)
-            api.post('/api/register', {email:dataform.personal.email, password:dataform.account.password, firstName:dataform.personal.firstName, lastName:dataform.personal.lastName, phoneNumber:dataform.personal.phoneNumber, landMark:dataform.address.landMark, houseNumber:dataform.address.houseNumber, province:dataform.address.province,barangay:dataform.address.barangay, cityMunicipality:dataform.address.cityMunicipality}).then((res)=>{
+            api.post('/api/register', {data_front:this.data_front,data_back:this.data_back,email:dataform.personal.email, password:dataform.account.password, firstName:dataform.personal.firstName, lastName:dataform.personal.lastName, phoneNumber:dataform.personal.phoneNumber, landMark:dataform.address.landMark, houseNumber:dataform.address.houseNumber, province:dataform.address.province,barangay:dataform.address.barangay, cityMunicipality:dataform.address.cityMunicipality}).then((res)=>{
                  console.log(res.data);
                  if(res){
                      this.dispatches().then(()=>{//wait for the dispatches to finish

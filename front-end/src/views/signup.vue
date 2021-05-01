@@ -38,7 +38,7 @@
                     <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" v-model="PersonalInfo.email"  />
                 </div>
                 <div class="mb-10">
-                    <input aria-label="Phone Number" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max"/>
+                    <input aria-label="Phone Number" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max" v-mask="'+63 ### ### ####'"/>
                 </div>
                 <div class="flex flex-col  
                 md:flex-row md:justify-between md:space-x-6
@@ -48,10 +48,16 @@
                 lg:flex-row lg:justify-between lg:space-x-6
                  ">
                     <div class="w-full" >
-                        <input aria-label="Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300 " placeholder="Password" v-model="PersonalInfo.password"/>   
+                         <input aria-label="Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300 " placeholder="Password" v-model="PersonalInfo.password" v-show="!showPass"/> 
+                         <input aria-label="Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300 " placeholder="Password" v-model="PersonalInfo.password" v-show="showPass"/>  
+                        <button @click="showPass = !showPass">
+                        <span v-show="!showPass">Show Password</span>
+                        <span v-show="showPass">Hide Password</span>
+                        </button>
                     </div>
                     <div class="w-full" >
-                        <input aria-label="Confirm Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" />
+                         <input aria-label="Confirm Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="!showPass"/>
+                        <input aria-label="Confirm Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="showPass"/>
                     </div>
                 </div>
                 <div class="flex mb-2 -mx-1 ">
@@ -110,14 +116,18 @@ import api from '../api'
 export default {
     data(){
         return{
-            max: 11,
+            max: 16,
+            showPass: false,
+            showPass1: false,
             PersonalInfo:{
                firstName : null,
                lastName : null,
                email :  null,
                phoneNumber : null,
-               password : null,
-               password_confirmation : null
+              password : '',
+               password_confirmation : '',
+               valid: false,
+               number: "",
             },
             errors:null,
         }
