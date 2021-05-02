@@ -234,43 +234,43 @@ export default {
         this.component = InterpretationAndDefinitions;
     },
     toggle2(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component2;
     },
     toggle3(){
-       if(this.component != CollectingData)
+       if(this.component != Acknowledgment)
         this.component = this.component3;
     },
     toggle4(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component4;
     },
     toggle5(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component5;
     },
     toggle6(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component6;
     },
     toggle7(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component7;
     },
     toggle8(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component8;
     },
     toggle9(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component9;
     },
     toggle10(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component10;
     },
     toggle11(){
-      if(this.component != CollectingData)
+      if(this.component != Acknowledgment)
         this.component = this.component11;
     },
 

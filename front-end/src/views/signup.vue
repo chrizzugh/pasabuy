@@ -2,7 +2,7 @@
 
     <div class="flex items-center ">
         <router-link to="/">
-        <img src="/img/pasaBUYLogoOnly.png" class="block w-20 h-16">
+        <img src="/img/pasaBUYLogoOnly.png" class="block w-16 h-16 ">
         </router-link>
         <h1 class="absolute block text-xl font-black tracking-widest left-16 font-raleway text-red-buttons">pasaBUY</h1>
       </div>
@@ -48,12 +48,12 @@
                 </div>
                 <div class="mt-4 text-xs font-bold tracking-wide text-left text-gray-500 text-grey-dark">
                     By signing up, you agree to the 
-                    <a class="font-bold text-black" href="#">
+                    <router-link to="/terms-and-condition"  class="font-bold text-black" >
                          Terms of Service
-                    </a> and 
-                    <a class="font-bold text-black" href="#">
+                    </router-link> and 
+                    <router-link to="/privacy-policy" class="font-bold text-black" >
                         Privacy Policy
-                    </a>
+                    </router-link>
                 </div>
             </form>
           </div>

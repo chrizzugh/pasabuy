@@ -197,19 +197,19 @@ export default {
         this.component = InterpretationAndDefinitions;
     },
     toggle2(){
-      if(this.component != CollectingData)
+      if(this.component != YourOrderCancellationRights)
         this.component = this.component2;
     },
     toggle3(){
-       if(this.component != CollectingData)
+       if(this.component != YourOrderCancellationRights)
         this.component = this.component3;
     },
     toggle4(){
-      if(this.component != CollectingData)
+      if(this.component != YourOrderCancellationRights)
         this.component = this.component4;
     },
     toggle5(){
-      if(this.component != CollectingData)
+      if(this.component != YourOrderCancellationRights)
         this.component = this.component5;
     },
 
