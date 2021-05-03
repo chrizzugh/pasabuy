@@ -115,8 +115,7 @@
         </span>
         </div>
         <!--Edit Home address-->
-        <div v-if="toggle" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle" class=" fixed overflow-y-auto items-center  inset-0 ">
+        <div v-if="toggle" class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
@@ -166,8 +165,7 @@
     </div>
       <!--Home Address Edit end-->
       <!--Edit Shipping Address-->
-      <div v-if="toggle_shipping" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle_shipping" class=" fixed overflow-y-auto items-center  inset-0 ">
+        <div v-if="toggle_shipping"  class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
@@ -180,12 +178,27 @@
               shadow-2xl
               h-auto
           ">
-         <div class="flex flex-row items-center  justify-between p-3">
-            <p class="hidden lg:block 2xl:block xl:block"></p>
-            <p class="text-lg flex  font-extrabold xl:ml-8 lg:ml-8 2xl:ml-8">Update Shipping Address</p>
-            <p class="font-bold text-red-700 cursor-pointer left-10" @click="toggle_shipping=false,toggle_delete=!toggle_delete"> Delete</p>
+         <div class="flex flex-row items-center  justify-between">
+            <p></p>
+            <p class="text-lg flex  font-extrabold xl:ml-20 lg:ml-20 2xl:ml-20">Update Shipping Address</p>
+            <div class="vs:flex-col"> 
+                <button @click="editVisible=!editVisible" class="ml-16 text-sm font-bold  focus:outline-none">
+                  <span class="material-icons">
+                  more_vert
+                </span></button>
+           </div>
           </div>
-            
+            <div v-if="editVisible" class="  flex justify-end ">
+                <div class="absolute bg-white rounded-xl shadow-2xl p-2">
+                
+                <div @click="toggle_delete=!toggle_delete,editVisible=false" class="flex cursor-pointer  items-center space-x-2">
+                  <span class="material-icons text-gray-400">
+                    delete
+                  </span>
+                  <p class="select-none">Delete</p>
+                </div>
+                </div>
+            </div>
          <div class=" ">
             <div class="flex flex-col space-y-4
             ">
@@ -217,8 +230,7 @@
     </div>
       <!--End Edit Shipping Address-->
       <!--Add new Shipping Address-->
-      <div v-if="toggle_add" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle_add" class=" fixed overflow-y-auto items-center  inset-0 ">
+        <div v-if="toggle_add"  class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
@@ -241,21 +253,21 @@
             <div class="flex flex-col space-y-4
             ">
                  <div class="flex flex-col">
-                   <span class="ml-2 uppercase text-sm font-bold text-gray-500">Landmark</span> 
+                   <span class="ml-2 uppercase text-xs font-bold text-gray-500">Landmark</span> 
                    <input   type="text"  id="Landmark_add"   class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                  </div>
 
                  <div class="flex flex-col">
-                   <span class="ml-2 uppercase text-sm font-bold text-gray-500">House Number</span> <input   type="text"  id="H_number_add"  class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                   <span class="ml-2 uppercase text-xs font-bold text-gray-500">House Number</span> <input   type="text"  id="H_number_add"  class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                  </div>
                   <div class="flex flex-col">
-                 <span class="ml-2 uppercase text-sm font-bold text-gray-500">Province</span> <input type="text" id="Province_add"    class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                 <span class="ml-2 uppercase text-xs font-bold text-gray-500">Province</span> <input type="text" id="Province_add"    class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                   </div>
                    <div class="flex flex-col">
-                  <span class="ml-2 uppercase text-sm font-bold text-gray-500">City/Municaplity </span> <input id="Town_add"   type="text" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                  <span class="ml-2 uppercase text-xs font-bold text-gray-500">City/Municaplity </span> <input id="Town_add"   type="text" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                    </div>
                     <div class="flex flex-col">
-                  <span class="ml-2 uppercase text-sm font-bold text-gray-500">Barangay</span> <input id="Barangay_add"  type="text" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                  <span class="ml-2 uppercase text-xs font-bold text-gray-500">Barangay</span> <input id="Barangay_add"  type="text" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                     </div>
               </div>
                <div class="flex justify-between items-center mt-4 space-x-4 ">
@@ -269,8 +281,7 @@
     </div>
       <!--End Add new Shipping Address-->
       <!--Delete Confirmation-->
-      <div v-if="toggle_delete" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle_delete"  class=" fixed overflow-y-auto   inset-0 ">
+        <div v-if="toggle_delete"   class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
@@ -298,7 +309,7 @@
            <div class="flex justify-between mt-4 px-5 space-x-4 items-center">
              <button @click="toggle_delete=false" class="px-4 bg-white text-black focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Cancel</button>
              
-             <button @click="toggle_delete=false,delete_shippingAdd()" class="px-4 bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Delete</button>
+             <button @click="toggle_delete=false,toggle_shipping=false,delete_shippingAdd()" class="px-4 bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Delete</button>
               
             </div>
             
@@ -307,9 +318,10 @@
           </div>
         </div>
     </div>
-   
+</div>
       <!--End Delete Confirmation-->
-     </div>
+    
+     
 </template>
 <script>
 //import ShippingAdd from './shopping_address_info.vue'
@@ -320,6 +332,7 @@ export default {
   },*/
 data(){
     return{
+     editVisible:false,
     toggle:false,
     toggle_add:false,
    toggle_shipping:false,
@@ -339,7 +352,7 @@ data(){
             num:0,
             selected:0,
               options: [
-            { text: 'Shipping Address 1', value: 0 },
+            { text: 'Shipping Address 1 (default)', value: 0 },
             { text: 'Shipping Address 2', value: 1 },
             { text: 'Shipping Address 3', value: 2 }
                     ],
@@ -433,6 +446,13 @@ methods:  {
           let n=document.getElementById('select_address').value;
           this.shippingAdd.splice(n,1);
           this.options.pop();
+          this.selected=0+1;
+          this.Landmark=this.shippingAdd[0].landmark;
+           this.House_number=this.shippingAdd[0].house_number;
+           this.Province=this.shippingAdd[0].province;
+           this.City=this.shippingAdd[0].city;
+           this.Barangay=this.shippingAdd[0].barangay;
+          
          
     }
 
