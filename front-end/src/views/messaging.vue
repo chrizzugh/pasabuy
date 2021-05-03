@@ -763,7 +763,7 @@
        
       <div class="pr-4 w-full absolute bottom-3 flex flex-cols justify-between items-center" style="min-width:400">
               <button class="h-6 w-6 ml-4 mr-1 bg-gray-400 rounded-full focus:outline-none hover:text-white" @click="attachbtn" type="button">
-               <span class="material-icons" id="attach">
+               <span class="material-icons" id="attach2">
                     {{attach}}</span>
               </button>
               <input type="text" class="w-10/12 h-8 flex pl-4 border focus:outline-none focus:ring-1 focus:ring-gray-400 rounded-full" placeholder="Type a message" id="typemsg-MOBILE" />
