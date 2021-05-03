@@ -1,38 +1,36 @@
 <template>
-    <div class="pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-10  pb-16 bg-transparent px-3 ">
-            <div class="overflow-hidden font-bold text-center bg-transparent w-full rounded-xl">
-                <div class="px-10 py-16 ">
-                    <h1 class="space-x-1 space-y-1 text-2xl">Collecting and Using Your Personal Data</h1>
+    <div class="font-nunito">
+        <div id="helpCreateAcc" class=" items-center flex justify-center w-full mt-5 pb-16 bg-transparent  ">
+            <div class=" overflow-hidden  text-left bg-transparent w-full ">
+                <div class="">
+                    <h1 class="space-x-1 font-bold space-y-1 text-2xl pb-3 uppercase">Collecting and Using Your Personal Data</h1>
                 </div> 
-                <h2>Types of Data Collected</h2>
-                    <div class="flex">
-                        <h1 class="text-2xl">Personal Data</h1>
-                        <button @click="isOpen=!isOpen" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
+                <h1 class="text-3xl text-blue-800 font-bold">Types of Data Collected</h1>
+                    <div class="flex py-3">
+                        <h1 class="font-normal text-xl text-gray-400">Personal Data</h1>
+
                     </div>
                     <div class="w-full text-align-left justify">
-                            <div v-if="isOpen">
+                            <div class="space-y-3">
                                 <p class="justify">
                                     While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to 
                                     contact or identify You. Personally identifiable information may include, but is not limited to:</p>
+                               <ul class="pl-3 list-inside list-disc">
                                 <li>Email address</li>
                                 <li>First name and last name</li>
                                 <li>Phone number</li>
                                 <li>Address, State, Province, ZIP/Postal code, City</li>
                                 <li>Usage Data</li>
+                               </ul>
                             </div>
                     </div>
                 <!----sub section 2---->
-                    <div class="flex">
-                        <h1 class="text-2xl">Usage Data</h1>
-                        <button @click="isOpen1=!isOpen1" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
+                    <div class="flex py-3">
+                       <h1 class="font-normal text-xl text-gray-400">Usage of Data</h1>
+                      
                     </div>
                     <div class="w-full text-align-left justify">
-                            <div v-if="isOpen1">
+                            <div>
                                 <p>Usage Data is collected automatically when using the Service.</p>
                                 <p>
                                     Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type, browser 
@@ -50,18 +48,18 @@
                             </div>
                     </div>
 
-                    <div class="flex">
-                        <h1 class="text-2xl">Information from Third-Party Social Media Services</h1>
-                        <button @click="isOpen2=!isOpen2" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
+                    <div class="flex py-3">
+                        <h1 class="font-normal text-xl text-gray-400">Information from Third-Party Social Media Services</h1>
+                        
                     </div>
                     <div class="w-full text-align-left justify">
-                            <div v-if="isOpen2">
+                            <div class="space-y-3 ">
                                 <p>The Company allows You to create an account and log in to use the Service through the following Third-party Social Media Services:</p>
-                                    <li>Google</li>
-                                    <li>Facebook</li>
-                                    <li>Twitter</li>
+                                    <ul class="pl-3 list-inside list-disc">
+                                        <li>Google</li>
+                                        <li>Facebook</li>
+                                        <li>Twitter</li>
+                                    </ul>
                                 <p>
                                     If You decide to register through or otherwise grant us access to a Third-Party Social Media Service, 
                                     We may collect Personal data that is already associated with Your Third-Party Social Media Service's account, 
@@ -75,18 +73,16 @@
 
                             </div>
                     </div>
-                    <div class="flex">
-                        <h1 class="text-2xl">Tracking Technologies and Cookies</h1>
-                        <button @click="isOpen3=!isOpen3" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
+                    <div class="flex py-3">
+                    <h1 class="font-normal text-xl text-gray-400">Tracking Technologies and Cookies</h1>
+                       
                     </div>
                     <div class="w-full text-align-left justify">
-                            <div v-if="isOpen3">
+                            <div   class="space-y-3"  >
                                 <p>We use Cookies and similar tracking technologies to track the activity on Our Service and store certain information. 
                                     Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze Our Service. 
                                     The technologies We use may include:</p>
-
+                                    
                                 <li>
                                     Cookies or Browser Cookies. A cookie is a small file placed on Your Device. You can instruct Your browser to refuse all Cookies 
                                     or to indicate when a Cookie is being sent. However, if You do not accept Cookies, You may not be able to use some parts 
@@ -153,9 +149,7 @@
                                 <p>
                                     For more information about the cookies we use and your choices regarding cookies, please visit our Cookies Policy or the Cookies section of our Privacy Policy.
                                 </p>
-                                <h2>
-                                    Use of Your Personal Data
-                                </h2>
+                                
                                 <p>
                                     The Company may use Personal Data for the following purposes:
                                 </p>
@@ -176,60 +170,11 @@
                                     <li>For other purposes: We may use Your information for other purposes, such as data analysis, identifying usage trends, determining the effectiveness of 
                                         our promotional campaigns and to evaluate and improve our Service, products, services, marketing and your experience.</li>
 
-                                    <p>
-                                        We may share Your personal information in the following situations:
-                                    </p>
-
-                                    <li>With Service Providers: We may share Your personal information with Service Providers to monitor and analyze the use of our Service, to contact You.</li>
-                                    <li>For business transfers: We may share or transfer Your personal information in connection with, or during negotiations of, any merger, sale of Company assets, financing, or acquisition of all or a portion of Our business to another company.</li>
-                                    <li>With Affiliates: We may share Your information with Our affiliates, in which case we will require those affiliates to honor this Privacy Policy. Affiliates include Our parent company and any other subsidiaries, joint venture partners or other companies that We control or that are under common control with Us.</li>
-                                    <li>With business partners: We may share Your information with Our business partners to offer You certain products, services or promotions.</li>
-                                    <li>With other users: when You share personal information or otherwise interact in the public areas with other users, such information may be viewed by all 
-                                        users and may be publicly distributed outside. If You interact with other users or register through a Third-Party Social Media Service, Your contacts 
-                                        on the Third-Party Social Media Service may see Your name, profile, pictures and description of Your activity. Similarly, other users will be able to view 
-                                        descriptions of Your activity, communicate with You and view Your profile.</li>
-                                    <li>With Your consent: We may disclose Your personal information for any other purpose with Your consent.</li>
-
-                                    <h2 class="font-bold">Retention of Your Personal Data</h2>
-                                    <p>The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy 
-                                        Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations 
-                                        (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our 
-                                        legal agreements and policies.</p>
-                                    <p>The Company will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter 
-                                        period of time, except when this data is used to strengthen the security or to improve the functionality of Our Service, 
-                                        or We are legally obligated to retain this data for longer time periods.</p>
                                     
-                                    <h2>Transfer of Your Personal Data</h2>
-                                    <p>Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the 
-                                        processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, 
-                                        province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.</p>
-                                    <p>Your consent to this Privacy Policy followed by Your submission of such information represents Your agreement to that transfer.</p>
-                                    <p>The Company will take all steps reasonably necessary to ensure that Your data is treated securely and in accordance with this Privacy Policy 
-                                        and no transfer of Your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security 
-                                        of Your data and other personal information.</p>
 
-
-                                    <h2>Disclosure of Your Personal Data</h2>
-                                        <h3>Business Transactions</h3>
-                                            <p>If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. 
-                                            We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.</p>
-                                        
-                                        <h3>Law enforcement</h3>
-                                            <p>Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law or in response to valid 
-                                            requests by public authorities (e.g. a court or a government agency).</p>
-
-                                        <h3>Other legal requirements</h3>
-                                            <p>The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>
-                                                <li>Comply with a legal obligation</li>
-                                                <li>Protect and defend the rights or property of the Company</li>
-                                                <li>Prevent or investigate possible wrongdoing in connection with the Service</li>
-                                                <li>Protect the personal safety of Users of the Service or the public</li>
-                                                <li>Protect against legal liability</li>
-                                        
-                                        <h3>Security of Your Personal Data</h3>
-                                            <p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic 
-                                                storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, 
-                                                We cannot guarantee its absolute security.</p>
+                                   
+                               
+                                    
                             </div>
                     </div>
                     
