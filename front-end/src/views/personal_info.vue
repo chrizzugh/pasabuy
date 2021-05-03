@@ -62,8 +62,7 @@
        
         </form>
         </div>
-       <div v-if="toggle" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle" class=" fixed items-center  inset-0 overflow-y-auto ">
+        <div v-if="toggle" class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
