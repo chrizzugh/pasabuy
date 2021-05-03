@@ -37,8 +37,7 @@
         </div>
         </div>
         <!--Change Email Address-->
-        <div v-if="toggle_email" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle_email"  class=" fixed overflow-y-auto items-center  inset-0 ">
+        <div v-if="toggle_email" class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
@@ -83,8 +82,8 @@
         </div>
     </div>
     <!--Confirmation-->
-    <div v-if="toggle_confirmation" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle_confirmation"  class=" fixed overflow-y-auto items-center  inset-0 ">
+    
+        <div v-if="toggle_confirmation"  class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
@@ -128,8 +127,7 @@
          <!---->
     <!--Change Password-->
     
- <div v-if="toggle_password" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle_password"  class=" fixed overflow-y-auto items-center  inset-0 ">
+        <div v-if="toggle_password" class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
