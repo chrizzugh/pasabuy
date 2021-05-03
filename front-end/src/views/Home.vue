@@ -1,5 +1,5 @@
 <template> 
-
+<!-----nav bar----->
         <nav class="fixed z-10 flex items-center justify-between w-full py-4 xl:px-4 font-nunito" :class="{change_color: scrollPosition > 100}">
         <div class="absolute items-center ">
         <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 "/>
@@ -15,9 +15,9 @@
                     <router-link to="/sign-up" >Sign Up</router-link>
                 </button>
             </div>
-        </nav>      
-    
+        </nav>  
 
+<!-----FIRST----->
     <div id="landing" class="w-full h-screen bg-no-repeat bg-cover xl:mx-auto ssm:w-full vs:bg-center md:bg-center vs:justify-center sm:bg-cover sm:bg-center ssm:bg-cover ssm:bg-center md:bg-no-repeat font-nunito" style="background-image: url('img/main-back.jpg')">
         <div class="flex items-center h-full xl:px-10 xl:ml-56 lg:ml-56 md:ml-28 2xl:pl-60 2xl:leading-loose">
             <section class="w-full ml-3 xl:w-6/12 md:w-7/12 lg:w-5/12 2xl:w-6/12 ">
@@ -64,7 +64,7 @@
         <div class="flex flex-wrap items-center justify-center px-20 bg-white 2xl:pt-48 sm:pt-20 sm:px-12 vs:px-12 vs:w-full pt-28 vs:pt-16 font-nunito">
             <div class="p-1 sm:p-0 sm:w-full vs:p-0 md:p-5 sm:px-4 vs:w-full md:justify-center md:w-full w-1/4 bg-white h-96.7 rounded-xl 2xl:pl-5 ">    
                 <h2 class="pt-5 text-3xl font-bold leading-snug tracking-wide text-left lg:text-2xl 2xl:pt-0 md:text-3xl leading-1">We deliver<br class="vs:hidden sm:hidden md:hidden"> more than just groceries</h2>
-                <p class="py-3 mb-6 font-semibold justify  leading-loose text-left text-md xl:mr-3 pt-9 2xl:mr-8 2xl:text-xl 2xl:leading-loose sm:text-lg md:text-lg lg:text-md lg:leading-loose lg:mr-3 lg:mb-0 lg:pt-6" >
+                <p class="py-3 mb-6 font-semibold justify text-justify leading-loose text-left text-md xl:mr-3 pt-9 2xl:mr-8 2xl:text-xl 2xl:leading-loose sm:text-lg md:text-lg lg:text-md lg:leading-loose lg:mr-3 lg:mb-0 lg:pt-6" >
                     Wanting to buy that branded shirt on sale? Need party supplies for a surprise birthday celebration? Shop for things with just a few clicks! With pasaBuy, your other essentials are just at the end of your fingertips.</p>
                     <button class="h-8 px-5 font-semibold tracking-wider text-white transition-colors duration-150 w-26 bg-red-buttons rounded-3xl focus:shadow-outline 2xl:h-10 hover:bg-red-700">
                         <router-link to="/log-in" >Try Now</router-link>
@@ -82,7 +82,7 @@
 
                 <div class="ml-6 vs:ml-0 sm:pl-0 sm:w-full vs:p-0 md:ml-20 p-1 vs:justify-center md:w-full vs:w-full w-1/4 bg-white h-96.7 rounded-xl">  
                 <h2 class="pt-2 text-3xl font-bold leading-snug tracking-wide text-left 2xl:pt-8 leading-1">We value your <br class="vs:hidden md:hidden sm:hidden 2xl:hidden"> health and <br class="vs:hidden sm:hidden"> safety.</h2>
-                <p class="py-3 mb-6 font-semibold justify leading-loose text-left md:text-lg 2xl:text-xl 2xl:leading-loose pt-11 text-md xl:mr-8 2xl:mr-8">
+                <p class="py-3 mb-6 font-semibold justify text-justify leading-loose text-left md:text-lg 2xl:text-xl 2xl:leading-loose pt-11 text-md xl:mr-8 2xl:mr-8">
                    pasaBuy limits your presence outside reducing your possibility of contracting the virus. Its security features ensure safe and worry-free transactions with other users on the platform.</p>
                     <button class="h-8 px-5 mt-2 font-semibold tracking-wider text-white transition-colors duration-150 w-26 bg-red-buttons 2xl:h-10 rounded-3xl focus:shadow-outline hover:bg-red-700">
                         <router-link to="/sign-up" >Sign Up Now</router-link>
