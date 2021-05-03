@@ -4,7 +4,7 @@
     <div class="bg-gray-50 flex h-screen justify-center divide-x divide-light-gray-700 px-2">
   
       <!--Inbox Corner-->
-        <div class="mt-20 shadow-md vsv:w-full vsvs:w-full x-v:w-full se:w-full vvs:w-full lvs:w-full vs:w-full ssm:w-full xsm:w-full sm:w-full mt-20 md:w-1/3 relative">
+        <div class="mt-20 shadow-md vsv:w-full vsvs:w-full x-v:w-full se:w-full vvs:w-full lvs:w-full vs:w-full ssm:w-full xsm:w-full sm:w-full mt-20 md:w-2/5 w-1/4 relative">
         
         <div id="msgheader" class="flex justify-items-center relative shadow pt-5 pb-1">
               <button class="focus:outline-none pl-5 hover:text-red-700" type="button"><span class="material-icons pt-1" id="iMessage">
@@ -93,7 +93,7 @@
       <!------------------------------------------------------>
      
       <!---Chat Corner-->
-            <div class="mt-20 shadow-md relative vsv:w-full vsvs:w-full x-v:w-full se:w-full vvs:w-full lvs:w-full vs:w-full ssm:w-full xsm:w-full sm:w-full mt-20 w-5/12 md:w-2/3">
+            <div class="mt-20 shadow-md relative vsv:w-full vsvs:w-full x-v:w-full se:w-full vvs:w-full lvs:w-full vs:w-full ssm:w-full xsm:w-full sm:w-full mt-20 w-5/12 md:w-3/5">
         
         <div class="relative flex justify-items-center md:justify-items-center shadow py-3">
           <div class="flex flex-row justify-between">
@@ -129,13 +129,11 @@
               
                 <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
                   more_verti</span></button></div>
-
                 <div class="flex justify-end pr-3">
                   <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Offer</span></button>
                   <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
                 </div>
             </div><!------->
-
             <!-- sent request 1--->
             <div v-if ="toggle2" class="text-sm w-full">
               <div class="flex justify-between items-center">
@@ -146,45 +144,37 @@
               
                 <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
                   more_verti</span></button></div>
-
                 <div class="flex justify-end pr-3">
                   <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
                   <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
                 </div>
             </div><!------->
-
             <!-- received offer 1--->
             <div v-if="toggle3" class="text-sm w-full">
               <div class="flex justify-between items-center">
               <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you an offer
               <span class="ml-2">for your </span>
               <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-
               <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
                   more_verti</span></button></div>
-
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
-
             <!-- received request 1--->
             <div v-if="toggle4" class="text-sm w-full">
               <div class="flex justify-between items-center">
               <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you a request
               <span class="ml-2">for your </span>
               <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-
               <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
                   more_verti</span></button></div>
-
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
-
         <!--------------transaction details confirmed------>
             <div v-if="toggle5" class="text-sm w-full">
               <div class="flex flex-row justify-between">
@@ -203,7 +193,6 @@
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
-
             <!--------------transaction details cancelled------>
             <div v-if="toggle6" class="text-sm w-full">
               <div class="flex flex-row justify-between">
@@ -222,7 +211,6 @@
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
-
             <!-----vertical-dot  options--> 
             <div v-if="toggleVerti" id="vertiOPTIONS" class="absolute right-4 top-2 xl:fixed xl:top-36 xl:right-16  px-2 mr-4 bg-gray-200 w-2/5 shadow-inner rounded-lg border-solid border-2 border-white" style="width:220px">
                 <div class="flex flex-col">
@@ -255,9 +243,7 @@
 
                   </div>
             </div><!-----end of transaction options--->
-
         </div><!------------------->
-
         <div class="p-2 flex justify-end">
           <div class="ml-32 pt-2 pl-4 pb-3 pr-4 text-sm bg-gray-200 rounded-lg">
             <p>{{ chatOutgoing[0].sent}}</p>
@@ -271,7 +257,6 @@
               <div class="mx-4 mb-2 text-sm font-semibold">
                 <span>Order Details</span>
               </div>
-
               <div class="mx-4 pr-2 pt-3 pb-3 text-sm">
                 <div class="flex flex-col px-2">
                   
@@ -279,26 +264,21 @@
                     <span class="text-red-700 material-icons" style="font-size:18px">place</span>
                     <span class="pl-2 pb-1"> {{placeFrom}}</span>
                   </div>
-
                   <div class="flex items-start">
                     <span class=" text-red-700 material-icons" style="font-size:18px">shopping_cart</span>
                     <span class="pl-2 pb-1">SM {{destination}}</span>
                   </div>
-
                   <div class="flex items-start">
                     <span class="text-red-700 material-icons" style="font-size:16px">watch_later</span>
                     <span class="pl-2 pb-1">{{timeAlloted}}</span>
                   </div>
-
                   <div class="flex items-start">
                     <span class=" text-red-700 material-icons" style="font-size:16px">payments</span>
                     <span class="pl-2">{{paymentMethod}}</span>
                   </div>
                   
-
                 </div>
               </div>
-
               <div class="mx-4 p-2 bg-white rounded-lg text-sm">
                 <div>
                   <span class="font-semibold">Shopping List<span class="ml-3 text-gray-500">{{shoppingListSize }}items</span></span>
@@ -423,7 +403,6 @@
         </div>
         <div id="chatmsg-DESKTOP"></div>
       </div>
-
       <div v-if="attachment" class="sticky bottom-11">
           <div class="w-full bg-white bg-opacity-100 flex justify-start pt-2">
             
@@ -448,7 +427,6 @@
                     send</span>
               </button>
       </div>
-
     </div><!--end of chat corner-->
 
     </div>
@@ -495,13 +473,11 @@
               
                 <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
                   more_verti</span></button></div>
-
                 <div class="flex justify-end pr-3">
                   <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Offer</span></button>
                   <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
                 </div>
             </div><!------->
-
             <!-- sent request 1--->
             <div v-if ="toggle2" class="text-sm w-full">
               <div class="flex justify-between items-center">
@@ -512,45 +488,37 @@
               
                 <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
                   more_verti</span></button></div>
-
                 <div class="flex justify-end pr-3">
                   <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
                   <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
                 </div>
             </div><!------->
-
             <!-- received offer 1--->
             <div v-if="toggle3" class="text-sm w-full">
               <div class="flex justify-between items-center">
               <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you an offer
               <span class="ml-2">for your </span>
               <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-
               <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
                   more_verti</span></button></div>
-
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
-
             <!-- received request 1--->
             <div v-if="toggle4" class="text-sm w-full">
               <div class="flex justify-between items-center">
               <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you a request
               <span class="ml-2">for your </span>
               <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-
               <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
                   more_verti</span></button></div>
-
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
-
         <!--------------transaction details confirmed------>
             <div v-if="toggle5" class="text-sm w-full">
               <div class="flex flex-row justify-between">
@@ -569,7 +537,6 @@
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
-
             <!--------------transaction details cancelled------>
             <div v-if="toggle6" class="text-sm w-full">
               <div class="flex flex-row justify-between">
@@ -588,7 +555,6 @@
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
-
             <!-----vertical-dot  options--> 
             <div v-if="toggleVerti" id="vertiOPTIONS-MOBILE" class="absolute right-4 top-2 xl:fixed xl:top-36 xl:right-16  px-2 mr-4 bg-gray-200 w-2/5 shadow-inner rounded-lg border-solid border-2 border-white" style="width:220px">
                 <div class="flex flex-col">
@@ -621,9 +587,7 @@
 
                   </div>
             </div><!-----end of transaction options--->
-
         </div><!------------------->
-
         <div class="p-2 flex justify-end">
           <div class="ml-32 pt-2 pl-4 pb-3 pr-4 text-sm bg-gray-200 rounded-lg">
             <p>{{ chatOutgoing[0].sent}}</p>
@@ -637,7 +601,6 @@
               <div class="mx-4 mb-2 text-sm font-semibold">
                 <span>Order Details</span>
               </div>
-
               <div class="mx-4 pr-2 pt-3 pb-3 text-sm">
                 <div class="flex flex-col px-2">
                   
@@ -645,26 +608,21 @@
                     <span class="text-red-700 material-icons" style="font-size:18px">place</span>
                     <span class="pl-2 pb-1"> {{placeFrom}}</span>
                   </div>
-
                   <div class="flex items-start">
                     <span class=" text-red-700 material-icons" style="font-size:18px">shopping_cart</span>
                     <span class="pl-2 pb-1">SM {{destination}}</span>
                   </div>
-
                   <div class="flex items-start">
                     <span class="text-red-700 material-icons" style="font-size:16px">watch_later</span>
                     <span class="pl-2 pb-1">{{timeAlloted}}</span>
                   </div>
-
                   <div class="flex items-start">
                     <span class=" text-red-700 material-icons" style="font-size:16px">payments</span>
                     <span class="pl-2">{{paymentMethod}}</span>
                   </div>
                   
-
                 </div>
               </div>
-
               <div class="mx-4 p-2 bg-white rounded-lg text-sm">
                 <div>
                   <span class="font-semibold">Shopping List<span class="ml-3 text-gray-500">{{shoppingListSize }}items</span></span>
@@ -789,7 +747,6 @@
         </div>
         <div id="chatmsg-MOBILE"></div>
       </div>
-
       <div v-if="attachment" class="sticky bottom-11">
           <div class="w-full bg-white bg-opacity-100 flex justify-start pt-2">
             
@@ -814,11 +771,9 @@
                     send</span>
               </button>
       </div>
-
     </div><!--end of right corner-->
     </div>
   </div><!-------------end chatbox------------->
-
   <div v-show="toggleInbox">
     <div class="bg-gray-50 flex h-full min-h-screen max-h-screen w-full justify-center pb-2">
       
@@ -917,9 +872,7 @@
 <script>
 import $ from 'jquery'
 import Navbar from './Navbar'
-
 var file = '';
-
 export default {
     components:{
       Navbar,
@@ -937,7 +890,6 @@ export default {
           searchMessageInactive: true,
           showSearchResults: false,
           attachment:false,
-
           ifHide:true,
           toggle1:true,
           toggle2:false,
@@ -946,7 +898,6 @@ export default {
           toggle5:false,
           toggle6:false,
           toggle7:false,
-
           attach:'add',
           active:'toggle1',
         //inbox
@@ -992,14 +943,12 @@ export default {
       }
     },
     methods: {
-
       sendbtn(){
         const fileInputBtn = document.getElementById('fileInput');
         var printtext = document.getElementById('chatmsg-DESKTOP');
         var printtext2 = document.getElementById('chatmsg-MOBILE');
         var copytext = document.getElementById('typemsg-DESKTOP');
         var copytext2 = document.getElementById('typemsg-MOBILE');
-
         var copiedtext = copytext.value;
         var copiedtext2 = copytext2.value;
           
@@ -1017,17 +966,13 @@ export default {
           printtext.insertAdjacentHTML('beforeend', printnow);
           document.getElementById('typemsg-DESKTOP').value = '';
         }
-
-
           if (fileInputBtn.value){
             //alert(file);
             var printFile = '<div class="p-2 flex justify-end ">'+'<div class="ml-32 pt-2 pl-4 pb-3 pr-4 bg-gray-100 text-sm rounded-lg">'+file+'</div> '  
             printtext.insertAdjacentHTML('beforeend', printFile);
             printtext2.insertAdjacentHTML('beforeend', printFile);
-
             document.getElementById('typemsg-MOBILE').value = '';
             document.getElementById('typemsg-DESKTOP').value = '';
-
             this.attachment = !this.attachment;
             if( this.attachment == true){
             document.getElementById("attach").innerHTML="close";
@@ -1039,29 +984,24 @@ export default {
         
         
       },//end sendbtn
-
       searchBtn(){
         this.showSearchResults=!this.showSearchResults;
         this.searchMessageInactive=!this.searchMessageInactive;
         document.getElementByID('search').value ='Mark';
       },
-
       alert(){
         alert('called');
       },
-
       closeSearchResults(){
         if(this.searchMessageInactive==false){
           this.searchMessageInactive=!this.searchMessageInactive;
           this.showSearchResults=!this.showSearchResults
         }
       },
-
       searchBackBtn(){
         this.showSearchResults=!this.showSearchResults;
         this.searchMessageInactive=!this.searchMessageInactive;
       },
-
       attachbtn(){
         this.attachment = !this.attachment;
         if( this.attachment == true){
@@ -1073,38 +1013,31 @@ export default {
           document.getElementById("attach2").innerHTML="add";
         }
       },
-
       navigate(){
         this.toggleInbox=!this.toggleInbox;
         this.toggleChat=!this.toggleChat;
-
         var b = document.getElementById('mark');
         var bText = b.textContent;
         var bLen = bText.length;
         var res = bText.substring(0, bLen-13);
         document.getElementById("active").innerHTML = res;
       },
-
       active_convo(el){
         this.toggleInbox=!this.toggleInbox;
         this.toggleChat=!this.toggleChat;
         //console.log(el);
         this.activeName = el;
       },
-
       backChat(){
         this.toggleInbox=!this.toggleInbox;
         this.toggleChat=!this.toggleChat;
       },
-
       threedots(){
         this.toggle = !this.toggle;
       },//end threedots
-
       vertiDots(){
         this.toggleVerti = !this.toggleVerti;
       },//end funtion vertiDots
-
       attachPhoto(){
         const fileInputBtn = document.getElementById('photoInput');
         const fileholder = document.getElementById('photo');
@@ -1117,7 +1050,6 @@ export default {
         }
         })
       },
-
       attachFile(){
         const fileInputBtn = document.getElementById('fileInput');
         //const fileholder = document.getElementById('file');
@@ -1131,18 +1063,14 @@ export default {
                 //alert(this.fileName);
             });
         })
-
       },
-
       hideVertiOptions(){
         this.ifHide = false;
       },
-
       showVertiOptions(){
         this.ifHide = true;
         console.log("called");
       },
-
       active_transact(e){
       
       if(this.active === 'toggle1')
@@ -1210,13 +1138,10 @@ export default {
           default:
             this.toggle1=true;
         }//end switch
-
         
       }
-
     }//end methods
   }//end export default
-
 $(document).mouseup(function(e){
     //desktop
     var delBtn = $("#delBtn");
@@ -1238,10 +1163,7 @@ $(document).mouseup(function(e){
     if(!vertiOPTIONS_MOBILE.is(e.target) && vertiOPTIONS_MOBILE.has(e.target).length === 0){
         vertiOPTIONS_MOBILE.hide();  
     }
-
     })
-
-
 </script>
 <style>
 .hide{
@@ -1288,7 +1210,6 @@ screen sizes lesser than 639px*/
 #vertiOPTIONS-MOBILE{
   box-shadow: 1px 1px 1px 1px #888888;
 }
-
 /*for screen sizes 639px++*/
 @media only screen and (min-width: 639px) {
   .desktopVersion{
