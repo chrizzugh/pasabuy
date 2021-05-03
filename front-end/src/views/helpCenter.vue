@@ -213,7 +213,7 @@ export default {
 }
 .active button{
    background-color: currentColor;
-   height: 40px;
+   
 }
 .active a{
   color:white;
