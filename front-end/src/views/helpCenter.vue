@@ -33,7 +33,9 @@
       w-full h-98" >
       <div id="helpCenterCreateAcc" class="w-full 
       2xl:w-2/4
-      xl:w-2/4  bg-white rounded-l-md  ">
+      xl:w-2/4 
+      lg:w-2/4
+       bg-white rounded-l-md  ">
         <!---Option Buttons--->
           <div class=" overflow-hidden   flex justify-start"> <!-- parent card box--->
               
@@ -44,9 +46,9 @@
                   </div>
                   <div class=" pb-2 w-full px-3
                    flex flex-col justify-center
-                   2xl:pr-20 2xl:pl-3 
-                   xl:pr-20 xl:pl-3
-                   lg:pr-20 lg:pl-3  
+                   2xl:pl-3 
+                   xl:pl-3
+                  lg:pl-3   
                    ">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
                             <button @click="toggle" class="rounded-full w-full bg-gray-100 px-3 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none  py-2 mb-2"><a class="text-black">Creating an Account</a></button>
