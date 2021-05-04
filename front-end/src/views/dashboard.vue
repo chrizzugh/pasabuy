@@ -655,20 +655,22 @@
               <hr>
                
                <!--SHOPPING LIST-->
-    <div v-if="shopping_list.length>0">
-        <h3 class="relative pt-2 pl-5 text-lg font-bold leading-loose tracking-wide">{{shopping_list[0].title}}
-                <div class="absolute bottom-0 pt-2 pr-2 ml-2 text-sm font-bold right-1 top-2 focus:outline-none">
+    <div >
+       <div class="relative pt-2 pl-5 text-lg font-bold leading-loose tracking-wide">
+         <span  v-if="shopping_list.length>0">{{shopping_list[0].title}}</span>
+          
+          <div v-if="shopping_list.length>0" class="absolute bottom-0 pt-2 pr-2 ml-2 text-sm font-bold right-1 top-2 focus:outline-none">
             <span @click="option_more=!option_more" class="cursor-pointer select-none material-icons md-18">
               more_vert
             </span>
              <div v-if="option_more" class="absolute bg-white drop-shadow-2xl  right-3 rounded-xl shadow-2xl p-1">
-                <div @click="Editlist=true" class="flex cursor-pointer  items-center space-x-2">
+                <div @click="Editlist=true,option_more=false" class="flex cursor-pointer  items-center space-x-2">
                   <span class="material-icons text-gray-400">
                     mode
                   </span>
                   <p class="select-none">Edit</p>
                 </div>
-                <div @click="toggle_delete=true" class="flex cursor-pointer  items-center space-x-2">
+                <div @click="toggle_delete=true,option_more=false" class="flex cursor-pointer  items-center space-x-2">
                   <span class="material-icons text-gray-400">
                     delete
                   </span>
@@ -678,10 +680,12 @@
           </div>
           
 
-                </h3> 
+                </div> 
                 
                   <div class="overflow-y-auto h-20">
-                    <span v-if="shopping_list.lenght>0">No shopping List Available</span>
+                 
+                      <span v-if="shopping_list.length<1" class="font-bold pl-5 text-center">No shopping List Available</span>
+                    
                     <ul v-else id="shop-list"  class="overflow-hidden text-sm leading-loose list-none pl-9">
                  
                       <li v-for="item in shopping_list[0].items" :key="item.id">  
