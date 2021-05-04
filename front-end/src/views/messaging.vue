@@ -1,6 +1,7 @@
 <template class="font-nunito">
 <Navbar/>
-<div class="desktopVersion fixed md:w-full vs:w-full min-h-screen">
+
+<div class="desktopVersion min-h-screen">
     <div class="bg-gray-50 flex h-screen justify-center divide-x divide-light-gray-700 px-2">
   
       <!--Inbox Corner-->
@@ -9,7 +10,7 @@
         <div id="msgheader" class="flex justify-items-center relative shadow pt-5 pb-1">
               <button class="focus:outline-none pl-5 hover:text-red-700" type="button"><span class="material-icons pt-1" id="iMessage">
                 chat</span></button>
-              <h4 class="text-base font-bold pl-4 ">Message</h4>   
+              <h4 class="tracking-wider text-base font-bold pl-4 ">Message</h4>   
         </div>
 
         <div v-if="searchMessageInactive" class="flex justify-center w-full relative py-1 mt-2 pt-2">
@@ -93,7 +94,7 @@
       <!------------------------------------------------------>
      
       <!---Chat Corner-->
-            <div class="mt-20 shadow-md relative vsv:w-full vsvs:w-full x-v:w-full se:w-full vvs:w-full lvs:w-full vs:w-full ssm:w-full xsm:w-full sm:w-full mt-20 w-5/12 md:w-3/5">
+      <div class="mt-20 shadow-md relative vsv:w-full vsvs:w-full x-v:w-full se:w-full vvs:w-full lvs:w-full vs:w-full ssm:w-full xsm:w-full sm:w-full mt-20 w-5/12 md:w-3/5">
         
         <div class="relative flex justify-items-center md:justify-items-center shadow py-3">
           <div class="flex flex-row justify-between">
@@ -108,16 +109,15 @@
             </div>
             
             <div class="align-middle absolute right-2">
-              <button v-if="toggle" class="absolute right-10 px-2 h-9 w-24 rounded bg-gray-100 border-solid border-2 border-gray-300 hover:text-red-700" id="delBtn" ><span class="font-semibold">Delete</span></button>
-              <button @click="threedots" class="pt-1 mr-3 focus:outline-none hover:text-red-700" type="button"><span class="material-icons">
+              <button @click="threedots" class="focus:bg-gray-300 hover:bg-gray-300 rounded-full px-1 h-6 mr-3 focus:outline-none hover:text-red-700" type="button"><span class="material-icons">
                   more_horiz</span></button>
             </div>
           </div>
         </div>
 
       <div class="overflow-auto overflow-x-hidden h-4/5" id="journal-scroll">
-
-        <div v-if="ifHide" class="sticky top-0 p-3 flex justify items-center shadow-lg bg-white border">
+   
+        <div v-if="ifHide" class="sticky top-0 w-full p-3 flex justify items-center shadow-lg bg-white border">
             
             <!-- sent offer 1--->
             <div v-if ="toggle1" class="text-sm w-full">
@@ -127,7 +127,7 @@
                 <span class="ml-2">for</span>
                 <span class="font-semibold ml-2">Post {{postNum}} </span></span>
               
-                <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+                <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
                 <div class="flex justify-end pr-3">
                   <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Offer</span></button>
@@ -142,7 +142,7 @@
                 <span class="ml-2">for</span>
                 <span class="font-semibold ml-2">Post {{postNum}} </span></span>
               
-                <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+                <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
                 <div class="flex justify-end pr-3">
                   <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
@@ -155,7 +155,7 @@
               <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you an offer
               <span class="ml-2">for your </span>
               <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-              <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+              <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
@@ -168,7 +168,7 @@
               <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you a request
               <span class="ml-2">for your </span>
               <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-              <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+              <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
@@ -183,7 +183,7 @@
                 <div class="flex items-center">
                   <span class="rounded border h-6 border-blue-700 px-1">Confirmed</span>
                                    
-                  <button @click="vertiDots" class="pt-1 w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+                  <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button>
                 </div>
 
@@ -193,50 +193,49 @@
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
+
             <!--------------transaction details cancelled------>
             <div v-if="toggle6" class="text-sm w-full">
               <div class="flex flex-row justify-between">
                 <span>Transaction <span class="font-semibold ml-2">{{postNum2 }} </span> </span>
-                
-                <div class="flex items-center">
+                 <div class="flex items-center">
                   <span class="rounded border h-6 border-crimsonRed text-crimsonRed px-1">Cancelled</span>
-                                   
-                  <button @click="vertiDots" class="pt-1 w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+                    <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button>
                 </div>
-
               </div>
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
+
             <!-----vertical-dot  options--> 
-            <div v-if="toggleVerti" id="vertiOPTIONS" class="absolute right-4 top-2 xl:fixed xl:top-36 xl:right-16  px-2 mr-4 bg-gray-200 w-2/5 shadow-inner rounded-lg border-solid border-2 border-white" style="width:220px">
+            <div v-if="toggleVerti" id="vertiOPTIONS" class="md:absolute md:right-4 md:top-2 fixed top-36 right-0  px-2 mr-4 bg-gray-200 w-2/5 shadow-inner rounded-lg border-solid border-2 border-white" style="width:220px">
                 <div class="flex flex-col">
                     <div class="flex flex-row items-center">
-                      <button @click="hideVertiOptions" class="w-full flex py-1 hover:bg-white hover:text-crimsonRed justify-start mt-2 border border-gray-300 rounded-lg">
+                      <button @click="hideVertiOptions" class="w-full flex py-1 hover:bg-white hover:text-crimsonRed justify-start mt-2 border border-gray-300 rounded-lg items-center">
                         <span class="material-icons pl-3" style="font-size:20px">visibility</span>
                         <span class="font-semibold pl-2 ">Hide</span>
                       </button>
                     </div> 
                   <div class="divide-y divide-gray-300">
                     <div class="flex flex-col pb-2">
-                      <span class="pl-1 font-semibold py-1 text-gray-500 py-1 text-xs">Request(s)/Offers RECEIVED</span>
-                      <button @click="active_transact('toggle1')" class="h-6 flex items-center rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Offer #1</button>
-                      <button @click="active_transact('toggle2')" class="h-6 flex items-center rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Request #1</button>
+                      <span class="pl-1 font-semibold py-1 text-gray-500 py-1 text-xs tracking-wide ">Request(s)/Offers RECEIVED</span>
+                      <button @click="active_transact('toggle1')" class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Offer #1</button>
+                      <button @click="active_transact('toggle2')" class="h-6 flex items-center tracking-wide rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Request #1</button>
                     </div>
 
                     <div class="flex flex-col pb-2">
-                      <span class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs">Request(s)/Offers SENT</span>
-                      <button @click="active_transact('toggle3')" class="h-6 flex items-center rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Offer #1</button>
-                      <button @click="active_transact('toggle4')" class="h-6 flex items-center rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Request #1</button>
+                      <span class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs tracking-wide">Request(s)/Offers SENT</span>
+                      <button @click="active_transact('toggle3')" class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Offer #1</button>
+                      <button @click="active_transact('toggle4')" class="h-6 flex items-center tracking-wide rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Request #1</button>
                     </div>
 
                     <div class="flex flex-col pb-2">
-                      <span class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs">OTHER TRANSACTIONS</span>
-                      <button @click="active_transact('toggle5')" class="h-6 flex items-center rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white text-blue-500 justify-start pl-4 ">Tansactions #17</button>
-                      <button @click="active_transact('toggle6')" class="h-6 flex items-center rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white text-crimsonRed justify-start pl-4 ">Transactions #18</button>
+                      <span class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs tracking-wide">OTHER TRANSACTIONS</span>
+                      <button @click="active_transact('toggle5')" class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white text-blue-500 justify-start pl-4 ">Tansactions #17</button>
+                      <button @click="active_transact('toggle6')" class="h-6 flex items-center tracking-wide rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white text-crimsonRed justify-start pl-4 ">Transactions #18</button>
                       <span class="pl-4 font-semibold italic text-gray-400 py-1 py-1 text-xs">No other transactions</span>
                     </div>
                   </div>
@@ -244,6 +243,11 @@
                   </div>
             </div><!-----end of transaction options--->
         </div><!------------------->
+        <div v-show="toggle" id="delBtn" class="absolute top-14 right-1.5 shadow-lg bg-gray-100 border-2 rounded w-auto flex flex-col justify-center text-sm">
+            <button class="tracking-wide py-2 px-10 bg-gray-100 font-semibold hover:border-white hover:bg-crimsonRed hover:text-white p-2">Delete</button>
+            <button v-if="!(ifHide)" @click="showVertiOptions" class="tracking-wide py-2 px-10 bg-gray-100 font-semibold hover:border-white hover:bg-crimsonRed hover:text-white p-2">Show Transactions</button>
+          </div>
+
         <div class="p-2 flex justify-end">
           <div class="ml-32 pt-2 pl-4 pb-3 pr-4 text-sm bg-gray-200 rounded-lg">
             <p>{{ chatOutgoing[0].sent}}</p>
@@ -452,8 +456,7 @@
             </div>
             
             <div class="align-middle absolute right-2">
-              <button v-if="toggle" class="absolute right-10 px-2 h-9 w-24 rounded bg-gray-100 border-solid border-2 border-gray-300 hover:text-red-700" id="delBtn-MOBILE" ><span class="font-semibold">Delete</span></button>
-              <button @click="threedots" class="pt-1 mr-3 focus:outline-none hover:text-red-700" type="button"><span class="material-icons">
+              <button @click="threedots" class="focus:bg-gray-300 hover:bg-gray-300 rounded-full px-1 h-6 mr-3 focus:outline-none hover:text-red-700" type="button"><span class="material-icons">
                   more_horiz</span></button>
             </div>
           </div>
@@ -471,8 +474,9 @@
                 <span class="ml-2">for</span>
                 <span class="font-semibold ml-2">Post {{postNum}} </span></span>
               
-                <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+                <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
+
                 <div class="flex justify-end pr-3">
                   <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Offer</span></button>
                   <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
@@ -486,7 +490,7 @@
                 <span class="ml-2">for</span>
                 <span class="font-semibold ml-2">Post {{postNum}} </span></span>
               
-                <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+                <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
                 <div class="flex justify-end pr-3">
                   <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
@@ -499,7 +503,7 @@
               <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you an offer
               <span class="ml-2">for your </span>
               <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-              <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+              <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
@@ -512,13 +516,14 @@
               <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you a request
               <span class="ml-2">for your </span>
               <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-              <button @click="vertiDots" class="w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+              <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
               <div class="flex justify-end pr-3">
                 <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
+
         <!--------------transaction details confirmed------>
             <div v-if="toggle5" class="text-sm w-full">
               <div class="flex flex-row justify-between">
@@ -527,7 +532,7 @@
                 <div class="flex items-center">
                   <span class="rounded border h-6 border-blue-700 px-1">Confirmed</span>
                                    
-                  <button @click="vertiDots" class="pt-1 w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+                  <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button>
                 </div>
 
@@ -537,6 +542,7 @@
                 <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
+            
             <!--------------transaction details cancelled------>
             <div v-if="toggle6" class="text-sm w-full">
               <div class="flex flex-row justify-between">
@@ -545,7 +551,7 @@
                 <div class="flex items-center">
                   <span class="rounded border h-6 border-crimsonRed text-crimsonRed px-1">Cancelled</span>
                                    
-                  <button @click="vertiDots" class="pt-1 w-5 focus:outline-none hover:text-red-700" type="button"><span class="material-icons" style="font-size:">
+                  <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button>
                 </div>
 
@@ -559,28 +565,28 @@
             <div v-if="toggleVerti" id="vertiOPTIONS-MOBILE" class="absolute right-4 top-2 xl:fixed xl:top-36 xl:right-16  px-2 mr-4 bg-gray-200 w-2/5 shadow-inner rounded-lg border-solid border-2 border-white" style="width:220px">
                 <div class="flex flex-col">
                     <div class="flex flex-row items-center">
-                      <button @click="hideVertiOptions" class="w-full flex py-1 hover:bg-white hover:text-crimsonRed justify-start mt-2 border border-gray-300 rounded-lg">
+                      <button @click="hideVertiOptions" class="w-full items-center flex py-1 hover:bg-white hover:text-crimsonRed justify-start mt-2 border border-gray-300 rounded-lg">
                         <span class="material-icons pl-3" style="font-size:20px">visibility</span>
-                        <span class="font-semibold pl-2 ">Hide</span>
+                        <span class="font-semibold pl-2">Hide</span>
                       </button>
                     </div> 
-                  <div class="divide-y divide-gray-300">
+                  <div class="divide-y divide-gray-300 tracking-wide">
                     <div class="flex flex-col pb-2">
                       <span class="pl-1 font-semibold py-1 text-gray-500 py-1 text-xs">Request(s)/Offers RECEIVED</span>
-                      <button @click="active_transact('toggle1')" class="h-6 flex items-center rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Offer #1</button>
-                      <button @click="active_transact('toggle2')" class="h-6 flex items-center rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Request #1</button>
+                      <button @click="active_transact('toggle1')" class="h-6 flex items-center rounded tracking-wide py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Offer #1</button>
+                      <button @click="active_transact('toggle2')" class="h-6 flex items-center rounded tracking-wide py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Request #1</button>
                     </div>
 
                     <div class="flex flex-col pb-2">
                       <span class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs">Request(s)/Offers SENT</span>
-                      <button @click="active_transact('toggle3')" class="h-6 flex items-center rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Offer #1</button>
-                      <button @click="active_transact('toggle4')" class="h-6 flex items-center rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Request #1</button>
+                      <button @click="active_transact('toggle3')" class="h-6 flex items-center rounded tracking-wide py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Offer #1</button>
+                      <button @click="active_transact('toggle4')" class="h-6 flex items-center rounded tracking-wide py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4 ">Request #1</button>
                     </div>
 
                     <div class="flex flex-col pb-2">
                       <span class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs">OTHER TRANSACTIONS</span>
-                      <button @click="active_transact('toggle5')" class="h-6 flex items-center rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white text-blue-500 justify-start pl-4 ">Tansactions #17</button>
-                      <button @click="active_transact('toggle6')" class="h-6 flex items-center rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white text-crimsonRed justify-start pl-4 ">Transactions #18</button>
+                      <button @click="active_transact('toggle5')" class="h-6 flex items-center rounded tracking-wide py-1 flex text-xs hover:bg-gray-400 hover:text-white text-blue-500 justify-start pl-4 ">Tansactions #17</button>
+                      <button @click="active_transact('toggle6')" class="h-6 flex items-center rounded tracking-wide py-1 flex text-xs hover:bg-gray-400 hover:text-white text-crimsonRed justify-start pl-4 ">Transactions #18</button>
                       <span class="pl-4 font-semibold italic text-gray-400 py-1 py-1 text-xs">No other transactions</span>
                     </div>
                   </div>
@@ -588,6 +594,12 @@
                   </div>
             </div><!-----end of transaction options--->
         </div><!------------------->
+
+        <div v-show="toggle" id="delBtn-MOBILE" class="absolute top-16 right-1.5 shadow-lg bg-gray-100 border-2 rounded w-56 flex flex-col justify-center text-sm">
+            <button class="tracking-wide bg-gray-100 font-semibold hover:border-white hover:bg-crimsonRed hover:text-white p-2">Delete</button>
+            <button v-if="!(ifHide)" @click="showVertiOptions" class="tracking-wide bg-gray-100 font-semibold hover:border-white hover:bg-crimsonRed hover:text-white p-2">Show Transactions</button>
+        </div>
+
         <div class="p-2 flex justify-end">
           <div class="ml-32 pt-2 pl-4 pb-3 pr-4 text-sm bg-gray-200 rounded-lg">
             <p>{{ chatOutgoing[0].sent}}</p>
@@ -783,7 +795,7 @@
         <div id="msgheader" class="flex justify-items-center relative shadow pt-5 pb-1">
               <button class="focus:outline-none pl-5 hover:text-red-700" type="button"><span class="material-icons pt-1" id="iMessage">
                 chat</span></button>
-              <h4 class="text-base font-bold pl-4 ">Message</h4>   
+              <h4 class="tracking-wider text-base font-bold pl-4 ">Message</h4>   
         </div>
 
         <div v-if="searchMessageInactive" class="flex justify-center w-full relative py-1 mt-2 pt-2">
@@ -822,7 +834,7 @@
 
             <button @click ="active_convo('Gwen Lopez')" type="button" class=" focus:bg-gray-200 relative w-full sm:pr-8 flex focus:outline-none justify-between items-center mt-2 p-2 hover:shadow-lg cursor-pointer transition">
               <div class="flex ml-2"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" class="rounded-lg h-8 w-7 pt-1"> 
-                <div class="flex flex-col justify-between items-start ml-2"> <span class="font-medium text-sm" id="gwen">{{ inbox[1].name}}<span class="material-icons pl-2" id="iCheck" style="font-size:14px">
+                <div class="flex flex-col justify-between items-start ml-2"> <span class="font-medium text-sm " id="gwen">{{ inbox[1].name}}<span class="material-icons pl-2" id="iCheck" style="font-size:14px">
                   check_circle
                   </span></span> 
                   <span class="text-xs text-gray-400 truncate w-32 md:w-28 lvs:w-64 sm:w-64 ssm:w-24"> {{ inbox[1].message}}
@@ -1069,7 +1081,8 @@ export default {
       },
       showVertiOptions(){
         this.ifHide = true;
-        console.log("called");
+        this.toggle = false;
+        this.toggleVerti = false;
       },
       active_transact(e){
       
