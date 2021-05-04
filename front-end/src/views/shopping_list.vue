@@ -379,7 +379,7 @@ methods:{
           'quantity':parseInt(quantx) 
      }
      this.n++;
-     this.shopping_list.push(obj);
+     this.shopping_list[index].items.push(obj);
      console.log(this.shopping_list[index].items);
      document.getElementById(a).value='';
      document.getElementById(b).value='';
