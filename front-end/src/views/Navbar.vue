@@ -35,18 +35,21 @@
       <p class="text text-gray-500">Home</p>
       </div>
       </router-link>
-     <router-link to="/messages"> <div class="flex gap-x-4 py-4">
+
+     <router-link to="/messages"> <div class="flex gap-x-4 py-4 relative">
       <span class="material-icons cursor-pointer">
         chat
       </span>
+      <span class="absolute left-3 top-2 rounded-full font-semibold bg-balticsea text-white text-xs px-1 h-4">2</span>
       <p class=" text-gray-500">Messages</p>
       </div></router-link>
-      <div class="flex gap-x-4 py-4 cursor-pointer  items-center" @click="activeBtn=!activeBtn,show=!show" :class="{active_notif: activeBtn }">
+
+      <div class="flex gap-x-4 py-4 relative cursor-pointer  items-center" @click="activeBtn=!activeBtn,show=!show" :class="{active_notif: activeBtn }">
        <span id="notif" class="text-gray-500 material-icons \">
             notifications
           </span>
           <span id="btn_notif" class="text-base font-bold leading-none tracking-wide text-gray-500 outline-none ">Notifications</span>
-              
+          <span class="absolute left-3 top-2 rounded-full font-semibold bg-balticsea text-white text-xs px-1 h-4">10</span>   
       </div>
       </div>
       <div class=" flex  mr-2 gap-x-5 ">
