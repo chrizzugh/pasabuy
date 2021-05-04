@@ -17,89 +17,93 @@
             <router-link to="/"  class="flex flex-row gap-x-2 text-black">Log out</router-link>
           </div>
         </div>
-  </nav> 
+  </nav> <!---End of navbar--->
+
   <div class="bg-white space-y-3 w-full flex flex-col justify-center  py-10 ">
-    <h1 class="text-5xl xl:pl-60 px-3 font-extrabold"> Terms and Conditions</h1>
-    <div class="px-3 w-full xl:w-608 self-center flex justify-center items-center text-justify">
-      <p>Please read these terms and conditions carefully before using Our Service.</p>
+    <h1 class="text-5xl xl:pl-60 px-3 font-extrabold"> About Us</h1>
+    <div class="px-3 w-full xl:w-608 self-center flex justify-center items-center ">
+      <p class="text-center">
+        PasaBuy is a safe, secure, convenient, and streamlined platform for all Bicolanos for grocery delivery services. With PasaBuy, users can get help with their groceries and earn money by being shoppers.
+      </p>
     </div>
   </div>
 <div class=" ">
 <div class="flex justify-center mb-4 bg-gray-200">
     <div class="flex justify-center self-center 2xl:w-4/6 xl:w-4/6 lg:w-4/6 w-5/6">
       <div id="helpCenterCreateAcc" class="w-full 2xl:w-2/3 xl:w-2/5  bg-gray-200 rounded-l-md ">
-          <div class="  flex justify-start"> 
-              <!---left---->
+
+        <!--1st--->
+          <div class="  flex justify-start">
               <div class="bg-transparent  w-full ">                  
-                  <div class=" pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">                        
-                        <div @click=" isActive_function('btn1')"  :class="{active: activeBtn === 'btn1' }" >
-                            <span @click="toggle" ><a class="text-black font-bold cursor-pointer text-sm">Interpretation</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 'btn1' }">
-                            <span @click ="toggle" ><a class="text-black font-bold cursor-pointer text-sm">Definitions</a></span>
-                        </div>
+                  <div class=" pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-left 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">                        
+                        <h1>How we started</h1>
+                        <p class="text-justify">
+                          In 2020, pasaBuy started as a simple idea with a purpose of helping and keeping our 
+                          townsmen— Bicolanos safe from the cyber and environmental threats.
+                        </p>
+                        <p class="text-justify">
+                          Aside from that, we are really motivated to turn this idea into a reality because
+                          of this important agenda— avoid getting a failure grade.
+                        </p>
                   </div>
               </div>
           </div>
       </div>
           
-     <div class="w-full bg-gray-200 rounded-r-md pr-8 pl-2 overflow-auto">
-        <component :is="new_component" />
+     <div class="w-full bg-transparent rounded-r-md pr-8 pl-2 overflow-auto">
+        <img src="/img/womanDev.svg">
       </div>
     </div>
   </div>
 
-  <div class="flex justify-center bg-white">
+<!---2nd--->
+  <div class="flex justify-center bg-gray-200">
     <div class="flex justify-center self-center 2xl:w-4/6 xl:w-4/6 lg:w-4/6 w-5/6 h-screen" >
-      <div id="helpCenterCreateAcc" class="w-full   2xl:w-2/3 xl:w-2/5  bg-white rounded-l-md overflow-auto">
+      <div class="w-full   2xl:w-2/3 xl:w-2/5  bg-white rounded-l-md overflow-auto">
+        <!---Option Buttons--->
           <div class=" overflow-hidden  flex justify-start"> 
+              <!---left---->
               <div class="bg-transparent  w-full ">
-                  <div class="  pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
-                        <div @click=" isActive_function('btn1')"  :class="{active: activeBtn === 0 }" >
-                            <span @click="toggle1" ><a class="text-black font-bold cursor-pointer text-sm">Acknowledgment</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <span @click ="toggle2" ><a class="text-black font-bold cursor-pointer text-sm">Links to Other Websites</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <span @click="toggle3" ><a class="text-black cursor-pointer font-bold text-sm">Termination</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <span @click="toggle4" ><a class="text-black cursor-pointer font-bold text-sm">Limitation of Liability</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" >
-                            <span @click="toggle5" ><a class="text-black cursor-pointer font-bold text-sm">"AS IS" and "AS AVAILABLE" Disclaimer</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn6')" :class="{active: activeBtn === 'btn6' }" >
-                            <span @click="toggle6" ><a class="text-black cursor-pointer font-bold text-sm">Governing Law</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn7')" :class="{active: activeBtn === 'btn7' }" >
-                            <span @click="toggle7" ><a class="text-black cursor-pointer font-bold text-sm">Disputes Resolution</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn8')" :class="{active: activeBtn === 'btn8' }" >
-                            <span @click="toggle8" ><a class="text-black cursor-pointer font-bold text-sm">Severability and Waiver</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn9')" :class="{active: activeBtn === 'btn9' }" >
-                            <span @click="toggle9" ><a class="text-black cursor-pointer font-bold text-sm">Translation Interpretation</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn10')" :class="{active: activeBtn === 'btn10' }" >
-                            <span @click="toggle10" ><a class="text-black cursor-pointer font-bold text-sm">Changes to These Terms and Conditions</a></span>
-                        </div>
-
+                  <div class="  pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-left 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
+                       <h1 class="font-bold text-crimsonRed">Our Mission</h1>
+                       <p class="text-justify">
+                         It is our commitment to provide our customers with smooth and secured transactions for their pasabuy and 
+                         delivery needs by allowing them to experience the convenience that technology provides. With our simple way, 
+                         we will offer income alternatives to unemployed individuals or even to people employed but who need additional 
+                         income and contribute to the improvement of their lives.
+                       </p>
                   </div>
-              </div>
           </div>
       </div>
-          
-     <div class="w-full bg-white rounded-r-md pr-8 pl-2 overflow-auto">
-        <component :is="component" />
-      </div>
+    <div class="w-full bg-transparent rounded-r-md pr-8 pl-2 overflow-auto">
+        <div class="  pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-left 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
+              <h1 class="font-bold text-crimsonRed">Our Vision</h1>
+                <p class="text-justify">Pasabuy aims to be the most trusted and best possible platform for the customers' pasabuy and delivery needs.</p>
+        </div>
+    </div>
+
+<!--3rd--->
+    <div class="justify-center self-center 2xl:w-4/6 xl:w-4/6 lg:w-4/6 w-5/6">
+              <div class="bg-transparent  w-full ">                  
+                  <div class=" pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-left 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">                        
+                        <h1>No more ruined schedules, when you pasaBuy with us!</h1>
+                        <p class="text-justify">
+                          In 2020, pasaBuy started as a simple idea with a purpose of helping and keeping our 
+                          townsmen— Bicolanos safe from the cyber and environmental threats.
+                        </p>
+                        <p class="text-justify">
+                          Aside from that, we are really motivated to turn this idea into a reality because
+                          of this important agenda— avoid getting a failure grade.
+                        </p>
+                  </div>
+              </div>
+    </div>
     </div>
   </div>
 </div>
 
 <!--FOOTER-->
-        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille">
+        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille"> <!---change to pb-5---->
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
                 <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
@@ -109,12 +113,13 @@
                         <li class="inline-block px-3 py-1 font-medium tracking-wide sm:px-0">Company</li>
                         <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline">About Us</a>
                         </li>
+                        <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">FAQs</a></li>
                         <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">Help</a></li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
                        <li class="inline-block px-3 py-2 font-medium tracking-wide ">Privacy Policy</li>
-                          <router-link to="/privacy-policy"> <li><a  class="inline-block py-1 pl-3 pr-5 text-white no-underline">Privacy</a></li></router-link>
-                          <router-link to="/terms-and-condition"> <li><a class="inline-block py-1 pl-3 pr-5 no-underline ">Terms</a></li></router-link>
+                        <router-link to="/privacy-policy"> <li><a  class="inline-block py-1 pl-3 pr-5 text-white no-underline">Privacy</a></li></router-link>
+                        <router-link to="/terms-and-condition"> <li><a class="inline-block py-1 pl-3 pr-5 no-underline ">Terms</a></li></router-link>
                     </ul>
                     <div class="flex flex-col w-full sm:w-11/12">
                         <div class="inline-block px-3 py-1 font-medium tracking-wide ">©Pasabuy 2021</div>
@@ -171,10 +176,31 @@
 </style>
 
 <script>
+import PolicyChanges from './privacyPolicyChanges'
+import ChildrenPolicy from './privacyPolicyInterpAndDef'
+import InterandDef from './privacyPolicyInterpAndDef'
+import CollectingData from './privacyPolicyChildren'
+import TypesOfCollectedData from './privacyPolicyCollecting'
+import ExpandingYourConnection from './privacyPolicyLink'
+import PersonalData from './privacyPolicyPersonal'
+import Retention from './privacyPolicyRetention'
+import TranPersonal from './privacyPolicyTransPersonal'
+import Disclosure from './privacyPolicyDisclosure'
+import $ from 'jquery'
 export default {
   data(){
         return{
+            new_component:"InterandDef",
+            component: "TypesOfCollectedData",
+            component2: "CollectingData",
+            component3: "ExpandingYourConnection",
+            component4: "ChildrenPolicy",
+            component5: "PolicyChanges",
             
+            isOpen: false,
+            isClick: false,
+            activeBtn: 0,
+            show: false
         }
     },
   
@@ -182,9 +208,47 @@ export default {
  
   },
   components:{
+      PersonalData,
+      TypesOfCollectedData,
+      CollectingData,
+      ExpandingYourConnection,
+      ChildrenPolicy,
+      PolicyChanges,
+     InterandDef,
+     Retention,
+     TranPersonal,
+     Disclosure
   },
   methods:{
-    
+    toggle(){
+      if(this.component != TypesOfCollectedData)
+        this.component = TypesOfCollectedData;
+    },
+    toggle2(){
+      this.component=PersonalData;
+    },
+    toggle3(){
+        this.component = Retention;
+    },
+    toggle4(){
+        this.component = TranPersonal;
+    },
+    toggle5(){
+        this.component = Disclosure;
+    },
+     toggle7(){
+      this.new_component=InterandDef;
+    },
+    isActive_function(el){
+     if(el=='btn1'){
+      this.activeBtn= 0;
+    } else {
+        this.activeBtn= el;
+        }
+    },
+    selectButton(){
+      $(".notSelected").toggleClass("isSelected");
+    }
   }
 }
 </script>
