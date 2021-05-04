@@ -8,23 +8,22 @@
                 <div class="pt-2">
                 <!----sub section 1---->
                     <div class="py-3">
-                        <h1 class="text-4xl font-bold text-blue-800">Interpretation</h1>
-                        
+                        <h1 class="text-4xl font-bold text-blue-800">Interpretation</h1>                        
                     </div>
                     <div class="w-full text-align-left justify">
-                            <div >
+                            <div>
                                 <p class="text-justify">The words of which the initial letter 
                                     is capitalized have meanings defined under the following 
                                     conditions. The following definitions
-                                     shall have the same meaning regardless
-                                      of whether they appear in singular or in plural.
+                                    shall have the same meaning regardless
+                                    of whether they appear in singular or in plural.
                                 </p>
                             </div>
                     </div>
+
                 <!----sub section 2---->
                     <div class="flex py-3">
                         <h1 class="text-4xl font-bold text-blue-800">Definitions</h1>
-                        
                     </div>
                     <div class="w-full text-align-left justify">
                             <div>

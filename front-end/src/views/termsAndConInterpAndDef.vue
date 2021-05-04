@@ -9,26 +9,18 @@
                 <!----sub section 1---->
                     <div class="flex">
                         <h1 class="text-sm">Interpretation</h1>
-                        <button @click="isOpen=!isOpen" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
                     </div>
-                    <div class="w-full text-align-left justify">
-                            <div v-if="isOpen">
-                                <p class="justify">The words of which the initial letter is capitalized have meanings defined under the following conditions. 
-                                    The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
-                            </div>
+                    <div class="w-full text-align-left ">
+                                <p class="text-justify">The words of which the initial letter is capitalized have meanings defined under the following conditions. 
+                                    The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>                        
                     </div>
                 <!----sub section 2---->
                     <div class="flex">
                         <h1 class="text-sm">Definitions</h1>
-                        <button @click="isOpen1=!isOpen1" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
                     </div>
                     <div class="w-full text-align-left justify">
-                            <div v-if="isOpen1">
                                 <p>For the purposes of these Terms and Conditions:</p>
+                                <ul class="pl-3 space-y-2 list-inside list-disc">
                                     <li>Affiliate means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</li>
                                     <li>Country refers to: Philippines</li>
                                     <li>Company (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to pasaBUY.</li>
@@ -38,7 +30,7 @@
                                     <li>Third-party Social Media Service means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</li>
                                     <li>Website refers to pasaBUY, accessible from https://pasabuybscs.herokuapp.com/</li>
                                     <li>You means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
-                            </div>
+                                </ul>
                     </div>
                 </div>
             </div><!----->

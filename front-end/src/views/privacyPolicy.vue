@@ -1,7 +1,5 @@
 <template class=" flex font-nunito">
-
 <!----nav bar--->
-<!------navigation--->
   <nav class=" w-full flex items-center py-5 shadow-md bg-red-buttons  sticky top-0 ">
       <div class="flex justify-center items-center pl-4">
       <img src="/img/pasaBUYwhiteLogo.png" class="w-10 h-10 pl-1 block">
@@ -19,77 +17,51 @@
             <router-link to="/"  class="flex flex-row gap-x-2 text-black">Log out</router-link>
           </div>
         </div>
-  </nav> <!----end of nav bar--->
+  </nav> 
   <div class="bg-white space-y-3 w-full flex flex-col justify-center  py-10 ">
     <h1 class="text-5xl xl:pl-60 px-3 font-extrabold"> PasaBuy Privacy Policy</h1>
-    <div class="px-3 w-full xl:w-608 self-center flex justify-center items-center  text-justify">
+    <div class="px-3 w-full xl:w-608 self-center flex justify-center items-center text-justify">
       <p>
         This Privacy Policy describes Our policies and procedures on the collection, 
         use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the 
         law protects You.We use Your Personal data to provide and improve the Service.
-         By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the Privacy Policy Generator.
+        By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the Privacy Policy Generator.
       </p>
     </div>
   </div>
 <div class=" ">
-<div class="flex justify-center
-    mb-4
-   bg-gray-200  
-  ">
-    <div class="flex justify-center self-center
-    2xl:w-4/6
-    xl:w-4/6  
-    lg:w-4/6
-      w-5/6 " >
-      <div id="helpCenterCreateAcc" class="w-full 
-      2xl:w-2/3
-      xl:w-2/5  bg-gray-200 rounded-l-md ">
+<div class="flex justify-center mb-4 bg-gray-200">
+    <div class="flex justify-center self-center 2xl:w-4/6 xl:w-4/6 lg:w-4/6 w-5/6">
+      <div id="helpCenterCreateAcc" class="w-full 2xl:w-2/3 xl:w-2/5  bg-gray-200 rounded-l-md ">
         <!---Option Buttons--->
-          <div class="  flex justify-start"> <!-- parent card box--->
-              
+          <div class="  flex justify-start"> 
               <!---left---->
-              <div class="bg-transparent  w-full "> <!---child1 card box-->
-                  
-                  <div class=" pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
-                        
+              <div class="bg-transparent  w-full ">                  
+                  <div class=" pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">                        
                         <div @click=" isActive_function('btn7')"  :class="{active: activeBtn === 'btn7' }" >
                             <span @click="toggle7" ><a class="text-black font-bold cursor-pointer text-sm">Interpretation</a></span>
                         </div>
-                        <div @click=" isActive_function('btn8')" :class="{active: activeBtn === 'btn8' }">
+                        <div @click=" isActive_function('btn7')" :class="{active: activeBtn === 'btn7' }">
                             <span @click ="toggle7" ><a class="text-black font-bold cursor-pointer text-sm">Definitions</a></span>
                         </div>
-                  
-
                   </div>
-                
               </div>
-          </div><!--End--></div>
+          </div>
+      </div>
           
      <div class="w-full bg-gray-200 rounded-r-md pr-8 pl-2 overflow-auto">
         <component :is="new_component" />
       </div>
     </div>
-
   </div>
 
-  <!------->
-  <div class="flex justify-center
- 
-   bg-white  
-  ">
-    <div class="flex justify-center self-center
-    2xl:w-4/6
-    xl:w-4/6
-    lg:w-4/6
-      w-5/6 h-screen" >
-      <div id="helpCenterCreateAcc" class="w-full 
-      2xl:w-2/3
-      xl:w-2/5  bg-white rounded-l-md overflow-auto">
+  <div class="flex justify-center bg-white">
+    <div class="flex justify-center self-center 2xl:w-4/6 xl:w-4/6 lg:w-4/6 w-5/6 h-screen" >
+      <div id="helpCenterCreateAcc" class="w-full   2xl:w-2/3 xl:w-2/5  bg-white rounded-l-md overflow-auto">
         <!---Option Buttons--->
-          <div class=" overflow-hidden  flex justify-start"> <!-- parent card box--->
-              
+          <div class=" overflow-hidden  flex justify-start"> 
               <!---left---->
-              <div class="bg-transparent  w-full "> <!---child1 card box-->
+              <div class="bg-transparent  w-full ">
                   
                   <div class="  pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
                         <div @click=" isActive_function('btn1')"  :class="{active: activeBtn === 0 }" >
@@ -107,19 +79,16 @@
                         <div @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" >
                             <span @click="toggle5" ><a class="text-black cursor-pointer font-bold text-sm"> Security and Disclosure of Your Personal Data</a></span>
                         </div>
-
                   </div>
-                
               </div>
-          </div><!--End--></div>
+          </div>
+      </div>
           
      <div class="w-full bg-white rounded-r-md pr-8 pl-2 overflow-auto">
         <component :is="component" />
       </div>
     </div>
-
   </div>
-    
 </div>
 
 <!--FOOTER-->
@@ -138,8 +107,8 @@
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
                        <li class="inline-block px-3 py-2 font-medium tracking-wide ">Privacy Policy</li>
-<router-link to="/privacy-policy"> <li><a  class="inline-block py-1 pl-3 pr-5 text-white no-underline">Privacy</a></li></router-link>
-<router-link to="/terms-and-condition"> <li><a class="inline-block py-1 pl-3 pr-5 no-underline ">Terms</a></li></router-link>
+                        <router-link to="/privacy-policy"> <li><a  class="inline-block py-1 pl-3 pr-5 text-white no-underline">Privacy</a></li></router-link>
+                        <router-link to="/terms-and-condition"> <li><a class="inline-block py-1 pl-3 pr-5 no-underline ">Terms</a></li></router-link>
                     </ul>
                     <div class="flex flex-col w-full sm:w-11/12">
                         <div class="inline-block px-3 py-1 font-medium tracking-wide ">©Pasabuy 2021</div>
