@@ -31,12 +31,20 @@ xsm:w-max
     lg:mr-2
     md:mr-2
     ">
-    <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"  class="font-bold focus:outline-none text-red-buttons px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Deliveries</a></button>
+    <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"  class="font-bold focus:outline-none text-red-buttons px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Orders</a></button>
   </div>
   <div class="flex  items-center justify-between space-x-2">
   <button  @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }"  type="button"    class=" font-bold focus:outline-none text-green-150 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Complete</a></button>  
   <button   @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }"  type="button"   class=" font-bold focus:outline-none text-blue-700 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Confirmed</a></button>
   <button  @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }"  type="button"    class="font-bold focus:outline-none text-yellow-600 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Cancelled</a></button>
+</div>
+<div class="mt-3 
+    2xl:ml-2
+    xl:ml-2
+    lg:ml-2
+    md:ml-2
+    ">
+    <button @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" type="button"  class="font-bold focus:outline-none text-yellow-600 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a> In Transit</a></button>
   </div>
 </div>
 
@@ -74,8 +82,8 @@ lg:p-0
             </div>
             <div class="vs:flex-col vs:space-x-2"> 
              
-      <button v-if="itemx.selected=='Confirmed'" class=" font-bold focus:outline-none" @click="toggle_status=!toggle_status,trans_id=itemx.id">Update Status</button>
-      <button v-else  class=" font-bold text-gray-400" disabled>Update Status</button>
+      <button  class=" font-bold focus:outline-none" @click="toggle_status=!toggle_status,trans_id=itemx.id">Update Status</button>
+     
            
            </div>
          </div>
@@ -86,7 +94,7 @@ lg:p-0
             lg:items-center  lg:flex-row
             md:flex-row
            ">
-            <p class="uppercase font-bold text-gray-500 ">customer:</p>
+            <p class="uppercase font-bold text-gray-500 ">customer</p>
             <div class=" flex gap-x-3 items-center space-x-3">
            <img class="w-8 h-8 border rounded-full border-gray-700 shadow-md  " :src="itemx.profile_image"/><!--Profile Pic-->
             <span class="flex flex-col">
@@ -214,7 +222,7 @@ export default {
        activeBtn:0,
        trans_id:'',
        transaction:[
-         {
+        {
           id:1,
           street:'Rizal Street',
           city:'Legazpi City',
@@ -259,7 +267,6 @@ export default {
             }
           ]
         }
-
     ]
         
 }
