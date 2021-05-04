@@ -93,7 +93,7 @@ lg:p-0
             lg:items-center  lg:flex-row
             md:flex-row
            ">
-            <p class="uppercase font-bold text-gray-500 ">customer:</p>
+            <p class="uppercase font-bold text-gray-500 ">customer</p>
             <div class=" flex gap-x-3 items-center space-x-3">
            <img class="w-8 h-8 border rounded-full border-gray-700 shadow-md  " :src="itemx.profile_image"/><!--Profile Pic-->
             <span class="flex flex-col">
