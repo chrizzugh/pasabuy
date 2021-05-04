@@ -170,6 +170,7 @@ lg:p-0
             ">
             <span class="flex items-center space-x-2"><input type="radio" name="status" value="Completed"/><span>Completed</span></span>
             <span class="flex items-center space-x-2"><input type="radio" name="status" value="Cancelled"/><span>Cancelled</span></span>
+            <span class="flex items-center space-x-2"><input type="radio" name="status" value="In Trasit"/><span>In Transit</span></span>
            
               </div>
             
