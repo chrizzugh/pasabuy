@@ -37,9 +37,16 @@ xsm:w-max
   <button  @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }"  type="button"    class=" font-bold focus:outline-none text-green-150 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Complete</a></button>  
   <button   @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }"  type="button"   class=" font-bold focus:outline-none text-blue-700 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Confirmed</a></button>
   <button  @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }"  type="button"    class="font-bold focus:outline-none text-yellow-600 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Cancelled</a></button>
+</div>
+<div class="mt-3 
+    2xl:ml-2
+    xl:ml-2
+    lg:ml-2
+    md:ml-2
+    ">
+    <button @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" type="button"  class="font-bold focus:outline-none text-yellow-600 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a> In Transit</a></button>
   </div>
 </div>
-
 <div v-for="itemx in transaction" :key="itemx.id" >
 
 <div class="p-5 w-full  flex flex-col space-y-4 items-center 
@@ -74,8 +81,8 @@ lg:p-0
             </div>
             <div class="vs:flex-col vs:space-x-2"> 
              
-      <button v-if="itemx.selected=='Confirmed'" class=" font-bold focus:outline-none" @click="toggle_status=!toggle_status,trans_id=itemx.id">Update Status</button>
-      <button v-else  class=" font-bold text-gray-400" disabled>Update Status</button>
+      <button  class=" font-bold focus:outline-none" @click="toggle_status=!toggle_status,trans_id=itemx.id">Update Status</button>
+      
            
            </div>
          </div>
