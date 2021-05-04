@@ -114,6 +114,10 @@ module.exports = {
         500: '500rem',
         //px
         eh: '430px',
+        u: '264px',
+        w: '48px',
+        y: '56px',
+        z: '480px',
         ew: '844px',
         220: '267px',
 
