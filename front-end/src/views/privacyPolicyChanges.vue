@@ -1,12 +1,18 @@
 <template>
     <div class="pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full  pb-16 bg-transparent px-3 ">
-            <div class=" space-y-3 overflow-hidden font-bold text-center bg-transparent w-full rounded-xl">
-                <div class="text-left ">
+        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-10  pb-16 bg-transparent px-3 ">
+            <div class="overflow-hidden font-bold text-center bg-transparent w-full rounded-xl">
+                <div class="px-10 py-16 ">
                     <h1 class="space-x-1 space-y-1 text-2xl">Changes to this Privacy Policy</h1>
                 </div> 
-                    <div class="w-full text-justify">
-                            <div >
+        <!---        <div class="flex">
+                        <h1 class="text-2xl">Children's Privacy</h1> 
+                        <button @click="isOpen=!isOpen" class="font-bold">
+                            <span class="material-icons">arrow_drop_down</span>
+                        </button>
+                    </div>---->
+                    <div class="w-full text-align-left justify">
+                            <div v-if="isOpen">
                                 <p class="justify">We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.</p>
                                 <p class="justify">We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the 
                                     "Last updated" date at the top of this Privacy Policy.</p>
