@@ -1,11 +1,11 @@
 <template>
     <div class="pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-10  pb-16 bg-transparent px-3 ">
+        <div id="helpCreateAcc" class="items-center flex justify-center w-full pb-16 bg-transparent px-3 ">
             <div class="overflow-hidden font-bold text-center bg-transparent w-full rounded-xl">
-                <div class="px-10 py-16 ">
+                <div class=" text-left">
                     <h1 class="space-x-1 space-y-1 text-2xl">Children's Privacy</h1>
                 </div> 
-                    <div class="w-full text-align-left justify">
+                    <div class="w-full text-justify">
                                 <p class="justify">Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable 
                                     information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided 
                                     Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age 
