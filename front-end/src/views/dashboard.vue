@@ -1,6 +1,5 @@
 <template class="bg-gray-bgcolor">
     <Navbar/>
-
     <div class="flex flex-wrap pt-4 pb-24 overflow-hidden lg:h-screen xl:h-screen llg:justify-center llg:px-10 mv:pt-5 vs:pt-9 bg-gray-bgcolor vs:flex-col sm:flex-col font-nunito md:flex-col">
         <div class="flex w-3/5 xl:h-screen 2xl:h-screen lg:h-screen xl:overflow-hidden lg:overflow-hidden 2xl:overflow-hidden llg:w-65 vs:w-full xsm:w-full sm:w-full md:w-full ssm:w-full">
           <div class="pt-4 xl:overflow-y-scroll lg:overflow-y-scroll 2xl:overflow-y-scroll bg-gray-bgcolor mv:pt-1 font-nunito rounded-xl llg:pl-5">
@@ -31,25 +30,21 @@
                       arrow_drop_down
                       </span>
                     </button>
-
                     <!---------OPTIONS----------->
                     <div class="absolute z-20 font-bold origin-top-right bg-white rounded-lg shadow-lg top-15 w-44 focus:outline-none x-v:leading-tight" role="menu" aria-orientation="vertical" aria-labelledby="options-menu" >
                       <div class="py-1" role="none" v-if="filter">
                         <a href="#" class="block px-4 py-2 text-xs font-light tracking-wider text-gray-500 font-raleway" aria-disabled role="menuitem">
                           <label for=""> POST TYPE</label>
                         </a>
-
                         <a href="#" class="block px-4 py-2 text-sm text-gray-900" role="menuitem" >
                           <span class="pr-3 x-v:mt-0 mt-0.5 align-bottom material-icons-round text-gray-600">
                             view_stream
                           </span>
                           <label for="" class="cursor-pointer"> All Posts</label>
                         </a>
-
                         <a href="#" class="block px-4 py-2 text-sm text-gray-900" role="menuitem"> <span class="pr-3 mt-0.5 align-bottom material-icons text-gray-600">
                           delivery_dining
                           </span>Shopping Offer</a>
-
                         <a href="#" class="block px-4 py-2 text-sm hover:text-gray-900" role="menuitem"> <span class="pr-3 mt-0.5 align-bottom material-icons text-gray-600">
                           shopping_bag
                         </span>Order Requests</a>
@@ -962,14 +957,81 @@
   </div>
 
 
-                <div class="flex flex-wrap float-left font-nunito md:block vs:hidden xsm:hidden ssm:hidden">
+        <div class="flex flex-wrap float-left font-nunito md:block vs:hidden xsm:hidden ssm:hidden">
             <div class="mt-2 mb-6 text-xs leading-relaxed text-gray-500 bg-transparent w-72 rounded-xl">
               Privacy Policy · Cookies Policy · Terms and Conditions Return and refund Policy Help Center <br> Pasabuy © 2021
             </div>
+        </div>
+        </div>
+        </div>
+  </div>
+
+    <!-----pop ups--->
+    <div class="bg-transparent fixed bottom-3 w-full flex flex-col items-end">
+
+      <div v-if="popupTriggers.popUp1"
+                :TogglePopup="() => TogglePopup('popUpUp1')" class="transition delay-150 mb-1 sm:w-z md:w-z lg:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z 
+          md:right-7 lg:right-7 llg:right-7 xl:right-7 xll:right-7 2xl:right-7 2xxl:right-7 mx-2 rounded-xl flex justify-between 
+          flex-row shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto">
+        <div class="flex items-center">
+            <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" class="rounded-full h-w w-w 
+                xsm:h-8 ssm:h-8 vsv:h-8 vsvs:h-8 lvs:h-8 sm:h-8 xsm:w-8 ssm:w-8 vsv:w-8 vsvs:w-8 lvs:w-8 sm:w-8">
+            <span class="ml-2 text-sm flex flex-col justify-start"> 
+              <span>  Mark Aral sent you an order request.</span>
+              <span class="font-bold">View Request</span>
+            </span>
+          </div>
+          <div class="flex items-center">
+            <button @click="popupTriggers.popUp1=false" class="focus:outline-none hover:text-red-700 hover:bg-white rounded-full h-6
+             ml-2 xsm:ml-2 ssm: vsv: vsvs: lvs: sm: md:" type="button"><span class="material-icons">
+                  cancel</span></button>
+          </div>
+        </div>
+
+        <div v-if="popupTriggers.popUp2"
+                :TogglePopup="() => TogglePopup('popUpUp2')" class="mb-1 sm:w-z md:w-z lg:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z 
+          md:right-7 lg:right-7 llg:right-7 xl:right-7 xll:right-7 2xl:right-7 2xxl:right-7 mx-2 rounded-xl flex justify-between 
+          flex-row shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto">
+          <div class="flex items-center">
+            <span class="icons material-icons" style="color:#9CA3AF">check_circle</span>
+            <span class="ml-2 text-sm"> Request successfully sent to <span class="font-bold">Mark Aral</span></span>
+          </div>
+          <div class="flex items-center">
+            <button @click="popupTriggers.popUp2=false" class="focus:outline-none hover:text-red-700 hover:bg-white rounded-full h-6" type="button"><span class="material-icons">
+                  cancel</span></button>
+          </div>
+        </div>
+
+        <div v-if="popUp3" class="sm:w-z md:w-z lg:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z 
+          md:right-7 lg:right-7 llg:right-7 xl:right-7 xll:right-7 2xl:right-7 2xxl:right-7 mx-2 rounded-xl flex justify-between 
+          flex-row shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto">
+          <div class="flex items-center">
+            <span class="icons material-icons" style="color:#9CA3AF">check_circle</span>
+            <span class="ml-2 text-sm"> Post successfully shared on your profile.</span>
+          </div>
+          <div class="flex items-center">
+            <button @click="popUp3=false" class="focus:outline-none hover:text-red-700 hover:bg-white rounded-full h-6" type="button"><span class="material-icons">
+                  cancel</span></button>
+          </div>
+        </div>
+
+        <!---popup cookies--->
+          <div v-if="popupTriggers.timedTrigger"
+                :TogglePopup="() => TogglePopup('timedTrigger')" class="md:w-z lg:w-z sm:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z 
+                      md:right-3 lg:right-3 llg:right-3 xl:right-3 xll:right-3 2xl:right-3 2xxl:right-3 h-u mx-2 rounded-xl flex justify items-center shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto">
+            <div class="text-sm w-full h-full px-3 rounded pt-4">
+              <h1 class="font-semibold text-lg">This website use cookies</h1>
+              <p class="text-justify font-normal pt-1">We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. 
+                We also share information about your use of our site with our social media, advertising and analytics partners who may combine 
+                it with other information that you’ve provided to them or that they’ve collected from your use of their services</p>
+                <div class="flex justify-end relative">
+                <button @click="popupTriggers.timedTrigger=false" class ="mx-2 mt-2 h-7 px-2 mb-2 bg-gray-100 text-black hover:text-white hover:bg-gray-400 focus:outline-none rounded-full border border-gray-700 "><span>Accept all cookies</span></button>
                 </div>
-        </div>
-        </div>
-</div>
+            </div>
+          </div>
+
+      </div>
+
 </template>
 
 <script>
@@ -981,14 +1043,42 @@ import SendRequest from "./sendRequest"
 import createShopList from "./createShopList"
 import EditOrderRequest from "./EditOrderRequest"
 import $ from 'jquery'
-
-
+import { ref } from 'vue';
 export default {
   
     el:'#shop-list',
-   
+  setup () {
+		const popupTriggers = ref({
+			timedTrigger: false,
+      popUp1:false,
+      popUp2:false,
+		});
+
+		const TogglePopup = (trigger) => {
+			popupTriggers.value[trigger] = !popupTriggers.value[trigger]
+		}
+
+		setTimeout(() => {
+			popupTriggers.value.popUp1 = true;
+		}, 10000);
+
+    setTimeout(() => {
+			popupTriggers.value.popUp2 = true;
+		}, 5000);
+
+    setTimeout(() => {
+			popupTriggers.value.timedTrigger = true;
+		}, 3500);
+
+		return {
+			
+			popupTriggers,
+			TogglePopup
+		}
+	},
   data() {
     return {
+      popUp3:true,
       shift:0,
       toggle_delete:false,
       option_more:false,
@@ -1023,7 +1113,6 @@ export default {
        new_items: [],
     createShopList:false,
     editOrderRequest:false,
-
       datePosted: '3 hours ago',
       datePosted1: '13 hours ago',
       postStatus: 'posted',
@@ -1080,7 +1169,6 @@ export default {
         stats: "Confirmed"
       }
       ],
-
       activeOrders:[{
         transactNo: '1267643764',
         address: 'Legazpi',
@@ -1108,13 +1196,11 @@ export default {
         
       }
       ],
-
      shopping_list:[
          {
           id:1,
           date:'7:00 AM',
           title:'Weekly Grocery List',
-
            items:[
              {
                product:'Flour',size:'1kg',brand:'Brando',quantity:4,
@@ -1131,7 +1217,6 @@ export default {
            id:2,
           date:'7:00 AM',
            title:'Birthday Party List',
-
            items:[
              {
                product:'Flour',size:'2kg',brand:'Brando',quantity:1,
@@ -1165,7 +1250,6 @@ export default {
       { items: 'Pork',brand: 'Any brand', },
       { items: 'Beef',brand: 'Any brand', },
     ],
-
     shopListPost:[
       {
         item:"Flour (1kg)",
@@ -1188,21 +1272,23 @@ export default {
         units:"2"
       },
       ],
-
     shopListRequest1: [
       { items: 'Flour (1kg)' },
       { items: 'Vanilla extract (50ml)' },
       { items: 'brown sugar' },
       { items: 'cocoa powder' },
     ],
-
     shopListRequest2: [
       { items: 'baking soda' },
       { items: 'Chocolate syrup' },
       { items: 'powdered sugar' },
       { items: 'cocoa powder' },
     ],
-
+    popUp: [
+      {pop:true},
+      {pop:true},
+      {pop:true},
+    ],//popUp.pop[0]
     }
   },
   components: {
@@ -1218,7 +1304,6 @@ export default {
   methods:{
     //The Shopping list function//
 view_list(e){
-
    let x=document.getElementById(e);
      if (x.style.display === "none") {
     x.style.display = "block";
@@ -1264,7 +1349,6 @@ view_list(e){
     //alert(index);
   },
   updateShoppinglist(){
-
   },
   delete_shopping_list(){
    /* if(this.shopping_list.length>0){
@@ -1272,7 +1356,6 @@ view_list(e){
     }
     else{
       this.shopping_list.pop();
-
     }*/
     this.toggle_delete=false;
     console.log(this.toggle_delete);
@@ -1321,9 +1404,7 @@ view_list(e){
     this.addlist=false;
       }
   },
-
     //
-
     next_swap_order(){
       let x=this.or_shift;
       let y=this.activeOrders.length;
@@ -1338,7 +1419,6 @@ view_list(e){
         this.or_shift--;
       }
     },
-
   next_swap_deliver(){
       let x=this.shift;
       let y=this.activeDeliveries.length;
@@ -1367,7 +1447,6 @@ view_list(e){
         this.s_shift--;
       }
     },
-
     togglePostModal(){
       this.postModalVisible = !this.postModalVisible
     },
@@ -1437,10 +1516,8 @@ view_list(e){
       var clonedContainer = container.clone().css({padding: '0', float: 'none'});
       clonedContainer.find('#3dotmenu').remove();
       clonedContainer.appendTo('.modal-body')
-
       //with 3 dot menu when share post modal is open
       //$('#shopOrder-UserPost').clone().css({padding: '0', float: 'none'}).appendTo('.modal-body');
-
       $('#modal-background').css({display: 'flex'});
       $(".target").hide();
       this.share2 = !this.share2
@@ -1459,14 +1536,12 @@ view_list(e){
       $('#display-footer').css({padding: '0'}).remove();
       clonedContainer.appendTo('.display-body')
       $('#display-sharedPost').css({display: 'flex'});
-
       //with 3dot menu when shared
       //$('#shopOffer-UserPost').find('#changeBoxRadius').css({"border-top-left-radius": "0px","border-top-right-radius": "0px"})
       //$('#shopOffer-UserPost').find('#3dotmenu').remove()
       //$('#shopOffer-UserPost').clone().css({padding: '0', float: 'none'}).appendTo('.display-body');
       //$('display-header').find('#closeButton').empty();
       //$('#display-footer').css({padding: '0'}).empty();
-
       $(".target").hide();
       this.share1 = !this.share1
       
@@ -1480,7 +1555,6 @@ view_list(e){
 #fkmouse{
   pointer-events: none;
 }
-
 #modal-background{
   display:none;
   position:fixed;
@@ -1492,7 +1566,6 @@ view_list(e){
     right: 0;
     left: 0;
 }
-
 #display-sharedPost{
   display:none;
 }
@@ -1500,6 +1573,4 @@ view_list(e){
     width: 0px;
     background: transparent; /* make scrollbar transparent */
 }
-
-
 </style>
