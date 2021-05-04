@@ -50,14 +50,12 @@
                             </div>
                     </div>
 
-                    <div class="flex">
-                        <h1 class="text-2xl">Information from Third-Party Social Media Services</h1>
-                        <button @click="isOpen2=!isOpen2" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
+                    <div class="flex items-center">
+                        <h1 class=" text-2xl">Information from Third-Party Social Media Services</h1>
+                        
                     </div>
                     <div class="w-full text-align-left justify">
-                            <div v-if="isOpen2">
+                            <div >
                                 <p>The Company allows You to create an account and log in to use the Service through the following Third-party Social Media Services:</p>
                                     <li>Google</li>
                                     <li>Facebook</li>
