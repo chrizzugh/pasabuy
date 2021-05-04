@@ -3,9 +3,12 @@
 <!----nav bar--->
 <!------navigation--->
   <nav class=" w-full flex items-center shadow-md bg-white  sticky top-0 ">
+       <router-link to="/">
+       <div class="flex items-center">
         <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 block">
         <h1 class="absolute text-xl font-black tracking-widest left-16 font-raleway text-red-buttons block">pasaBUY</h1>
-        
+       </div>
+       </router-link>
         <div class="border-black items-align-right justify justify-right absolute right-3">
           <button @click="isOpen=!isOpen" class=" focus:outline-none h-10 w-10 border-2 rounded-full border-red-700 items-right justify-right">
           <img class="h-9.7 w-10 rounded-full" src="/img/yami.jpg">
