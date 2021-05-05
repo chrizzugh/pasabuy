@@ -31,7 +31,8 @@ xsm:w-max
     lg:mr-2
     md:mr-2
     ">
-    <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"  class="font-bold focus:outline-none text-red-buttons px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Orders</a></button>
+    <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"
+    class="font-bold focus:outline-none text-red-buttons px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Deliveries</a></button>
   </div>
   <div class="flex  items-center justify-between space-x-2">
   <button  @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }"  type="button"    class=" font-bold focus:outline-none text-green-150 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Complete</a></button>  
