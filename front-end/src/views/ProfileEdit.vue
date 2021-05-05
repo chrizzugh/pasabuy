@@ -220,7 +220,7 @@ export default {
 <style scoped>
 .active {
   color:red;  
-  border-bottom: solid red 5px;
+  border-bottom: solid red 3px;
 }
 .active button{
   color:red;

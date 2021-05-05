@@ -17,7 +17,14 @@
          <div class="flex pl-4 pb-1.5">
             <p class="text-sm font-bold tracking-wide leading-none text-gray-500 uppercase">Add skill</p>
          </div>
+         <div class="flex w-full flex-row justify-between space-x-3 items-center">
           <input class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-5 pl-4 bg-gray-100 rounded-xl vs:h-10 ssm:h-8 h-12 w-full vs:w-full ssm:w-full" placeholder="Type a skill that you have!">
+          <button class="focus:outline-none">
+          <span class="text-gray-700 material-icons text-3xl">
+           add_circle
+          </span>
+         </button>
+         </div>
         </div>
 
         <div class="flex flex-col pb-6">
