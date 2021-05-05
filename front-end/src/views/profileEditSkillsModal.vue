@@ -18,7 +18,13 @@
             <p class="text-sm font-bold tracking-wide leading-none text-gray-500 uppercase">Add skill</p>
          </div>
          <div class="flex w-full flex-row justify-between space-x-3 items-center">
-          <input class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-5 pl-4 bg-gray-100 rounded-xl vs:h-10 ssm:h-8 h-12 w-full vs:w-full ssm:w-full" placeholder="Type a skill that you have!">
+          <select id="Skills" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-3 pl-4 bg-gray-100 rounded-xl h-auto w-full vs:w-full ssm:w-full" placeholder="What do you activities like?">
+                  <option value="Province" disabled>Choose Skills</option>
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="opel">Opel</option>
+                  <option value="audi">Audi</option>
+                </select>
           <button class="focus:outline-none">
           <span class="text-gray-700 material-icons text-3xl">
            add_circle

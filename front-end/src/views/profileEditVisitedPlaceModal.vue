@@ -18,8 +18,14 @@
             <p class="text-sm font-bold tracking-wide leading-none text-gray-500 uppercase">Add Visited Place</p>
          </div>
          <div class="flex w-full flex-row justify-between space-x-3 items-center">
-          <input class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-5 pl-4 bg-gray-100 rounded-xl vs:h-10 ssm:h-8 h-12 w-full vs:w-full ssm:w-full" placeholder="Share the places you've been to!">
-        <button class="focus:outline-none">
+          <select id="VisitedPlaces" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-3 pl-4 bg-gray-100 rounded-xl h-auto w-full vs:w-full ssm:w-full" placeholder="What do you activities like?">
+                  <option value="Province" disabled>Choose Visited Places</option>
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="opel">Opel</option>
+                  <option value="audi">Audi</option>
+                </select>
+          <button class="focus:outline-none">
           <span class="text-gray-700 material-icons text-3xl">
            add_circle
           </span>
