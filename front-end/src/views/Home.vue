@@ -134,6 +134,26 @@
     </footer>    
 </div>
 
+    <!-----pop ups--->
+    <div class="bg-transparent fixed bottom-3 w-full flex flex-col items-end">
+
+        <!---popup cookies--->
+          <div v-if="popupTriggers.timedTrigger"
+                :TogglePopup="() => TogglePopup('timedTrigger')" class="md:w-z lg:w-z sm:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z 
+                      md:right-3 lg:right-3 llg:right-3 xl:right-3 xll:right-3 2xl:right-3 2xxl:right-3 h-u mx-2 rounded-xl flex justify items-center shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto">
+            <div class="text-sm w-full h-full px-3 rounded pt-4">
+              <h1 class="font-semibold text-lg">This website use cookies</h1>
+              <p class="text-justify font-normal pt-1">We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. 
+                We also share information about your use of our site with our social media, advertising and analytics partners who may combine 
+                it with other information that you’ve provided to them or that they’ve collected from your use of their services</p>
+                <div class="flex justify-end relative">
+                <button @click="popupTriggers.timedTrigger=false" class ="mx-2 mt-2 h-7 px-2 mb-2 bg-gray-100 text-black hover:text-white hover:bg-gray-400 focus:outline-none rounded-full border border-gray-700 "><span>Accept all cookies</span></button>
+                </div>
+            </div>
+          </div>
+
+      </div>
+
 </template>
 
 <style scoped>
@@ -148,7 +168,28 @@
 </style>
 
 <script>
+import { ref } from 'vue';
 export default {
+  el:'#shop-list',
+  setup () {
+		const popupTriggers = ref({
+			timedTrigger: false,
+		});
+
+		const TogglePopup = (trigger) => {
+			popupTriggers.value[trigger] = !popupTriggers.value[trigger]
+		}
+
+    setTimeout(() => {
+			popupTriggers.value.timedTrigger = true;
+		}, 3500);
+
+		return {
+			
+			popupTriggers,
+			TogglePopup
+		}
+	},
 
   name: "Header",
       data(){
