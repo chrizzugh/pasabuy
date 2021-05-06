@@ -130,10 +130,11 @@
                 <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
                 <div class="flex justify-end pr-3">
-                  <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Offer</span></button>
-                  <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
+                  <button @click ="cancel_transact('offer')" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Offer</span></button>
+                  <router-link to="/dashboard" class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></router-link>
                 </div>
             </div><!------->
+            
             <!-- sent request 1--->
             <div v-if ="toggle2" class="text-sm w-full">
               <div class="flex justify-between items-center">
@@ -145,8 +146,8 @@
                 <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
                 <div class="flex justify-end pr-3">
-                  <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
-                  <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
+                  <button @click ="cancel_transact('request')" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
+                  <router-link to="/dashboard" class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></router-link>
                 </div>
             </div><!------->
             <!-- received offer 1--->
@@ -158,8 +159,8 @@
               <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
               <div class="flex justify-end pr-3">
-                <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
-                <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
+                <button @click="declineDisOffer('offer')" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
+                <button  @click="acceptDisOffer('offer')" class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
             <!-- received request 1--->
@@ -171,8 +172,8 @@
               <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
               <div class="flex justify-end pr-3">
-                <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
-                <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
+                <button @click="declineDisOffer('request')" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
+                <button @click="acceptDisOffer('request')" class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
         <!--------------transaction details confirmed------>
@@ -189,8 +190,8 @@
 
               </div>
               <div class="flex justify-end pr-3">
-                <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
-                <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
+                <button @click="toggleViewDetails" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
+                <button @click="toggle_status=!toggle_status,trans_id=itemx.id" class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
 
@@ -205,8 +206,8 @@
                 </div>
               </div>
               <div class="flex justify-end pr-3">
-                <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
-                <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
+                <button @click="toggleViewDetails" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
+                <button @click="VOID" class="bg-opacity-50 mx-2 mt-2 h-7 px-2 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
 
@@ -243,10 +244,11 @@
                   </div>
             </div><!-----end of transaction options--->
         </div><!------------------->
-        <div v-show="toggle" id="delBtn" class="absolute top-14 right-1.5 shadow-lg bg-gray-100 border-2 rounded w-auto flex flex-col justify-center text-sm">
+        <div v-show="toggle" id="delBtn" class="absolute top-14 right-1.5 shadow-lg bg-gray-100 border-2 rounded w-56 flex flex-col justify-center text-sm">
             <button class="tracking-wide py-2 px-10 bg-gray-100 font-semibold hover:border-white hover:bg-crimsonRed hover:text-white p-2">Delete</button>
-            <button v-if="!(ifHide)" @click="showVertiOptions" class="tracking-wide py-2 px-10 bg-gray-100 font-semibold hover:border-white hover:bg-crimsonRed hover:text-white p-2">Show Transactions</button>
+            <button v-if="!(ifHide)" @click="showVertiOptions" class="tracking-wide bg-gray-100 font-semibold hover:border-white hover:bg-crimsonRed hover:text-white p-2">Show Transactions</button>
           </div>
+
 
         <div class="p-2 flex justify-end">
           <div class="ml-32 pt-2 pl-4 pb-3 pr-4 text-sm bg-gray-200 rounded-lg">
@@ -435,8 +437,7 @@
 
     </div>
   </div>
-
-  <!---MOBILE VERSION---->
+<!---MOBILE VERSION---->
 <div class="mobileVersion">
   <div v-show="toggleChat">
     <div class="bg-gray-50 flex h-full min-h-screen max-h-screen justify-center">
@@ -478,8 +479,8 @@
                   more_verti</span></button></div>
 
                 <div class="flex justify-end pr-3">
-                  <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Offer</span></button>
-                  <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
+                  <button @click ="cancel_transact('offer')" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Offer</span></button>
+                  <router-link to="/dashboard" class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></router-link>
                 </div>
             </div><!------->
             <!-- sent request 1--->
@@ -493,8 +494,8 @@
                 <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
                 <div class="flex justify-end pr-3">
-                  <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
-                  <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></button>
+                  <button @click ="cancel_transact('request')" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
+                  <router-link to="/dashboard" class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></router-link>
                 </div>
             </div><!------->
             <!-- received offer 1--->
@@ -506,8 +507,8 @@
               <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
               <div class="flex justify-end pr-3">
-                <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
-                <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
+                <button @click="declineDisOffer('offer')" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
+                <button @click="acceptDisOffer('offer')" class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
             <!-- received request 1--->
@@ -519,8 +520,8 @@
               <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
                   more_verti</span></button></div>
               <div class="flex justify-end pr-3">
-                <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
-                <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
+                <button @click="declineDisOffer('request')" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
+                <button @click="acceptDisOffer('request')" class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
               </div>
             </div><!------->
 
@@ -538,8 +539,8 @@
 
               </div>
               <div class="flex justify-end pr-3">
-                <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
-                <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
+                <button @click="toggleViewDetails" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
+                <button @click="toggle_status=!toggle_status,trans_id=itemx.id" class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
             
@@ -557,8 +558,8 @@
 
               </div>
               <div class="flex justify-end pr-3">
-                <button class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
-                <button class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
+                <button @click="toggleViewDetails" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>View Details</span></button>
+                <button @click="VOID" class="bg-opacity-50 mx-2 mt-2 h-7 px-2 rounded-full focus:outline-none bg-red-700 text-white"><span>Update</span></button>
               </div>
             </div><!------------------->
             <!-----vertical-dot  options--> 
@@ -879,6 +880,292 @@
   </div>
 </div>
 
+<!--Accept User Request Modal-->
+<div v-if="viewDetails" class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="hideMe1 inline-flex flex-col bg-white shadow rounded-xl h-auto w-97 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Request from Asta</p>
+    <button @click="toggleViewDetails" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full flex-row items-center space-x-4">
+     <img src="img/asta.jpeg" class="rounded-full w-10 h-10">
+     <div class="flex flex-col">
+       <div class="flex-row flex space-x-1 items-center">
+        <p class="text-base font-bold leading-none text-gray-900">Asta Staria</p>
+         <span class="text-blue-900 align-middle material-icons text-base">
+          verified
+         </span>
+       </div>
+      <p class="text-sm leading-none text-gray-500">5 minutes ago</p> 
+     </div>
+   </div>
+   <div class="flex flex-col w-full">
+     <div class="flex space-x-2">
+       <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+        location_on  
+       </span>
+       <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{request_info.delivery_area}}</p>
+     </div>
+     <div class=" flex space-x-2 py-2">
+      <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+       alarm  
+       </span>
+       <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{request_info.schedule}}</p>
+      </div>
+     <div class="flex space-x-2">
+      <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+       shopping_cart  
+      </span>
+       <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{request_info.shopping_place}}</p>
+      </div>
+     <div class="flex space-x-2 py-2">
+      <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+      payments  
+      </span>
+      <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{request_info.payment_method}}</p>
+     </div>
+   </div>
+      <div class="flex flex-col  ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl">
+      <div class="inline-flex flex-row space-x-4">
+        <span class="text-base ssm:text-sm leading-none text-gray-900">Shopping List</span>
+        <span class="text-base ssm:text-sm leading-none text-gray-500">{{countItems}} items</span>
+       </div>
+       <div class="inline-flex flex-col ssm:px-0 w-full vs:px-0 space-y-2 py-4 px-4">    
+       <li v-for="shoppingItems in computedShopItemList" :key="shoppingItems" class="text-sm leading-none text-gray-900">
+       {{shoppingItems.item}} ({{shoppingItems.amount}}) · {{shoppingItems.brand}} [{{shoppingItems.unit}}]
+       </li>
+       </div>
+      <button @click="showMoreshowLess" v-if="!isFew" class="focus:outline-none items-start justify-start text-sm text-gray-500">{{showListStatus}}</button>
+     </div>
+    <div class="inline-flex  items-start ssm:px-2 justify-start mt-3 rounded-xl h-auto bg-white w-full">
+     <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal w-auto text-gray-900">{{request_info.comment}}</p>
+    </div>
+   <div class="justify-between flex flex-row vs:space-x-2 ssm:space-x-2 sm:space-x-2 w-full">
+    <button @click="declineDisRequest" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Decline</p>
+    </button>
+    <button @click="acceptDisRequest" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Accept</p>
+    </button>
+  </div>
+ </div>
+</div>
+<!--end-->
+
+<!--Accept User Request Button Modal-->
+<transition name="fadeSlide">
+<div v-if="acceptRequest" class="z-50 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Accept Asta's Request</p>
+    <button @click="acceptDisRequest1" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full">
+    <p class="block items-start leading-normal text-base text-gray-900">Are you sure you want to accept Asta's request?</p>
+   </div>
+  <div class="justify-between flex flex-row space-x-2 w-full">
+    <button @click="acceptDisRequest1" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
+    </button>
+    <button  @click="confirmAcceptDisRequest1" class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Confirm</p>
+    </button>
+  </div>
+ </div>
+</div>
+</transition>
+<!--end-->
+
+<!--Decline User Request Button Modal-->
+<transition name="fadeSlide">
+<div v-if="declineRequest" class="z-50 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Decline Asta's Request</p>
+    <button @click="declineDisRequest1" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full">
+    <p class="block items-start leading-normal text-base text-gray-900">Are you sure you want to decline Asta's request? You can not undo this.</p>
+   </div>
+  <div class="justify-between flex flex-row space-x-2 w-full">
+    <button @click="declineDisRequest1" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
+    </button>
+    <button @click="confirmDeclineDisRequest1" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Confirm</p>
+    </button>
+  </div>
+ </div>
+</div>
+</transition>
+<!--end-->
+
+<!--Accept Offer Modal-->
+<div v-if="acceptOffer" class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-96.5 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Accept Asta's {{transaction}}</p>
+    <button @click="acceptDisOffer" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full">
+    <p class="block items-start leading-normal text-base text-gray-900">Are you sure you want to accept Asta's {{transaction}}? This would decline all other offers you received for this post and will automatically update your post into <span class="font-bold text-green-600 leading-normal ">Order Taken</span>. </p>
+   </div>
+  <div class="justify-between flex flex-row space-x-2 w-full">
+    <button @click="acceptDisOffer" class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
+    </button>
+    <button @click="confirmAcceptDisRequest2" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Confirm</p>
+    </button>
+  </div>
+ </div>
+</div>
+<!--end-->
+
+<!--Decline Offer Modal-->
+<div v-if="declineOffer" class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Decline Asta's {{transaction}}</p>
+    <button @click="declineDisOffer" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full">
+    <p class="block items-start leading-normal text-base text-gray-900">Are you sure you want to decline Asta's {{transaction}}? You can not undo this.</p>
+   </div>
+  <div class="justify-between flex flex-row space-x-2 w-full">
+    <button @click="declineDisOffer" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
+    </button>
+    <button @click="confirmDeclineDisRequest2" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Confirm</p>
+    </button>
+  </div>
+ </div>
+</div>
+<!--end-->
+
+
+<!--Cancellation Modal-->
+<div v-if="cancel" class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Cancel Asta's {{transaction}}</p>
+    <button @click="cancel_transact" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full">
+    <p class="block items-start leading-normal text-base text-gray-900">Are you sure you want to cancel Asta's {{transaction}}? You can not undo this.</p>
+   </div>
+  <div class="justify-between flex flex-row space-x-2 w-full">
+    <button @click="cancel_transact" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
+    </button>
+    <button @click="confirmCancellation" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Confirm</p>
+    </button>
+  </div>
+ </div>
+</div>
+<!--end-->
+
+<!--Accept PopUp Notification-->
+  <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
+  <div v-if="acceptReqNotiPop" class="acceptRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto" role="alert">
+    <div class="flex w-full flex-row justify-between items-center">
+      <div class="flex flex-row w-full space-x-2">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       check_circle 
+       </span>
+       <p class="text-base leading-normal text-white">Successfully Accepted Asta's Request</p>
+      </div>
+      <button @click="closeAcceptRequestNotiPop" class="focus:outline-none flex">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       cancel
+       </span>
+      </button>
+    </div>
+    </div>
+  </div>
+<!--end-->
+
+  <!--Decline PopUp Notification-->
+  <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
+  <div v-if="declineReqNotiPop" class="declineRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto" role="alert">
+    <div class="flex w-full flex-row justify-between items-center">
+      <div class="flex flex-row w-full space-x-2">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       check_circle 
+       </span>
+       <p class="text-base leading-normal text-white">Successfully Declined Asta's Request</p>
+      </div>
+      <button @click="closeDeclineRequestNotiPop" class="focus:outline-none flex">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       cancel
+       </span>
+      </button>
+    </div>
+    </div>
+  </div>
+<!--end-->
+
+  <!--Cancel PopUp Notification-->
+  <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
+  <div v-if="confirmCancel" class="declineRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto" role="alert">
+    <div class="flex w-full flex-row justify-between items-center">
+      <div class="flex flex-row w-full space-x-2">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       check_circle 
+       </span>
+       <p class="text-base leading-normal text-white">{{transaction}} cancelled!</p>
+      </div>
+      <button @click="confirmCancel=false" class="focus:outline-none flex">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       cancel
+       </span>
+      </button>
+    </div>
+    </div>
+  </div>
+<!--end-->
+
+<!----update status--->
+<div v-if="toggle_status"  class="fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0  ">
+        <div class="flex   mt-4 w-full p-3  items-center justify-center
+        py-20
+        ">
+          <div class=" bg-white ring-1  ring-gray-300  p-5 w-full rounded-xl 2xl:w-97 lg:w-97 xl:w-97   xl:mr-16 md:w-8/12 sm:w-10/12 shadow-2xl h-auto">
+            <div class="flex flex-row items-center  justify-between p-3">
+              <p class="hidden lg:block 2xl:block xl:block"></p>
+              <p class="text-lg font-bold xl:ml-8 lg:ml-8 2xl:ml-8">Update Transaction Status</p>
+              <p class="font-bold text-blue-700 cursor-pointer left-10" @click="toggle_status=false"> Close</p>
+            </div>
+            <hr>
+            <div class=" ">
+              <div class="flex flex-col p-3 space-y-4 ">
+                <span class="flex items-center space-x-2"><input type="radio" name="status" value="Completed"/><span>Completed</span></span>
+                <span class="flex items-center space-x-2"><input type="radio" name="status" value="Comfirmed"/><span>Confirmed</span></span>
+                <span class="flex items-center space-x-2"><input type="radio" name="status" value="In Transit"/><span>In Transit</span></span>
+                <span class="flex items-center space-x-2"><input type="radio" name="status" value="Cancelled"/><span>Cancelled</span></span>
+              </div> 
+            </div>
+            <div class="flex justify-between mt-4  items-center">
+              <button @click="toggle_status=false" class="bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 </template>
 
 <script>
@@ -891,6 +1178,15 @@ export default {
     },
     props:{
       //message: String 
+    },
+    computed:{
+    computedShopItemList(){
+      return this.limit_by ? this.filter_itemList.slice(0,this.limit_by) : this.filter_itemList
+    },
+    isFew: ({ filter_itemList }) => filter_itemList.length < 5,
+    computedRequestReceived(){
+      return this.limitRequestDisplay ? this.RequsetReceived.slice(0,this.limitRequestDisplay) : this.RequsetReceived
+    },
     },
     data() {
       return{
@@ -912,6 +1208,83 @@ export default {
           toggle7:false,
           attach:'add',
           active:'toggle1',
+
+          countItems: 8,
+          viewDetails: false,
+          acceptRequest: false,
+          declineRequest: false,
+          acceptReqNotiPop: false,
+          declineReqNotiPop: false,
+          acceptOffer: false,
+          declineOffer: false,
+
+          toggle_status:false,
+          transaction:'',
+          cancel:false,
+          confirmCancel:false,
+
+          request_info:{
+            delivery_area: 'Banquerohan Legazpi City',
+            shopping_place: 'SM City Legazpi',
+            schedule: 'Tomorrow at 5:00 PM',
+            payment_method: 'Payment First',
+            comment: 'Hello sis! Pwede pasabuy me? Wes akes time para gumora sa market huhuhu accept my request juseyo!! labyu hehehe',
+          },
+          filter_itemList: [
+            {
+              item: 'flour',
+              amount: '1 kg',
+              brand: 'Any brand',
+              unit: '2 units',
+            },
+            {
+              item: 'flour',
+              amount: '1 kg',
+              brand: 'Any brand',
+              unit: '2 units',
+            },
+            {
+              item: 'flour',
+              amount: '1 kg',
+              brand: 'Any brand',
+              unit: '2 units',
+            },
+            {
+              item: 'flour',
+              amount: '1 kg',
+              brand: 'Any brand',
+              unit: '2 units',
+            },
+            {
+              item: 'flour',
+              amount: '1 kg',
+              brand: 'Any brand',
+              unit: '2 units',
+            },
+            {
+              item: 'flour',
+              amount: '1 kg',
+              brand: 'Any brand',
+              unit: '2 units',
+            },
+            {
+              item: 'flour',
+              amount: '1 kg',
+              brand: 'Any brand',
+              unit: '2 units',
+            },
+            {
+              item: 'flour',
+              amount: '1 kg',
+              brand: 'Any brand',
+              unit: '2 units',
+            },
+            ],
+            
+            default_limit: 4,
+            showListStatus: "See More",
+            showLessStatus: "See Less",
+            limit_by: 4,
         //inbox
           inbox: [
             { name: 'Mark Aral', message: 'No problem. Thanks as well for the handsome pay!', time: '21 mins'},
@@ -1151,8 +1524,114 @@ export default {
           default:
             this.toggle1=true;
         }//end switch
-        
+
+        this.toggleVerti = false;
+      },
+      toggleViewDetails(){
+      this.viewDetails = !this.viewDetails
+    },
+
+    acceptDisRequest(){
+      $('.hideMe1').fadeOut()
+      this.acceptRequest = !this.acceptRequest
+    },
+
+    declineDisRequest(){
+      $('.hideMe1').fadeOut()
+      this.declineRequest = !this.declineRequest
+    },
+
+    acceptDisRequest1(){
+      this.acceptRequest = !this.acceptRequest
+      $('.hideMe1').fadeIn()
+    },
+
+    confirmAcceptDisRequest1(){
+      this.acceptRequest = !this.acceptRequest
+      this.viewDetails = !this.viewDetails
+      setTimeout(() => {$('.acceptRequestNotiPop').fadeIn(), this.acceptReqNotiPop = true}, 500);
+
+      setTimeout(function(){
+      this.acceptReqNotiPop=false
+      $('.acceptRequestNotiPop').fadeOut();
+      }, 4000);
+    },
+
+    confirmAcceptDisRequest2(){
+      this.acceptOffer = !this.acceptOffer
+      setTimeout(() => {$('.acceptOfferNotiPop').fadeIn(), this.acceptReqNotiPop = true}, 500);
+
+      setTimeout(function(){
+      this.acceptOffer = false
+      $('.acceptOfferNotiPop').fadeOut();
+      }, 4000);
+    },
+
+    closeAcceptRequestNotiPop(){
+      this.acceptReqNotiPop=false
+      $('.acceptRequestNotiPop').fadeOut();
+    },
+     confirmDeclineDisRequest1(){
+      this.declineRequest = !this.declineRequest
+      this.viewDetails = !this.viewDetails
+      setTimeout(() => {$('.declineRequestNotiPop').fadeIn(), this.declineReqNotiPop = true}, 500);
+
+      setTimeout(function(){
+      this.declineReqNotiPop=false
+      $('.declineRequestNotiPop').fadeOut();
+      }, 4000);
+    },
+
+    confirmDeclineDisRequest2(){
+      this.declineOffer = !this.declineOffer
+      setTimeout(() => {$('.declineOfferNotiPop').fadeIn(), this.declineReqNotiPop = true}, 500);
+
+      setTimeout(function(){
+      this.declineReqNotiPop=false
+      $('.declineOfferNotiPop').fadeOut();
+      }, 4000);
+    },
+
+    closeDeclineRequestNotiPop(){
+      this.declineReqNotiPop=false
+      $('.declineRequestNotiPop').fadeOut();
+    },
+
+    declineDisRequest1(){
+      this.declineRequest = !this.declineRequest
+      $('.hideMe1').fadeIn()
+    },
+
+    showMoreshowLess(){
+      this.limit_by = null;
+     if(this.showListStatus != this.showLessStatus){
+        this.showListStatus = this.showLessStatus;
       }
+      else{
+        this.showListStatus = "See More";
+        this.limit_by = this.default_limit
+      }
+    },
+    acceptDisOffer(e){
+      this.acceptOffer = !this.acceptOffer;
+      this.transaction = e;
+    },
+
+    declineDisOffer(e){
+      this.declineOffer = !this.declineOffer;
+      this.transaction = e;
+    },
+
+    cancel_transact(e) {
+      this.cancel = !this.cancel;
+      this.transaction = e;
+    },
+
+    confirmCancellation() {
+      this.confirmCancel = !this.confirmCancel;
+      this.cancel = !this.cancel;
+    }
+
     }//end methods
   }//end export default
 $(document).mouseup(function(e){
@@ -1178,6 +1657,7 @@ $(document).mouseup(function(e){
     }
     })
 </script>
+
 <style>
 .hide{
     display: none;
@@ -1265,4 +1745,31 @@ text-rendering: optimizeLegibility;
 /* Support for IE. */
 font-feature-settings: 'liga';
 }
+
+.fadeSlide-enter-from{
+  transform: translateX(100%);
+  transform: translateX(150px);
+  opacity:0
+}
+.fadeSlide-enter-to{
+  transform: translateX(0);
+  opacity:1
+}
+.fadeSlide-enter-active{
+  transition: all .3s ease-in-out;
+}
+
+.fadeSlide-leave-from{
+  transform: translateX(0);
+  opacity:1
+}
+.fadeSlide-leave-to{
+  transform: translateX(100%);
+  transform: translateX(150px);
+  opacity:0
+}
+.fadeSlide-leave-active{
+  transition: all .3s ease-in-out
+}
+
 </style>
