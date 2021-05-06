@@ -1,36 +1,71 @@
 <template>
-  <div class="flex">
-    <!-- mobile menu bar -->
-    <div class="bg-gray-800 text-gray-100 flex justify-between">
-      <!-- logo -->
-      <!-- mobile menu button -->
-      <nav
-        class="z-40 h-20 bg-red-700 w-full fixed flex items-center justify-between font-nunito p-0 2xl:bg-white 2xl:shadow-md xl:bg-white xl:shadow-md lg:bg-white lg:shadow-md mt-0"
-      >
-        <!--Logo-->
-        <div class="flex items-center">
-          <button
-            class="material-icons 2xl:hidden xl:hidden lg:hidden ml-4 text-white block"
-            @click="toggle_event()"
-          >
-            menu
-          </button>
-          <p
-            class="uppercase font-bold 2xl:hidden xl:hidden lg:hidden block text-white h-full"
-          >
-            {{ currentRoute }}
-          </p>
-          <div class="flex items-center">
-            <img
-              src="/img/pasaBUYLogoOnly.png"
-              class="w-20 h-16 hidden 2xl:block xl:block lg:block"
-            />
-            <h1
-              class="absolute text-xl font-black tracking-widest top-6 left-16 font-raleway 2xl:text-red-700 xl:text-red-700 lg:text-red-700 hidden 2xl:block xl:block lg:block"
-            >
-              pasaBUY
-            </h1>
-          </div>
+    <div class="flex">
+  <!-- mobile menu bar -->
+  <div class=" w-full bg-gray-800 text-gray-100 flex justify-between ">
+    <!-- logo -->
+    <!-- mobile menu button -->
+    <nav class=" z-40 h-20 bg-red-buttons w-full  fixed flex items-center justify-between font-nunito p-0 
+  2xl:bg-white 2xl:shadow-md
+  xl:bg-white  xl:shadow-md
+  lg:bg-white  lg:shadow-md
+   mt-0  ">
+      <!--Logo-->
+       <div class="flex  items-center ">
+       <button class="material-icons 2xl:hidden xl:hidden lg:hidden ml-4 text-white block" @click="toggle_event()"> menu</button>
+      <p class="uppercase font-bold 2xl:hidden xl:hidden lg:hidden block text-white h-full">{{currentRoute}}</p>
+      <div class="flex items-center">
+        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 hidden 2xl:block xl:block lg:block">
+        <h1 class="absolute text-xl font-black tracking-widest top-6 left-16 font-raleway
+          2xl:text-red-700 xl:text-red-700 lg:text-red-700
+         hidden 2xl:block xl:block lg:block ">pasaBUY</h1>
+      </div>
+       </div>
+       <img v-if="currentRoute=='' " src="/img/pasaBUYwhiteLogo.png" class=" 2xl:hidden xl:hidden lg:hidden block"/>
+      <div class=" hidden 
+      2xl:flex 2xl:ml-60 
+      xl:flex xl:ml-72 
+      lg:flex lg:ml-48 lg:space-x-0 lg:px-3   lg:w-97
+      w-608
+      justify-center items-center font-bold gap-x-10 text-gray-500 ">
+     <router-link to="/dashboard"> 
+     <div class="flex gap-x-4 py-4">
+       <span class="material-icons">
+        home  
+      </span> 
+      <p class="text text-gray-500">Home</p>
+      </div>
+      </router-link>
+
+     <router-link to="/messages"> <div class="flex gap-x-4 py-4 relative">
+      <span class="material-icons cursor-pointer">
+        chat
+      </span>
+      <span class="absolute left-3 top-2 rounded-full font-semibold bg-balticsea text-white text-xs px-1 h-4">2</span>
+      <p class=" text-gray-500">Messages</p>
+      </div></router-link>
+
+      <div class="flex gap-x-4 py-4 relative cursor-pointer  items-center" @click="activeBtn=!activeBtn,show=!show" :class="{active_notif: activeBtn }">
+       <span id="notif" class="text-gray-500 material-icons \">
+            notifications
+          </span>
+          <span id="btn_notif" class="text-base font-bold leading-none tracking-wide text-gray-500 outline-none ">Notifications</span>
+          <span class="absolute left-3 top-2 rounded-full font-semibold bg-balticsea text-white text-xs px-1 h-4">10</span>   
+      </div>
+      </div>
+      <div class=" flex  mr-2 gap-x-5 ">
+       
+        
+        <button class="material-icons mr-2 text-white w-full" >search</button>
+       
+        <div class=" 
+         items-center hidden ring-2 ring-gray-400 rounded-2xl bg-white
+          2xl:flex
+          xl:flex
+          lg:flex
+         ">
+        <input type="search" class=" focus:outline-none  text-black lg:w-28 pl-3 rounded-2xl h-5" placeholder="Search">
+        <button class="material-icons mr-2 text-gray-400 w-full" >
+          <router-link to="/search"> search</router-link></button>
         </div>
         <img
           v-if="currentRoute == ''"
@@ -177,6 +212,10 @@
           </div></button
         >
       </nav>
+      <p class="text-gray-500 text-sm">
+        Privacy Policy-Cookies Policy-Terms and Conditions
+        Return and Refund Policy-PasaBuy   2021
+    </p>
     </div>
   </div>
 </template>
@@ -339,23 +378,23 @@ export default {
 .router-link-active .mobile {
   background-color: rgba(236, 233, 233, 0.705);
 }
-.router-link-active .mobile p {
-  color: red;
+.router-link-active .mobile p{
+  color:#CD0F0F;
 }
-.router-link-active {
-  color: red;
+.router-link-active{
+  color:#CD0F0F;
 }
-.router-link-active {
-  color: red;
-  border-bottom: 5px solid red;
+.router-link-active{
+  color:#CD0F0F;
+  border-bottom: 5px solid #CD0F0F;
 }
-.router-link-active p {
-  color: red;
+.router-link-active p{
+  color:#CD0F0F;
 }
-.active_notif #notif {
-  color: red;
+.active_notif #notif{
+ color:#CD0F0F;
 }
-.active_notif #btn_notif {
-  color: red;
+.active_notif #btn_notif{
+ color:#CD0F0F;
 }
 </style>

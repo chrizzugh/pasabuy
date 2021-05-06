@@ -1591,101 +1591,345 @@
       </div>
       <!-----------END OF ACTIVE DELIVERIES---------------->
 
-      <div
-        class="flex flex-wrap float-left font-nunito md:block vs:hidden xsm:hidden ssm:hidden"
-      >
-        <div class="mb-6 bg-white w-72 rounded-xl">
-          <header
-            class="py-3 pl-4 text-sm font-semibold tracking-wide text-gray-500"
-          >
-            SHOPPING LIST
-            <span
-              class="inline-flex pl-24 pr-3 align-bottom material-icons-round md-18"
-            >
-              navigate_before
+      
+          <div class="flex flex-wrap float-left font-nunito md:block vs:hidden xsm:hidden ssm:hidden">
+            <div class=" bg-white w-72 h-56 rounded-xl">
+               <header class="py-3 pl-4 text-sm font-semibold tracking-wide text-gray-500">
+                SHOPPING LIST
+               <span v-if="s_shift>0"  @click="prev_swap_list()" class="inline-flex pl-24 pr-3 align-bottom cursor-pointer select-none material-icons-round md-18">
+                    navigate_before
+                </span>
+                  <span v-else  class="inline-flex pl-24 pr-3 text-gray-300 align-bottom cursor-pointer select-none material-icons-round md-18">
+                    navigate_before
+                </span>
+
+                <span v-if="s_shift<shopping_list.length-1" @click="next_swap_list()" class="inline-flex align-bottom cursor-pointer select-none material-icons-round md-18">
+                    navigate_next
+                </span>
+                <span v-else class="inline-flex text-gray-300 align-bottom cursor-pointer select-none material-icons-round md-18">
+                    navigate_next
+                </span>
+              </header>
+              
+              <hr>
+               
+               <!--SHOPPING LIST-->
+    <div >
+       <div class="relative pt-2 pl-5 text-lg font-bold leading-loose tracking-wide">
+         <span  v-if="shopping_list.length>0">{{shopping_list[0].title}}</span>
+          
+          <div v-if="shopping_list.length>0" class="absolute bottom-0 pt-2 pr-2 ml-2 text-sm font-bold right-1 top-2 focus:outline-none">
+            <span @click="option_more=!option_more" class="cursor-pointer select-none material-icons md-18">
+              more_vert
             </span>
-            <span class="inline-flex align-bottom material-icons-round md-18">
-              navigate_next
-            </span>
-          </header>
-
-          <hr />
-
-          <!--SHOPPING LIST-->
-          <div v-for="(userList, index) in shoppingLists" :key="index">
-            <h3
-              class="relative pt-2 pl-5 text-lg font-bold leading-loose tracking-wide"
-            >
-              {{ userList.shoppingListTitle }}
-              <editShopListModal
-                v-if="
-                  editVisible &&
-                  toggleeditShopListNum == userList.shoppingListNumber
-                "
-                @closeModal="editlistener"
-                :list="userList.shoppingListContent.split(', ')"
-                :index="userList.shoppingListTitle"
-                :listNum="toggleeditShopListNum"
-              />
-              <button
-                @click="
-                  (toggleeditShopListNum = userList.shoppingListNumber),
-                    toggleeditShopList()
-                "
-                class="absolute text-sm font-bold text-blue-700 right-7 top-4 focus:outline-none"
-              >
-                Edit
-              </button>
-            </h3>
-
-            <ul
-              id="shop-list"
-              class="overflow-hidden text-sm leading-relaxed text-gray-500 list-disc list-inside h-22 pl-9"
-            >
-              <li
-                v-for="shopList in userList.shoppingListContent.split(', ')"
-                :key="shopList"
-              >
-                {{ shopList }}
-              </li>
-            </ul>
-
-            <ShoppingList
-              v-if="toggleList && toggleListNum == userList.shoppingListNumber"
-              @closeListModal="toggleList = !toggleList"
-              :list="userList.shoppingListContent.split(', ')"
-              :index="userList.shoppingListTitle"
-            />
-
-            <button
-              v-if="userList.shoppingListContent.split(', ').length > 4"
-              @click="
-                (toggleList = !toggleList),
-                  (toggleListNum = userList.shoppingListNumber)
-              "
-              class="text-sm leading-loose pl-9 focus:outline-none"
-            >
-              {{ userList.shoppingListContent.split(", ").length - 4 }} more
-              items...
-            </button>
+             <div v-if="option_more" class="absolute bg-white drop-shadow-2xl  right-3 rounded-xl shadow-2xl p-1">
+                <div @click="Editlist=true,option_more=false" class="flex cursor-pointer  items-center space-x-2">
+                  <span class="material-icons text-gray-400">
+                    mode
+                  </span>
+                  <p class="select-none">Edit</p>
+                </div>
+                <div @click="toggle_delete=true,option_more=false" class="flex cursor-pointer  items-center space-x-2">
+                  <span class="material-icons text-gray-400">
+                    delete
+                  </span>
+                  <p class="select-none">Delete</p>
+                </div>
+                </div>
           </div>
-          <hr />
-          <div class="items-center justify-center p-3 pl-4">
-            <createShopList
-              v-if="createShopList"
-              @closeshopListModal="listener6"
-            />
-            <button
-              @click="togglecreateShopList"
-              class="w-64 h-8 px-5 text-sm font-bold text-red-600 transition-colors duration-150 border-2 border-red-600 rounded-3xl focus:outline-none"
-            >
-              Create New
-            </button>
+          
+
+                </div> 
+                
+                  <div class="overflow-y-auto h-20">
+                 
+                      <span v-if="shopping_list.length<1" class="font-bold pl-5 text-center">No shopping List Available</span>
+                    
+                    <ul v-else id="shop-list"  class="overflow-hidden text-sm leading-loose list-none pl-9">
+                 
+                      <li v-for="item in shopping_list[0].items" :key="item.id">  
+                        <input type="checkbox" name="" id="" class="pr-4 overflow-hidden truncate whitespace-nowrap"> 
+                        {{ item.product }} · {{item.brand}} · [{{item.quantity}}]</li>
+                 
+                    </ul>
+                  </div>
+                   <hr>
+                  <div class="items-center justify-center p-3 pl-4">
+                    <createShopList v-if="createShopList" @closeshopListModal="listener6"/>
+                    <button @click="addlist=!addlist"  class="w-64 h-8 px-5 text-sm font-bold text-red-600 transition-colors duration-150 border-2 border-red-600 rounded-3xl focus:outline-none">
+                            Create New
+                    </button>
+                  </div>
+<!--Add new Shopping list-->
+      <div v-if="addlist"  class=" fixed z-100 bg-black bg-opacity-75 overflow-y-auto   inset-0 ">
+        <div class="flex   mt-4 w-full p-3  items-center justify-center
+        py-20
+        ">
+         <div  class="  self-center bg-white ring-1  ring-gray-300  py-2 w-full rounded-xl
+            2xl:w-608 2xl:mt-0
+              lg:w-608 lg:mt-0
+              xl:w-608 xl:mt-0
+              md:w-10/12 md:mt-0
+              sm:w-11/12 p-5 space-y-3
+              h-auto
+              
+          ">
+          <div class="flex  flex-row items-center space-x-2">
+            <input  type="text" placeholder="Title"  id="new_title" class="pl-3 focus:outline-none h-10 text-base "/>
+            <span @click="document.getElementbyId('new_title').disable=false" class="cursor-pointer select-none material-icons text-md text-gray-500">
+            mode  
+            </span>
+          </div>
+            <div class="flex flex-row items-center space-x-3 select-none pl-3">
+              <span @click="new_item=!new_item" class="cursor-pointer material-icons">
+              add_circle
+              </span>
+              <p class="">Add new item</p>
+             
+            </div>
+            <div v-if="new_item" class="ring-1 ring-gray-400 p-5 space-y-3 rounded-xl">
+              <input id="product" type="text" placeholder="Product" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
+            <div class="flex flex-row space-x-2">
+                <input id="brand" type="text" placeholder="Brand" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
+                <input id="size" type="text" placeholder="Size" class="w-40 rounded-xl pl-5 focus:outline-none h-10  bg-gray-100"/>
+            </div>
+            <div class="flex flex-row space-x-2">
+              <p class="font-bold">Quantity</p>
+             <span @click="quantity++" class="material-icons select-none cursor-pointer text-red-700">
+              add
+            </span>
+              <p id="quants">{{quantity}}</p>
+            <span @click="quantity--" class="material-icons select-none cursor-pointer text-red-700">
+            remove
+            </span>
+            </div>
+             <div class="flex justify-end">
+               <div class="space-x-3">   
+              <button @click="new_item=false" class="ring-2 rounded-2xl h-6 w-20 font-bold  ring-red-buttons focus:outline-none">Cancel</button>
+              <button  @click="add_newItem()" class="ring-2 rounded-2xl h-6 w-20 font-bold text-white  ring-red-buttons focus:outline-none bg-red-buttons">Add</button>
+               </div>
+            </div>
+            </div>
+             <div class="flex text-gray-400 text-xs justify-end">
+                <p>Updated</p>
+                {{time}}
+              </div>
+           <hr class="bg-black">
+           <div class="flex justify-between   ">
+            <ul id="example-1" class=" text-sm list-inside  space-y-2 p-5  w-full ">
+       <li v-for="item in new_items" :key="item.id" class=" grid-cols-2  w-ful list-none">
+         <div class=" flex flex-row  justify-between w-full ">
+          <div class="flex flex-col">
+            <div class="flex flex-row  text-md  items-center space-x-3">
+             <input type="checkbox" class=""  id="check" :value="item.product" />
+              <label class="">{{ item.product }}({{item.size}})</label>
+            </div>
+          <div class="flex justify-start pl-8 ">
+            <p class="text-sm">{{item.brand}}</p>
+           </div>
+          </div>
+          
+             <div class="flex flex-row space-x-5">
+             <span @click="item.quantity=item.quantity+1" class="material-icons select-none cursor-pointer text-red-700">
+              add
+            </span>
+            <div class="w-3 h-3">
+              <p>{{item.quantity}}</p>
+            </div>
+            <span   @click="item.quantity=item.quantity-1" class="material-icons select-none cursor-pointer text-red-700">
+            remove
+            </span>
+            <span  class=" cursor-pointer material-icons">
+            more_vert
+            </span>
+            </div>
+         </div>
+
+       </li>
+        </ul>
+           </div>
+           <div class="flex flex-row items-center justify-between">
+            <div class="space-x-3 text-gray-500">
+            <span @click="new_items=[]" class="material-icons cursor-pointer select-none">
+              delete
+            </span>
+            <span @click="add_shopping_list()" class="material-icons cursor-pointer select-none"> 
+              post_add
+            </span>
+          
+          </div>
+           <p @click="addlist=false" class="cursor-pointer text-blue-700 font-bold select-none">Close</p>
+           </div>
+
+
+          </div>
+          
+        </div>
+        
+    </div>
+ <!--End -->
+ <!--Edit Shopping List-->
+   <div v-if="Editlist"  class=" fixed z-100 bg-black bg-opacity-75 overflow-y-auto   inset-0 ">
+        <div class="flex   mt-4 w-full p-3  items-center justify-center
+        py-20
+        ">
+         <div  class="  self-center bg-white ring-1  ring-gray-300  py-2 w-full rounded-xl
+            2xl:w-608 2xl:mt-0
+              lg:w-608 lg:mt-0
+              xl:w-608 xl:mt-0
+              md:w-10/12 md:mt-0
+              sm:w-11/12 p-5 space-y-3
+              h-auto
+              
+          ">
+          <div class="flex  flex-row items-center space-x-2">
+
+           <input :value="shopping_list[0].title" type="text" id="new_title" class="focus:outline-none h-10 pl-3 bg-gray-100"/>
+            <span class="cursor-pointer select-none material-icons text-md text-gray-500">
+            mode  
+            </span>
+          </div>
+            <div class="flex flex-row items-center space-x-3 select-none pl-3">
+              <span @click="new_item=!new_item" class="cursor-pointer material-icons">
+              add_circle
+              </span>
+              <p class="">Add new item</p>
+             
+            </div>
+            <div v-if="new_item" class="ring-1 ring-gray-400 p-5 space-y-3 rounded-xl">
+              <input id="s_product" type="text" placeholder="Product" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
+            <div class="flex flex-row space-x-2">
+                <input id="s_brand" type="text" placeholder="Brand" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
+                <input id="s_size" type="text" placeholder="Size" class="w-40 rounded-xl pl-5 focus:outline-none h-10  bg-gray-100"/>
+            </div>
+            <div class="flex flex-row space-x-2">
+              <p class="font-bold">Quantity</p>
+             <span @click="quantity++" class="material-icons select-none cursor-pointer text-red-700">
+              add
+            </span>
+              <p id="s_quants">{{quantity}}</p>
+            <span @click="quantity--" class="material-icons select-none cursor-pointer text-red-700">
+            remove
+            </span>
+            </div>
+             <div class="flex justify-end">
+               <div class="space-x-3">   
+              <button @click="new_item=false" class="ring-2 rounded-2xl h-6 w-20 font-bold  ring-red-buttons focus:outline-none">Cancel</button>
+              <button  @click="add_item_shopping_list('s_product','s_brand','s_size','s_quants')" class="ring-2 rounded-2xl h-6 w-20 font-bold text-white  ring-red-buttons focus:outline-none bg-red-buttons">Add</button>
+               </div>
+            </div>
+            </div>
+             <div class="flex text-gray-400 text-xs justify-end">
+                <p>Updated</p>
+                {{time}}
+              </div>
+           <hr class="bg-black">
+       <div class="flex justify-between  h-50 overflow-y-auto  ">
+            <ul id="example-1" class=" text-sm list-inside  space-y-2 p-5  w-full ">
+          <li v-for="item in shopping_list[0].items" :key="item.id" class=" grid-cols-2  w-ful list-none">
+          <div class=" flex flex-row  justify-between w-full ">
+           <div class="flex flex-col">
+            <div class="flex flex-row  text-md  items-center space-x-3">
+             <input type="checkbox" class=""  id="check" :value="item.product" />
+              <label class="">{{ item.product }}({{item.size}})</label>
+            </div>
+          <div class="flex justify-start pl-8 ">
+            <p class="text-sm">{{item.brand}}</p>
+           </div>
+          </div>
+          
+             <div class="flex flex-row space-x-5">
+             <span @click="item.quantity=item.quantity+1" class="material-icons select-none cursor-pointer text-red-700">
+              add
+            </span>
+            <div class="w-3 h-3">
+              <p>{{item.quantity}}</p>
+            </div>
+            <span   @click="item.quantity=item.quantity-1" class="material-icons select-none cursor-pointer text-red-700">
+            remove
+            </span>
+            <span  class=" cursor-pointer material-icons">
+            more_vert
+            </span>
+            </div>
+         </div>
+          </li>
+          </ul>
+           </div>
+           <div class="flex flex-row items-center justify-between">
+            <div class="space-x-3 text-gray-500">
+            <span @click="shopping_list[0].items=[]" class="material-icons cursor-pointer select-none">
+              delete
+            </span>
+            <span @click="Editlist=false" class="material-icons cursor-pointer select-none"> 
+              post_add
+            </span>
+          
+          </div>
+           <p @click="Editlist=false" class="cursor-pointer text-blue-700 font-bold select-none">Close</p>
+           </div>
+
+
+          </div>
+          
+        </div>
+        
+        
+    </div>
+<!--End Edit Shopping List-->
+<!--Toggle Delete -->
+<div v-if="toggle_delete"   class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
+        <div class="flex   mt-4 w-full p-3  items-center justify-center
+        py-20
+        ">
+          <div class=" bg-white ring-1  ring-gray-300  p-5 w-full rounded-xl
+             2xl:w-97 
+              lg:w-97
+              xl:w-97   xl:mr-16
+              md:w-8/12
+              sm:w-10/12
+              shadow-2xl
+              h-auto
+          ">
+            <div class="flex flex-row items-center  justify-between p-3">
+            <p class="hidden lg:block 2xl:block xl:block"></p>
+            <p class="text-lg font-extrabold xl:ml-8 lg:ml-8 2xl:ml-8">Delete Shopping List</p>
+            <p class="font-bold text-blue-700 cursor-pointer left-10" @click="toggle_delete=false"> Close</p>
+          </div>
+          <div class="text-center pb-5 ">
+          <p class="text-lg">
+            Are you sure you want to remove this shipping Address?
+          </p>
+          </div>
+         <hr>
+          <div class=" ">
+           <div class="flex justify-between mt-4 px-5 space-x-4 items-center">
+             <button @click="toggle_delete=false" class="px-4 bg-white text-black focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Cancel</button>
+             
+             <button @click="toggle_delete=false,shopping_list.shift()" class="px-4 bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Delete</button>
+              
+            </div>
+            
+          </div>
+           
           </div>
         </div>
-      </div>
     </div>
+</div>
+<!--end toggle delete-->
   </div>
+  </div>
+
+
+                <div class="flex flex-wrap float-left font-nunito md:block vs:hidden xsm:hidden ssm:hidden">
+            <div class="mt-2 mb-6 text-xs leading-relaxed text-gray-500 bg-transparent w-72 rounded-xl">
+              Privacy Policy · Cookies Policy · Terms and Conditions Return and refund Policy Help Center <br> Pasabuy © 2021
+            </div>
+                </div>
+        </div>
+        </div>
+</div>
+</template>
 </template>
 
 <script>
@@ -1827,8 +2071,6 @@ export default {
     UpdateOfferStatus,
     SendRequest,
     createShopList,
-    ShoppingList,
-    editShopListModal,
     EditOrderRequest,
     SendOffer,
     UpdateOrderStatus,
@@ -1884,6 +2126,125 @@ export default {
         this.shift--;
       }
     },
+       next_swap_list(){
+      let x=this.s_shift;
+      let y=this.shopping_list.length;
+      if(x<y-1){
+        [this.shopping_list[0],this.shopping_list[x+1]]=[this.shopping_list[x+1],this.shopping_list[0]];
+        this.s_shift++;
+      }
+    },
+    prev_swap_list(){
+      if(this.s_shift>0){
+        [this.shopping_list[0],this.shopping_list[this.s_shift]]=[this.shopping_list[this.s_shift],this.shopping_list[0]];
+        this.s_shift--;
+      }
+    },
+    view_list(e){
+
+   let x=document.getElementById(e);
+     if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+  },
+  add_newItem(){
+    let x=document.getElementById('product').value;
+    let y=document.getElementById('brand').value;
+    let z=document.getElementById('size').value;
+    let n=this.quantity;
+    if(x==''||y==''||z==''){
+      alert('Empty Field');
+      return false;
+    }
+    else{
+      let datax={
+          'id':this.list_number,
+          'product':x,
+          'brand':y,
+          'size':z,
+          'quantity':n
+  
+      }
+      this.new_items.push(datax);
+      this.new_item=false;
+        this.list_number++;
+      console.log(this.new_items);
+    }
+  },
+  title_edit(e,m){
+     //const index = this.shopping_list.findIndex(x=>x.id==e);
+     let x=document.getElementById(e);
+     let n=document.getElementById(m);
+     if (x.style.display === "none") {
+    x.style.display = "block";
+    n.style.display="none";
+  } else {
+    x.style.display = "none";
+    n.style.display='block';
+  }
+    //alert(index);
+  },
+  updateShoppinglist(){
+
+  },
+  delete_shopping_list(){
+   /* if(this.shopping_list.length>0){
+        this.shopping_list.shift();
+    }
+    else{
+      this.shopping_list.pop();
+
+    }*/
+    this.toggle_delete=false;
+    console.log(this.toggle_delete);
+  },
+  add_item_shopping_list(a,b,c,e){
+     let productx=document.getElementById(a).value;
+     let brandx=document.getElementById(b).value;
+     let sizex=document.getElementById(c).value;
+     let quantx=document.getElementById(e).innerHTML;
+     if(productx==''||brandx==''||sizex==''){
+       alert("Empty Field");
+       return false
+     }
+     let obj={
+         'id':this.n,
+          'product':productx,
+          'brand':brandx,
+          'size':sizex,
+          'quantity':parseInt(quantx) 
+     }
+     this.n++;
+     this.shopping_list[0].items.push(obj);
+     console.log(this.shopping_list[0].items);
+     document.getElementById(a).value='';
+     document.getElementById(b).value='';
+     document.getElementById(c).value='';
+  },
+  add_shopping_list(){
+      let bagotitle=document.getElementById('new_title').value
+      if(bagotitle==''||this.new_items.length==0){
+        alert("Empty Field");
+      }
+      else{
+         let new_time=new Date();
+        let timex=new_time.toLocaleTimeString();
+        let datex=new_time.toDateString();
+        let new_date=datex+' '+timex;  
+         let obj={
+      'id':this.id_num++,
+      'date':new_date,
+      'title':document.getElementById('new_title').value,
+      'items':this.new_items,
+    }
+    this.shopping_list.push(obj);
+    this.new_items=[];
+    this.addlist=false;
+      }
+  },
+
 
     togglePostModal() {
       this.postModalVisible = !this.postModalVisible;
@@ -1986,20 +2347,15 @@ export default {
     },
     showShareDisplay() {
       //without 3dot menu when shared
-      var container = $("#shopOffer-UserPost");
-      var clonedContainer = container
-        .clone()
-        .css({ padding: "0", float: "none" });
-      clonedContainer.find("#3dotmenu").remove();
-      clonedContainer.find("#changeBoxRadius").css({
-        "border-top-left-radius": "0px",
-        "border-top-right-radius": "0px",
-        "box-shadow": "none",
-      });
-      $("display-header").find("#closeButton").remove();
-      $("#display-footer").css({ padding: "0" }).remove();
-      clonedContainer.appendTo(".display-body");
-      $("#display-sharedPost").css({ display: "flex" });
+      var container = $('#shopOffer-UserPost');
+      var clonedContainer = container.clone().css({padding: '0', float: 'none'});
+      clonedContainer.find('#3dotmenu').remove();
+      clonedContainer.find('#changeBoxRadius').css({"border-top-left-radius": "0px","border-top-right-radius": "0px", "box-shadow":"none"});
+      $('display-header').find('#closeButton').remove();
+      $('#display-footer').css({padding: '0'}).remove();
+      clonedContainer.appendTo('.display-body')
+      $('#display-sharedPost').css({display: 'flex'});
+
       //with 3dot menu when shared
       //$('#shopOffer-UserPost').find('#changeBoxRadius').css({"border-top-left-radius": "0px","border-top-right-radius": "0px"})
       //$('#shopOffer-UserPost').find('#3dotmenu').remove()
@@ -2316,4 +2672,10 @@ export default {
 #display-sharedPost {
   display: none;
 }
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+
 </style>

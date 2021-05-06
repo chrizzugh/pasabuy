@@ -1,7 +1,7 @@
 <template>
 <div class="bg-gray-100  pt-6 font-nunito">
   <!--profile review-->
-  <div class="pb-6 flex h-auto ssm:items-center vs:items-center sm:items-center md:items-center ssm:flex-col ssm:h-auto sm:flex-col vs:flex-col md:flex-col md:h-auto vs:h-auto sm:h-auto ssm:pb-6 vs:pb-6 sm:pb-6 md:pb-6 w-full justify-center  ssm:space-x-0 vs:space-x-0 sm:space-x-0 space-x-10">
+  <div class="flex h-auto ssm:items-center vs:items-center sm:items-center md:items-center ssm:flex-col ssm:h-auto sm:flex-col vs:flex-col md:flex-col md:h-auto vs:h-auto sm:h-auto pb-6 w-full justify-center  ssm:space-x-0 vs:space-x-0 sm:space-x-0 space-x-10">
 
   <!--Rating-->
     <div class=" flex flex-col ssm:h-auto vs:h-auto sm:h-auto md:h-auto h-auto">
@@ -87,8 +87,31 @@
       <div class="percentage" :style="{'width' : percentage + '%'}"></div>
     </div>
   </div> -->
+  <!--end of rating code-->
+
+  <!--idk the term buttons-->
+  <div class="sm:hidden vs:hidden ssm:hidden flex flex-col pt-6 h-auto w-74 space-y-2">
+    <div class="flex flex-row space-x-1 justify-start items-start">
+      <button class="text-xs hover:underline leading-3 text-gray-500">Privacy Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Cookies Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Terms and Conditions</button>
+    </div>
+    <div class="flex flex-row space-x-1 justify-start items-start">
+      <button class="text-xs hover:underline leading-3 text-gray-500">Return and Refund Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Help Center</button>
+    </div>
+    <div class="flex flex-row">
+          <button class="text-xs hover:underline leading-3 text-gray-500">PasaBuy ©️ 2021</button>
+    </div>
+  </div>
+  <!--end-->
+
 </div>
-<!--end of rating code-->
+
+
 
 <!--user post comments about reviews-->
   <div class="flex flex-col ssm:mt-6 ssm:w-full ssm:h-auto vs:mt-6 sm:mt-6 sm:h-auto md:mt-6 md:h-auto h-auto vs:w-full min-w-0 px-2 sm:w-full vs:h-auto">
@@ -153,7 +176,28 @@
     </div>
   </div>
   <!--end-->
-</div>
+
+<!--only shown in mobile view-->
+<!--idk the term buttons-->
+  <div class="sm:flex vs:flex ssm:flex hidden flex-col vs:justify-center vs:items-center sm:justify-center sm:items-center ssm:justify-center ssm:items-center pt-6 h-auto w-74 vs:w-full sm:w-full ssm:w-full space-y-2">
+    <div class="flex flex-row space-x-1  justify-start items-start ">
+      <button class="text-xs hover:underline leading-3 text-gray-500">Privacy Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Cookies Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Terms and Conditions</button>
+    </div>
+    <div class="flex flex-row space-x-1 justify-start items-start">
+      <button class="text-xs hover:underline leading-3 text-gray-500">Return and Refund Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Help Center</button>
+    </div>
+    <div class="flex flex-row">
+          <button class="text-xs hover:underline leading-3 text-gray-500">PasaBuy ©️ 2021</button>
+    </div>
+  </div>
+  <!--end-->
+  </div>
 <!--end of user post comments about reviews-->
 </div>
 </div>

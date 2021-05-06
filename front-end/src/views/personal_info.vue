@@ -62,8 +62,8 @@
        
         </form>
         </div>
-       <div v-if="toggle" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle" class=" fixed items-center  inset-0 overflow-y-auto ">
+
+        <div v-if="toggle" class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
@@ -86,17 +86,17 @@
            <div class=" ">
             <div class="flex flex-col px-4  space-y-4
             ">
-                <div class="flex flex-col"><span class="ml-2">Firstname</span> <input id="f_name"   type="text" v-model="userPersonal.firstName" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Firstname</span> <input id="f_name"   type="text" v-model="userPersonal.firstName" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                  </div>
-                <div class="flex flex-col"><span class="ml-2">Middlename</span> <input id="m_name" type="text" v-model="personal.midname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Middlename</span> <input id="m_name" type="text" v-model="personal.midname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Lastname</span> <input id="l_name" type="text" v-model="userPersonal.lastName" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Lastname</span> <input id="l_name" type="text" v-model="userPersonal.lastName" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Phone number </span> <input id="p_number" type="number" v-model="userPersonal.phoneNumber" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Phone number </span> <input id="p_number" type="number" v-model="userPersonal.phoneNumber" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2">Work </span> <input id="work" type="text" v-model="personal.work" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Work </span> <input id="work" type="text" v-model="personal.work" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
-                <span class="ml-2">Gender</span>
+                <span class="ml-2 text-gray-500 font-bold  text-sm">Gender</span>
                 <div class=" space-x-4 ml-4">
                   <span class="space-x-2">
                   <span><input type="radio" value="Male" id="male" v-model="userPersonal.gender" name="gender" /></span>
@@ -107,9 +107,9 @@
                   <label for="female">Female</label>
                   </span>
               </div>
-                 <div class="flex flex-col "><span class="ml-2">Birthday</span>  <input  type="date" id="b_date"  v-model="userPersonal.birthDate"   class="focus:outline-none rounded-xl w-full h-10 pl-2 bg-transparent bg-gray-200" 
+                 <div class="flex flex-col "><span class="ml-2 text-gray-500 font-bold  text-sm">Birthday</span>  <input  type="date" id="b_date"  v-model="userPersonal.birthDate"   class="focus:outline-none rounded-xl w-full h-10 pl-2 bg-transparent bg-gray-200" 
                   ></div> 
-                <div class="flex flex-col"><span class="ml-2">Language: </span> <input type="text" id="language" v-model="userLang.languages" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Language: </span> <input type="text" id="language" v-model="userLang.languages" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
              
             </div>
            <div class="flex justify-between mt-10 space-x-4 items-center">

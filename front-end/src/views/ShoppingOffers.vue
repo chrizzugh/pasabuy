@@ -267,6 +267,94 @@
             </p>
           </div>
           <!--section 4-->
+          <!--section 5: Request Received-->
+        <div class="flex flex-col justify-start items-start w-full space-y-2.5 mt-4">
+          <hr class="w-full">
+          <div class="inline-flex justify-start items-center flex-row space-x-4">
+            <p class="text-base font-bold leading-none text-gray-900">Requests Received</p>
+            <div class="inline-flex px-2 py-1 bg-red-700 rounded-full">
+              <p class="text-base font-bold leading-none text-white">5</p>
+            </div>
+          </div>
+          <div class="flex-auto flex-col w-full vs:px-0 px-2 space-y-3.5 pb-2 pt-2">
+            <div class="flex flex-row justify-between">
+              <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
+              <img class="w-10 h-10 vs:w-8 vs:h-8 rounded-full" src="img/asta.jpeg"/>
+              <div class="flex flex-col space-y-1">
+                <div class="flex flex-row vs:space-x-1 space-x-2">
+                  <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">Asta Staria</p>
+                  <span class="text-blue-900 align-middle material-icons md-14 ">
+                  verified
+                </span>
+                </div>
+                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">5 minutes ago</p>
+              </div>
+              </div>
+              <div class="flex flex-row items-center vs:space-x-1 space-x-2">
+                <button class="focus:outline-none inline-flex items-start justify-start vs:px-2 vs:py-1 px-3 py-2 bg-red-700 rounded-full">
+                <p class="text-sm vs:text-xs ssm:text-xs font-bold leading-none text-white">View Details</p>
+                </button>
+                <button class="focus:outline-none">
+                <span class="material-icons vs:text-xs">
+                  more_vert
+                </span>
+                </button>
+              </div>
+            </div>
+            <div class="flex flex-row justify-between">
+              <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
+              <img class="w-10 h-10 rounded-full" src="img/julius.png"/>
+              <div class="flex flex-col space-y-1">
+                <div class="flex flex-row vs:space-x-1 space-x-2">
+                  <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">Julius Novachrono</p>
+                  <span class="text-blue-900 align-middle material-icons md-14 ">
+                  verified
+                </span>
+                </div>
+                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">5 minutes ago</p>
+              </div>
+              </div>
+              <div class="flex flex-row items-center vs:space-x-1 space-x-2">
+                <button class="focus:outline-none inline-flex items-start justify-start vs:px-2 vs:py-1 px-3 py-2 bg-red-700 rounded-full">
+                <p class="text-sm vs:text-xs ssm:text-xs font-bold leading-none text-white">View Details</p>
+                </button>
+                <button class="focus:outline-none">
+                <span class="material-icons vs:text-xs">
+                  more_vert
+                </span>
+                </button>
+              </div>
+            </div>
+            <div class="flex flex-row justify-between">
+              <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
+              <img class="w-10 h-10 rounded-full" src="img/baha.jpg"/>
+              <div class="flex flex-col space-y-1">
+                <div class="flex flex-row vs:space-x-1 space-x-2">
+                  <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">Baha-bahaha</p>
+                  <span class="text-blue-900 align-middle material-icons md-14 ">
+                  verified
+                </span>
+                </div>
+                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">5 minutes ago</p>
+              </div>
+              </div>
+              <div class="flex flex-row items-center vs:space-x-1 space-x-2">
+                <button class="focus:outline-none inline-flex items-start justify-start vs:px-2 vs:py-1 px-3 py-2 bg-red-700 rounded-full">
+                <p class="text-sm vs:text-xs ssm:text-xs font-bold leading-none text-white">View Details</p>
+                </button>
+                <button class="focus:outline-none">
+                <span class="material-icons vs:text-xs">
+                  more_vert
+                </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-row w-full justify-between items-center">
+              <button class="focus:outline-none inline-flex text-base font-bold leading-none text-gray-500">View more</button>
+              <p class="inline-flex text-base font-bold leading-none text-gray-500">3 of 5</p>
+          </div>
+        </div>
 
           <!--section 5-->
           <div
@@ -451,6 +539,17 @@ export default {
         comment:
           "Hi! I’ll be  going to SM City Legazpi tomorrow. If there’s anyone who wants to pasabuy their groceries, I am willing to help out. Just send me a request!",
         status: "No Longer Accepting Requests",
+      }
+      delivery_info:{
+        delivery_area: 'Delivering to Banquerohan area only',
+        shopping_place: 'Shopping at SM City Legazpi',
+        schedule: 'Tomorrow at 2 PM',
+        public_transit: 'Public Transit',
+        capacity: 'Up to 3 medium bags or 2 large bags',
+        payment_method: 'Payment First',
+        comment: 'Hi! I’ll be  going to SM City Legazpi tomorrow. If there’s anyone who wants to pasabuy their groceries, I am willing to help out. Just send me a request!',
+        status: 'No Longer Accepting Requests',
+        status1: 'Accepting Requests',
       },
       shoppingOffer_postNumber: null,
       user_email: null,
@@ -480,15 +579,23 @@ export default {
     },
     listener() {
       this.postModalVisible = false;
+      this.edit1 = false
+      this.share= false
     },
     listener1() {
       this.postModalVisible1 = false;
+      this.edit1 = false  
+      this.share= false   
     },
     listener2() {
       this.postModalVisible2 = false;
+      this.edit1 = false
+      this.share= false
     },
     listener3() {
       this.postSendModal = false;
+      this.edit1 = false
+      this.share= false
     },
     toEncrypt(val) {
       return btoa(val);
@@ -532,6 +639,31 @@ export default {
           VueSimpleAlert.alert("An error occured", "Error", "error");
           console.log(error);
         });
+        },
+
+    closeOpen(){
+      this.share=!this.share
+      this.edit1 = false
+    },
+
+    EditModal(){
+      this.edit1 = !this.edit1
+      this.share= false
+    },
+    
+    showShareModal(){
+      ////without 3 dot menu when share post modal is open
+      var container = $('#shopOffer-UserPost');
+      var clonedContainer = container.clone().css({padding: '0', float: 'none'});
+      clonedContainer.find('#3dotmenu').remove();
+      clonedContainer.appendTo('.modal-body')
+      
+      ////with 3 dot menu when share post modal is open
+      //$('#shopOffer-UserPost').clone().css({padding: '0', float: 'none'}).appendTo('.modal-body');
+      
+      $('#modal-background').css({display: 'flex'});
+      $(".target").hide();
+      this.share = !this.share
     },
     deletePost(postNum) {
       api.delete("api/post/" + postNum + "/delete").then(() => {

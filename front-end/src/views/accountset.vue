@@ -35,15 +35,150 @@ lg:flex
          <div class="ring-1 ring-gray-300 bg-white p-5 rounded-2xl shadow-sm" >
         <div class=" flex justify-between">
             <div class="flex gap-4">
-            <p class="font-bold font-nunito text-sm">Verification Status</p>
+            <p  class="font-bold font-nunito text-sm">Verification Status</p>
             </div>
           </div>
         <div class="text-sm gap-x-10 space-y-8 pt-8 ">
-        <span class="  font-raleways font-bold grid grid-cols-1 "> 
-         <p :class="{ red: unverified }">{{ verification_status.msg }}</p>
+        <span class="  font-raleways  grid grid-cols-1 " style="font-size:16px"> 
+        <p v-if=" status=='verified'" class="select-none text-gray-500"> Your Account is fully verified</p>
+        <p v-else-if=" status=='pending'" class="select-none text-gray-500" >Account verification will get wrapped up as soon as possible. Please wait 2 to 5 business days. We’ll be in touch if there’s anything else we need.  </p>
+        <span v-else class="text-gray-500 space-y-2">
+         <p class="text-red-700 select-none"> Your account is not verified yet. Verify now to enjoy all the features of PasaBuy.</p>
+          <p @click="verify_id=!verify_id" class="font-bold select-none cursor-pointer text-blue-900"> Verify now</p>
+        </span>
+        
         </span>
         </div>
+         <!--Verify--->
+         <div v-if="verify_id" class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
+        <div class="flex   mt-4   justify-center
+        py-20 px-3
+        ">
+          <div class="w-full m-0 overflow-hidden text-center  bg-white shadow-md flex-grow-1 rounded-xl
+         xl:w-608 lg:w-608 2xl:w-608
+      md:w-97 sm:w-97
+        ">
+            <div class="px-10 py-5">
+                <h1 class="mb-3 space-x-1 space-y-1 text-2xl font-bold">Upload a valid ID</h1>
+                <p class="mb-4 text-left sm:text-center lg:text-justify xl:text-center">
+                    A government ID helps us check you're really you. It also helps us keep Pasabuy secure, fight fraud, and more. </p>
+                <div class="flex flex-col justify-between space-y-4
+                sm:flex-row sm:space-y-0  sm:space-x-8
+                md:flex-row md:space-y-0  md:space-x-8
+                lg:flex-row lg:space-y-0  lg:space-x-8
+                xl:flex-row xl:space-y-0  xl:space-x-8
+                2xl:flex-row 2xl:space-y-0  2xl:space-x-8
+                ">
+                    <!--front id--->
+                    <div class=" text-left text-gray-500 
+                    md:w-1/2
+                    lg:w-1/2
+                    xl:w-1/2
+                    2xl:w-1/2
+                    sm:w-1/2">
+                        <span>Front of your ID</span>
+                        <div class="ring-2 rounded-xl  ring-gray-500 px-3 flex flex-col justify-center pt-4 pb-2 h-44">
+                        <div class="flex  flex-col justify-center overflow-hidden items-center  h-32">
+                        <img :src="front_image" class="w-full " />
+                       <img id="front_img" :src="icon_front" class="w-16 cursor-not-allowed">  
+                       <label for="front_id"> <span class="font-bold cursor-pointer text-black">{{browse1}}</span>   </label> 
+                        </div>
+                            <div class="w-28 mt-">
+                                <p class=" text-sm  w-full overflow-x-auto">{{filename}}</p> 
+                            </div>
+                         <div class="space-x-3 flex flex-row justify-end self-end">
+                            <span class="text-red-700 font-bold cursor-pointer" @click="delete_front">{{delete1}}</span>
+                             <label for="front_id"> <span class="font-bold text-black cursor-pointer">{{edit1}}</span></label>
+                        </div>
+                       
+                        </div>
+                        <input type="file" id="front_id" @change="filechange" class="hidden"/>
+                       
+                    </div>
+                     <!--Back id-->   
+                    <div class=" text-left text-gray-500 
+                    md:w-1/2
+                    lg:w-1/2
+                    xl:w-1/2
+                    2xl:w-1/2
+                    sm:w-1/2">
+                        <span>Back of your ID</span>
+                        <div class="ring-2 rounded-xl  ring-gray-500 px-3 flex flex-col justify-center pt-4 pb-2 h-44">
+                        <div class="flex  flex-col justify-center overflow-hidden items-center  h-32">
+                        <img :src="back_image" class="w-full " />
+                       <img id="front_img" :src="icon_back" class="w-16 cursor-not-allowed">  
+                       <label for="back_id"> <span class="font-bold cursor-pointer text-black">{{browse2}}</span>   </label> 
+                        </div>
+                            <div class="w-28 mt-">
+                                <p class=" text-sm  w-full overflow-x-auto">{{filename2}}</p> 
+                            </div>
+                         <div class="space-x-3 flex flex-row justify-end self-end">
+                            <span class="text-red-700 font-bold cursor-pointer" @click="delete_back">{{delete2}}</span>
+                             <label for="back_id"> <span class="font-bold text-black cursor-pointer">{{edit2}}</span></label>
+                        </div>
+                       
+                        </div>
+                        <input type="file" id="back_id" @change="filechange_back" class="hidden"/>
+                       
+                    </div>
+                </div>
+
+                  <!--Buttons-->
+            <div class="flex justify-end mt-4 items-center">
+               
+                <div class=" space-x-4">
+                  <button @click="verify_id=false" class="h-10 m-2 text-black font-bold items-center transition-colors 
+                   border-2 border-red-buttons px-5   rounded-3xl focus:outline-none ">Cancel</button>
+                    <button id="confirm_next" v-if="front_image!=null&& back_image!=null" @click="verify_message=!verify_message,verify_id=false" class="h-10 m-2 text-white transition-colors 
+                    bg-red-buttons px-7 font-bold rounded-3xl focus:outline-none ">Next</button>
+                    <button id="confirm_next" v-else class="h-10 m-2 text-white transition-colors 
+                    bg-red-buttons px-7 font-bold rounded-3xl focus:outline-none ">Next</button>
+                </div>
+            </div>
+              
+             
+        </div>
     </div>
+        </div>
+    </div>
+  <!--End Verify-->
+    <!--verify-message-->
+    <div v-if="verify_message" class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
+        <div class="flex   mt-4   justify-center
+        py-20 px-3
+        ">
+         <div class="w-full m-0 overflow-hidden text-center  bg-white shadow-md flex-grow-1 rounded-xl
+         xl:w-608 lg:w-608 2xl:w-608
+      md:w-97 sm:w-97
+        ">
+            <div class="px-10 py-16">
+                <img class= "w-1/4 mx-auto mb-5 2xl:mx-auto" src="img/id-review.svg">
+                <h2 class="items-center justify-center mb-5 text-2xl font-bold md:flex font-raleways ">
+                We're still reviewing your ID</h2>
+                <p class="text-left vs:text-center lg:text-justify xl:text-center">
+                This will get wrapped up as soon as possible. We'll be in touch if there's anything we need.</p>
+                <p class="pt-2 mb-4 text-center">
+                In the meantime, you can continue setting up your profile</p>
+                <div class="justify-end flex">
+                    <button @click="status='pending',verify_message=false" class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none">
+                     Confirm
+                    </button>
+                </div>
+            </div>    
+        </div>
+        </div>
+    </div>
+    <!--end verify-message-->
+    </div>
+
+   
+    
+  
+
+    <p class="text-gray-500 text-sm">
+        Privacy Policy-Cookies Policy-Terms and Conditions
+        Return and Refund Policy-PasaBuy   2021
+    </p>
 </div>
 </div>
 </template>
@@ -85,6 +220,23 @@ export default {
       verification_status: {
         msg: "",
       },
+          verify_message:false,
+      verify_id:false,
+      browse1:'Browse',
+        browse2:'Browse',
+        delete1:null,
+        delete2:null,
+        edit1:null,
+        edit2:null,
+        front_image:null,
+        back_image:null,
+        icon_front:'img/id-front.svg',
+        icon_back:'img/id-back.svg',
+        filename:null,
+        filename2:null,
+   status:'notVerfied',
+    verification_status:{
+        msg:'Your Account is fully verified',
       unverified: true,
     };
   },
@@ -99,6 +251,41 @@ export default {
         this.submit();
       }
     },
+     filechange(e){
+        const file=e.target.files[0]
+        this.front_image=URL.createObjectURL(file);
+        this.icon_front=null;
+        this.browse1=null;
+        this.filename=file.name;
+        this.delete1="Delete";
+        this.edit1="Edit";
+    },
+    delete_front(){
+        this.front_image=null;
+        this.filename=null;
+        this.icon_front='img/id-front.svg';
+        this.browse1='Browse';
+        this.delete1=null;
+        this.edit1=null;
+    },
+    //back id
+    filechange_back(e){
+        const file=e.target.files[0]
+        this.back_image=URL.createObjectURL(file);
+        this.icon_back=null;
+        this.browse2=null;
+        this.filename2=file.name;
+        this.delete2="Delete";
+        this.edit2="Edit";
+    },
+    delete_back(){
+        this.back_image=null;
+        this.filename2=null;
+        this.icon_back='img/id-back.svg';
+        this.browse2='Browse';
+        this.delete2=null;
+        this.edit2=null;
+    }
   },
   mounted() {
     store.dispatch('getPersonal')

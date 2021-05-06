@@ -382,4 +382,10 @@ export default {
 .followed {
   background-color: rgba(220, 20, 60, 1);
 }
+.followButton{
+  border-color: rgba(220, 20, 60, 1);
+}
+.followed {
+    background-color: rgba(220, 20, 60, 1);  
+}
 </style>

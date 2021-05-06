@@ -253,7 +253,7 @@
           <div
             class="flex flex-row pt-3 ssm:pt-2 ssm:flex-col ssm:space-x-0 se:space-x-1 ssm:space-y-2 space-x-4 w-full justify-center"
           >
-            <div class="flex flex-row space-x-2 sm:w-full">
+           <div class="flex flex-row space-x-2 vs:w-full  sm:w-full">
               <span class="rounded-lg mt-1.5 material-icons text-red-700">
                 alarm
               </span>

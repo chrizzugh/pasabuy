@@ -2,20 +2,12 @@
 
     <div class="flex items-center ">
         <router-link to="/">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-20 h-16 block">
+        <img src="/img/pasaBUYLogoOnly.png" class="block w-16 h-16 ">
         </router-link>
-        <h1 class="absolute text-xl font-black tracking-widest  left-16 font-raleway
-          text-red-buttons block
-          
-           ">pasaBUY</h1>
+        <h1 class="absolute block text-xl font-black tracking-widest left-16 font-raleway text-red-buttons">pasaBUY</h1>
       </div>
-
-
-    <div id="signup" class="flex items-center justify-center   pb-10  px-4">
-      <div class="w-full my-12 overflow-hidden text-center bg-white shadow-md flex-grow-1 rounded-xl
-      xl:w-2/5 lg:w-2/5 2xl:w-2/5 
-      md:w-97 sm:w-97
-      ">
+    <div id="signup" class="flex items-center justify-center px-4 pb-10">
+      <div class="w-full my-12 overflow-hidden text-center bg-white shadow-md flex-grow-1 rounded-xl xl:w-2/5 lg:w-2/5 2xl:w-2/5 md:w-97 sm:w-97 ">
         <div class="px-10 py-16 ">
             <h1 class="pb-5 space-x-1 space-y-1 text-2xl font-bold">Create an account</h1>
               <div action="#" class="space-y-3">
@@ -37,16 +29,13 @@
                 <div class="mb-6">
                     <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" v-model="PersonalInfo.email"  />
                 </div>
-                <div class="mb-10">
-                    <input aria-label="Phone Number" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max" v-mask="'+63 ### ### ####'"/>
+                <div class="relative flex mb-10">
+                    <div class="flex">
+                        <img class="absolute w-8 h-12 rounded-md left-3 " src="img/Philippines-Flag.svg ">
+                        <input aria-label="Phone Number" name="" type="text" required class="block w-full px-3 py-2 pl-8 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" value="" />
+                    </div>
                 </div>
-                <div class="flex flex-col  
-                md:flex-row md:justify-between md:space-x-6
-                sm:flex-row sm:justify-between sm:space-x-6
-                xl:flex-row xl:justify-between xl:space-x-6
-                2xl:flex-row 2xl:justify-between 2xl:space-x-6
-                lg:flex-row lg:justify-between lg:space-x-6
-                 ">
+                <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between 2xl:space-x-6 lg:flex-row lg:justify-between lg:space-x-6 ">
                     <div class="w-full" >
                          <input aria-label="Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300 " placeholder="Password" v-model="PersonalInfo.password" v-show="!showPass"/> 
                          <input aria-label="Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300 " placeholder="Password" v-model="PersonalInfo.password" v-show="showPass"/>  
@@ -72,12 +61,12 @@
                 </div>
                 <div class="mt-4 text-xs font-bold tracking-wide text-left text-gray-500 text-grey-dark">
                     By signing up, you agree to the 
-                    <a class="font-bold text-black" href="#">
+                    <router-link to="/terms-and-condition"  class="font-bold text-black" >
                          Terms of Service
-                    </a> and 
-                    <a class="font-bold text-black" href="#">
+                    </router-link> and 
+                    <router-link to="/privacy-policy" class="font-bold text-black" >
                         Privacy Policy
-                    </a>
+                    </router-link>
                 </div>
               </div>
             </div>

@@ -1,187 +1,145 @@
 <template>
-  <Nav />
-  <div
-    class="flex flex-col w-full ssm:w-max xsm:w-max justify-center font-nunito"
-  >
-    <div
-      class="w-5/12 2xl:block 2xl:mt-24 lg:block lg:mt-24 lg:w-6/12 xl:block xl:mt-24 justify-center self-center gap-y-5 mt-16 hidden"
-    >
-      <p class="text-2xl font-nunito font-bold uppercase">Orders</p>
-    </div>
-    <!--buttons-->
-    <div
-      class="mt-20 px-0 flex flex-col pb-4 2xl:flex-row 2xl:w-5/12 2xl:mt-0 2xl:self-center 2xl:justify-items-center 2xl:items-center lg:flex-row lg:w-6/12 lg:self-center lg:justify-items-center lg:mt-0 xl:flex-row xl:w-5/12 xl:self-center xl:justify-items-center xl:mt-0 md:flex-row md:mt-24 md:pl-4 md:items-center md:w-max sm:flex-row space-y-3"
-    >
-      <div class="mt-3 mr-3">
-        <button
-          @click="isActive_function('btn1')"
-          :class="{ active: activeBtn === 0 }"
-          type="button"
-          class="text-red-700 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"
-        >
-          <a> All Orders</a>
-        </button>
-      </div>
-      <div class="flex items-center gap-x-2">
-        <button
-          @click="isActive_function('btn2')"
-          :class="{ active: activeBtn === 'btn2' }"
-          type="button"
-          class="text-green-150 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"
-        >
-          <a>Complete</a>
-        </button>
-        <button
-          @click="isActive_function('btn3')"
-          :class="{ active: activeBtn === 'btn3' }"
-          type="button"
-          class="text-blue-700 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"
-        >
-          <a>Confirmed</a>
-        </button>
-        <button
-          @click="isActive_function('btn4')"
-          :class="{ active: activeBtn === 'btn4' }"
-          type="button"
-          class="text-yellow-600 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"
-        >
-          <a>Cancelled</a>
-        </button>
-      </div>
-    </div>
-    <!--end of buttons-->
-    <div
-      class="p-5 w-full flex flex-col space-y-4 items-center 2xl:p-0 xl:p-0 lg:p-0"
-    >
-      <!--container-->
-      <div
-        v-for="order in allOrders" :key="order.indexTransactionPost"
-        class="flex flex-col justify-center self-center 2xl:w-5/12 lg:w-6/12 xl:w-5/12 w-full bg-white ring-1 ring-gray-300 p-5 rounded-2xl"
-      >
-        <div class="flex justify-between vs:flex-col">
-          <div class="flex flex-col gap-4">
-            <span class="flex justify-items-center space-x-3">
-              <p class="font-bold font-nunito">
-                Transaction#{{ order.transactionNumber }}
-              </p>
-              <p
-                v-if="order.transactionStatus == 'Confirmed'"
-                class="tracking-wider text-blue-700 bg-white text-xs ring-1 ring-blue-700 h-min w-18 self-center p-1 font-nunito font-bold"
-              >
-                {{ order.transactionStatus }}
-              </p>
-              <p
-                v-else-if="order.transactionStatus == 'Completed'"
-                class="tracking-wider text-green-700 bg-white text-xs ring-1 ring-green-700 h-min w-18 self-center p-1 font-nunito font-bold"
-              >
-                {{ order.transactionStatus }}
-              </p>
-              <p
-                  v-else
-                  class="text-center tracking-wider text-yellow-600 bg-white ring-1 ring-yellow-600 text-xs h-min w-18 self-center p-1 font-nunito font-bold"
-                >
-                  {{ order.transactionStatus }}
-                </p>
+ <Nav/>
+<div class="flex flex-col w-full
+ssm:w-max
+xsm:w-max
+ justify-center   font-nunito ">
+<div class="w-608
+      2xl:block 2xl:mt-24
+      lg:block lg:mt-24  lg:w-6/12
+      xl:block xl:mt-24
+    
+      justify-center self-center  gap-y-5 mt-16 hidden ">
+      <p class="text-2xl  font-nunito font-bold uppercase">orders</p>
+</div>
+<div class="mt-20 self-center px-2 w-full flex flex-col pb-4  
+            2xl:flex-row   2xl:mt-0 2xl:self-center 2xl:justify-items-center  2xl:items-center
+            lg:flex-row     lg:self-center lg:justify-items-center lg:mt-0
+            xl:flex-row     xl:self-center xl:justify-items-center xl:mt-0 
+            md:flex-row md:mt-24 md:pl-4 md:items-center
+            sm:flex-row
+            space-y-3
+             2xl:w-608 2xl:px-0
+              lg:w-608 lg:px-0
+              xl:w-608 xl:px-0
+              md:w-10/12 md:px-0
+              sm:w-10/12
+             ">
+    <div class="mt-3 
+    2xl:mr-2
+    xl:mr-2
+    lg:mr-2
+    md:mr-2
+    ">
+    <button @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" type="button"  class="font-bold focus:outline-none text-red-buttons px-3 py-1 shadow  rounded-2xl bg-white w-full h-full"><a> All Orders</a></button>
+  </div>
+  <div class="flex  items-center justify-between space-x-2">
+  <button  @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }"  type="button"    class=" font-bold focus:outline-none text-green-150 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Complete</a></button>  
+  <button   @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }"  type="button"   class=" font-bold focus:outline-none text-blue-700 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Confirmed</a></button>
+  <button  @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }"  type="button"    class="font-bold focus:outline-none text-yellow-600 px-3 py-1 shadow rounded-2xl bg-white w-full h-full"><a>Cancelled</a></button>
+  </div>
+</div>
+
+<div v-for="itemx in transaction" :key="itemx.id" >
+
+<div class="p-5 w-full  flex flex-col space-y-4 items-center 
+2xl:p-0
+xl:p-0
+lg:p-0
+">
+ <div class="flex flex-col justify-center self-center 
+              2xl:w-608 2xl:mb-4
+              lg:w-608  xl:mb-4
+              xl:w-608  lg:mb-4
+              md:w-10/12
+              sm:w-10/12
+     w-full bg-white ring-1 ring-gray-300 p-5 rounded-2xl " >
+        <div class=" flex justify-between">
+            <div class="flex flex-col gap-4">
+            <span class="flex vs:flex-col gap-x-3"> 
+            <p class="font-bold font-nunito">Transaction#{{itemx.order_number}}</p>
+              <div>
+              <p v-if="itemx.selected=='Completed'" class="text-center rounded-md  tracking-wider text-green-150 ring-1 ring-green-150 bg-white text-xs h-min w-18 self-center p-1 font-nunito font-bold">
+            {{itemx.selected}}
+            </p>
+            <p v-else-if="itemx.selected=='Confirmed'" class=" text-center rounded-md tracking-wider text-blue-700 ring-1 ring-blue-700 bg-gray-200 text-xs   h-min w-18 self-center p-1 font-nunito font-bold">
+            {{itemx.selected}}
+            </p>
+            <p v-else class=" text-center  tracking-wider text-yellow-600 rounded-md bg-white ring-1 ring-yellow-600 text-xs  h-min w-18 self-center p-1 font-nunito font-bold">
+            {{itemx.selected}}
+            </p>
+              </div>
             </span>
-            <span class="text-gray-500">Place on {{ timestamp(order.dateCreated) }}</span>
-          </div>
-           <div class="vs:flex-col vs:space-x-2" v-if="order.transactionStatus=='Confirmed' && order.post.email != user.email"> 
-              <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status, setDataToSave(order.post.email,order.indexTransactionPost,order.postNumber)">Update</span>
+           
+            </div>
+            <div class="vs:flex-col vs:space-x-2"> 
+             
+      <button v-if="itemx.selected=='Confirmed'" class=" font-bold focus:outline-none" @click="toggle_status=!toggle_status,trans_id=itemx.id">Update Status</button>
+      <button v-else  class=" font-bold text-gray-400" disabled>Update Status</button>
+           
            </div>
-           <div class="vs:flex-col vs:space-x-2" v-else-if="order.transactionStatus=='Confirmed'"> 
-              <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status, setDataToSave(order.transaction_sender.email,order.indexTransactionPost,order.postNumber)">Update</span>
-           </div>
-        </div>
-        <div
-          class="flex items-start gap-x-8 my-3 flex-col 2xl:items-center 2xl:flex-row xl:items-center xl:flex-row lg:items-center lg:flex-row md:flex-row"
-        >
-          <p class="uppercase font-semibold text-gray-500">Shopper:</p>
-          <div class="flex gap-x-3 items-center space-x-3" v-if="order.post.email != user.email">
-            <img
-              class="w-8 h-8 border rounded-full border-gray-700 shadow-md"
-              :src="order.post.user.profilePicture"
-            /><!--Profile Pic-->
+         </div>
+          <span class="text-gray-500 mt-2">Place on {{itemx.date}},{{itemx.time}}</span>
+       <div class="flex  items-start gap-x-8 my-3  flex-col
+            2xl:items-center 2xl:flex-row
+            xl:items-center  xl:flex-row
+            lg:items-center  lg:flex-row
+            md:flex-row
+           ">
+            <p class="uppercase font-bold text-gray-500 ">customer:</p>
+            <div class=" flex gap-x-3 items-center space-x-3">
+           <img class="w-8 h-8 border rounded-full border-gray-700 shadow-md  " :src="itemx.profile_image"/><!--Profile Pic-->
             <span class="flex flex-col">
-              <p class="font-bold">{{ order.post.user.firstName }} {{ order.post.user.lastName }}</p>
-              <!--name-->
+              <p class="font-bold">{{itemx.name}}</p> <!--name-->
               <span class="flex gap-x-1">
-                <p class="font-bold text-gray-500 text-sm">{{ rate }}</p>
-                <p class="material-icons text-sm text-red-700">star</p>
+              <p class="font-bold text-gray-500 text-sm">{{itemx.rate}}</p>
+              <p class="material-icons text-sm text-red-700">star</p>
               </span>
             </span>
             <!--chat button-->
-            <router-link :to="'/messages/?ID='+toEncrypt(order.post.email)"
-              class="flex items-center gap-x-2 bg-green-150 rounded-2xl p-2"
-            >
-              <p class="material-icons text-white text-sm">chat</p>
-              <p class="font-bold text-white text-sm">Chat Shopper</p>
-            </router-link>
-            <!--/chat button-->
-          </div>
-          <div class="flex gap-x-3 items-center space-x-3" v-else>
-            <img
-              class="w-8 h-8 border rounded-full border-gray-700 shadow-md"
-              :src="order.transaction_sender.profilePicture"
-            /><!--Profile Pic-->
-            <span class="flex flex-col">
-              <p class="font-bold">{{ order.transaction_sender.firstName }} {{ order.transaction_sender.lastName }}</p>
-              <!--name-->
-              <span class="flex gap-x-1">
-                <p class="font-bold text-gray-500 text-sm">{{ rate }}</p>
-                <p class="material-icons text-sm text-red-700">star</p>
-              </span>
-            </span>
-            <!--chat button-->
-            <router-link :to="'/messages/?ID='+toEncrypt(order.transaction_sender.email)"
-              class="flex items-center gap-x-2 bg-green-150 rounded-2xl p-2"
-            >
-              <p class="material-icons text-white text-sm">chat</p>
-              <p class="font-bold text-white text-sm">Chat Shopper</p>
-            </router-link>
-            <!--/chat button-->
-          </div>
+              <button class="  flex items-center gap-x-2 focus:outline-none  bg-green-150 rounded-2xl p-2">
+                <p class="material-icons text-white text-sm">chat</p>
+                <p class=" font-bold text-white text-sm "> Chat Shopper</p>
+              </button>
+              <!--/chat button-->
+            </div>
+            
         </div>
-        <div class="grid grid-cols-2 p-5 gap-y-4 text-sm">
-          <div class="flex gap-2">
-            <span class="material-icons text-red-600"> room </span>
-            <p>{{order.transactionData.deliveryAddress}}</p>
-          </div>
-          <div class="flex gap-2">
-            <span class="material-icons text-red-600"> watch_later </span>
-            <p>{{timestampSched(order.transactionData.deliverySchedule)}}</p>
-          </div>
-          <div class="flex gap-2">
-            <span class="material-icons text-red-600"> shopping_cart </span>
-            <p>{{order.transactionData.shoppingPlace}}</p>
-          </div>
-          <div class="flex gap-2">
-            <span class="material-icons text-red-600"> payments </span>
-            <p>{{order.transactionData.paymentMethod}}</p>
-          </div>
+        <div v-if="itemx.selected=='Completed'" class=" space-y-2 w-full p-4 ring-2 ring-gray-300 rounded-xl">
+              <p class="text-sm select-none">Transaction marked as completed on {{itemx.currentDate}},at {{itemx.currenTime}}</p>
+              <span class="flex space-x-2"><p class=" text-gray-400">Would you like to review the shopper?</p><b class="cursor-pointer">Write a review.</b></span>
         </div>
-        <div class="bg-gray-200 py-1 px-3 rounded-2xl" v-if=" order.transactionData.shopping_list !=null">
-          <div class="flex text-sm sm: space-x-2">
-            <p>Shopping List</p>
-            <p class="text-gray-500">{{ order.transactionData.shopping_list.shoppingListContent.split(", ").length }}</p>
-            <!--number of items-->
-            <p v-if="order.transactionData.shopping_list.shoppingListContent.split(', ').length > 1" class="text-gray-500">items</p>
-            <!--items-->
-            <p v-else class="text-gray-500">item</p>
-            <!--item-->
-          </div>
-          <ul
-            id="example-1"
-            class="list-disc text-sm list-inside grid grid-cols-2 p-5"
-          >
-            <li v-for="(item,index) in order.transactionData.shopping_list.shoppingListContent.split(', ') " :key="index">
-              {{ item }}
-            </li>
-          </ul>
+        <div class=" grid grid-cols-2  p-5 gap-y-4 text-sm">
+          <div class="flex items-center space-x-2"><span class="material-icons  text-red-buttons ">
+          fmd_good
+          </span><p>{{itemx.street}},{{itemx.city}}</p></div>
+          <div class="flex items-center space-x-2"><span class="material-icons text-red-buttons">
+          shopping_cart
+          </span><p>{{itemx.store}}</p></div>
+          <div class="flex items-center space-x-2"><span class="material-icons text-red-buttons">
+          watch_later
+          </span><p>{{itemx.date}},{{itemx.time}}</p></div>
+          <div class="flex items-center space-x-2"><span class="material-icons text-red-buttons">
+         payments
+          </span><p>{{itemx.payment}}</p></div>
+        </div>  
+        <div class="bg-gray-200  py-1 px-3 rounded-2xl">
+        <div class="flex text-sm  sm: space-x-2"><p>Shopping List</p><p class=" text-gray-500">{{itemx.items.length}}</p>
+        <p v-if="itemx.items.length>1" class="text-gray-500">items</p>
+         <p v-else class="text-gray-500">item</p>
+        </div>
+        <ul id="example-1" class="list-disc text-sm space-y-2 list-inside p-5">
+       <li v-for="item in itemx.items" :key="item.list" class="list-disc items-center">
+         <label class=" text-md" style="font-size:16px">{{ item.list }}({{item.size}})-{{item.brand}} [{{item.quantity}}unit/s]</label> 
+       </li>
+        </ul>
         </div>
       </div>
-      <!--End container-->
-      <div v-if="toggle_status" class="fixed inset-0 h-max bg-white bg-opacity-75"></div>
-        <div v-if="toggle_status"  class=" fixed overflow-y-auto   inset-0 ">
+    </div>
+
+</div>
+</div>
+        <div v-if="toggle_status"   class=" fixed bg-black z-100 h-max w-screen  bg-opacity-75 overflow-y-auto items-center  inset-0   ">
         <div class="flex   mt-4 w-full p-3  items-center justify-center
         py-20
         ">
@@ -217,6 +175,20 @@
     </div>
     </div>
   </div>
+  <div class="w-full flex justify-center">
+<div class="text-left flex self-center
+          2xl:w-608
+              lg:w-608
+              xl:w-608
+              md:w-10/12
+              sm:w-10/12
+ p-2 ">
+ <p class="text-gray-500 text-sm">
+        Privacy Policy-Cookies Policy-Terms and Conditions
+        Return and Refund Policy-PasaBuy   2021
+    </p>
+</div>
+</div>
 </template>
 <script>
 import Nav from "../views/Navbar.vue";
@@ -356,3 +328,4 @@ export default {
   color: white;
 }
 </style>
+

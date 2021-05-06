@@ -67,6 +67,13 @@
               Log in
             </button>
           </div>
+           <!----- Loging in loading
+                    <div class="flex justify-center py-5">
+                      <button class="w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none" disabled>
+                        <router-link to="/dashboard" class="animate-spin h-5 w-5" >Logging In</router-link>
+                      </button>
+                    </div>
+                    ----->
         </form>
         <div
           class="mt-4 font-normal text-left text-gray-500 text-md text-grey-dark"

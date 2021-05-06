@@ -18,6 +18,12 @@ import verifyemail from '../views/verifyemail.vue'
 import Shopping_List from '../views/shopping_list.vue'
 import Notifications from '../views/mobile_notification.vue'
 import forgotPasswordForm from '../views/forgot_password_form.vue'
+import HelpCenter from '../views/helpCenter.vue'
+import privacyPolicy from '../views/privacyPolicy.vue'
+import TermsAndCondition from '../views/termsAndCon.vue'
+import ReturnAndRefundPolicy from '../views/returnPolicy.vue'
+
+
 
 const routes = [
   {
@@ -152,6 +158,31 @@ const routes = [
     name: 'forgotPasswordForm',
     component: forgotPasswordForm,
     meta: {guest:true}
+  },
+
+  {
+    path: '/help-center',
+    name: 'HelpCenter',
+    component: HelpCenter
+  },
+  
+  {
+    path: '/privacy-policy',
+    name: 'privacyPolicy',
+    component: privacyPolicy
+  },
+
+
+  {
+    path: '/terms-and-condition',
+    name: 'TermsAndCondition',
+    component: TermsAndCondition
+  },
+
+  {
+    path: '/return-and-refund-policy',
+    name: 'ReturnAndRefundPolicy',
+    component: ReturnAndRefundPolicy
   },
 
 ]

@@ -1,7 +1,7 @@
 <template>
   <!--About-->
   <div class="bg-gray-100 font-nunito w-full">
-  <div class="flex  h-auto w-full vs:px-1 sm:px-6  ssm:flex-col vs:flex-col sm:flex-col md:flex-col justify-center ssm:space-x-0 vs:space-x-0 sm:space-x-0 space-x-10">
+  <div class="flex  h-auto w-full vs:px-1 sm:px-6 pb-6  ssm:flex-col vs:flex-col sm:flex-col md:flex-col justify-center vs:items-center sm:items-center ssm:items-center ssm:space-x-0 vs:space-x-0 sm:space-x-0 space-x-10">
 
   <!--Section 2-->
     <div class="flex flex-col ssm:w-full ssm:px-2 ssm:h-auto md:h-auto vs:h-auto sm:h-auto">
@@ -150,6 +150,26 @@
   </div>
   </div>
   <!--end-->
+
+  <!--idk the term buttons-->
+  <div class="sm:hidden vs:hidden ssm:hidden flex flex-col pb-6 h-auto w-74 space-y-2">
+    <div class="flex flex-row space-x-1 justify-start items-start">
+      <button class="text-xs hover:underline leading-3 text-gray-500">Privacy Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Cookies Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Terms and Conditions</button>
+    </div>
+    <div class="flex flex-row space-x-1 justify-start items-start">
+      <button class="text-xs hover:underline leading-3 text-gray-500">Return and Refund Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Help Center</button>
+    </div>
+    <div class="flex flex-row">
+          <button class="text-xs hover:underline leading-3 text-gray-500">PasaBuy ©️ 2021</button>
+    </div>
+  </div>
+  <!--end-->
 </div>
 <!--section 2 end-->
 
@@ -235,6 +255,28 @@
       </div>
     </div>    
 </div>
+
+<!--only shown in mobile view-->
+<!--idk the term buttons-->
+  <div class="sm:flex vs:flex ssm:flex hidden flex-col vs:justify-center vs:items-center sm:justify-center sm:items-center ssm:justify-center ssm:items-center pt-6 h-auto w-74 vs:w-full sm:w-full ssm:w-full space-y-2">
+    <div class="flex flex-row space-x-1  justify-start items-start ">
+      <button class="text-xs hover:underline leading-3 text-gray-500">Privacy Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Cookies Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Terms and Conditions</button>
+    </div>
+    <div class="flex flex-row space-x-1 justify-start items-start">
+      <button class="text-xs hover:underline leading-3 text-gray-500">Return and Refund Policy</button>
+      <p class="text-xs leading-3 text-gray-500">•</p>
+      <button class="text-xs hover:underline leading-3 text-gray-500">Help Center</button>
+    </div>
+    <div class="flex flex-row">
+          <button class="text-xs hover:underline leading-3 text-gray-500">PasaBuy ©️ 2021</button>
+    </div>
+  </div>
+  <!--end-->
+
 </div>
 <!--Section 1 end-->
 </div>
