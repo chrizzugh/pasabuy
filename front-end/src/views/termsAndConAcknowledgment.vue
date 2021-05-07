@@ -1,20 +1,20 @@
 <template>
-    <div class="bg-gray- pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-9 pb-16 px-3 ">
-            <div class="overflow-hidden font-bold  w-full rounded-xl divide-y divide-gray-400 divide-solid">
+    <div class="pt-6 bg-gray- font-nunito">
+        <div id="termsAndcond" class="flex items-center justify-center w-full px-3 pb-16 mt-9 ">
+            <div class="w-full overflow-hidden font-bold rounded-xl divide-solid">
                 <div class="pb-1">
                     <h1 class="space-x-1 space-y-1 text-xl">Acknowledgment</h1>
                 </div> 
                 <div class="pt-2">
-                    <div class="w-full text-align-left justify">
-                                <p class="justify">These are the Terms and Conditions governing the use of this Service and the agreement that operates between You 
+                    <div class="w-full font-normal text-justify sm:text-sm vs:text-xs md:text-sm dv:text-base text-align-left">
+                                <p class="pt-2">These are the Terms and Conditions governing the use of this Service and the agreement that operates between You 
                                     and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.</p>
-                                <p class="justify">Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. 
+                                <p class="pt-5">Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. 
                                     These Terms and Conditions apply to all visitors, users and others who access or use the Service.</p>
-                                <p class="justify"> By accessing or using the Service You agree to be bound by these Terms and Conditions. 
+                                <p class="pt-5"> By accessing or using the Service You agree to be bound by these Terms and Conditions. 
                                     If You disagree with any part of these Terms and Conditions then You may not access the Service.</p>
-                                <p class="justify">You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.</p>
-                                <p class="justify">Your access to and use of the Service is also conditioned on Your acceptance of and compliance with the Privacy Policy of the Company. 
+                                <p class="pt-5">You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.</p>
+                                <p class="pt-5">Your access to and use of the Service is also conditioned on Your acceptance of and compliance with the Privacy Policy of the Company. 
                                     Our Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your personal information when You use the 
                                     Application or the Website and tells You about Your privacy rights and how the law protects You. Please read Our Privacy Policy carefully before using 
                                     Our Service.</p>
