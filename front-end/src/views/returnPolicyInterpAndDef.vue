@@ -1,40 +1,38 @@
 <template>
-    <div class="bg-gray- pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-9 pb-16 px-3 ">
-            <div class="overflow-hidden font-bold  w-full rounded-xl divide-y divide-gray-400 divide-solid">
+    <div class="pt-6 bg-gray- font-nunito">
+        <div id="helpCreateAcc" class="flex items-center justify-center w-full px-3 pb-16 pr-20 vs:px-0 sm:pr-14 sm:px-0 mt-9 ">
+            <div class="w-full overflow-hidden font-bold rounded-xl ">
                 <div class="pb-1">
-                    <h1 class="space-x-1 space-y-1 text-xl">Interpretation and Definitions</h1>
+                    <h1 class="text-2xl uppercase sm:text-xl md:text-xl vs:text-base">Interpretation and Definitions</h1>
                 </div> 
-                <div class="pt-2">
+                <div class="pt-2 vs:pt-0">
                 <!----sub section 1---->
-                    <div class="flex">
-                        <h1 class="text-sm">Interpretation</h1>
-                        <button @click="isOpen=!isOpen" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
+                    <div class="py-3">
+                        <h1 class="text-3xl font-bold text-blue-800 sm:text-2xl vs:text-lg md:text-2xl">Interpretation</h1>                        
                     </div>
                     <div class="w-full text-align-left justify">
-                            <div v-if="isOpen">
-                                <p class="justify">The words of which the initial letter is capitalized have meanings defined under the following conditions. 
-                                    The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
+                            <div>
+                                <p class="font-normal text-justify sm:text-sm vs:text-xs md:text-sm dv:text-base">The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
+                                </p>
                             </div>
                     </div>
+
                 <!----sub section 2---->
-                    <div class="flex">
-                        <h1 class="text-sm">Definitions</h1>
-                        <button @click="isOpen1=!isOpen1" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
+                    <div class="flex py-3">
+                        <h1 class="text-3xl font-bold text-blue-800 sm:text-2xl vs:text-lg md:text-2xl">Definitions</h1>
                     </div>
-                    <div class="w-full text-align-left justify">
-                            <div v-if="isOpen1">
-                                <p>For the purposes of this Return and Refund Policy:</p>
-                                    <li>Company (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to pasaBUY.</li>
-                                    <li>Goods refer to the items offered for sale on the Service.</li>
-                                    <li>Orders mean a request by You to purchase Goods from Us.</li>
-                                    <li>Service refers to the Website.</li>
-                                    <li>Website refers to pasaBUY, accessible from https://pasabuybscs.herokuapp.com/</li>
-                                    <li>You means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
+                    <div class="w-full font-normal text-align-left justify sm:text-sm vs:text-xs md:text-sm dv:text-base">
+                            <div>
+                                
+  <p class="vs:text-xs">For the purposes of this Return and Refund Policy:</p><br>
+     <ul class="pl-12 space-y-3 text-justify list-disc list-outside vs:text-xs">
+         <li><b>Company </b>(referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to pasaBUY.</li>
+         <li><b>Goods</b> refer to the items offered for sale on the Service.</li>
+         <li><b>Orders</b> mean a request by You to purchase Goods from Us.</li>
+         <li><b>Service</b> refers to the Website.</li>
+         <li><b>Website</b> refers to pasaBUY, accessible from https://pasabuybscs.herokuapp.com/</li>
+         <li><b>You</b> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
+     </ul>
                             </div>
                     </div>
                 </div>
@@ -67,6 +65,7 @@
   font-size:24px;
   color:rgb(22, 22, 141);
 }
+
 </style>
 <script>
 export default {

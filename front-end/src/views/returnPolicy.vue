@@ -1,107 +1,123 @@
-<template class=" bg-gray-bgcolor font-nunito">
-
+<template class="flex font-nunito">
 <!----nav bar--->
-<!------navigation--->
-  <nav class=" w-full flex items-center shadow-md bg-white  sticky top-0 ">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 block">
-        <h1 class="absolute text-xl font-black tracking-widest left-16 font-raleway text-red-buttons block">pasaBUY</h1>
-        
-        <div class="border-black items-align-right justify justify-right absolute right-3">
-          <button @click="isOpen=!isOpen" class=" focus:outline-none h-10 w-10 border-2 rounded-full border-red-700 items-right justify-right">
-          <img class="h-9.7 w-10 rounded-full" src="/img/yami.jpg">
-          </button>
+  <nav class="sticky top-0 flex items-center w-full py-5 shadow-md h-14 bg-red-buttons">
+      <div class="flex items-center justify-center pl-4">
+       <div class="flex items-center justify-center pl-4">
+      <img src="/img/pasaBUYwhiteLogo.png" class="block w-8 h-8 pl-1">
+        <h1 class="block pl-1 text-lg font-black tracking-widest text-white font-raleway">pasaBUY</h1>
+        </div>
+        <div class="absolute border-black items-align-right justify justify-right right-7">
+          <button class="px-3 text-xs font-semibold text-white uppercase bg-transparent border border-white rounded-full h-7 focus:outline-none">
+        <router-link to="/log-in"> Log in</router-link>
+      </button>
+        </div>
         </div>
         
         <div class="w-full">
-          <div v-if="isOpen" class="shadow-xl fixed bg-white space-y-2  h-auto w-30 ring-2 ring-gray-200 right-0 rounded-lg py-2 pl-4 pr-4 pt-2 mr-16 mt-2">
-            <router-link to="/dashboard"  class="flex flex-row gap-x-2 text-black">Go to Pasabuy<span class="material-icons text-gray-500">launch</span></router-link>
-            <router-link to="/"  class="flex flex-row gap-x-2 text-black">Log out</router-link>
+          <div v-if="isOpen" class="fixed right-0 h-auto py-2 pt-2 pl-4 pr-4 mt-2 mr-16 space-y-2 bg-white rounded-lg shadow-xl w-30 ring-2 ring-gray-200">
+            <router-link to="/dashboard"  class="flex flex-row text-black gap-x-2">Go to Pasabuy<span class="text-gray-500 material-icons">launch</span></router-link>
+            <router-link to="/"  class="flex flex-row text-black gap-x-2">Log out</router-link>
           </div>
         </div>
-  </nav> <!----end of nav bar--->
-  <!------->
-  <div class="flex justify-center
-  xl:mt-10 xl:mb-20
-  2xl:mt-10 2xl:mb-20
-  lg:mt-10 lg:mb-20
-  ">
-    <div class="flex justify-center self-center
-    2xl:w-3/5
-    xl:w-3/5
-    lg:w-3/5
-      w-full h-98" >
-      <div id="helpCenterCreateAcc" class="w-full 
-      2xl:w-2/4
-      xl:w-2/4  bg-white rounded-l-md  ">
+  </nav> 
+  <div class="flex flex-col w-full py-10 space-y-3 bg-white ">
+    <h1 class="px-3 text-5xl font-extrabold xl:pl-60 lg:pl-42 md:pl-24 sm:text-3xl md:text-4xl sm:pl-20 vs:text-2xl vs:pl-10 lg:text-left 2xl:pl-74"> PasaBuy Return and Refund Policy</h1>
+    <div class="flex items-center self-center justify-center w-full text-justify dv:w-3/5">
+      <p class="font-normal pl-44 dv:text-base sm:text-sm md:text-sm md:pl-64 md:pr-20 vs:pl-16 sm:pl-52 sm:pr-16 vs:pr-5 vs:text-xs">
+        Thank you for shopping at pasaBUY.<br><br>
+
+        If, for any reason, You are not completely satisfied with a purchase We invite You to review our policy on refunds and returns. This Return and Refund Policy has been created with the help of the Return and Refund Policy Generator.<br><br>
+
+        The following terms are applicable for any products that You purchased with Us.
+      </p>
+    </div>
+  </div>
+<div class="">
+<div class="flex justify-center mb-4 bg-gray-200">
+    <div class="flex self-center justify-center w-5/6 vs:w-full sm:w-full md:w-full 2xl:w-full lg:w-full">
+      <div id="helpCenterCreateAcc" class="w-full bg-gray-200 vs:w-2/6 sm:w-2/5 md:w-3/5 lg:w-1/2 2xl:w-1/2 xl:w-2/5 rounded-l-md ">
         <!---Option Buttons--->
-          <div class=" overflow-hidden   flex justify-start"> <!-- parent card box--->
-              
+          <div class="flex justify-start "> 
               <!---left---->
-              <div class="bg-transparent  w-full "> <!---child1 card box-->
-                  <div class=" text-align-left"> 
-                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Return and Refund Policy</h1>
-                        <p class="justify">Thank you for shopping at pasaBUY.</p>
-                        <p class="justify">If, for any reason, You are not completely satisfied with a purchase We invite You to review our policy on refunds and returns. 
-                            This Return and Refund Policy has been created with the help of the Return and Refund Policy Generator.</p>
-                        <p class="justify">The following terms are applicable for any products that You purchased with Us.</p>
+              <div class="w-full bg-transparent ">                  
+                  <div class="flex flex-col justify-center w-full px-3 pb-2 mt-32 space-y-2 vs:pr-8 2xl:pr-40 2xl:pl-58 xl:pl-32 lg:pr-20 lg:pl-42 md:pl-24 md:pr-0 sm:pl-12 ">                        
+                        <div @click=" isActive_function('btn7')"  :class="{active: activeBtn === 'btn7' }" >
+                            <span @click="toggle7" ><a class="text-sm font-bold text-black cursor-pointer">Interpretation</a></span>
+                        </div>
+                        <div @click=" isActive_function('btn7')" :class="{active: activeBtn === 'btn7' }">
+                            <span @click ="toggle7" ><a class="text-sm font-bold text-black cursor-pointer">Definitions</a></span>
+                        </div>
                   </div>
-                  <div class=" pb-2 w-full px-3 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
-                        <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            <button @click="toggle" class="rounded-full w-full bg-gray-100 px-3 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none  py-2 mb-2"><a class="text-black">Interpretation and Definitions</a></button>
+              </div>
+          </div>
+      </div>
+          
+     <div class="w-full pl-2 pr-16 overflow-auto bg-gray-200 2xl:pr-50 vs:pl-5 vs:pr-5 sm:pl-5 sm:pr-0 md:pr-0 md:pl-0 rounded-r-md lg:pl-7">
+        <component :is="new_component" />
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center bg-white">
+    <div class="flex self-center justify-center w-5/6 h-screen vs:w-full sm:w-full md:w-full 2xl:w-full xl:w-4/6 lg:w-full" >
+      <div id="helpCenterCreateAcc" class="w-full overflow-auto bg-white vs:w-64 lg:w-9/12 sm:w-1/2 md:w-3/5 2xl:w-1/2 xl:w-2/5 rounded-l-md">
+        <!---Option Buttons--->
+          <div class="flex justify-start overflow-hidden "> 
+              <!---left---->
+              <div class="w-full bg-transparent ">
+                  
+                  <div class="flex flex-col justify-center w-full px-3 pb-2 mt-20 space-y-2 sm:pr-2 md:pl-16 2xl:pl-36 xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-40">
+                        <div @click=" isActive_function('btn1')"  :class="{active: activeBtn === 0 }" >
+                            <span @click="toggle" ><a class="text-sm font-bold text-black cursor-pointer">Your Order Cancellation Rights</a></span>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Your Order Cancellation Rights</a></button>
+                            <span @click ="toggle2" ><a class="text-sm font-bold text-black cursor-pointer">Conditions for Returns</a></span>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Conditions for Returns</a></button>
+                            <span @click="toggle3" ><a class="text-sm font-bold text-black cursor-pointer">Returning Goods</a></span>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2"><a class="text-black">Returning Goods</a></button>
+                            <span @click="toggle4" ><a class="text-sm font-bold text-black cursor-pointer">Gifts</a></span>
                         </div>
-                        <div @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" >
-                            <button @click="toggle5" class="rounded-full w-full bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed focus:text-white focus:outline-none duration-150 text-sm font-nunito leading-none  text-gray-900 ml-5 py-2">Gifts</button>
+                      <div @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" >
+                            <span @click="toggle5" ><a class="text-sm font-bold text-black cursor-pointer"> Contact Us</a></span>
                         </div>
                   </div>
-
-                  
-                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Contact Us</h1>
-                      <div class="w-full text-align-left justify">
-                                <p class="justify">If you have any questions about this Privacy Policy, You can contact us:</p>
-                                <p class="justify">By email: kristoferbalang.alcantara@bicol-u.edu.ph</p>
-                    </div>
               </div>
-          </div><!--End--></div>
+          </div>
+      </div>
           
-     <div class="w-full bg-gray-100 rounded-r-md pr-8 pl-2 overflow-auto">
+     <div class="w-full pl-2 pr-8 overflow-auto bg-white 2xl:pr-72 sm:pr-14 sm:pl-4 md:pr-24 md:pl-5 rounded-r-md lg:pr-36">
         <component :is="component" />
       </div>
     </div>
-
   </div>
-    
+</div>
+
 <!--FOOTER-->
-        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille"> <!---change to pb-5---->
+    <footer class="px-4 text-sm text-white lg:pb-5 lg:pt-8 pb-7 xl:pt-5 md:pt-12 bg-bastille">
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
                 <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-1 font-medium tracking-wide ">Pasabuy</li>
+                        <li class="inline-block px-3 py-1 text-sm font-medium tracking-wide ">Pasabuy</li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-1 font-medium tracking-wide sm:px-0">Company</li>
-                        <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline">About Us</a>
+                        <li class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide sm:px-0">Company</li>
+                        <li><router-link to="/about-us"  class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline">About Us</router-link>
                         </li>
-                        <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">FAQs</a></li>
-                        <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">Help</a></li>
+                        <li><router-link to="/help-center" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Help</router-link></li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-2 font-medium tracking-wide ">Privacy Policy</li>
-                        <li><a href="#" class="inline-block py-1 pl-3 pr-5 text-white no-underline">Privacy</a></li>
-                        <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">Terms</a></li>
+                        <li class="inline-block px-3 py-0.5 font-medium tracking-wide text-sm ">Policies</li>
+                        <li><router-link to="/privacy-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Privacy Policy</router-link></li>
+                        <li><router-link to="/terms-and-condition" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Terms and Condition</router-link></li>
+                        <li><router-link to="/return-and-refund-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Return Refund</router-link></li>
+                        <li><router-link to="/cookies-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Cookies Policy</router-link></li>
                     </ul>
                     <div class="flex flex-col w-full sm:w-11/12">
-                        <div class="inline-block px-3 py-1 font-medium tracking-wide ">©Pasabuy 2021</div>
+                        <div class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide ">©Pasabuy 2021</div>
                         <ul class="flex flex-col w-full p-0 font-thin text-left">
-                            <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">Stay connected with us</a></li>
+                            <li><a href="#" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Stay connected with us</a></li>
                         </ul>
                         <div class="flex justify-start pl-4 mt-2">
                             <a class="flex items-center mr-6 text-gray-300 no-underline hover:text-white" href="#">
@@ -120,12 +136,12 @@
                     </div>
                 </div>
             </div>    
-    </footer>  <!---end of footer---->
+    </footer>       <!---end of footer---->
       
 
 </template>
 
-<style>
+<style >
     #journal-scroll::-webkit-scrollbar {
         width: 5px;
         cursor: pointer;
@@ -153,26 +169,23 @@
 </style>
 
 <script>
-import InterpretationAndDefinitions from './termsAndConInterpAndDef'
-import YourOrderCancellationRights from './termsAndConDisputes'
-import ConditionsforReturns from './termsAndConLaw'
-import ReturningGoods from './termsAndConLimitation'
-import Gifts from './termsAndConLinks'
-
-
-
+import Gifts from './returnPolicyGifts'
+import Conditions from './returnPolicyConditions'
+import InterandDef from './returnPolicyInterpAndDef'
+import OrderCancel from './returnPolicyOrderCancel'
+import Return from './returnPolicyReturn'
+import ContactUs from './ContactUs'
 import $ from 'jquery'
 export default {
   data(){
         return{
-            component: "InterpretationAndDefinitions",
-            component2: "YourOrderCancellationRights",
-            component3: "ConditionsforReturns",
-            component4: "ReturningGoods",
-            component5: "Gifts",
-           
+            new_component:"InterandDef",
+            component: "OrderCancel",
+            component2: "Conditions",
+            component3: "Return",
+            component4: "Gifts",
+            component5: "ContactUs",
             
-
             isOpen: false,
             isClick: false,
             activeBtn: 0,
@@ -180,39 +193,37 @@ export default {
         }
     },
   
-  created: function () {
-    document.body.style.backgroundColor = "rgb(235,235,235)";
+  new_component:{
+ 
   },
   components:{
-        InterpretationAndDefinitions,
-        YourOrderCancellationRights,
-        ConditionsforReturns,
-        ReturningGoods,
-        Gifts,
-
+      OrderCancel,
+      Conditions,
+      Return,
+      Gifts,
+      ContactUs,
+     InterandDef,
   },
   methods:{
     toggle(){
-      if(this.component != InterpretationAndDefinitions)
-        this.component = InterpretationAndDefinitions;
+      if(this.component != OrderCancel)
+        this.component = OrderCancel;
     },
     toggle2(){
-      if(this.component != YourOrderCancellationRights)
-        this.component = this.component2;
+      this.component=Conditions;
     },
     toggle3(){
-       if(this.component != YourOrderCancellationRights)
-        this.component = this.component3;
+        this.component = Return;
     },
     toggle4(){
-      if(this.component != YourOrderCancellationRights)
-        this.component = this.component4;
+        this.component = Gifts;
     },
     toggle5(){
-      if(this.component != YourOrderCancellationRights)
-        this.component = this.component5;
+      this.component = ContactUs;
     },
-
+     toggle7(){
+      this.new_component=InterandDef;
+    },
     isActive_function(el){
      if(el=='btn1'){
       this.activeBtn= 0;
@@ -231,9 +242,8 @@ export default {
   color:rgba(220, 20, 60, 1);  
   background-color: #CD0F0F, 100%;
 }
-.active button{
-   background-color: currentColor;
-   height: 40px;
+.active span a{
+   color:#35397B;
 }
 .active a{
   color:white;
