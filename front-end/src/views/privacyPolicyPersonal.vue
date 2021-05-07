@@ -1,7 +1,7 @@
 <template>
-  <h2 class="text-4xl mt-10 text-blue-800 font-bold py-3">Use of Your Personal Data</h2>
-  <p>We may share Your personal information in the following situations:</p>
-     <ul class="pl-3 list-inside list-disc space-y-3">
+  <h2 class="py-3 mt-10 text-3xl font-bold text-blue-800 sm:text-2xl vs:text-lg md:text-2xl">Use of Your Personal Data</h2>
+  <p class="vs:text-xs">We may share Your personal information in the following situations:</p><br>
+     <ul class="pl-12 space-y-3 text-justify list-disc list-outside vs:text-xs">
     <li><b>With Service Providers:</b> We may share Your personal information with Service Providers to monitor and analyze the use of our Service, to contact You.</li>
     <li><b>For business transfers:</b> may share or transfer Your personal information in connection with, or during negotiations of, any merger, sale of Company assets, financing, or acquisition of all or a portion of Our business to another company.</li>
     <li><b>With Affiliates:</b>We may share Your information with Our affiliates, in which case we will require those affiliates to honor this Privacy Policy. Affiliates include Our parent company and any other subsidiaries, joint venture partners or other companies that We control or that are under common control with Us.</li>

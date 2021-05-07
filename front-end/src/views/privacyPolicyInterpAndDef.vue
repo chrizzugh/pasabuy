@@ -1,18 +1,18 @@
 <template>
-    <div class="bg-gray- pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-9 pb-16 px-3 ">
-            <div class="overflow-hidden font-bold  w-full rounded-xl  ">
+    <div class="pt-6 bg-gray- font-nunito">
+        <div id="helpCreateAcc" class="flex items-center justify-center w-full px-3 pb-16 pr-20 vs:px-0 sm:pr-14 sm:px-0 mt-9 ">
+            <div class="w-full overflow-hidden font-bold rounded-xl ">
                 <div class="pb-1">
-                    <h1 class="text-2xl uppercase">Interpretation and Definitions</h1>
+                    <h1 class="text-2xl uppercase sm:text-xl md:text-xl vs:text-base">Interpretation and Definitions</h1>
                 </div> 
-                <div class="pt-2">
+                <div class="pt-2 vs:pt-0">
                 <!----sub section 1---->
                     <div class="py-3">
-                        <h1 class="text-4xl font-bold text-blue-800">Interpretation</h1>                        
+                        <h1 class="text-3xl font-bold text-blue-800 sm:text-2xl vs:text-lg md:text-2xl">Interpretation</h1>                        
                     </div>
                     <div class="w-full text-align-left justify">
                             <div>
-                                <p class="text-justify">The words of which the initial letter 
+                                <p class="font-normal text-justify sm:text-sm vs:text-xs md:text-sm dv:text-base">The words of which the initial letter 
                                     is capitalized have meanings defined under the following 
                                     conditions. The following definitions
                                     shall have the same meaning regardless
@@ -23,12 +23,12 @@
 
                 <!----sub section 2---->
                     <div class="flex py-3">
-                        <h1 class="text-4xl font-bold text-blue-800">Definitions</h1>
+                        <h1 class="text-3xl font-bold text-blue-800 sm:text-2xl vs:text-lg md:text-2xl">Definitions</h1>
                     </div>
-                    <div class="w-full text-align-left justify">
+                    <div class="w-full font-normal text-align-left justify sm:text-sm vs:text-xs md:text-sm dv:text-base">
                             <div>
                                 <p>For the purposes of this Privacy Policy:</p>
-                                 <ul class="pl-3 space-y-2 list-inside list-disc">
+                                 <ul class="space-y-2 text-justify list-disc list-outside pl-7">
                                     <li>Account means a unique account created for You to access our Service or parts of our Service.</li>
                                     <li>Company (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to pasaBUY.</li>
                                     <li>Cookies are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.</li>
@@ -74,6 +74,7 @@
   font-size:24px;
   color:rgb(22, 22, 141);
 }
+
 </style>
 <script>
 export default {

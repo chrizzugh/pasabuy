@@ -1,6 +1,6 @@
 <template>
-       <h2 class="text-4xl mt-10 text-blue-800 font-bold py-3">Transfer of Your Personal Data</h2>
-       <div class="space-y-3">
+       <h2 class="py-3 mt-10 text-3xl font-bold text-blue-800 sm:text-2xl vs:text-lg md:text-2xl">Transfer of Your Personal Data</h2>
+       <div class="space-y-3 text-justify vs:text-xs">
            <p>Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the 
             processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, 
             province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.</p>
