@@ -12,7 +12,7 @@
             <h1 class="pb-5 space-x-1 space-y-1 text-2xl font-bold">Create an account</h1>
               <form action="#" class="space-y-3">
                <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between 2xl:space-x-6 lg:flex-row lg:justify-between lg:space-x-6 ">
-                    <div  class="w-full">
+                    <div class="w-full">
                         <input name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="First Name" value="" />
                     </div>
                     <div  class="w-full">
@@ -22,11 +22,11 @@
                 <div class="mb-6">
                     <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" value="" />
                 </div>
-                <div class="relative flex mb-10">
-                    <div class="flex">
-                        <img class="absolute w-8 h-12 rounded-md left-3 " src="img/Philippines-Flag.svg ">
-                        <input aria-label="Phone Number" name="" type="text" required class="block w-full px-3 py-2 pl-8 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" value="" />
-                    </div>
+                <div class="relative flex mb-10 ">
+                    
+                        <span class="absolute z-20 bg-gray-200 top-2.5 left-4"><img class="w-9 h-9" src="img/philippines.png"></span>
+                        <input name="" type="text" class="w-full px-3 py-2 pl-16 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" value="" />
+                    
                 </div>
                 <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between 2xl:space-x-6 lg:flex-row lg:justify-between lg:space-x-6 ">
                     <div class="w-full" >
