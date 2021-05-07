@@ -1,12 +1,12 @@
 <template>
-    <div class="bg-gray- pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-9 pb-16 px-3 ">
-            <div class="overflow-hidden font-bold  w-full rounded-xl divide-y divide-gray-400 divide-solid">
+    <div class="pt-6 bg-gray- font-nunito">
+        <div id="helpCreateAcc" class="flex items-center justify-center w-full px-3 pb-16 mt-9 ">
+            <div class="w-full overflow-hidden font-bold rounded-xl divide-solid">
                 <div class="pb-1">
                     <h1 class="space-x-1 space-y-1 text-xl">Governing Law</h1>
                 </div> 
                 <div class="pt-2">
-                    <div class="w-full text-align-left justify">
+                    <div class="w-full font-normal text-justify text-align-left sm:text-sm vs:text-xs md:text-sm dv:text-base">
                                 <p class="justify">The laws of the Country, excluding its conflicts of law rules, shall govern this Terms and Your use of the Service. 
                                     Your use of the Application may also be subject to other local, state, national, or international laws.</p>
                     </div>
