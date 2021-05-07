@@ -1,71 +1,33 @@
 <template>
-    <div class="bg-gray- pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-9 pb-16 px-3 ">
-            <div class="overflow-hidden font-bold  w-full rounded-xl divide-y divide-gray-400 divide-solid">
+    <div class="pt-6 bg-gray- font-nunito">
+        <div id="helpCreateAcc" class="flex items-center justify-center w-full px-3 pb-16 mt-9 ">
+            <div class="w-full overflow-hidden font-bold rounded-xl divide-solid">
                 <div class="pb-1">
                     <h1 class="space-x-1 space-y-1 text-xl">Severability and Waiver</h1>
                 </div> 
-                <div class="pt-2">
+                <div class="pt-2 font-normal text-justify sm:text-sm vs:text-xs md:text-sm dv:text-base">
                 <!----sub section 1---->
-                    <div class="flex">
-                        <h1 class="text-sm">Severability</h1>
-                        <button @click="isOpen=!isOpen" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
-                    </div>
-                    <div class="w-full text-align-left justify">
-                            <p class="justify">If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the 
+                    
+                        <h1 class="pb-2 text-lg font-bold text-waterloo">Severability</h1>
+                        
+                    <div class="w-full pb-3 font-normal text-justify text-align-left sm:text-sm vs:text-xs md:text-sm dv:text-base">
+                            <p class="">If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the 
                                 objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force 
                                 and effect.</p>
                     </div>
                 <!----sub section 2---->
-                    <div class="flex">
-                        <h1 class="text-sm">Waiver</h1>
-                        <button @click="isOpen1=!isOpen1" class="font-bold">
-                            <span class="material-icons">arrow_drop_down</span>
-                        </button>
-                    </div>
-                    <div class="w-full text-align-left justify">
-                            <div v-if="isOpen1">
-                                <p class="justify">Except as provided herein, the failure to exercise a right or to require performance of an obligation under this Terms 
+                    
+                        <h1 class="pb-2 text-lg font-bold text-waterloo">Waiver</h1>
+                        
+                
+                    <div class="w-full font-normal text-justify text-align-left sm:text-sm vs:text-xs md:text-sm dv:text-base">
+                           
+                                <p class="">Except as provided herein, the failure to exercise a right or to require performance of an obligation under this Terms 
                                     shall not effect a party's ability to exercise such right or require such performance at any time thereafter nor shall 
                                     be the waiver of a breach constitute a waiver of any subsequent breach.</p>
-                            </div>
+                            
                     </div>
-                <!----sub section 3---->
-                    <div class="flex">
-                        <h1 class="text-sm">How do I verify my Pasabuy account?</h1>
-                        <button @click="isOpen2=!isOpen2" class="font-bold">
-                            <span class="material-icons ">arrow_drop_down</span>
-                        </button>
-                    </div>
-                    <div class="w-full text-align-left justify">
-                            <div v-if="isOpen2">
-                                <ol class="list-decimal text-sm font-normal">
-                                    <li>Log in to your Pasabuy account.</li>
-                                    <li>Go to your profile.</li>
-                                    <li>Click Edit Profile.</li>
-                                    <li>Scroll down to the Verification Status and click Verify Now.</li>
-                                    <li>Upload the back and front photos of your ID.</li>
-                                    <li>Wait for a few seconds for verification of your ID</li>
-                                </ol>
-                            </div>
-                    </div>
-                <!---sub section 4----->
-                <div class="flex">
-                        <h1 class="text-sm">I can’t create an account with my email address.</h1>
-                        <button @click="isOpen3=!isOpen3" class="font-bold">
-                            <span class="material-icons ">arrow_drop_down</span>
-                        </button>
-                    </div>
-                    <div class="w-full text-align-left justify">
-                            <div v-if="isOpen3">
-                                <ol class="list-decimal font-normal text-sm">
-                                    <li>Keep in mind that an email address can only be associated with one (1) Pasabuy account.</li>
-                                    <li>If you've typed your email address correctly and see a message that an account with your email address already exists, let us know.</li>
-                                </ol>
-                            </div>
-                    </div>
+                
                 </div>
             </div><!----->
         </div>
