@@ -539,17 +539,6 @@ export default {
         comment:
           "Hi! I’ll be  going to SM City Legazpi tomorrow. If there’s anyone who wants to pasabuy their groceries, I am willing to help out. Just send me a request!",
         status: "No Longer Accepting Requests",
-      }
-      delivery_info:{
-        delivery_area: 'Delivering to Banquerohan area only',
-        shopping_place: 'Shopping at SM City Legazpi',
-        schedule: 'Tomorrow at 2 PM',
-        public_transit: 'Public Transit',
-        capacity: 'Up to 3 medium bags or 2 large bags',
-        payment_method: 'Payment First',
-        comment: 'Hi! I’ll be  going to SM City Legazpi tomorrow. If there’s anyone who wants to pasabuy their groceries, I am willing to help out. Just send me a request!',
-        status: 'No Longer Accepting Requests',
-        status1: 'Accepting Requests',
       },
       shoppingOffer_postNumber: null,
       user_email: null,

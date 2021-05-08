@@ -16,7 +16,6 @@ const store = new Vuex.Store({
         unreadNotif: [],
         userAddress: [],
         userChatRooms: [],
-        userLang: [],
         userTransactions: [],
         userShippingAddress: [],
         transportModes: [],
@@ -61,9 +60,6 @@ const store = new Vuex.Store({
         },
         CREATE_MESSAGES(state, rooms) {
             state.userChatRooms.unshift(rooms)
-        },
-        setUserLang(state, lang) {
-            state.userLang = lang
         },
         setUserTransactions(state, trans) {
             state.userTransactions = []
@@ -206,17 +202,6 @@ const store = new Vuex.Store({
                     console.log(error)
                 })
         },
-        async getUserLang(state) {
-            return api
-                .get('api/getLanguages')
-                .then((res) => {
-                    let lang = res.data
-                    state.commit('setUserLang', lang)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
         async getUserTransactions(state) {
             return api
                 .get('api/getTransaction')
@@ -344,7 +329,6 @@ const store = new Vuex.Store({
         getUnreadNotif: (state) => state.unreadNotif,
         getAddress: (state) => state.userAddress,
         getRooms: (state) => state.userChatRooms,
-        getUserLang: (state) => state.userLang,
         getUserTransactions: (state) => state.userTransactions,
         getUserShippingAddress: (state) => state.userShippingAddress,
         getTransportModes: (state) => state.transportModes,

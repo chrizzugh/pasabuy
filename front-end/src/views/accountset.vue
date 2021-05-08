@@ -219,6 +219,7 @@ export default {
     return {
       verification_status: {
         msg: "",
+        unverified: true,
       },
           verify_message:false,
       verify_id:false,
@@ -235,10 +236,7 @@ export default {
         filename:null,
         filename2:null,
    status:'notVerfied',
-    verification_status:{
-        msg:'Your Account is fully verified',
-      unverified: true,
-    };
+    }
   },
   methods: {
     submit: function () {},

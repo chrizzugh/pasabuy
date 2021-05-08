@@ -870,7 +870,7 @@ export default {
         return moment(datetime).format("[Tommorow at] h:mm a");
       else return moment(datetime).format("[From] MMM DD, YYYY [at] h:mm a");
 
-
+    },
     showShareModal(){
       //without 3 dot menu when share post modal is open
       var container = $('#shopOrder-UserPost');
@@ -919,6 +919,17 @@ export default {
         store.dispatch("getPosts").then(() => {});
       });
     },
+     showMoreshowLess(){
+      this.isActive = !this.isActive;
+      this.limit_by = null;
+     if(this.showListStatus != this.showLessStatus){
+        this.showListStatus = this.showLessStatus;
+      }
+      else{
+        this.showListStatus = "See More";
+        this.limit_by = this.default_limit
+      }
+    }
   },
   // created(){
   //   this.loadShoppingOrder_infos();
@@ -941,20 +952,9 @@ export default {
       }); //filtering only the offer posts opf the current user
     },
   },
-};
-    showMoreshowLess(){
-      this.isActive = !this.isActive;
-      this.limit_by = null;
-     if(this.showListStatus != this.showLessStatus){
-        this.showListStatus = this.showLessStatus;
-      }
-      else{
-        this.showListStatus = "See More";
-        this.limit_by = this.default_limit
-      }
-    }
-  }
 }
+
+
 </script>
 
 <style scoped>

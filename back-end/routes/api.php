@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/confirmRequest', [transactionController::class, 'confirmRequest']);
     Route::post('/updateTransaction', [transactionController::class, 'updateTransaction']);
     Route::get('/getShoppingList', [shoppingListController::class, 'getShoppingList']);
-    Route::post('/editList', [shoppingListController::class, 'editList']);
+    Route::post('/editList/{listNum}', [shoppingListController::class, 'editList']);
     Route::post('/createList', [shoppingListController::class, 'createList']);
 	Route::post('/editPostStatus', [PostController::class, 'editPostStatus']);
 	Route::post('/followStatus', [followController::class, 'followStatus']);

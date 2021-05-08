@@ -67,13 +67,13 @@
               Log in
             </button>
           </div>
-           <!----- Loging in loading
-                    <div class="flex justify-center py-5">
+           <!-- --- Loging in loading -->
+                    <!-- <div class="flex justify-center py-5">
                       <button class="w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none" disabled>
                         <router-link to="/dashboard" class="animate-spin h-5 w-5" >Logging In</router-link>
                       </button>
-                    </div>
-                    ----->
+                    </div> -->
+                    <!-- --- -->
         </form>
         <div
           class="mt-4 font-normal text-left text-gray-500 text-md text-grey-dark"
@@ -169,7 +169,6 @@ export default {
       await store.dispatch("getPosts");
       await store.dispatch("getUnreadNotifications");
       await store.dispatch("getAllNotifications");
-      await store.dispatch("getUserLang");
       await store.dispatch("getChatRoom");
       await store.dispatch("getUserTransactions");
       await store.dispatch("getUserShippingAddress");

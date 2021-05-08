@@ -85,7 +85,6 @@ class RegisterController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'houseNumber' => ['required'],
             'province' => ['required'],
             'barangay' => ['required'],
             'cityMunicipality' => ['required'],
@@ -127,7 +126,8 @@ class RegisterController extends Controller
             if ($userAuth->save()) {
                 $userAddress = new userAddress();
                 $userAddress->email = $request->email;
-                $userAddress->landMark = $request->landMark;
+                if($request->houseNumber==null)
+                    $userAddress->houseNumber = '';
                 $userAddress->houseNumber = $request->houseNumber;
                 $userAddress->province = $request->province;
                 $userAddress->barangay = $request->barangay;

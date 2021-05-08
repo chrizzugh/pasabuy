@@ -55,7 +55,7 @@
          <span class=" font-raleways font-bold  grid grid-cols-2"> 
         <p class="text-gray-500">Language</p>
         <span>
-        <p>{{userLang.languages}}</p>
+        <p>{{userPersonal.language}}</p>
         </span>
          </span>
           </div>
@@ -109,7 +109,7 @@
               </div>
                  <div class="flex flex-col "><span class="ml-2 text-gray-500 font-bold  text-sm">Birthday</span>  <input  type="date" id="b_date"  v-model="userPersonal.birthDate"   class="focus:outline-none rounded-xl w-full h-10 pl-2 bg-transparent bg-gray-200" 
                   ></div> 
-                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Language: </span> <input type="text" id="language" v-model="userLang.languages" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Language: </span> <input type="text" id="language" v-model="userPersonal.language" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
              
             </div>
            <div class="flex justify-between mt-10 space-x-4 items-center">
@@ -179,7 +179,7 @@ methods:{
         lastname:this.userPersonal.lastName,
         phone_number:this.userPersonal.phoneNumber,
         gender:this.userPersonal.gender,
-        language:this.userLang.languages,
+        language:this.userPersonal.language,
         birdate: this.userPersonal.birthDate,
       };
       api.post('/api/editPersonal', personal).then((res)=>{
@@ -258,9 +258,6 @@ mounted(){
 computed:{
     userPersonal(){
       return store.getters.getPersonal
-    },
-    userLang(){
-      return store.getters.getUserLang
     },
   },
 };

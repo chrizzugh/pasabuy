@@ -282,7 +282,6 @@ export default {
       await store.dispatch("getPosts");
       await store.dispatch("getUnreadNotifications");
       await store.dispatch("getAllNotifications");
-      await store.dispatch("getUserLang");
       await store.dispatch("getChatRoom");
       await store.dispatch("getUserTransactions");
       await store.dispatch("getUserShippingAddress");
