@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Events\NewChatMessage;
 use App\Models\messageRoom;
+use App\Models\User;
 use App\Models\userInformation;
+use App\Notifications\newMessageNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -55,6 +57,13 @@ class messageController extends Controller
             $msgRoom = messageRoom::where('messageRoomNumber',$request->roomID)->first();
             $msgRoom->dateModified = Carbon::now('Asia/Manila');
             $msgRoom->save();
+            if($msgRoom->email1 === Auth::user()->email){
+                $userToNotif = User::where('email',$msgRoom->email2)->first();
+            }else{
+                $userToNotif = User::where('email',$msgRoom->email1)->first();
+            }
+            $userToNotif = User::find($userToNotif->indexUserAuthentication);
+			$userToNotif->notify(new newMessageNotification());
         }
         
         broadcast(new NewChatMessage($newMessage))->toOthers();

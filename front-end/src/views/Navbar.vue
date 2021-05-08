@@ -224,7 +224,7 @@ export default {
       this.show = !this.show;
     },
     debounceMethod: _.debounce((notif) => {
-      if (notif == "App\\Notifications\\newTransactionNotification") {
+      if (notif == "App\\Notifications\\newTransactionNotification" || notif == "App\\Notifications\\newMessageNotification") {
         api.get("api/getChatroom").then((res) => {
           store.commit("FETCH_ROOMS", res.data);
         });
@@ -238,7 +238,7 @@ export default {
           store.commit("setNotifications", resArr[1].data),
           store.commit("setUserTransactions", resArr[2].data);
       });
-    }, 1000),
+    }, 2000),
     debounceMethodGetPosts: _.debounce(() => {
       Axios.all([api.get("api/getPosts"), api.get("api/getShares")]).then(
         (resArr) => {
@@ -246,7 +246,7 @@ export default {
             store.commit("setAllShares", resArr[1].data);
         }
       );
-    }, 1000),
+    }, 2000),
     clearNotif() {
       api.delete("api/clearNotif/").then(() => {
         store.dispatch("getAllNotifications");
@@ -292,7 +292,6 @@ export default {
         for (var i = 0; i < users.length; i++) {
           store.commit("setOnlineUsers", users[i].email);
         }
-        console.log(users);
       })
       .joining((user) => {
         //add the user who just logged in tpo online
@@ -306,7 +305,6 @@ export default {
       })
       .listen(".post.new", () => {
         //
-        console.log("someone posted");
         this.debounceMethodGetPosts();
       })
       .error((error) => {
@@ -316,7 +314,6 @@ export default {
     window.Echo.private(
       "App.Models.User." + this.user.indexUserAuthentication
     ).notification((notification) => {
-      console.log("in the navbar", notification.type);
       this.debounceMethod(notification.type);
     });
   },
@@ -324,12 +321,12 @@ export default {
   computed: {
     unreadNotif() {
       return store.getters.getUnreadNotif.filter((x) => {
-        return x.type != "App\\Notifications\\newTransactionNotification";
+        return x.type != "App\\Notifications\\newTransactionNotification" && x.type != "App\\Notifications\\newMessageNotification";
       });
     },
     unreadNotifChat() {
       return store.getters.getUnreadNotif.filter((x) => {
-        return x.type == "App\\Notifications\\newTransactionNotification";
+        return x.type == "App\\Notifications\\newTransactionNotification" || x.type == "App\\Notifications\\newMessageNotification";
       });
     },
     user() {
