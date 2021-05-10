@@ -246,8 +246,8 @@
 </template>
 <script>
 import Nav from "../views/Navbar.vue";
-import editShopListModal from "./editShopListModal";
-import store from "../store/index";
+// import editShopListModal from "./editShopListModal";
+// import store from "../store/index";
 export default {
   name: "shopping-list",
   components: {

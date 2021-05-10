@@ -52,7 +52,7 @@
               <span class="material-icons cursor-pointer"> chat </span>
               <span
                 class="absolute left-3 top-2 rounded-full font-semibold bg-balticsea text-white text-xs px-1 h-4"
-                >{{unreadNotifChat.length}}</span
+                >{{ unreadNotifChat.length }}</span
               >
               <p class="text-gray-500">Messages</p>
             </div></router-link
@@ -73,7 +73,7 @@
             >
             <span
               class="absolute left-3 top-2 rounded-full font-semibold bg-balticsea text-white text-xs px-1 h-4"
-              >{{unreadNotif.length}}</span
+              >{{ unreadNotif.length }}</span
             >
           </div>
         </div>
@@ -179,7 +179,8 @@
           <div class="mobile rounded-2xl items-center flex h-10 space-x-2 pl-2">
             <span class="material-icons"> logout </span>
             <p class="text-gray-500">Log Out</p>
-          </div></button>
+          </div>
+        </button>
       </nav>
       <p class="text-gray-500 text-sm">
         Privacy Policy-Cookies Policy-Terms and Conditions Return and Refund
@@ -224,7 +225,10 @@ export default {
       this.show = !this.show;
     },
     debounceMethod: _.debounce((notif) => {
-      if (notif == "App\\Notifications\\newTransactionNotification" || notif == "App\\Notifications\\newMessageNotification") {
+      if (
+        notif == "App\\Notifications\\newTransactionNotification" ||
+        notif == "App\\Notifications\\newMessageNotification"
+      ) {
         api.get("api/getChatroom").then((res) => {
           store.commit("FETCH_ROOMS", res.data);
         });
@@ -234,16 +238,16 @@ export default {
         api.get("api/getNotifications"),
         api.get("api/getTransaction"),
       ]).then((resArr) => {
-        store.commit("setUnreadNotifications", resArr[0].data),
-          store.commit("setNotifications", resArr[1].data),
-          store.commit("setUserTransactions", resArr[2].data);
+        store.commit("setUnreadNotifications", resArr[0].data);
+        store.commit("setNotifications", resArr[1].data);
+        store.commit("setUserTransactions", resArr[2].data);
       });
     }, 2000),
     debounceMethodGetPosts: _.debounce(() => {
       Axios.all([api.get("api/getPosts"), api.get("api/getShares")]).then(
         (resArr) => {
-          store.commit("FETCH_POSTS", resArr[0].data),
-            store.commit("setAllShares", resArr[1].data);
+          store.commit("FETCH_POSTS", resArr[0].data);
+          store.commit("setAllShares", resArr[1].data);
         }
       );
     }, 2000),
@@ -321,12 +325,18 @@ export default {
   computed: {
     unreadNotif() {
       return store.getters.getUnreadNotif.filter((x) => {
-        return x.type != "App\\Notifications\\newTransactionNotification" && x.type != "App\\Notifications\\newMessageNotification";
+        return (
+          x.type != "App\\Notifications\\newTransactionNotification" &&
+          x.type != "App\\Notifications\\newMessageNotification"
+        );
       });
     },
     unreadNotifChat() {
       return store.getters.getUnreadNotif.filter((x) => {
-        return x.type == "App\\Notifications\\newTransactionNotification" || x.type == "App\\Notifications\\newMessageNotification";
+        return (
+          x.type == "App\\Notifications\\newTransactionNotification" ||
+          x.type == "App\\Notifications\\newMessageNotification"
+        );
       });
     },
     user() {

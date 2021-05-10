@@ -173,8 +173,8 @@ lg:p-0
           </div>
         </div>
     </div>
-    </div>
-  </div>
+ 
+ 
   <div class="w-full flex justify-center">
 <div class="text-left flex self-center
           2xl:w-608
