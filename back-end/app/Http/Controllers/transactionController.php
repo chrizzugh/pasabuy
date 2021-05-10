@@ -27,21 +27,22 @@ class transactionController extends Controller
         $newTransaction->transactionNumber = '084'.str_pad($postOwner->indexUserInformation,4,'0',STR_PAD_LEFT).str_pad($user->indexUserInformation,4,'0',STR_PAD_LEFT).str_pad(transaction::count()+1, 4, '0', STR_PAD_LEFT); 
         $newTransaction->postNumber = $request->postNumber;
         $newTransaction->transactionReceiver = $request->email;
-        $newTransaction->transactionData = serialize($request->transactionData);
+        $newTransaction->transactionData = json_encode($request->transactionData);
+        $newTransaction->transactionShoppingList = json_encode($request->transactionShoppingList);
         $newTransaction->emailCustomerShopper = Auth::user()->email;
 
         if($newTransaction->save()){
             $userToNotif = User::where('email',$request->email)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
 			$userToNotif->notify(new newTransactionNotification($request->postNumber));
-            return response()->json('ok');
+            return $this->getTransaction();
         }else{
-            return response()->json('not ok');
+            return response()->json(['error'],422);
 
         }
 
     }
-    public function getTransaction(Request $request)
+    public function getTransaction()
     {
 
         # code...
@@ -51,17 +52,18 @@ class transactionController extends Controller
                 ->orWhere('transactionReceiver', Auth::user()->email);
             })->orderBy('dateCreated','desc')
               ->get();
-        // $transaction = transaction::with('post','post.offer_post','post.request_post','transactionSender')->orWhere([['emailCustomerShopper','\''.Auth::user()->email.'\''],['transactionReceiversss','\''.Auth::user()->email.'\'']])->where('transactionStatus','\'pending\'')->orderBy('dateCreated','desc')->get();
-        // $transaction = transaction::with('post','post.offer_post','post.request_post','transactionSender')->where('emailCustomerShoppeasr',Auth::user()->email)->orWhere('transactionReceiver',Auth::user()->email)->where('transactionStatus','=','pending')->orderBy('dateCreated','desc')->get();
-        // $transaction = Post::has('transaction')->where('email',Auth::user()->email)->orWhere('email','hokage.igneel@gmail.com')->join('tbl_transaction.emailCustomerShopper','=','tbl_post.email')->where('tbl_transaction.emailCustomerShopper',Auth::user()->email)->orWhere('tbl_transaction.emailCustomerShopper','hokage.igneel@gmail.com')->where('tbl_transaction.transactionStatus','pending')->orderBy('tbl_transaction.dateCreated','desc')->get();
+   
         for($i=0;$i<$transaction->count();$i++){
-            $transaction[$i]->transactionData = unserialize($transaction[$i]->transactionData);
+            if (is_string($transaction[$i]->transactionData))
+                $transaction[$i]->transactionData = json_decode($transaction[$i]->transactionData);
+            if (is_string($transaction[$i]->transactionShoppingList))
+                $transaction[$i]->transactionShoppingList = json_decode($transaction[$i]->transactionShoppingList);
         }
         
         return response()->json($transaction);
     }
 
-    public function cancelRequest(Request $request)
+    public function cancelTransaction(Request $request)
     {
           # code...
  
@@ -72,7 +74,7 @@ class transactionController extends Controller
 			$userToNotif = Post::where('postNumber',$request->postNumber)->get();
 			$userToNotif = User::where('email',$userToNotif[0]->email)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-			$userToNotif->notify(new cancelledRequestNotification($request->postNumber));
+			$userToNotif->notify(new cancelledRequestNotification($request->postNumber, $request->postIdentity));
             return response()->json('ok');
         }
         else 

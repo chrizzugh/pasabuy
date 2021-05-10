@@ -444,8 +444,8 @@ export default {
     },
     toEncryptData(){
       var stringList = JSON.stringify(this.shoppingLists.filter((x)=>{return x.shoppingListNumber === this.selectedListNumber}))
-      stringList = stringList.replace('[', ' ')
-      stringList = stringList.replace(']', ' ')
+      // stringList = stringList.replace('[', ' ')
+      // stringList = stringList.replace(']', ' ')
       
       return btoa(JSON.stringify({
         deliveryAddress:this.deliveryAddress,

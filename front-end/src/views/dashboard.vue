@@ -631,7 +631,7 @@
 
                     <!--section 4-->
                     <div
-                      class="flex items-center justify-start w-full p-2 mt-4 space-x-4 rounded-lg bg-gray-bgcolor ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
+                       class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
                       v-if="post_info.request_post != null"
                     >
                       <div class="flex-col items-start w-full">
@@ -650,8 +650,9 @@
                           class="pl-4 leading-loose list-disc list-inside"
                         >
                           <li
-                            v-for="(shoppingList, index) in post_info
-                              .request_post.shoppingListContent"
+                            v-for="(
+                              shoppingList, index
+                            ) in computedShopItemList(post_info.request_post.shoppingListContent)"
                             :key="index"
                             class="text-xl"
                           >
@@ -665,6 +666,17 @@
                           </li>
                         </ul>
                       </div>
+                      <button
+                        @click="showMoreshowLess"
+                        v-if="
+                          !isFew(
+                            post_info.request_post.shoppingListContent
+                          )
+                        "
+                        class="focus:outline-none items-start justify-start text-sm text-gray-500"
+                      >
+                        {{ showListStatus }}
+                      </button>
                     </div>
                     <div
                       class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
@@ -2111,7 +2123,7 @@
                         </span>
                         <span
                           @click="
-                              (listToggleFlag = true),
+                            (listToggleFlag = true),
                               updateShoppinglist(
                                 shoppingLists[0].shoppingListNumber
                               )
@@ -2123,9 +2135,9 @@
                       </div>
                       <p
                         @click="
-                            updateShoppinglist(
-                              shoppingLists[0].shoppingListNumber
-                            ),
+                          updateShoppinglist(
+                            shoppingLists[0].shoppingListNumber
+                          ),
                             (selectedList = [])
                         "
                         class="cursor-pointer text-blue-700 font-bold select-none"
@@ -2345,7 +2357,7 @@ import EditOrderRequest from "./EditOrderRequest";
 import $ from "jquery";
 import { ref } from "vue";
 import api from "../api";
-// import SendOffer from "./sendOffer.vue";
+import SendOffer from "./sendOffer.vue";
 import store from "../store/index";
 import moment from "moment";
 import VueSimpleAlert from "vue-simple-alert";
@@ -2565,7 +2577,12 @@ export default {
       showItemList: false,
       listToggleFlag: false,
       listError: "",
-      ctr:0
+      ctr: 0,
+      limit_by: 4,
+      default_limit: 4,
+      showListStatus: "See More",
+      showLessStatus: "See Less",
+      isActive: false,
     };
   },
   components: {
@@ -2576,6 +2593,7 @@ export default {
     SendRequest,
     createShopList,
     EditOrderRequest,
+    SendOffer
   },
   watch: {
     posts() {
@@ -2589,6 +2607,22 @@ export default {
   },
   methods: {
     //
+    showMoreshowLess() {
+      this.isActive = !this.isActive;
+      this.limit_by = null;
+      if (this.showListStatus != this.showLessStatus) {
+        this.showListStatus = this.showLessStatus;
+      } else {
+        this.showListStatus = "See More";
+        this.limit_by = this.default_limit;
+      }
+    },
+    computedShopItemList(list) {
+      return this.limit_by ? list.slice(0, this.limit_by) : list;
+    },
+    isFew(filter_itemList) {
+      filter_itemList.length < 5;
+    },
     next_swap_order() {
       let x = this.or_shift;
       let y = this.confirmedOrders.length;
@@ -2643,7 +2677,7 @@ export default {
       let y = document.getElementById("brand").value;
       let z = document.getElementById("size").value;
       let n = this.quantity;
-      if (x == "" || y == "" || z == "" || n <=0) {
+      if (x == "" || y == "" || z == "" || n <= 0) {
         alert("Empty Field");
         return false;
       } else {
@@ -2687,7 +2721,7 @@ export default {
         ) {
           //if true check the status
           this.new_items[i].status = 0;
-        }else{
+        } else {
           this.new_items[i].status = 1;
         }
       }
@@ -2704,8 +2738,10 @@ export default {
         .post("api/editList/" + listNumber, obj)
         .then((res) => {
           store.dispatch("getUserShoppingList").then(() => {
-            var tempChecked = res.data.shoppingListContent.filter((x)=>{ return x.status === 1 })
-            res.data.shoppingListContent = tempChecked
+            var tempChecked = res.data.shoppingListContent.filter((x) => {
+              return x.status === 1;
+            });
+            res.data.shoppingListContent = tempChecked;
             this.selectedList = res.data;
             this.showItemList = true;
             console.log("before", this.selectedList, this.showItemList);
@@ -2713,7 +2749,7 @@ export default {
             this.Editlist = false;
             if (this.listToggleFlag) this.togglePostModal();
             this.listToggleFlag = false;
-            this.listError=''
+            this.listError = "";
           });
         })
         .catch((error) => {
@@ -2740,7 +2776,7 @@ export default {
       let brandx = document.getElementById(b).value;
       let sizex = document.getElementById(c).value;
       let quantx = document.getElementById(e).innerHTML;
-      if (productx == "" || brandx == "" || sizex == "" || quantx <=0) {
+      if (productx == "" || brandx == "" || sizex == "" || quantx <= 0) {
         alert("Empty Field");
         return false;
       }
@@ -2768,7 +2804,7 @@ export default {
       // let timex = new_time.toLocaleTimeString();
       // let datex = new_time.toDateString();
       // let new_date = datex + " " + timex;
-      
+
       for (var i = 0; i < this.new_items.length; i++) {
         if (!document.getElementById("check" + this.new_items[i].id).checked) {
           //if true check the status
@@ -2785,8 +2821,10 @@ export default {
         .post("api/createList", obj)
         .then((res) => {
           store.dispatch("getUserShoppingList").then(() => {
-            var tempChecked = res.data.shoppingListContent.filter((x)=>{ return x.status === 1 })
-            res.data.shoppingListContent = tempChecked
+            var tempChecked = res.data.shoppingListContent.filter((x) => {
+              return x.status === 1;
+            });
+            res.data.shoppingListContent = tempChecked;
             this.selectedList = res.data;
             this.showItemList = true;
             console.log("before", this.selectedList, this.showItemList);

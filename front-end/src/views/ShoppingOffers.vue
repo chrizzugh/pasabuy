@@ -268,14 +268,16 @@
           </div>
           <!--section 4-->
           <!--section 5: Request Received-->
-        <div class="flex flex-col justify-start items-start w-full space-y-2.5 mt-4">
+        
+        <div class="flex flex-col justify-start items-start w-full space-y-2.5 mt-4" v-if="shoppingOffer_info.email == user.email">
           <hr class="w-full">
           <div class="inline-flex justify-start items-center flex-row space-x-4">
             <p class="text-base font-bold leading-none text-gray-900">Requests Received</p>
             <div class="inline-flex px-2 py-1 bg-red-700 rounded-full">
-              <p class="text-base font-bold leading-none text-white">5</p>
+              <p class="text-base font-bold leading-none text-white">{{transactions.length}}</p>
             </div>
           </div>
+          <div v-for="(transaction,index) in transactions" :key="index">
           <div class="flex-auto flex-col w-full vs:px-0 px-2 space-y-3.5 pb-2 pt-2">
             <div class="flex flex-row justify-between">
               <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
@@ -350,11 +352,13 @@
               </div>
             </div>
           </div>
-          <div class="flex flex-row w-full justify-between items-center">
+          </div>
+          <div class="flex flex-row w-full justify-between items-center" v-if="transactions.length >0">
               <button class="focus:outline-none inline-flex text-base font-bold leading-none text-gray-500">View more</button>
               <p class="inline-flex text-base font-bold leading-none text-gray-500">3 of 5</p>
           </div>
         </div>
+        
 
           <!--section 5-->
           <div
@@ -510,6 +514,7 @@ import SendRequest from "./sendRequest";
 import moment from "moment";
 import api from "../api";
 import VueSimpleAlert from "vue-simple-alert";
+import $ from "jquery"
 export default {
   props: ["userID"],
   data() {
@@ -679,6 +684,11 @@ export default {
       return this.posts.filter((post) => {
         return post.email == this.userID && post.offer_post != null;
       }); //filtering only the offer posts opf the current user
+    },
+    transactions() {
+      return store.getters.getUserTransactions.filter((x) => {
+        return x.transactionStatus == "pending";
+      });
     },
   },
 

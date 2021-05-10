@@ -35,7 +35,7 @@
       <p class="pl-1 mx-2 text-sm text-gray-800">
         <span class="font-bold" href="#">{{ notif.data.canceller }}</span>
         <span class="font-semibold">
-          has cancelled their Request to your post</span
+          has cancelled their {{notif.data.postIdentity}} to your post</span
         ><br />
         <router-link
           :to="'/orders/?postnum=' + notif.data.postNumber"
