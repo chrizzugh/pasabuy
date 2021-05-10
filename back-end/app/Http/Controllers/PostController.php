@@ -197,7 +197,8 @@ class PostController extends Controller
 
 		for ($i = 0; $i < $data->count(); $i++) {
 			if ($data[$i]->postIdentity === 'request_post')
-				$data[$i]->request_post->shoppingListContent = json_decode($data[$i]->request_post->shoppingListContent);
+				if (is_string($data[$i]->request_post->shoppingListContent))
+					$data[$i]->request_post->shoppingListContent = json_decode($data[$i]->request_post->shoppingListContent);
 		}
 		return response()->json($data);
 	}
@@ -205,19 +206,14 @@ class PostController extends Controller
 	public function getAllShares(Request $request)
 	{
 		# code...
-		// $data = Post::has('share')->with('offer_post','request_post','user','request_post.shoppingList','share.user')->whereHas('share', function($query){
-		//     $query->where('shareDeleteStatus', 0)
-		// 	->orderBy('dateCreated', 'desc');
-		// })->get();
-		$data = share::with('post', 'post.offer_post', 'post.request_post', 'post.user', 'user')->where('shareDeleteStatus', '=', 0)->orderBy('dateCreated', 'desc')->get();
+		$data = share::with('post', 'post.offer_post', 'post.user', 'user')->where('shareDeleteStatus', '=', 0)->orderBy('dateCreated', 'desc')->get();
 
-		// $data = $data->map(function ($i) {
-		// 	$i->post->request_post->shoppingListContent = unserialize($i->post->request_post->shoppingListContent);
-		// 	return $i;
-		// });
 		for ($i = 0; $i < $data->count(); $i++) {
 			if ($data[$i]->post->postIdentity === 'request_post'){
-				$data[$i]->post->request_post->shoppingListContent = json_decode($data[$i]->post->request_post->shoppingListContent);
+				if(is_string($data[$i]->post->request_post->shoppingListContent)){
+					$array = json_decode($data[$i]->post->request_post->shoppingListContent,true);
+					$data[$i]->post->request_post->shoppingListContent = $array;
+				}
 			}
 		}
 		return response()->json($data);

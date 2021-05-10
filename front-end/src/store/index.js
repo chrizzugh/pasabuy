@@ -152,6 +152,7 @@ const store = new Vuex.Store({
                 .get('api/getPosts')
                 .then((res) => {
                     let posts = res.data
+                    console.log('posts',posts)
                     state.commit('FETCH_POSTS', posts)
                 })
                 .catch((error) => {
@@ -273,6 +274,7 @@ const store = new Vuex.Store({
                 .get('api/getShares')
                 .then((res) => {
                     let data = res.data
+                    console.log('shares',data)
                     state.commit('setAllShares', data)
                 })
                 .catch((error) => {
