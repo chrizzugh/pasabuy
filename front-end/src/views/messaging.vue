@@ -351,405 +351,437 @@
         </div>
 
         <div class="overflow-auto overflow-x-hidden h-4/5" id="journal-scroll">
-         
           <div
-            v-if="ifHide"
             class="sticky top-0 w-full p-3 flex justify items-center shadow-lg bg-white border"
+            v-for="(transaction) in transactions"
+            :key="transaction.postNumber"
+            v-show="ifHide &&
+              (transaction.emailCustomerShopper == activeEmail1 ||
+                transaction.emailCustomerShopper == activeEmail2) &&
+              (transaction.transactionReceiver == activeEmail1 ||
+                transaction.transactionReceiver == activeEmail2) && activeDisplayingTransaction == transaction.transactionNumber
+            "
           >
+   
+            
+            <!-- sent offer 1--->
             <div
-              v-for="transaction in transactions"
-              :key="transaction.postNumber"
-             
+              v-if="
+                transaction.emailCustomerShopper == authUser.email &&
+                (transaction.transactionReceiver == activeEmail1 ||
+                  transaction.transactionReceiver == activeEmail2)
+              "
             >
-              <!-- sent offer 1--->
               <div
+                class="text-sm w-full"
                 v-if="
-                  (transaction.emailCustomerShopper == authUser.email &&
-                    (transaction.transactionReceiver == activeEmail1 ||
-                      transaction.transactionReceiver == activeEmail2))
+                  (transaction.transactionStatus == 'pending') &&
+                  isRequestPost(transaction.transactionData) != -1
                 "
               >
-                <div class="text-sm w-full" v-if="(transaction.transactionStatus == 'pending' || toggle1)  && isRequestPost(transaction.transactionData)!=-1">
-                  <div class="flex justify-between items-center">
-                    <span
-                      >You sent an offer to
-                      <span class="font-semibold ml-2">{{ recipient }}</span>
-                      <span class="ml-2">for</span>
-                      <span class="font-semibold ml-2"
-                        >Post {{ transaction.postNumber }}
-                      </span></span
-                    >
+               
+                <div class="flex justify-between items-center">
+                  <span
+                    >You sent an offer to
+                    <span class="font-semibold ml-2">{{ recipient }}</span>
+                    <span class="ml-2">for</span>
+                    <span class="font-semibold ml-2"
+                      >Post {{ transaction.postNumber }}
+                    </span></span
+                  >
 
-                    <button
-                      @click="vertiDots"
-                      class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
-                      type="button"
+                  <button
+                    @click="vertiDots"
+                    class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
+                    type="button"
+                  >
+                    <span class="material-icons" style="font-size: 17px">
+                      more_verti</span
                     >
-                      <span class="material-icons" style="font-size: 17px">
-                        more_verti</span
-                      >
-                    </button>
-                  </div>
-                  <div class="flex justify-end pr-3">
-                    <button
-                      @click="
-                        cancel_transact(
-                          transaction.postNumber,
-                          transaction.indexTransactionPostm,
-                          'offer'
-                        )
-                      "
-                      class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700"
-                    >
-                      <span>Cancel Offer</span>
-                    </button>
-                    <button
-                      class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
-                    >
-                      <span>View Post</span>
-                    </button>
-                  </div>
+                  </button>
                 </div>
-              
+                <div class="flex justify-end pr-3">
+                  <button
+                    @click="
+                      cancel_transact(
+                        transaction.postNumber,
+                        transaction.indexTransactionPostm,
+                        'offer'
+                      )
+                    "
+                    class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700"
+                  >
+                    <span>Cancel Offer</span>
+                  </button>
+                  <button
+                    class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
+                  >
+                    <span>View Post</span>
+                  </button>
+                </div>
+              </div>
 
               <!------->
               <!-- sent request 1--->
-              <div v-if="(toggle2 || transaction.transactionStatus == 'pending') && isRequestPost(transaction.transactionData)==-1" class="text-sm w-full">
-              <div class="flex justify-between items-center">
-                <span
-                  >You sent a request to
-                  <span class="font-semibold ml-2">{{ recipient }}</span>
-                  <span class="ml-2">for</span>
-                  <span class="font-semibold ml-2"
-                    >Post {{ transaction.postNumber }}
-                  </span></span
-                >
-
-                <button
-                  @click="vertiDots"
-                  class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
-                  type="button"
-                >
-                  <span class="material-icons" style="font-size: 17px">
-                    more_verti</span
-                  >
-                </button>
-              </div>
-              <div class="flex justify-end pr-3">
-                <button
-                 @click="
-                        cancel_transact(
-                          transaction.postNumber,
-                          transaction.indexTransactionPost,
-                          'request'
-                        )
-                      "
-                  class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700"
-                >
-                  <span>Cancel Request</span>
-                </button>
-                <button
-                @click="alert('single page post')"
-                  class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
-                >
-                  <span>View Post</span>
-                </button>
-              </div>
-            </div>
-            </div>
-              <!------->
-              <!-- received offer 1--->
               <div
-                v-else-if="
-                  (transaction.transactionReceiver == authUser.email &&
-                    (transaction.emailCustomerShopper == activeEmail1 ||
-                      transaction.emailCustomerShopper == activeEmail2))
-                 
+                v-if="
+                  (transaction.transactionStatus == 'pending') &&
+                  isRequestPost(transaction.transactionData) == -1
+                "
+                class="text-sm w-full"
+              >
+                <div class="flex justify-between items-center">
+                  <span
+                    >You sent a request to
+                    <span class="font-semibold ml-2">{{ recipient }}</span>
+                    <span class="ml-2">for</span>
+                    <span class="font-semibold ml-2"
+                      >Post {{ transaction.postNumber }}
+                    </span></span
+                  >
+
+                  <button
+                    @click="vertiDots"
+                    class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
+                    type="button"
+                  >
+                    <span class="material-icons" style="font-size: 17px">
+                      more_verti</span
+                    >
+                  </button>
+                </div>
+                <div class="flex justify-end pr-3">
+                  <button
+                    @click="
+                      cancel_transact(
+                        transaction.postNumber,
+                        transaction.indexTransactionPost,
+                        'request'
+                      )
+                    "
+                    class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700"
+                  >
+                    <span>Cancel Request</span>
+                  </button>
+                  <button
+                    @click="alert('single page post')"
+                    class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
+                  >
+                    <span>View Post</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!------->
+            <!-- received offer 1--->
+            <div
+              v-if="
+                transaction.transactionReceiver == authUser.email &&
+                (transaction.emailCustomerShopper == activeEmail1 ||
+                  transaction.emailCustomerShopper == activeEmail2)
+              "
+            >
+              <div
+                class="text-sm w-full"
+                v-if="
+                  (transaction.transactionStatus == 'pending') &&
+                  isRequestPost(transaction.transactionData) != -1
                 "
               >
-                <div class="text-sm w-full" v-if="(transaction.transactionStatus == 'pending' || toggle3) && isRequestPost(transaction.transactionData)==-1">
-                  <div class="flex justify-between items-center">
-                    <span
-                      ><span class="font-semibold mr-2"
-                        >{{ transaction.transaction_sender.firstName }}
-                        {{ transaction.transaction_sender.lastName }}</span
-                      >sent you an offer
-                      <span class="ml-2">for your </span>
-                      <span class="font-semibold ml-2"
-                        >Post {{ transaction.postNumber }}
-                      </span></span
+                <div class="flex justify-between items-center">
+                  <span
+                    ><span class="font-semibold mr-2"
+                      >{{ transaction.transaction_sender.firstName }}
+                      {{ transaction.transaction_sender.lastName }}</span
+                    >sent you an offer
+                    <span class="ml-2">for your </span>
+                    <span class="font-semibold ml-2"
+                      >Post {{ transaction.postNumber }}
+                    </span></span
+                  >
+                  <button
+                    @click="vertiDots"
+                    class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
+                    type="button"
+                  >
+                    <span class="material-icons" style="font-size: 17px">
+                      more_verti</span
                     >
-                    <button
-                      @click="vertiDots"
-                      class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
-                      type="button"
-                    >
-                      <span class="material-icons" style="font-size: 17px">
-                        more_verti</span
-                      >
-                    </button>
-                  </div>
-                  <div class="flex justify-end pr-3">
-                    <button
-                      @click="
-                        decline(
-                          transaction.postNumber,
-                          transaction.indexTransactionPost,
-                          transaction.emailCustomerShopper,
-                          'offer'
-                        )
-                      "
-                      class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
-                    >
-                      <span>Decline</span>
-                    </button>
-                    <button
-                      @click="
-                        accept(
-                          transaction.postNumber,
-                          transaction.indexTransactionPost,
-                          transaction.emailCustomerShopper,
-                          transaction.post.postIdentity,
-                          'offer'
-                        )
-                      "
-                      class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
-                    >
-                      <span>Accept</span>
-                    </button>
-                  </div>
+                  </button>
                 </div>
-              
+                <div class="flex justify-end pr-3">
+                  <button
+                    @click="
+                      decline_transact(
+                        transaction.postNumber,
+                        transaction.indexTransactionPost,
+                        transaction.emailCustomerShopper,
+                        'offer'
+                      )
+                    "
+                    class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
+                  >
+                    <span>Decline</span>
+                  </button>
+                  <button
+                    @click="
+                      accept_transact(
+                        transaction.postNumber,
+                        transaction.indexTransactionPost,
+                        transaction.emailCustomerShopper,
+                        'offer'
+                      )
+                    "
+                    class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
+                  >
+                    <span>Accept</span>
+                  </button>
+                </div>
+              </div>
+
               <!------->
               <!-- received request 1--->
-              <div v-if="(transaction.transactionStatus == 'pending' || toggle4) && isRequestPost(transaction.transactionData)!=-1" class="text-sm w-full">
-              <div class="flex justify-between items-center">
-                <span
-                  ><span class="font-semibold mr-2">{{ transaction.transaction_sender.firstName }}
-                        {{ transaction.transaction_sender.lastName }}</span
-                  >sent you a request
-                  <span class="ml-2">for your </span>
-                  <span class="font-semibold ml-2"
-                    >Post {{ transaction.postNumber }}
-                  </span></span
-                >
-                <button
-                  @click="vertiDots"
-                  class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
-                  type="button"
-                >
-                  <span class="material-icons" style="font-size: 17px">
-                    more_verti</span
+              <div
+                v-if="
+                  (transaction.transactionStatus == 'pending') &&
+                  isRequestPost(transaction.transactionData) == -1
+                "
+                class="text-sm w-full"
+              >
+                <div class="flex justify-between items-center">
+                  <span
+                    ><span class="font-semibold mr-2"
+                      >{{ transaction.transaction_sender.firstName }}
+                      {{ transaction.transaction_sender.lastName }}</span
+                    >sent you a request
+                    <span class="ml-2">for your </span>
+                    <span class="font-semibold ml-2"
+                      >Post {{ transaction.postNumber }}
+                    </span></span
                   >
-                </button>
+                  <button
+                    @click="vertiDots"
+                    class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
+                    type="button"
+                  >
+                    <span class="material-icons" style="font-size: 17px">
+                      more_verti</span
+                    >
+                  </button>
+                </div>
+                <div class="flex justify-end pr-3">
+                  <button
+                    @click="
+                      decline_transact(
+                        transaction.postNumber,
+                        transaction.indexTransactionPost,
+                        transaction.emailCustomerShopper,
+                        'request'
+                      )
+                    "
+                    class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
+                  >
+                    <span>Decline</span>
+                  </button>
+                  <button
+                    @click="
+                      accept_transact(
+                        transaction.postNumber,
+                        transaction.indexTransactionPost,
+                        transaction.emailCustomerShopper,
+                        'request'
+                      )
+                    "
+                    class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
+                  >
+                    <span>Accept</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!------->
+
+            <!--------------transaction details confirmed------>
+
+            <div
+              v-if="transaction.transactionStatus === 'Confirmed'"
+              class="text-sm w-full"
+            >
+              <div class="flex flex-row justify-between">
+                <span
+                  >Transaction
+                  <span class="font-semibold ml-2"
+                    >#{{ transaction.transactionNumber }} 
+                  </span>
+                </span>
+
+                <div class="flex items-center ml-2">
+                  <span class="rounded border h-6 border-blue-700 px-1"
+                    >Confirmed</span
+                  >
+
+                  <button
+                    @click="vertiDots"
+                    class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
+                    type="button"
+                  >
+                    <span class="material-icons" style="font-size: 17px">
+                      more_verti</span
+                    >
+                  </button>
+                </div>
               </div>
               <div class="flex justify-end pr-3">
                 <button
-                 @click="
-                        decline(
-                          transaction.postNumber,
-                          transaction.indexTransactionPost,
-                          transaction.emailCustomerShopper,
-                          'request'
-                        )
-                      "
                   class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
                 >
-                  <span>Decline</span>
+                  <span>View Details</span>
                 </button>
                 <button
-                 @click="
-                        accept(
-                          transaction.postNumber,
-                          transaction.indexTransactionPost,
-                          transaction.emailCustomerShopper,
-                          transaction.post.postIdentity,
-                          'request'
-                        )
-                      "
                   class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
                 >
-                  <span>Accept</span>
+                  <span>Update</span>
                 </button>
               </div>
             </div>
+            <!------------------->
+
+            <!--------------transaction details cancelled------>
+
+            <div
+              v-if="
+                (transaction.transactionStatus === 'Cancelled' ||
+                transaction.transactionStatus === 'Declined')
+              "
+              class="text-sm w-full"
+            >
+              <div class="flex flex-row justify-between">
+                <span
+                  >Transaction
+                  <span class="font-semibold ml-2"
+                    >#{{ transaction.transactionNumber }} 
+                  </span>
+                </span>
+                <div class="flex items-center ml-2">
+                  <span
+                    class="rounded border h-6 border-crimsonRed text-crimsonRed px-1"
+                    >Cancelled</span
+                  >
+                  <button
+                    @click="vertiDots"
+                    class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
+                    type="button"
+                  >
+                    <span class="material-icons" style="font-size: 17px">
+                      more_verti</span
+                    >
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-end pr-3">
+                <button
+                  class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
+                >
+                  <span>View Details</span>
+                </button>
+                <button
+                  class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
+                >
+                  <span>Update</span>
+                </button>
+              </div>
             </div>
-              <!------->
+            <!------------------->
 
-              <!--------------transaction details confirmed------>
-     
-                <div
-                  v-else-if="transaction.transactionStatus === 'Confirmed'"
-                  class="text-sm w-full"
-                >
-                  <div class="flex flex-row justify-between">
-                    <span
-                      >Transaction
-                      <span class="font-semibold ml-2"
-                        >{{ transaction.transactionNumber }}
-                      </span>
-                    </span>
-
-                    <div class="flex items-center">
-                      <span class="rounded border h-6 border-blue-700 px-1"
-                        >Confirmed</span
-                      >
-
-                      <button
-                        @click="vertiDots"
-                        class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
-                        type="button"
-                      >
-                        <span class="material-icons" style="font-size: 17px">
-                          more_verti</span
-                        >
-                      </button>
-                    </div>
-                  </div>
-                  <div class="flex justify-end pr-3">
-                    <button
-                      class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
+            <!-----vertical-dot  options-->
+            <div
+              v-if="toggleVerti"
+              id="vertiOPTIONS"
+              class="md:absolute md:right-4 md:top-2 fixed top-36 right-0 px-2 mr-4 bg-gray-200 w-2/5 shadow-inner rounded-lg border-solid border-2 border-white"
+              style="width: 220px"
+            >
+              <div class="flex flex-col">
+                <div class="flex flex-row items-center">
+                  <button
+                    @click="hideVertiOptions"
+                    class="w-full flex py-1 hover:bg-white hover:text-crimsonRed justify-start mt-2 border border-gray-300 rounded-lg items-center"
+                  >
+                    <span class="material-icons pl-3" style="font-size: 20px"
+                      >visibility</span
                     >
-                      <span>View Details</span>
-                    </button>
-                    <button
-                      class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
-                    >
-                      <span>Update</span>
-                    </button>
-                  </div>
+                    <span class="font-semibold pl-2">Hide</span>
+                  </button>
                 </div>
-              <!------------------->
-
-              <!--------------transaction details cancelled------>
-     
-                <div
-                  v-else-if="transaction.transactionStatus === 'Cancelled'"
-                  class="text-sm w-full"
-                >
-                  <div class="flex flex-row justify-between">
+                <div class="divide-y divide-gray-300">
+                  <div class="flex flex-col pb-2">
                     <span
-                      >Transaction
-                      <span class="font-semibold ml-2"
-                        >{{ transaction.transactionNumber }}
-                      </span>
-                    </span>
-                    <div class="flex items-center">
-                      <span
-                        class="rounded border h-6 border-crimsonRed text-crimsonRed px-1"
-                        >Cancelled</span
-                      >
-                      <button
-                        @click="vertiDots"
-                        class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
-                        type="button"
-                      >
-                        <span class="material-icons" style="font-size: 17px">
-                          more_verti</span
-                        >
-                      </button>
-                    </div>
-                  </div>
-                  <div class="flex justify-end pr-3">
-                    <button
-                      class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
+                      class="pl-1 font-semibold py-1 text-gray-500 py-1 text-xs tracking-wide"
+                      >Request(s)/Offers RECEIVED</span
                     >
-                      <span>View Details</span>
-                    </button>
                     <button
-                      class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
+                      v-for="(received, index) in transactionsReceived"
+                      :key="index"
+                      @click="active_transact(received.transactionNumber)"
+                      class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4"
                     >
-                      <span>Update</span>
+                      <span v-if="isRequestPost(received.transactionData) != -1"
+                        >Offer #{{ index + 1 }}</span
+                      >
+                      <span v-else>Request #{{ index + 1 }}</span>
                     </button>
                   </div>
-                </div>
-              <!------------------->
 
-              <!-----vertical-dot  options-->
-              <div
-                v-if="toggleVerti"
-                id="vertiOPTIONS"
-                class="md:absolute md:right-4 md:top-2 fixed top-36 right-0 px-2 mr-4 bg-gray-200 w-2/5 shadow-inner rounded-lg border-solid border-2 border-white"
-                style="width: 220px"
-              >
-                <div class="flex flex-col">
-                  <div class="flex flex-row items-center">
-                    <button
-                      @click="hideVertiOptions"
-                      class="w-full flex py-1 hover:bg-white hover:text-crimsonRed justify-start mt-2 border border-gray-300 rounded-lg items-center"
+                  <div class="flex flex-col pb-2">
+                    <span
+                      class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs tracking-wide"
+                      >Request(s)/Offers SENT</span
                     >
-                      <span class="material-icons pl-3" style="font-size: 20px"
-                        >visibility</span
+                    <button
+                      v-for="(received, index) in transactionsSent"
+                      :key="index"
+                      @click="active_transact(received.transactionNumber)"
+                      class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4"
+                    >
+                      <span v-if="isRequestPost(received.transactionData) != -1"
+                        >Offer #{{ index + 1 }}</span
                       >
-                      <span class="font-semibold pl-2">Hide</span>
+                      <span v-else>Request #{{ index + 1 }}</span>
                     </button>
                   </div>
-                  <div class="divide-y divide-gray-300">
-                    <div class="flex flex-col pb-2">
-                      <span
-                        class="pl-1 font-semibold py-1 text-gray-500 py-1 text-xs tracking-wide"
-                        >Request(s)/Offers RECEIVED</span
-                      >
-                      <button
-                        @click="active_transact('toggle1')"
-                        class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4"
-                      >
-                        Offer #1
-                      </button>
-                      <button
-                        @click="active_transact('toggle2')"
-                        class="h-6 flex items-center tracking-wide rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4"
-                      >
-                        Request #1
-                      </button>
-                    </div>
 
-                    <div class="flex flex-col pb-2">
+                  <div class="flex flex-col pb-2">
+                    <span
+                      class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs tracking-wide"
+                      >OTHER TRANSACTIONS</span
+                    >
+                    <button
+                      v-for="(transact, index) in transactions"
+                      :key="index"
+                      @click="active_transact(transact.transactionNumber)"
+                    >
                       <span
-                        class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs tracking-wide"
-                        >Request(s)/Offers SENT</span
-                      >
-                      <button
-                        @click="active_transact('toggle3')"
-                        class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4"
-                      >
-                        Offer #1
-                      </button>
-                      <button
-                        @click="active_transact('toggle4')"
-                        class="h-6 flex items-center tracking-wide rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4"
-                      >
-                        Request #1
-                      </button>
-                    </div>
-
-                    <div class="flex flex-col pb-2">
-                      <span
-                        class="pl-1 font-semibold text-gray-500 py-1 py-1 text-xs tracking-wide"
-                        >OTHER TRANSACTIONS</span
-                      >
-                      <button
-                        @click="active_transact('toggle5')"
+                        v-if="transact.transactionStatus === 'Confirmed'"
                         class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white text-blue-500 justify-start pl-4"
+                        >Transaction #{{ index + 1 }}</span
                       >
-                        Tansactions #17
-                      </button>
-                      <button
-                        @click="active_transact('toggle6')"
-                        class="h-6 flex items-center tracking-wide rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white text-crimsonRed justify-start pl-4"
-                      >
-                        Transactions #18
-                      </button>
                       <span
-                        class="pl-4 font-semibold italic text-gray-400 py-1 py-1 text-xs"
-                        >No other transactions</span
+                        v-else-if="
+                          transact.transactionStatus === 'Cancelled' ||
+                          transact.transactionStatus === 'Declined'
+                        "
+                        class="h-6 flex items-center tracking-wide rounded py=1 flex text-xs hover:bg-gray-400 hover:text-white text-crimsonRed justify-start pl-4"
+                        >Transaction #{{ index + 1 }}</span
                       >
-                    </div>
+                    </button>
+                    <span
+                      class="pl-4 font-semibold italic text-gray-400 py-1 py-1 text-xs"
+                      >No other transactions</span
+                    >
                   </div>
                 </div>
               </div>
-              <!-----end of toggle verti options--->
             </div>
+            <!-----end of toggle verti options--->
           </div>
           <!----------3 dots convo options--------->
           <div
@@ -822,18 +854,22 @@
                           "
                         >
                           You {{ msgStatus.status }} {{ msgStatus.receiver }}'s
-                          {{msgStatus.postIdentity}}
+                          {{ msgStatus.postIdentity }}
                         </p>
                         <p
                           v-else-if="
                             msgStatus.receiver ==
                             this.userPersonal.firstName +
                               ' ' +
-                              this.userPersonal.lastName
+                              this.userPersonal.lastName && msgStatus.status=='Cancelled'
                           "
                         >
+                          {{ msgStatus.sender }} {{ msgStatus.status }} their
+                          {{ msgStatus.postIdentity }}
+                        </p>
+                        <p v-else>
                           {{ msgStatus.sender }} {{ msgStatus.status }} your
-                          {{msgStatus.postIdentity}} post
+                          {{ msgStatus.postIdentity }}
                         </p>
                       </div>
                     </div>
@@ -1002,18 +1038,22 @@
                           "
                         >
                           You {{ msgStatus.status }} {{ msgStatus.receiver }}'s
-                          {{msgStatus.postIdentity}} post
+                          {{ msgStatus.postIdentity }}
                         </p>
                         <p
                           v-else-if="
                             msgStatus.receiver ==
                             this.userPersonal.firstName +
                               ' ' +
-                              this.userPersonal.lastName
+                              this.userPersonal.lastName && msgStatus.status == 'Cancelled'
                           "
                         >
+                          {{ msgStatus.sender }} {{ msgStatus.status }} their
+                          {{ msgStatus.postIdentity }}
+                        </p>
+                        <p v-else>
                           {{ msgStatus.sender }} {{ msgStatus.status }} your
-                          {{msgStatus.postIdentity}} post
+                          {{ msgStatus.postIdentity }}
                         </p>
                       </div>
                     </div>
@@ -1216,15 +1256,14 @@
             class="overflow-auto overflow-x-hidden h-4/5"
             id="journal-scrollMobile"
           >
-          <div
-                v-if="ifHide"
-                class="sticky top-0 p-3 flex justify items-center shadow-lg bg-white border"
-              >
             <div
-              v-for="transaction in transactions"
-              :key="transaction.postNumber"
+              v-if="ifHide"
+              class="sticky top-0 p-3 flex justify items-center shadow-lg bg-white border"
             >
-              
+              <div
+                v-for="transaction in transactions"
+                :key="transaction.postNumber"
+              >
                 <!-- sent offer 1--->
 
                 <div
@@ -1235,7 +1274,13 @@
                     toggle1
                   "
                 >
-                  <div class="text-sm w-full" v-if="(transaction.transactionStatus == 'pending' || toggle1)  && isRequestPost(transaction.transactionData)!=-1">
+                  <div
+                    class="text-sm w-full"
+                    v-if="
+                      (transaction.transactionStatus == 'pending' || toggle1) &&
+                      isRequestPost(transaction.transactionData) == -1
+                    "
+                  >
                     <div class="flex justify-between items-center">
                       <span
                         >You sent an offer to
@@ -1276,28 +1321,57 @@
                       >
                     </div>
                   </div>
-                
-                <!------->
-                <!-- sent request 1--->
-                <div v-if="(transaction.transactionStatus == 'pending' || toggle2)  && isRequestPost(transaction.transactionData)!=-1" class="text-sm w-full">
-              <div class="flex justify-between items-center">
-                <span>You sent a request to
-                <span class="font-semibold ml-2">{{recipient}}</span>
-                <span class="ml-2">for</span>
-                <span class="font-semibold ml-2">Post {{transaction.postNumber}} </span></span>
-              
-                <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
-                  more_verti</span></button></div>
-                <div class="flex justify-end pr-3">
-                  <button @click =" cancel_transact(
+
+                  <!------->
+                  <!-- sent request 1--->
+                  <div
+                    v-if="
+                      (transaction.transactionStatus == 'pending' || toggle2) &&
+                      isRequestPost(transaction.transactionData) != -1
+                    "
+                    class="text-sm w-full"
+                  >
+                    <div class="flex justify-between items-center">
+                      <span
+                        >You sent a request to
+                        <span class="font-semibold ml-2">{{ recipient }}</span>
+                        <span class="ml-2">for</span>
+                        <span class="font-semibold ml-2"
+                          >Post {{ transaction.postNumber }}
+                        </span></span
+                      >
+
+                      <button
+                        @click="vertiDots"
+                        class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
+                        type="button"
+                      >
+                        <span class="material-icons" style="font-size: 17px">
+                          more_verti</span
+                        >
+                      </button>
+                    </div>
+                    <div class="flex justify-end pr-3">
+                      <button
+                        @click="
+                          cancel_transact(
                             transaction.postNumber,
                             transaction.indexTransactionPost,
                             'request'
-                          )" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700 "><span>Cancel Request</span></button>
-                  <router-link to="/dashboard" class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"><span>View Post</span></router-link>
+                          )
+                        "
+                        class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 rounded-full border border-gray-700"
+                      >
+                        <span>Cancel Request</span>
+                      </button>
+                      <router-link
+                        to="/dashboard"
+                        class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
+                        ><span>View Post</span></router-link
+                      >
+                    </div>
+                  </div>
                 </div>
-            </div>
-            </div>
 
                 <!-- received offer 1--->
                 <div
@@ -1308,7 +1382,13 @@
                     toggle3
                   "
                 >
-                  <div class="text-sm w-full" v-if="(transaction.transactionStatus == 'pending' || toggle3) && isRequestPost(transaction.transactionData)!=-1">
+                  <div
+                    class="text-sm w-full"
+                    v-if="
+                      (transaction.transactionStatus == 'pending' || toggle3) &&
+                      isRequestPost(transaction.transactionData) == -1
+                    "
+                  >
                     <div class="flex justify-between items-center">
                       <span
                         ><span class="font-semibold mr-2"
@@ -1333,7 +1413,7 @@
                     <div class="flex justify-end pr-3">
                       <button
                         @click="
-                          decline(
+                          decline_transact(
                             transaction.postNumber,
                             transaction.indexTransactionPost,
                             transaction.emailCustomerShopper,
@@ -1346,11 +1426,10 @@
                       </button>
                       <button
                         @click="
-                          accept(
+                          accept_transact(
                             transaction.postNumber,
                             transaction.indexTransactionPost,
                             transaction.emailCustomerShopper,
-                            transaction.post.postIdentity,
                             'offer'
                           )
                         "
@@ -1360,35 +1439,64 @@
                       </button>
                     </div>
                   </div>
-              
-                <!------->
-                <!-- received request 1--->
-                <div v-if="(transaction.transactionStatus == 'pending' || toggle4) && isRequestPost(transaction.transactionData)==-1" class="text-sm w-full">
-              <div class="flex justify-between items-center">
-              <span><span class="font-semibold mr-2 ">{{sender}}</span>sent you a request
-              <span class="ml-2">for your </span>
-              <span class="font-semibold ml-2">Post {{postNum2}} </span></span>
-              <button @click="vertiDots" class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300" type="button"><span class="material-icons" style="font-size:17px">
-                  more_verti</span></button></div>
-              <div class="flex justify-end pr-3">
-                <button @click="
-                          decline(
+
+                  <!------->
+                  <!-- received request 1--->
+                  <div
+                    v-if="
+                      (transaction.transactionStatus == 'pending' || toggle4) &&
+                      isRequestPost(transaction.transactionData) != -1
+                    "
+                    class="text-sm w-full"
+                  >
+                    <div class="flex justify-between items-center">
+                      <span
+                        ><span class="font-semibold mr-2">{{ sender }}</span
+                        >sent you a request
+                        <span class="ml-2">for your </span>
+                        <span class="font-semibold ml-2"
+                          >Post {{ postNum2 }}
+                        </span></span
+                      >
+                      <button
+                        @click="vertiDots"
+                        class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
+                        type="button"
+                      >
+                        <span class="material-icons" style="font-size: 17px">
+                          more_verti</span
+                        >
+                      </button>
+                    </div>
+                    <div class="flex justify-end pr-3">
+                      <button
+                        @click="
+                          decline_transact(
                             transaction.postNumber,
                             transaction.indexTransactionPost,
                             transaction.emailCustomerShopper,
-                            'request'
-                          )" class=" mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700 "><span>Decline</span></button>
-                <button @click="
-                          accept(
-                            transaction.postNumber,
-                            transaction.indexTransactionPost,
-                            transaction.emailCustomerShopper,
-                            transaction.post.postIdentity,
                             'request'
                           )
-                        " class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"><span>Accept</span></button>
-              </div>
-            </div>
+                        "
+                        class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
+                      >
+                        <span>Decline</span>
+                      </button>
+                      <button
+                        @click="
+                          accept_transact(
+                            transaction.postNumber,
+                            transaction.indexTransactionPost,
+                            transaction.emailCustomerShopper,
+                            'request'
+                          )
+                        "
+                        class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full focus:outline-none bg-red-700 text-white"
+                      >
+                        <span>Accept</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <!--------------transaction details confirmed------>
                 <div
@@ -1512,16 +1620,16 @@
                           >Request(s)/Offers RECEIVED</span
                         >
                         <button
-                          @click="active_transact('toggle1')"
+                          v-for="(received, index) in transactionsReceived"
+                          :key="index"
+                          @click="active_transact('toggle' + index + 1)"
                           class="h-6 flex items-center rounded tracking-wide py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4"
                         >
-                          Offer #1
-                        </button>
-                        <button
-                          @click="active_transact('toggle2')"
-                          class="h-6 flex items-center rounded tracking-wide py-1 flex text-xs hover:bg-gray-400 hover:text-white justify-start pl-4"
-                        >
-                          Request #1
+                          <span
+                            v-if="isRequestPost(received.transactionData) != -1"
+                            >Offer #{{ index + 1 }}</span
+                          >
+                          <span v-else>Request #{{ index + 1 }}</span>
                         </button>
                       </div>
 
@@ -1653,19 +1761,24 @@
                             "
                           >
                             You {{ msgStatus.status }}
-                            {{ msgStatus.receiver }}'s offer/request
+                            {{ msgStatus.receiver }}'s
+                            {{ msgStatus.postIdentity }}
                           </p>
                           <p
                             v-else-if="
                               msgStatus.receiver ==
                               this.userPersonal.firstName +
                                 ' ' +
-                                this.userPersonal.lastName
+                                this.userPersonal.lastName && msgStatus=='Cancelled'
                             "
                           >
-                            {{ msgStatus.sender }} {{ msgStatus.status }} your
-                            offer/request
+                            {{ msgStatus.sender }} {{ msgStatus.status }} their
+                            {{ msgStatus.postIdentity }}
                           </p>
+                          <p v-else>
+                          {{ msgStatus.sender }} {{ msgStatus.status }} your
+                          {{ msgStatus.postIdentity }}
+                        </p>
                         </div>
                       </div>
                     </div>
@@ -1841,19 +1954,24 @@
                             "
                           >
                             You {{ msgStatus.status }}
-                            {{ msgStatus.receiver }}'s offer/request
+                            {{ msgStatus.receiver }}'s
+                            {{ msgStatus.postIdentity }}
                           </p>
                           <p
                             v-else-if="
                               msgStatus.receiver ==
                               this.userPersonal.firstName +
                                 ' ' +
-                                this.userPersonal.lastName
+                                this.userPersonal.lastName && msgStatus.status=='Cancelled'
                             "
                           >
-                            {{ msgStatus.sender }} {{ msgStatus.status }} your
-                            offer/request
+                            {{ msgStatus.sender }} {{ msgStatus.status }} their
+                            {{ msgStatus.postIdentity }}
                           </p>
+                          <p v-else>
+                          {{ msgStatus.sender }} {{ msgStatus.status }} your
+                          {{ msgStatus.postIdentity }}
+                        </p>
                         </div>
                       </div>
                     </div>
@@ -2491,7 +2609,7 @@
   <!--Accept User Request Button Modal-->
   <transition name="fadeSlide">
     <div
-      v-if="false"
+      v-if="accept && currentPostIdentity == 'request'"
       class="z-50 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2"
     >
       <div
@@ -2499,6 +2617,7 @@
       >
         <div class="flex justify-between items-center flex-row">
           <button
+            @click="accept = false"
             class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
           >
             Back</button
@@ -2506,10 +2625,10 @@
           <p
             class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
           >
-            Accept Asta's Request
+            Accept {{ recipient }}'s Request
           </p>
           <button
-            @click="acceptDisRequest1"
+            @click="accept = false"
             class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
           >
             Close
@@ -2518,12 +2637,12 @@
         <hr class="w-full" />
         <div class="flex w-full">
           <p class="block items-start leading-normal text-base text-gray-900">
-            Are you sure you want to accept Asta's request?
+            Are you sure you want to accept {{ recipient }}'s request?
           </p>
         </div>
         <div class="justify-between flex flex-row space-x-2 w-full">
           <button
-            @click="acceptDisRequest1"
+            @click="accept = false"
             class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700"
           >
             <p
@@ -2533,7 +2652,7 @@
             </p>
           </button>
           <button
-            @click="confirmAcceptDisRequest1"
+            @click="confirmAcceptTransact"
             class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full"
           >
             <p
@@ -2551,7 +2670,7 @@
   <!--Decline User Request Button Modal-->
   <transition name="fadeSlide">
     <div
-      v-if="false"
+      v-if="decline && currentPostIdentity === 'request'"
       class="z-50 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2"
     >
       <div
@@ -2566,7 +2685,7 @@
           <p
             class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
           >
-            Decline Asta's Request
+            Decline {{ recipient }}'s Request
           </p>
           <button
             @click="declineDisRequest1"
@@ -2578,8 +2697,8 @@
         <hr class="w-full" />
         <div class="flex w-full">
           <p class="block items-start leading-normal text-base text-gray-900">
-            Are you sure you want to decline Asta's request? You can not undo
-            this.
+            Are you sure you want to decline {{ recipient }}'s request? You can
+            not undo this.
           </p>
         </div>
         <div class="justify-between flex flex-row space-x-2 w-full">
@@ -2594,7 +2713,7 @@
             </p>
           </button>
           <button
-            @click="confirmDeclineDisRequest1"
+            @click="confirmDeclineDisRequest"
             class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full"
           >
             <p
@@ -2611,7 +2730,7 @@
 
   <!--Accept Offer Modal-->
   <div
-    v-if="false"
+    v-if="accept && currentPostIdentity == 'offer'"
     class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2"
   >
     <div
@@ -2619,6 +2738,7 @@
     >
       <div class="flex justify-between items-center flex-row">
         <button
+          @click="accept = false"
           class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
         >
           Back</button
@@ -2626,10 +2746,10 @@
         <p
           class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
         >
-          Accept Asta's {{ transaction }}
+          Accept {{ recipient }}'s Offer
         </p>
         <button
-          @click="acceptDisOffer"
+          @click="accept = false"
           class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
         >
           Close
@@ -2638,9 +2758,9 @@
       <hr class="w-full" />
       <div class="flex w-full">
         <p class="block items-start leading-normal text-base text-gray-900">
-          Are you sure you want to accept Asta's {{ transaction }}? This would
+          Are you sure you want to accept {{ recipient }}'s Offer? This would
           decline all other offers you received for this post and will
-          automatically update your post into
+          automatically update your post status
           <span class="font-bold text-green-600 leading-normal"
             >Order Taken</span
           >.
@@ -2648,7 +2768,7 @@
       </div>
       <div class="justify-between flex flex-row space-x-2 w-full">
         <button
-          @click="acceptDisOffer"
+          @click="accept = false"
           class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700"
         >
           <p
@@ -2658,7 +2778,7 @@
           </p>
         </button>
         <button
-          @click="confirmAcceptDisRequest2"
+          @click="confirmAcceptTransact"
           class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full"
         >
           <p class="text-base font-bold leading-normal text-center text-white">
@@ -2672,7 +2792,7 @@
 
   <!--Decline Offer Modal-->
   <div
-    v-if="false"
+    v-if="decline && currentPostIdentity == 'offer'"
     class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2"
   >
     <div
@@ -2687,10 +2807,10 @@
         <p
           class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
         >
-          Decline Asta's {{ transaction }}
+          Decline {{ recipient }}'s Offer
         </p>
         <button
-          @click="declineDisOffer"
+          @click="declineDisRequest1"
           class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
         >
           Close
@@ -2699,13 +2819,13 @@
       <hr class="w-full" />
       <div class="flex w-full">
         <p class="block items-start leading-normal text-base text-gray-900">
-          Are you sure you want to decline Asta's {{ transaction }}? You can not
+          Are you sure you want to decline {{ recipient }}'s Offer? You can not
           undo this.
         </p>
       </div>
       <div class="justify-between flex flex-row space-x-2 w-full">
         <button
-          @click="declineDisOffer"
+          @click="declineDisRequest1"
           class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700"
         >
           <p
@@ -2715,7 +2835,7 @@
           </p>
         </button>
         <button
-          @click="confirmDeclineDisRequest2"
+          @click="confirmDeclineDisRequest"
           class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full"
         >
           <p class="text-base font-bold leading-normal text-center text-white">
@@ -2744,10 +2864,10 @@
         <p
           class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
         >
-          Cancel {{currentPostIdentity}}
+          Cancel {{ currentPostIdentity }}
         </p>
         <button
-          @click="cancel=!cancel"
+          @click="cancel = !cancel"
           class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
         >
           Close
@@ -2756,13 +2876,13 @@
       <hr class="w-full" />
       <div class="flex w-full">
         <p class="block items-start leading-normal text-base text-gray-900">
-          Are you sure you want to cancel your {{currentPostIdentity}} to {{ recipient }}'s post? You can not
-          undo this.
+          Are you sure you want to cancel your {{ currentPostIdentity }} to
+          {{ recipient }}'s post? You can not undo this.
         </p>
       </div>
       <div class="justify-between flex flex-row space-x-2 w-full">
         <button
-          @click="cancel=!cancel"
+          @click="cancel = !cancel"
           class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700"
         >
           <p
@@ -2855,12 +2975,19 @@
             check_circle
           </span>
           <p class="text-base leading-normal text-white">
-            Successfully cancelled your {{currentPostIdentity}} to {{recipient}}'s {{ activePostNum }}
+            Successfully cancelled your {{ currentPostIdentity }} to
+            {{ recipient }}'s {{ activePostNum }}
           </p>
         </div>
-        <button @click="confirmCancel = false; this.currentPostIdentity = null
-      this.activePostNum = null;
-      this.activeIndexTransNum = null" class="focus:outline-none flex">
+        <button
+          @click="
+            confirmCancel = false;
+            this.currentPostIdentity = null;
+            this.activePostNum = null;
+            this.activeIndexTransNum = null;
+          "
+          class="focus:outline-none flex"
+        >
           <span class="w-6 h-6 rounded-full material-icons text-white">
             cancel
           </span>
@@ -3040,10 +3167,14 @@ export default {
       ],
       shoppingListSize: 8,
       userQueryID: null,
-      cancel:false,
-      currentPostIdentity:null,
-      activePostNum:null,
-      activeIndexTransNum:null
+      cancel: false,
+      currentPostIdentity: null,
+      activePostNum: null,
+      activeIndexTransNum: null,
+      decline: null,
+      activeUser: null,
+      accept: null,
+      activeDisplayingTransaction:null
     };
   },
   watch: {
@@ -3062,8 +3193,8 @@ export default {
     },
   },
   methods: {
-    isRequestPost(transactionData){
-      return JSON.stringify(transactionData).search('indexOrderRequestPost')
+    isRequestPost(transactionData) {
+      return JSON.stringify(transactionData).search("indexOrderRequestPost");
     },
     connect() {
       if (this.activeRoom != null) {
@@ -3228,6 +3359,9 @@ export default {
     //   } //end if
     // }, //end sendbtn
     setRoom(name, room_ID, email1, email2) {
+      if(this.transactions.length>0){
+        this.activeDisplayingTransaction = this.transactions[0].transactionNumber
+      }
       this.toggleInbox = !this.toggleInbox;
       this.toggleChat = !this.toggleChat;
       console.log(this.toggleInbox, this.toggleChat);
@@ -3236,13 +3370,21 @@ export default {
       this.recipient = name;
       this.activeEmail1 = email1;
       this.activeEmail2 = email2;
+      console.log(this.activeEmail1,this.activeEmail2,this.authUser.email)
       console.log("set room");
-      this.debounceReadChatNotif();
+      this.debounceReadChatNotif(email1,email2,this.authUser.email);
       this.$nextTick(() => this.scrollToEnd());
     },
-    debounceReadChatNotif: _.debounce(() => {
+    debounceReadChatNotif: _.debounce((email1,email2,authEmail) => {
+      var email = null;
+      console.log('asdfaf',email1,email2,authEmail)
+      if(email1 === authEmail){
+        email = email2
+      }else{
+        email = email1
+      }
       api
-        .post("/api/readMessageNotif")
+        .post("/api/readMessageNotif",{email:email})
         .then(() => {
           store.dispatch("getUnreadNotifications");
         })
@@ -3250,6 +3392,7 @@ export default {
           console.log(errors);
         });
     }, 1000),
+
     backChat() {
       this.toggleInbox = !this.toggleInbox;
       this.toggleChat = !this.toggleChat;
@@ -3370,7 +3513,6 @@ export default {
             api.get("api/getChatroom"),
           ]).then((responseArr) => {
             store.commit("FETCH_ROOMS", responseArr[2].data);
-            this.getChatRooms();
           });
         } else {
           this.getChatRooms();
@@ -3517,57 +3659,21 @@ export default {
       data[0] = JSON.parse(string);
       return data;
     },
-    
-    declineOffer(postNum, indexTransactionPost, user) {
-      var dataMessage = {
-        roomID: this.activeRoom,
-        message: JSON.stringify({
-          param: "this_is_a_message_transaction",
-          sender:
-            this.userPersonal.firstName + " " + this.userPersonal.lastName,
-          receiver: this.activeName,
-          status: "Declined",
-        }),
-      };
-      Axios.all([
-        api.post("api/declineRequest", {
-          postNumber: postNum,
-          ID: indexTransactionPost,
-          userNotif: user,
-        }),
-        api.post("/api/sendMessage", dataMessage),
-        api.get("/api/getTransaction"),
-      ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[1].data);
-        store.commit("FETCH_ROOMS", resArr[0].data);
-        this.getChatRooms();
-      });
+
+    decline_transact(postNum, indexTransactionPost, user, postIdentity) {
+      this.decline = !this.decline;
+      this.activePostNum = postNum;
+      this.activeIndexTransNum = indexTransactionPost;
+      this.activeUser = user;
+      this.currentPostIdentity = postIdentity;
     },
-    acceptOffer(postNum, indexTransactionPost, user, postIdentity) {
-      var dataMessage = {
-        roomID: this.activeRoom,
-        message: JSON.stringify({
-          param: "this_is_a_message_transaction",
-          sender:
-            this.userPersonal.firstName + " " + this.userPersonal.lastName,
-          receiver: this.activeName,
-          status: "Accepted",
-        }),
-      };
-      Axios.all([
-        api.post("api/confirmRequest", {
-          postNumber: postNum,
-          ID: indexTransactionPost,
-          userNotif: user,
-          postIdentity: postIdentity,
-        }),
-        api.post("/api/sendMessage", dataMessage),
-        api.get("/api/getTransaction"),
-      ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[2].data);
-        store.commit("FETCH_ROOMS", resArr[0].data);
-        this.getChatRooms();
-      });
+    accept_transact(postNum, indexTransactionPost, user, postIdentity) {
+      $(".hideMe1").fadeOut();
+      this.accept = !this.accept;
+      this.activePostNum = postNum;
+      this.activeIndexTransNum = indexTransactionPost;
+      this.activeUser = user;
+      this.currentPostIdentity = postIdentity;
     },
     ifOnline(email1, email2) {
       var authUser = this.authUser.email;
@@ -3670,144 +3776,195 @@ export default {
       this.toggleVerti = false;
     },
     active_transact(e) {
-      if (this.active === "toggle1") this.toggle1 = false;
-      else if (this.active === "toggle2") this.toggle2 = false;
-      else if (this.active === "toggle3") this.toggle3 = false;
-      else if (this.active === "toggle4") this.toggle4 = false;
-      else if (this.active === "toggle5") this.toggle5 = false;
-      else if (this.active === "toggle6") this.toggle6 = false;
+      console.log('active transact',e)
+      this.activeDisplayingTransaction = e
+      // if (this.active === "toggle1") this.toggle1 = false;
+      // else if (this.active === "toggle2") this.toggle2 = false;
+      // else if (this.active === "toggle3") this.toggle3 = false;
+      // else if (this.active === "toggle4") this.toggle4 = false;
+      // else if (this.active === "toggle5") this.toggle5 = false;
+      // else if (this.active === "toggle6") this.toggle6 = false;
 
-      switch (e) {
-        case "toggle1": {
-          if (this.toggle1 !== true) {
-            this.toggle1 = !this.toggle1;
-            this.active = "toggle1";
-          }
-          break;
-        }
-        case "toggle2": {
-          if (this.toggle2 !== true) {
-            this.toggle2 = !this.toggle2;
-            this.active = "toggle2";
-          }
-          break;
-        }
-        case "toggle3": {
-          if (this.toggle3 !== true) {
-            this.toggle3 = !this.toggle3;
-            this.active = "toggle3";
-          }
-          break;
-        }
-        case "toggle4": {
-          if (this.toggle4 !== true) {
-            this.toggle4 = !this.toggle4;
-            this.active = "toggle4";
-          }
-          break;
-        }
-        case "toggle5": {
-          if (this.toggle5 !== true) {
-            this.toggle5 = !this.toggle5;
-            this.active = "toggle5";
-          }
-          break;
-        }
-        case "toggle6": {
-          if (this.toggle6 !== true) {
-            this.toggle6 = !this.toggle;
-            this.active = "toggle6";
-          }
-          break;
-        }
-        default:
-          this.toggle1 = true;
-      } //end switch
+      // switch (e) {
+      //   case "toggle1": {
+      //     if (this.toggle1 !== true) {
+      //       this.toggle1 = !this.toggle1;
+      //       this.active = "toggle1";
+      //     }
+      //     break;
+      //   }
+      //   case "toggle2": {
+      //     if (this.toggle2 !== true) {
+      //       this.toggle2 = !this.toggle2;
+      //       this.active = "toggle2";
+      //     }
+      //     break;
+      //   }
+      //   case "toggle3": {
+      //     if (this.toggle3 !== true) {
+      //       this.toggle3 = !this.toggle3;
+      //       this.active = "toggle3";
+      //     }
+      //     break;
+      //   }
+      //   case "toggle4": {
+      //     if (this.toggle4 !== true) {
+      //       this.toggle4 = !this.toggle4;
+      //       this.active = "toggle4";
+      //     }
+      //     break;
+      //   }
+      //   case "toggle5": {
+      //     if (this.toggle5 !== true) {
+      //       this.toggle5 = !this.toggle5;
+      //       this.active = "toggle5";
+      //     }
+      //     break;
+      //   }
+      //   case "toggle6": {
+      //     if (this.toggle6 !== true) {
+      //       this.toggle6 = !this.toggle;
+      //       this.active = "toggle6";
+      //     }
+      //     break;
+      //   }
+      //   default:
+      //     this.toggle1 = true;
+      // } //end switch
     },
-     acceptDisRequest(){
-      $('.hideMe1').fadeOut()
-      this.acceptRequest = !this.acceptRequest
+    declineDisRequest() {
+      $(".hideMe1").fadeOut();
+      this.declineRequest = !this.declineRequest;
     },
-    declineDisRequest(){
-      $('.hideMe1').fadeOut()
-      this.declineRequest = !this.declineRequest
+    acceptDisRequest1() {
+      this.acceptRequest = !this.acceptRequest;
+      $(".hideMe1").fadeIn();
     },
-    acceptDisRequest1(){
-      this.acceptRequest = !this.acceptRequest
-      $('.hideMe1').fadeIn()
+    confirmAcceptTransact() {
+      var dataMessage = {
+        roomID: this.activeRoom,
+        message: JSON.stringify({
+          param: "this_is_a_message_transaction",
+          sender:
+            this.userPersonal.firstName + " " + this.userPersonal.lastName,
+          receiver: this.activeName,
+          status: "Accepted",
+          postIdentity: this.currentPostIdentity,
+        }),
+      };
+      Axios.all([
+        api.post("api/confirmRequest", {
+          postNumber: this.activePostNum,
+          ID: this.activeIndexTransNum,
+          userNotif: this.activeUser,
+          postIdentity: this.currentPostIdentity,
+        }),
+        api.post("/api/sendMessage", dataMessage),
+        api.get("/api/getTransaction"),
+      ]).then((resArr) => {
+        store.commit("setUserTransactions", resArr[2].data);
+        store.commit("FETCH_ROOMS", resArr[1].data);
+        setTimeout(() => {
+          $(".acceptRequestNotiPop").fadeIn(), (this.acceptReqNotiPop = true);
+        }, 500);
+        setTimeout(function () {
+          this.acceptReqNotiPop = false;
+          $(".acceptRequestNotiPop").fadeOut();
+        }, 4000);
+        this.activePostNum = null;
+        this.activeIndexTransNum = null;
+        this.activeUser = null;
+        this.currentPostIdentity = null;
+      });
+      // this.acceptRequest = !this.acceptRequest;
+      // this.viewDetails = !this.viewDetails;
     },
-    confirmAcceptDisRequest1(){
-      this.acceptRequest = !this.acceptRequest
-      this.viewDetails = !this.viewDetails
-      setTimeout(() => {$('.acceptRequestNotiPop').fadeIn(), this.acceptReqNotiPop = true}, 500);
-      setTimeout(function(){
-      this.acceptReqNotiPop=false
-      $('.acceptRequestNotiPop').fadeOut();
+    confirmAcceptDisRequest2() {
+      this.acceptOffer = !this.acceptOffer;
+      setTimeout(() => {
+        $(".acceptOfferNotiPop").fadeIn(), (this.acceptReqNotiPop = true);
+      }, 500);
+      setTimeout(function () {
+        this.acceptOffer = false;
+        $(".acceptOfferNotiPop").fadeOut();
       }, 4000);
     },
-    confirmAcceptDisRequest2(){
-      this.acceptOffer = !this.acceptOffer
-      setTimeout(() => {$('.acceptOfferNotiPop').fadeIn(), this.acceptReqNotiPop = true}, 500);
-      setTimeout(function(){
-      this.acceptOffer = false
-      $('.acceptOfferNotiPop').fadeOut();
-      }, 4000);
+    closeAcceptRequestNotiPop() {
+      this.acceptReqNotiPop = false;
+      $(".acceptRequestNotiPop").fadeOut();
     },
-    closeAcceptRequestNotiPop(){
-      this.acceptReqNotiPop=false
-      $('.acceptRequestNotiPop').fadeOut();
+    confirmDeclineDisRequest() {
+      this.declineRequest = !this.declineRequest;
+      // this.viewDetails = !this.viewDetails;
+      var dataMessage = {
+        roomID: this.activeRoom,
+        message: JSON.stringify({
+          param: "this_is_a_message_transaction",
+          sender:
+            this.userPersonal.firstName + " " + this.userPersonal.lastName,
+          receiver: this.activeName,
+          status: "Declined",
+          postIdentity: this.currentPostIdentity,
+        }),
+      };
+      Axios.all([
+        api.post("api/declineRequest", {
+          postNumber: this.activePostNum,
+          ID: this.activeIndexTransNum,
+          userNotif: this.activeUser,
+          postIdentity: this.currentPostIdentity,
+        }),
+        api.post("/api/sendMessage", dataMessage),
+        api.get("/api/getTransaction"),
+      ]).then((resArr) => {
+        store.commit("setUserTransactions", resArr[2].data);
+        store.commit("FETCH_ROOMS", resArr[1].data);
+        setTimeout(() => {
+          $(".declineRequestNotiPop").fadeIn(), (this.declineReqNotiPop = true);
+        }, 500);
+        setTimeout(function () {
+          this.declineReqNotiPop = false;
+          $(".declineRequestNotiPop").fadeOut();
+        }, 4000);
+        this.activePostNum = null;
+        this.activeIndexTransNum = null;
+        this.activeUser = null;
+        this.currentPostIdentity = null;
+      });
     },
-     confirmDeclineDisRequest1(){
-      this.declineRequest = !this.declineRequest
-      this.viewDetails = !this.viewDetails
-      setTimeout(() => {$('.declineRequestNotiPop').fadeIn(), this.declineReqNotiPop = true}, 500);
-      setTimeout(function(){
-      this.declineReqNotiPop=false
-      $('.declineRequestNotiPop').fadeOut();
-      }, 4000);
+
+    closeDeclineRequestNotiPop() {
+      this.declineReqNotiPop = false;
+      $(".declineRequestNotiPop").fadeOut();
     },
-    confirmDeclineDisRequest2(){
-      this.declineOffer = !this.declineOffer
-      setTimeout(() => {$('.declineOfferNotiPop').fadeIn(), this.declineReqNotiPop = true}, 500);
-      setTimeout(function(){
-      this.declineReqNotiPop=false
-      $('.declineOfferNotiPop').fadeOut();
-      }, 4000);
+    declineDisRequest1() {
+      this.decline = !this.decline;
+      $(".hideMe1").fadeIn();
     },
-    closeDeclineRequestNotiPop(){
-      this.declineReqNotiPop=false
-      $('.declineRequestNotiPop').fadeOut();
-    },
-    declineDisRequest1(){
-      this.declineRequest = !this.declineRequest
-      $('.hideMe1').fadeIn()
-    },
-    showMoreshowLess(){
+    showMoreshowLess() {
       this.limit_by = null;
-     if(this.showListStatus != this.showLessStatus){
+      if (this.showListStatus != this.showLessStatus) {
         this.showListStatus = this.showLessStatus;
-      }
-      else{
+      } else {
         this.showListStatus = "See More";
-        this.limit_by = this.default_limit
+        this.limit_by = this.default_limit;
       }
     },
-    acceptDisOffer(e){
+    acceptDisOffer(e) {
       this.acceptOffer = !this.acceptOffer;
       this.transaction = e;
     },
-    declineDisOffer(e){
+    declineDisOffer(e) {
       this.declineOffer = !this.declineOffer;
       this.transaction = e;
     },
     cancel_transact(postNum, indexTransactionPost, postIdentity) {
       this.cancel = !this.cancel;
-      console.log(postNum,indexTransactionPost,postIdentity)
-    //  this.transaction = postNum;
-     this.currentPostIdentity = postIdentity
-     this.activePostNum = postNum
-     this.activeIndexTransNum = indexTransactionPost
-
+      console.log(postNum, indexTransactionPost, postIdentity);
+      //  this.transaction = postNum;
+      this.currentPostIdentity = postIdentity;
+      this.activePostNum = postNum;
+      this.activeIndexTransNum = indexTransactionPost;
     },
     confirmCancellation() {
       var dataMessage = {
@@ -3818,26 +3975,30 @@ export default {
             this.userPersonal.firstName + " " + this.userPersonal.lastName,
           receiver: this.activeName,
           status: "Cancelled",
-          postIdentity: this.currentPostIdentity
+          postIdentity: this.currentPostIdentity,
         }),
       };
       Axios.all([
         api.post("api/cancelTransaction", {
           postNumber: this.activePostNum,
           ID: this.activeIndexTransNum,
-          postIdentity: this.currentPostIdentity
+          postIdentity: this.currentPostIdentity,
         }),
         api.post("/api/sendMessage", dataMessage),
         api.get("/api/getTransaction"),
       ]).then((resArr) => {
         store.commit("setUserTransactions", resArr[2].data);
         store.commit("FETCH_ROOMS", resArr[1].data);
+        setTimeout(() => {
+          $(".declineRequestNotiPop").fadeIn(), (this.confirmCancel = true);
+        }, 500);
+        setTimeout(function () {
+          this.confirmCancel = false;
+          $(".declineRequestNotiPop").fadeOut();
+        }, 4000);
+        this.cancel = !this.cancel;
       });
-      this.confirmCancel = !this.confirmCancel;
-      this.cancel = !this.cancel;
-
-    }
-
+    },
   }, //end methods
   mounted() {
     this.getUrlQuery();
@@ -3861,6 +4022,24 @@ export default {
     },
     onlineUsers() {
       return store.getters.getOnlineUsers;
+    },
+    transactionsReceived() {
+      var temp = this.transactions;
+      return temp.filter((x) => {
+        return (
+          x.transactionReceiver === this.authUser.email &&
+          x.transactionStatus === "pending"
+        );
+      });
+    },
+    transactionsSent() {
+      var temp = this.transactions;
+      return temp.filter((x) => {
+        return (
+          x.transaction_sender.email === this.authUser.email &&
+          x.transactionStatus === "pending"
+        );
+      });
     },
   },
 }; //end export default

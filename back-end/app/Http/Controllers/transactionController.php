@@ -110,7 +110,7 @@ class transactionController extends Controller
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
 			$userToNotif->notify(new confirmRequestNotification($request->postNumber));
 
-            if($request->postIdentity == "request_post"){
+            if($request->postIdentity == "offer"){
                 $transaction = transaction::with('post')->where('transactionStatus', 'pending')->where('postNumber', $request->postNumber)->get();
                 if(!empty($transaction))
                 foreach($transaction as $trans){

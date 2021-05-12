@@ -27,19 +27,22 @@ class NotificationController extends Controller
         // foreach (Auth::user()->unreadNotifications as $notification) {
         //     echo $notification;
         // }
-        Auth::user()->unreadNotifications->markAsRead();
+        $notifs = Auth::user()->unreadNotifications;
+
+        $notifications = $notifs->filter(function ($notif)  {
+            return $notif->type != 'App\\Notifications\\newMessageNotification' || $notif->type != 'App\\Notifications\\newTransactionNotification';
+        });
+        $notifications->markAsRead();
         return response()->json(Auth::user()->unreadNotifications);
     }
-    public function readMessageNotif()
+    public function readMessageNotif(Request $request)
     {
-        # code...
-        // foreach (Auth::user()->unreadNotifications as $notification) {
-        //     echo $notification;
-        // }
-        $notifs = Auth::user()->unreadNotifications->where('type','=','App\\Notifications\\newMessageNotification');
-        $notifs->markAsRead();
-
-        foreach($notifs as $notif){
+        $notifs = Auth::user()->unreadNotifications;
+        $notifications = $notifs->filter(function ($notif) use($request)  {
+            return ($notif->type == 'App\\Notifications\\newMessageNotification' || $notif->type == 'App\\Notifications\\newTransactionNotification') && ($notif->data['sender'] == $request->email);
+        });
+        $notifications->markAsRead();
+        foreach($notifications as $notif){
             $notif->delete();
         }
         return response()->json(Auth::user()->unreadNotifications);
