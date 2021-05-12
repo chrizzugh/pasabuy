@@ -471,6 +471,9 @@
     </div>
     <!--end-->
   </div>
+      </div>
+    </div>
+  </div>
 <!--end-->
 
 </template>
