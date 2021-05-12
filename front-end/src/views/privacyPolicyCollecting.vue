@@ -1,21 +1,21 @@
 <template>
     <div class="font-nunito">
-        <div id="helpCreateAcc" class=" items-center flex justify-center w-full mt-5 pb-16 bg-transparent  ">
-            <div class=" overflow-hidden  text-left bg-transparent w-full ">
+        <div id="helpCreateAcc" class="flex items-center justify-center w-full pb-16 mt-5 bg-transparent md:pl-4 ">
+            <div class="w-full overflow-hidden text-left bg-transparent ">
                 <div class="">
-                    <h1 class="space-x-1 font-bold space-y-1 text-2xl pb-3 uppercase">Collecting and Using Your Personal Data</h1>
+                    <h1 class="pb-3 space-x-1 space-y-1 text-xl font-bold uppercase vs:text-base md:text-lg">Collecting and Using Your Personal Data</h1>
                 </div> 
-                <h1 class="text-3xl text-blue-800 font-bold">Types of Data Collected</h1>
+                <h1 class="text-3xl font-bold text-blue-800 sm:text-xl vs:text-lg md:text-xl">Types of Data Collected</h1>
                     <div class="flex py-3">
-                        <h1 class="font-normal text-xl text-gray-400">Personal Data</h1>
+                        <h1 class="text-lg font-bold text-gray-500 sm:text-base vs:text-sm md:text-base">Personal Data</h1>
 
                     </div>
-                    <div class="w-full text-align-left justify">
+                    <div class="w-full text-justify text-align-left sm:text-sm vs:text-xs md:text-sm dv:text-base">
                             <div class="space-y-3">
                                 <p class="justify">
                                     While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to 
                                     contact or identify You. Personally identifiable information may include, but is not limited to:</p>
-                               <ul class="pl-3 list-inside list-disc">
+                               <ul class="pl-12 list-disc list-outside">
                                 <li>Email address</li>
                                 <li>First name and last name</li>
                                 <li>Phone number</li>
@@ -26,10 +26,10 @@
                     </div>
                 <!----sub section 2---->
                     <div class="flex py-3">
-                       <h1 class="font-normal text-xl text-gray-400">Usage of Data</h1>
+                       <h1 class="text-lg font-bold text-gray-500 sm:text-base vs:text-sm md:text-base">Usage of Data</h1>
                       
                     </div>
-                    <div class="w-full text-align-left justify">
+                    <div class="w-full text-justify text-align-left md:text-sm sm:text-sm vs:text-xs dv:text-base">
                             <div>
                                 <p>Usage Data is collected automatically when using the Service.</p>
                                 <p>
@@ -49,13 +49,13 @@
                     </div>
 
                     <div class="flex py-3">
-                        <h1 class="font-normal text-xl text-gray-400">Information from Third-Party Social Media Services</h1>
+                        <h1 class="text-lg font-bold text-gray-500 sm:text-base vs:text-sm md:text-base">Information from Third-Party Social Media Services</h1>
                         
                     </div>
-                    <div class="w-full text-align-left justify">
+                    <div class="w-full text-justify text-align-left sm:text-sm vs:text-xs md:text-sm dv:text-base">
                             <div class="space-y-3 ">
                                 <p>The Company allows You to create an account and log in to use the Service through the following Third-party Social Media Services:</p>
-                                    <ul class="pl-3 list-inside list-disc">
+                                    <ul class="pl-12 list-disc list-outside">
                                         <li>Google</li>
                                         <li>Facebook</li>
                                         <li>Twitter</li>
@@ -74,15 +74,15 @@
                             </div>
                     </div>
                     <div class="flex py-3">
-                    <h1 class="font-normal text-xl text-gray-400">Tracking Technologies and Cookies</h1>
+                    <h1 class="font-bold text-gray-500 dv:text-lg mv:text-base">Tracking Technologies and Cookies</h1>
                        
                     </div>
-                    <div class="w-full text-align-left justify">
+                    <div class="w-full text-justify text-align-left mv:text-sm dv:text-base">
                             <div   class="space-y-3"  >
                                 <p>We use Cookies and similar tracking technologies to track the activity on Our Service and store certain information. 
                                     Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze Our Service. 
                                     The technologies We use may include:</p>
-                                    
+                                <ul class="pl-12 list-disc list-outside">    
                                 <li>
                                     Cookies or Browser Cookies. A cookie is a small file placed on Your Device. You can instruct Your browser to refuse all Cookies 
                                     or to indicate when a Cookie is being sent. However, if You do not accept Cookies, You may not be able to use some parts 
@@ -98,7 +98,7 @@
                                     Web Beacons. Certain sections of our Service and our emails may contain small electronic files known as web beacons (also referred to as clear gifs, pixel 
                                     tags, and single-pixel gifs) that permit the Company, for example, to count users who have visited those pages or opened an email and for other related 
                                     website statistics (for example, recording the popularity of a certain section and verifying system and server integrity).
-                                </li>
+                                </li></ul>
                                 <p>
                                     Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, 
                                     while Session Cookies are deleted as soon as You close Your web browser. Learn more about cookies: What Are Cookies?.
@@ -153,6 +153,7 @@
                                 <p>
                                     The Company may use Personal Data for the following purposes:
                                 </p>
+                                <ul class="pl-12 list-disc list-outside">
                                     <li>To provide and maintain our Service, including to monitor the usage of our Service.</li>
                                     <li>To manage Your Account: to manage Your registration as a user of the Service. 
                                         The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.</li>
@@ -169,8 +170,7 @@
                                         in which Personal Data held by Us about our Service users is among the assets transferred.</li>
                                     <li>For other purposes: We may use Your information for other purposes, such as data analysis, identifying usage trends, determining the effectiveness of 
                                         our promotional campaigns and to evaluate and improve our Service, products, services, marketing and your experience.</li>
-
-                                    
+                                        </ul>
 
                                    
                                
@@ -207,6 +207,10 @@
 #iMessage{
   font-size:24px;
   color:rgb(22, 22, 141);
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 </style>
 

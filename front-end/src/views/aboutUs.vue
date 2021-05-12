@@ -1,16 +1,14 @@
 <template class="flex font-nunito">
 <!----nav bar--->
-  <nav class="sticky top-0 flex items-center w-full py-5 shadow-md h-14 bg-red-buttons">
+  <nav class="sticky top-0 flex items-center w-full h-12 py-5 shadow-md bg-red-buttons">
       <div class="flex items-center justify-center pl-4">
-       <div class="flex items-center justify-center pl-4">
       <img src="/img/pasaBUYwhiteLogo.png" class="block w-8 h-8 pl-1">
         <h1 class="block pl-1 text-lg font-black tracking-widest text-white font-raleway">pasaBUY</h1>
         </div>
         <div class="absolute border-black items-align-right justify justify-right right-7">
-          <button class="px-3 text-xs font-semibold text-white uppercase bg-transparent border border-white rounded-full h-7 focus:outline-none">
+          <button class="px-3 text-xs font-semibold text-white uppercase bg-transparent border border-white rounded-full focus:outline-none h-7">
         <router-link to="/log-in"> Log in</router-link>
       </button>
-        </div>
         </div>
         
         <div class="w-full">
@@ -19,83 +17,100 @@
             <router-link to="/"  class="flex flex-row text-black gap-x-2">Log out</router-link>
           </div>
         </div>
-  </nav> 
-  <div class="flex flex-col w-full py-10 space-y-3 bg-white ">
-    <h1 class="px-3 text-5xl font-extrabold xl:pl-60 lg:pl-42 md:pl-24 sm:text-3xl md:text-4xl sm:pl-20 vs:text-2xl vs:pl-10 lg:text-left 2xl:pl-74"> PasaBuy Return and Refund Policy</h1>
-    <div class="flex items-center self-center justify-center w-full text-justify dv:w-3/5">
-      <p class="font-normal pl-44 dv:text-base sm:text-sm md:text-sm md:pl-64 md:pr-20 vs:pl-16 sm:pl-52 sm:pr-16 vs:pr-5 vs:text-xs">
-        Thank you for shopping at pasaBUY.<br><br>
+  </nav> <!---End of navbar--->
 
-        If, for any reason, You are not completely satisfied with a purchase We invite You to review our policy on refunds and returns. This Return and Refund Policy has been created with the help of the Return and Refund Policy Generator.<br><br>
-
-        The following terms are applicable for any products that You purchased with Us.
+  <div class="flex flex-col justify-center w-full py-10 space-y-3 bg-white ">
+    <h1 class="px-3 text-4xl font-bold text-center"> About Us</h1>
+    <div class="flex items-center self-center justify-center w-full px-3 vs:pr-10 vs:pl-10 sm:w-94 md:w-97 lg:w-99 xl:w-608 2xl:w-1/2 2xl:text-center">
+      <p class="text-sm text-justify 2xl:text-center">
+        PasaBuy is a safe, secure, convenient, and streamlined platform for all Bicolanos for grocery delivery services. With PasaBuy, users can get help with their groceries and earn money by being shoppers.
       </p>
     </div>
   </div>
 <div class="">
-<div class="flex justify-center mb-4 bg-gray-200">
-    <div class="flex self-center justify-center w-5/6 vs:w-full sm:w-full md:w-full 2xl:w-full lg:w-full">
-      <div id="helpCenterCreateAcc" class="w-full bg-gray-200 vs:w-2/6 sm:w-2/5 md:w-3/5 lg:w-1/2 2xl:w-1/2 xl:w-2/5 rounded-l-md ">
-        <!---Option Buttons--->
-          <div class="flex justify-start "> 
-              <!---left---->
-              <div class="w-full bg-transparent ">                  
-                  <div class="flex flex-col justify-center w-full px-3 pb-2 mt-32 space-y-2 vs:pr-8 2xl:pr-40 2xl:pl-58 xl:pl-32 lg:pr-20 lg:pl-42 md:pl-24 md:pr-0 sm:pl-12 ">                        
-                        <div @click=" isActive_function('btn7')"  :class="{active: activeBtn === 'btn7' }" >
-                            <span @click="toggle7" ><a class="text-sm font-bold text-black cursor-pointer">Interpretation</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn7')" :class="{active: activeBtn === 'btn7' }">
-                            <span @click ="toggle7" ><a class="text-sm font-bold text-black cursor-pointer">Definitions</a></span>
-                        </div>
+<div class="flex justify-center mb-4 bg-white">
+    <div class="flex self-center justify-center w-5/6 vs:flex-wrap vs:w-full 2xl:w-4/6 xl:w-4/6 lg:w-4/6">
+      <div id="helpCenterCreateAcc" class="w-full bg-white vs:flex-row vs:flex 2xl:w-2/3 xl:w-2/5 rounded-l-md ">
+
+        <!--1st--->
+          <div class="flex justify-start ">
+              <div class="w-full bg-transparent vs:flex-row vs:flex">                  
+                  <div class="flex flex-col w-full pb-2 mb-5 space-y-2 text-sm xl:mt-16 vs:mt-0 mt-28 justify-left 2xl:pr-20 2xl:pl-3 xl:pr-20 xl:pl-3 vs:pl-10 vs:pr-10 lg:pr-20 md:pl-12 vs:w-full md:pr-5 lg:pl-3 sm:mt-0 lg:mt-12 md:mt-12">                        
+                        <h1 class="pt-0 text-2xl font-bold vs:w-full">How we started</h1>
+                        <p class="text-sm text-justify">
+                          In 2020, pasaBuy started as a simple idea with a purpose of helping and keeping our 
+                          townsmen— Bicolanos safe from the cyber and environmental threats.
+                        </p>
+                        <p class="text-sm text-justify">
+                          Aside from that, we are really motivated to turn this idea into a reality because
+                          of this important agenda— avoid getting a failure grade.
+                        </p>
                   </div>
               </div>
           </div>
       </div>
           
-     <div class="w-full pl-2 pr-16 overflow-auto bg-gray-200 2xl:pr-50 vs:pl-5 vs:pr-5 sm:pl-5 sm:pr-0 md:pr-0 md:pl-0 rounded-r-md lg:pl-7">
-        <component :is="new_component" />
+     <div class="w-full pr-8 overflow-auto bg-transparent xl:w-1/2 lpl-2 vs:pr-10 vs:pl-10 vs:flex-row vs:flex sm:w-608 md:w-full rounded-r-md">
+        <img src="/img/womanDev.png" class="w-full ">
       </div>
+    </div>
+  </div>
+  
+
+<!---2nd--->
+  <div class="flex flex-wrap justify-around w-full py-16 pl-48 pr-56 bg-gray-200 vs:pl-10 vs:pr-10 sm:pl-0 sm:pr-0 md:justify-center md:pl-0 md:pr-0 lg:justify-start sm:justify-center lg:pl-0 lg:pr-0 lg:px-48">
+    <div class="w-1/3 vs:flex-row vs:w-full lg:w-1/4 sm:w-2/5 sm:pr-5 lg:ml-48 md:ml-3 md:w-1/4">
+      <h1 class="text-2xl font-bold text-crimsonRed">Our Vision</h1>
+                <p class="pt-3 text-sm text-justify vs:pt-5 vs:pb-10">Pasabuy aims to be the most trusted and best possible platform for the customers' pasabuy and delivery needs.</p>
+    </div>
+    <div class="w-2/5 bg-transparent vs:w-full vs:flex-row sm:pl-5 sm:w-2/5 lg:w-2/5 lg:ml-16 md:ml-16">
+      <h1 class="text-2xl font-bold text-crimsonRed">Our Mission</h1>
+                       <p class="pt-3 text-sm text-justify vs:pt-5">
+                         It is our commitment to provide our customers with smooth and secured transactions for their pasabuy and 
+                         delivery needs by allowing them to experience the convenience that technology provides. With our simple way, 
+                         we will offer income alternatives to unemployed individuals or even to people employed but who need additional 
+                         income and contribute to the improvement of their lives.
+                       </p>
     </div>
   </div>
 
-  <div class="flex justify-center bg-white">
-    <div class="flex self-center justify-center w-5/6 h-screen vs:w-full sm:w-full md:w-full 2xl:w-full xl:w-4/6 lg:w-full" >
-      <div id="helpCenterCreateAcc" class="w-full overflow-auto bg-white vs:w-64 lg:w-9/12 sm:w-1/2 md:w-3/5 2xl:w-1/2 xl:w-2/5 rounded-l-md">
-        <!---Option Buttons--->
-          <div class="flex justify-start overflow-hidden "> 
-              <!---left---->
-              <div class="w-full bg-transparent ">
-                  
-                  <div class="flex flex-col justify-center w-full px-3 pb-2 mt-20 space-y-2 sm:pr-2 md:pl-16 2xl:pl-36 xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-40">
-                        <div @click=" isActive_function('btn1')"  :class="{active: activeBtn === 0 }" >
-                            <span @click="toggle" ><a class="text-sm font-bold text-black cursor-pointer">Your Order Cancellation Rights</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <span @click ="toggle2" ><a class="text-sm font-bold text-black cursor-pointer">Conditions for Returns</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <span @click="toggle3" ><a class="text-sm font-bold text-black cursor-pointer">Returning Goods</a></span>
-                        </div>
-                        <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <span @click="toggle4" ><a class="text-sm font-bold text-black cursor-pointer">Gifts</a></span>
-                        </div>
-                      <div @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" >
-                            <span @click="toggle5" ><a class="text-sm font-bold text-black cursor-pointer"> Contact Us</a></span>
-                        </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-          
-     <div class="w-full pl-2 pr-8 overflow-auto bg-white 2xl:pr-72 sm:pr-14 sm:pl-4 md:pr-24 md:pl-5 rounded-r-md lg:pr-36">
-        <component :is="component" />
-      </div>
-    </div>
+  <!---3RD SECTION---->
+
+   <div class="flex flex-wrap justify-around w-full py-16 pl-48 pr-56 bg-white md:pr-0 md:px-20 md:ml-0 md:mr-0 lg:px-20 lg:pr-0 lg:pl-36 md:justify-center sm:pl-0 sm:pr-0 sm:px-20 md:items-center vs:pl-10 vs:pr-10">
+     <h1 class="w-1/2 text-4xl font-bold text-center vs:text-2xl vs:pb-16 vs:w-full sm:w-5/6 sm:text-3xl md:w-3/5 md:text-3xl md:justify-center">No more ruined schedule when you pasaBuy with us!</h1>
+   <div class="flex pt-16 vs:flex-wrap-reverse xl:pl-16 sm:px-12 vs:pb-8 vs:pt-7 md:pt-20 ">
+                <div class="float-left bg-transparent vs:w-full vs:flex vs:flex-row sm:justify-center md:w-1/2 sm:mb-28 xl:w-5/12 2xl:w-150 sm:w-1/2">
+                    <img class="object-contain w-full h-full rounded-xl" src="img/manDev.png">
+            </div>
+
+                <div class="w-1/2 p-1 pt-20 pr-3 bg-transparent md:w-2/5 sm:w-1/2 pl-14 md:pl-0 lg:pl-0 lg:pr-0 sm:pt-16 vs:flex-row lg:w-2/5 sm:pl-0 vs:p-0 sm:p-0 md:pt-14 vs:justify-center vs:w-full rounded-xl vs:mb-5">  
+                <h2 class="pt-2 text-2xl font-bold leading-relaxed tracking-wide text-left vs:leading-tight sm:pt-0 2xl:pt-8 leading-1 vs:text-xl 2xl:3xl">We complete your<br class="vs:hidden"> essentials</h2>
+                <p class="py-3 pt-3 text-sm font-normal leading-normal text-justify 2xl:text-base sm:py-0 md:text-sm ">
+                You’re right, it’s really frustrating when you have a long unfinished list at your To-Dos, that’s why we’re here to get that list done in no time with just a few clicks!
+                </p>
+            </div>
+        </div>
+        <div class="flex xl:pl-16 sm:px-12 vs:flex-wrap ">
+               <div class="w-1/2 p-1 pr-3 bg-transparent pl-14 vs:flex-row md:w-2/5 lg:w-2/5 sm:pl-0 vs:p-0 md:ml-8 vs:justify-center vs:w-full sm:w-1/2 md:pl-0 vs:pl-20 vs:pr-20 md:pr-0 rounded-xl">  
+                <h2 class="pt-16 text-2xl font-bold leading-relaxed tracking-wide text-left vs:pt-0 vs:leading-tight vs:pr-0 vs:pl-0 sm:pt-0 md:pt-20 vs:text-xl 2xl:pt-8 leading-1"> We’re so glad to help you!</h2>
+                <p class="py-3 pt-3 text-sm font-normal leading-normal text-justify sm:pt-0 md:text-sm">
+               
+You’ll never know how much it means to our shoppers when you pasaBuy with them. Together, let’s start giving and receiving good things. Salamat po!
+                </p>
+            </div>
+             <div class="float-right ml-0 mr-0 bg-transparent vs:ml-10 vs:mr-10 vs:flex-row sm:w-1/2 md:w-1/2 lg:w-1/2 sm:justify-center sm:mb-0 xl:w-5/12 2xl:w-608">
+                    <img class="object-contain w-full rounded-xl" src="img/handshakes.png">
+            </div>
+
+                
+        </div>
   </div>
+
+  
 </div>
 
 <!--FOOTER-->
-    <footer class="px-4 text-sm text-white lg:pb-5 lg:pt-8 pb-7 xl:pt-5 md:pt-12 bg-bastille">
+      <footer class="px-4 text-sm text-white lg:pb-5 lg:pt-8 pb-7 xl:pt-5 md:pt-12 bg-bastille">
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
                 <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
@@ -112,7 +127,6 @@
                         <li><router-link to="/privacy-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Privacy Policy</router-link></li>
                         <li><router-link to="/terms-and-condition" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Terms and Condition</router-link></li>
                         <li><router-link to="/return-and-refund-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Return Refund</router-link></li>
-                        <li><router-link to="/cookies-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Cookies Policy</router-link></li>
                     </ul>
                     <div class="flex flex-col w-full sm:w-11/12">
                         <div class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide ">©Pasabuy 2021</div>
@@ -136,7 +150,7 @@
                     </div>
                 </div>
             </div>    
-    </footer>       <!---end of footer---->
+    </footer>    <!---end of footer---->
       
 
 </template>
@@ -169,72 +183,13 @@
 </style>
 
 <script>
-import Gifts from './returnPolicyGifts'
-import Conditions from './returnPolicyConditions'
-import InterandDef from './returnPolicyInterpAndDef'
-import OrderCancel from './returnPolicyOrderCancel'
-import Return from './returnPolicyReturn'
-import ContactUs from './ContactUs'
-import $ from 'jquery'
+
 export default {
   data(){
         return{
-            new_component:"InterandDef",
-            component: "OrderCancel",
-            component2: "Conditions",
-            component3: "Return",
-            component4: "Gifts",
-            component5: "ContactUs",
             
-            isOpen: false,
-            isClick: false,
-            activeBtn: 0,
-            show: false
         }
-    },
-  
-  new_component:{
- 
-  },
-  components:{
-      OrderCancel,
-      Conditions,
-      Return,
-      Gifts,
-      ContactUs,
-     InterandDef,
-  },
-  methods:{
-    toggle(){
-      if(this.component != OrderCancel)
-        this.component = OrderCancel;
-    },
-    toggle2(){
-      this.component=Conditions;
-    },
-    toggle3(){
-        this.component = Return;
-    },
-    toggle4(){
-        this.component = Gifts;
-    },
-    toggle5(){
-      this.component = ContactUs;
-    },
-     toggle7(){
-      this.new_component=InterandDef;
-    },
-    isActive_function(el){
-     if(el=='btn1'){
-      this.activeBtn= 0;
-    } else {
-        this.activeBtn= el;
-        }
-    },
-    selectButton(){
-      $(".notSelected").toggleClass("isSelected");
     }
-  }
 }
 </script>
 <style scoped>

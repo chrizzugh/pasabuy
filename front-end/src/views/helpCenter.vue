@@ -1,72 +1,55 @@
 <template class=" bg-gray-bgcolor font-nunito">
 
-<!----nav bar--->
-<!------navigation--->
-  <nav class=" w-full flex items-center shadow-md bg-white  sticky top-0 ">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 block">
-        <h1 class="absolute text-xl font-black tracking-widest left-16 font-raleway text-red-buttons block">pasaBUY</h1>
-        
-        <div class="border-black items-align-right justify justify-right absolute right-3">
-          <button @click="isOpen=!isOpen" class=" focus:outline-none h-10 w-10 border-2 rounded-full border-red-700 items-right justify-right">
-          <img class="h-9.7 w-10 rounded-full" src="/img/yami.jpg">
-          </button>
+<!----nav bar (!logged In)--->
+<nav class="sticky top-0 flex items-center w-full h-12 py-5 shadow-md bg-red-buttons">
+      <div class="flex items-center justify-center pl-4">
+      <img src="/img/pasaBUYwhiteLogo.png" class="block w-8 h-8 pl-1">
+        <h1 class="block pl-1 text-lg font-black tracking-widest text-white font-raleway">pasaBUY</h1>
+        </div>
+        <div class="absolute border-black items-align-right justify justify-right right-7">
+          <button class="px-3 text-xs font-semibold text-white uppercase bg-transparent border border-white rounded-full focus:outline-none h-7">
+        <router-link to="/log-in"> Log in</router-link>
+      </button>
         </div>
         
         <div class="w-full">
-          <div v-if="isOpen" class="shadow-xl fixed bg-white space-y-2  h-auto w-30 ring-2 ring-gray-200 right-0 rounded-lg py-2 pl-4 pr-4 pt-2 mr-16 mt-2">
-            <router-link to="/dashboard"  class="flex flex-row gap-x-2 text-black">Go to Pasabuy<span class="material-icons text-gray-500">launch</span></router-link>
-            <router-link to="/"  class="flex flex-row gap-x-2 text-black">Log out</router-link>
+          <div v-if="isOpen" class="fixed right-0 h-auto py-2 pt-2 pl-4 pr-4 mt-2 mr-16 space-y-2 bg-white rounded-lg shadow-xl w-30 ring-2 ring-gray-200">
+            <router-link to="/dashboard"  class="flex flex-row text-black gap-x-2">Go to Pasabuy<span class="text-gray-500 material-icons">launch</span></router-link>
+            <router-link to="/"  class="flex flex-row text-black gap-x-2">Log out</router-link>
           </div>
         </div>
   </nav> <!----end of nav bar--->
 
   <!------->
-  <div class="flex justify-center
-  xl:mt-10 xl:mb-20
-  2xl:mt-10 2xl:mb-20
-  lg:mt-10 lg:mb-20
-  ">
-    <div class="flex justify-center self-center
-    2xl:w-3/5
-    xl:w-3/5
-    lg:w-3/5
-      w-full h-98" >
-      <div id="helpCenterCreateAcc" class="w-full 
-      2xl:w-2/4
-      xl:w-2/4 
-      lg:w-2/4
-       bg-white rounded-l-md  ">
+  <div class="flex justify-center xl:mt-10 xl:mb-20 2xl:mt-10 2xl:mb-20 lg:mt-10 lg:mb-20 ">
+    <div class="flex self-center justify-center w-full 2xl:w-3/5 xl:w-3/5 lg:w-3/5 h-98" >
+      <div id="helpCenterCreateAcc" class="w-full bg-white md:w-3/5 sm:w-7/12 vs:w-10/12 2xl:w-2/4 xl:w-2/4 lg:w-2/4 rounded-l-md ">
         <!---Option Buttons--->
-          <div class=" overflow-hidden   flex justify-start"> <!-- parent card box--->
+          <div class="flex justify-start overflow-hidden "> <!-- parent card box--->
               
               <!---left---->
-              <div class="bg-transparent  w-full "> <!---child1 card box-->
+              <div class="w-full bg-transparent "> <!---child1 card box-->
                   <div class=" text-align-left"> 
-                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Help Center</h1>
+                    <h1 class="mt-5 mb-5 ml-5 text-2xl font-bold vs:text-lg">Help Center</h1>
                   </div>
-                  <div class=" pb-2 w-full px-3
-                   flex flex-col justify-center
-                   2xl:pl-3 
-                   xl:pl-3
-                  lg:pl-3   
-                   ">
+                  <div class="flex flex-col justify-center w-full px-3 md:px-7 2xl:pl-3 xl:pl-3 lg:pl-3">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            <button @click="toggle" class="rounded-full w-full bg-gray-100 px-3 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none  py-2 mb-2"><a class="text-black">Creating an Account</a></button>
+                            <button @click="toggle" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Creating an Account</a></button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Navigating Pasabuy</a></button>
+                            <button @click ="toggle2" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Navigating Pasabuy</a></button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2"><a class="text-black">Managing Your Profile </a></button>
+                            <button @click="toggle3" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Managing Your Profile </a></button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="rounded-full w-full px-3 bg-gray-100 hover:bg-red-200 focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2"><a class="text-black">Expanding Your Connections </a></button>
+                            <button @click="toggle4" class="w-full py-2 pl-5 mb-2 leading-none text-left bg-transparent rounded-full text-md vs:pl-7 focus:bg-crimsonRed vs:text-sm text-red-buttons focus:outline-none font-nunito"><a class="text-black">Expanding Your Connections </a></button>
                         </div>
 
                   </div>
               </div>
           </div><!--End--></div>
-     <div class="w-full bg-gray-100 rounded-r-md pr-8 pl-2 overflow-auto"><component :is="component" /></div>
+     <div class="w-full pl-2 pr-8 overflow-auto bg-white sm:pr-3 md:pr-3 vs:pr-3 rounded-r-md"><component :is="component" /></div>
     </div>
 
   </div>
@@ -215,6 +198,8 @@ export default {
 }
 .active button{
    background-color: currentColor;
+   height:48px;
+   padding-bottom: 8px;
    
 }
 .active a{

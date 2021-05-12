@@ -1,97 +1,102 @@
-<template class=" flex font-nunito">
+<template class="flex font-nunito">
 <!----nav bar--->
-  <nav class=" w-full flex items-center py-5 shadow-md bg-red-buttons  sticky top-0 ">
-      <div class="flex justify-center items-center pl-4">
-      <img src="/img/pasaBUYwhiteLogo.png" class="w-10 h-10 pl-1 block">
-        <h1 class="text-xl font-black tracking-widest pl-1 font-raleway text-white block">pasaBUY</h1>
+  <nav class="sticky top-0 flex items-center w-full py-5 shadow-md h-14 bg-red-buttons">
+      <div class="flex items-center justify-center pl-4">
+      <img src="/img/pasaBUYwhiteLogo.png" class="block w-10 h-10 pl-1">
+        <h1 class="block pl-1 text-xl font-black tracking-widest text-white font-raleway">pasaBUY</h1>
         </div>
-        <div class="border-black items-align-right justify justify-right absolute right-3">
-          <button @click="isOpen=!isOpen" class=" focus:outline-none h-10 w-10 border-2 rounded-full border-red-700 items-right justify-right">
+        <div class="absolute border-black items-align-right justify justify-right right-3">
+          <button @click="isOpen=!isOpen" class="w-10 h-10 border-2 border-red-700 rounded-full focus:outline-none items-right justify-right">
           <img class="h-9.7 w-10 rounded-full" src="/img/yami.jpg">
           </button>
         </div>
         
         <div class="w-full">
-          <div v-if="isOpen" class="shadow-xl fixed bg-white space-y-2  h-auto w-30 ring-2 ring-gray-200 right-0 rounded-lg py-2 pl-4 pr-4 pt-2 mr-16 mt-2">
-            <router-link to="/dashboard"  class="flex flex-row gap-x-2 text-black">Go to Pasabuy<span class="material-icons text-gray-500">launch</span></router-link>
-            <router-link to="/"  class="flex flex-row gap-x-2 text-black">Log out</router-link>
+          <div v-if="isOpen" class="fixed right-0 h-auto py-2 pt-2 pl-4 pr-4 mt-2 mr-16 space-y-2 bg-white rounded-lg shadow-xl w-30 ring-2 ring-gray-200">
+            <router-link to="/dashboard"  class="flex flex-row text-black gap-x-2">Go to Pasabuy<span class="text-gray-500 material-icons">launch</span></router-link>
+            <router-link to="/"  class="flex flex-row text-black gap-x-2">Log out</router-link>
           </div>
         </div>
   </nav> 
-  <div class="bg-white space-y-3 w-full flex flex-col justify-center  py-10 ">
-    <h1 class="text-5xl xl:pl-60 px-3 font-extrabold"> Terms and Conditions</h1>
-    <div class="px-3 w-full xl:w-608 self-center flex justify-center items-center text-justify">
-      <p>Please read these terms and conditions carefully before using Our Service.</p>
+  <div class="flex flex-col justify-center w-full py-10 space-y-3 bg-white ">
+    <h1 class="px-3 text-5xl font-extrabold 2xl:pl-94 lg:pl-48 xl:pl-72 md:pl-24 sm:text-2xl md:text-4xl lg:float-left lg:px-0 sm:pl-14 vs:text-2xl vs:pl-10">PasaBuy Terms and Conditions</h1>
+    <div class="flex items-center self-center justify-center w-full text-justify 2xl:pl-72 2xl:justify-start xl:pl-0 dv:w-full lg:pr-16">
+      <p class="font-normal pl-44 dv:text-base sm:text-sm md:text-sm lg:pl-20 md:pl-64 md:pr-20 vs:pl-16 sm:pl-48 sm:pr-16 vs:pr-5 vs:text-xs 2xl:pl-80 ">Please read these terms and conditions carefully before using Our Service.</p>
     </div>
   </div>
-<div class=" ">
+<div class="">
 <div class="flex justify-center mb-4 bg-gray-200">
-    <div class="flex justify-center self-center 2xl:w-4/6 xl:w-4/6 lg:w-4/6 w-5/6">
-      <div id="helpCenterCreateAcc" class="w-full 2xl:w-2/3 xl:w-2/5  bg-gray-200 rounded-l-md ">
-          <div class="  flex justify-start"> 
+    <div class="flex self-center justify-center vs:w-full sm:w-full xl:w-4/6 md:w-full 2xl:w-4/6 lg:w-full">
+      <div id="termsAndcond" class="w-full bg-gray-200 vs:w-2/6 sm:w-2/5 lg:w-9/12 md:w-3/5 2xl:w-2/3 xl:w-2/5 rounded-l-md">
+          <div class="flex justify-start "> 
               <!---left---->
-              <div class="bg-transparent  w-full ">                  
-                  <div class=" pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">                        
-                        <div @click=" isActive_function('btn1')"  :class="{active: activeBtn === 'btn1' }" >
-                            <span @click="toggle" ><a class="text-black font-bold cursor-pointer text-sm">Interpretation</a></span>
+              <div class="w-full bg-transparent ">                  
+                  <div class="flex flex-col justify-center w-full px-3 pb-2 mt-32 space-y-2 vs:pr-8 2xl:pr-20 2xl:pl-36 xl:pr-16 xl:pl-16 lg:pr-16 lg:pl-48 md:pl-24 md:pr-0 sm:pl-12 ">                        
+                        <div @click=" isActive_function('btn11')"  :class="{active: activeBtn === 'btn11' }" >
+                            <span @click="toggle11" ><a class="text-sm font-bold text-black cursor-pointer">Interpretation</a></span>
                         </div>
-                        <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 'btn1' }">
-                            <span @click ="toggle" ><a class="text-black font-bold cursor-pointer text-sm">Definitions</a></span>
+                        <div @click=" isActive_function('btn11')" :class="{active: activeBtn === 'btn11' }">
+                            <span @click ="toggle11" ><a class="text-sm font-bold text-black cursor-pointer">Definitions</a></span>
                         </div>
                   </div>
               </div>
           </div>
       </div>
           
-     <div class="w-full bg-gray-200 rounded-r-md pr-8 pl-2 overflow-auto">
+     <div class="w-full pl-2 pr-16 overflow-auto bg-gray-200 vs:pl-5 vs:pr-5 sm:pl-5 sm:pr-8 md:pr-8 md:pl-0 rounded-r-md xl:pr-0 xl:pl-0 2xl:pl-0 2xl:pr-0">
         <component :is="new_component" />
       </div>
     </div>
   </div>
 
   <div class="flex justify-center bg-white">
-    <div class="flex justify-center self-center 2xl:w-4/6 xl:w-4/6 lg:w-4/6 w-5/6 h-screen" >
-      <div id="helpCenterCreateAcc" class="w-full   2xl:w-2/3 xl:w-2/5  bg-white rounded-l-md overflow-auto">
-          <div class=" overflow-hidden  flex justify-start"> 
-              <div class="bg-transparent  w-full ">
-                  <div class="  pb-2 space-y-2 w-full px-3 mt-20 flex flex-col justify-center 2xl:pr-20 2xl:pl-3  xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-3">
+    <div class="flex self-center justify-center w-5/6 h-screen vs:w-full sm:w-full md:w-full 2xl:w-4/6 xl:w-4/6 lg:w-full" >
+      <div id="termsAndcond" class="w-full overflow-auto bg-white vs:w-64 sm:w-1/2 lg:w-9/12 md:w-3/5 2xl:w-2/3 xl:w-2/5 rounded-l-md">
+          <div class="flex justify-start overflow-hidden "> 
+              <div class="w-full bg-transparent ">
+                  <div class="flex flex-col justify-center w-full px-3 pb-2 mt-20 space-y-2 sm:pr-2 md:pl-16 2xl:pr-20 2xl:pl-3 xl:pr-20 xl:pl-3 lg:pr-20 lg:pl-40">
                         <div @click=" isActive_function('btn1')"  :class="{active: activeBtn === 0 }" >
-                            <span @click="toggle1" ><a class="text-black font-bold cursor-pointer text-sm">Acknowledgment</a></span>
+                            <span @click="toggle" ><a class="text-sm font-bold text-black cursor-pointer">Acknowledgment</a></span>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <span @click ="toggle2" ><a class="text-black font-bold cursor-pointer text-sm">Links to Other Websites</a></span>
+                            <span @click ="toggle2" ><a class="text-sm font-bold text-black cursor-pointer">Links to Other Websites</a></span>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <span @click="toggle3" ><a class="text-black cursor-pointer font-bold text-sm">Termination</a></span>
+                            <span @click="toggle3" ><a class="text-sm font-bold text-black cursor-pointer">Termination</a></span>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <span @click="toggle4" ><a class="text-black cursor-pointer font-bold text-sm">Limitation of Liability</a></span>
+                            <span @click="toggle4" ><a class="text-sm font-bold text-black cursor-pointer">Limitation of Liability</a></span>
                         </div>
                         <div @click=" isActive_function('btn5')" :class="{active: activeBtn === 'btn5' }" >
-                            <span @click="toggle5" ><a class="text-black cursor-pointer font-bold text-sm">"AS IS" and "AS AVAILABLE" Disclaimer</a></span>
+                            <span @click="toggle5" ><a class="text-sm font-bold text-black cursor-pointer">"AS IS" and "AS AVAILABLE" Disclaimer</a></span>
                         </div>
                         <div @click=" isActive_function('btn6')" :class="{active: activeBtn === 'btn6' }" >
-                            <span @click="toggle6" ><a class="text-black cursor-pointer font-bold text-sm">Governing Law</a></span>
+                            <span @click="toggle6" ><a class="text-sm font-bold text-black cursor-pointer">Governing Law</a></span>
                         </div>
                         <div @click=" isActive_function('btn7')" :class="{active: activeBtn === 'btn7' }" >
-                            <span @click="toggle7" ><a class="text-black cursor-pointer font-bold text-sm">Disputes Resolution</a></span>
+                            <span @click="toggle7" ><a class="text-sm font-bold text-black cursor-pointer">Disputes Resolution</a></span>
+                        </div>
+                        <div @click=" isActive_function('btn12')" :class="{active: activeBtn === 'btn12' }" >
+                            <span @click="toggle12" ><a class="text-sm font-bold text-black cursor-pointer">United States Legal Compliance</a></span>
+                        </div>
+                        <div @click=" isActive_function('btn13')" :class="{active: activeBtn === 'btn13' }" >
+                            <span @click="toggle13" ><a class="text-sm font-bold text-black cursor-pointer">For European Union (EU) Users</a></span>
                         </div>
                         <div @click=" isActive_function('btn8')" :class="{active: activeBtn === 'btn8' }" >
-                            <span @click="toggle8" ><a class="text-black cursor-pointer font-bold text-sm">Severability and Waiver</a></span>
+                            <span @click="toggle8" ><a class="text-sm font-bold text-black cursor-pointer">Severability and Waiver</a></span>
                         </div>
                         <div @click=" isActive_function('btn9')" :class="{active: activeBtn === 'btn9' }" >
-                            <span @click="toggle9" ><a class="text-black cursor-pointer font-bold text-sm">Translation Interpretation</a></span>
+                            <span @click="toggle9" ><a class="text-sm font-bold text-black cursor-pointer">Translation Interpretation</a></span>
                         </div>
                         <div @click=" isActive_function('btn10')" :class="{active: activeBtn === 'btn10' }" >
-                            <span @click="toggle10" ><a class="text-black cursor-pointer font-bold text-sm">Changes to These Terms and Conditions</a></span>
+                            <span @click="toggle10" ><a class="text-sm font-bold text-black cursor-pointer">Changes to These Terms and Conditions</a></span>
                         </div>
-
                   </div>
               </div>
           </div>
       </div>
           
-     <div class="w-full bg-white rounded-r-md pr-8 pl-2 overflow-auto">
+     <div class="w-full pl-2 pr-8 overflow-auto bg-white rounded-r-md 2xl:pr-0 xl:pr-0 xl:pl-6">
         <component :is="component" />
       </div>
     </div>
@@ -99,27 +104,29 @@
 </div>
 
 <!--FOOTER-->
-        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille">
+      <footer class="px-4 text-sm text-white lg:pb-5 lg:pt-8 pb-7 xl:pt-5 md:pt-12 bg-bastille">
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
                 <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-1 font-medium tracking-wide ">Pasabuy</li>
+                        <li class="inline-block px-3 py-1 text-sm font-medium tracking-wide ">Pasabuy</li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-1 font-medium tracking-wide sm:px-0">Company</li>
-                        <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline">About Us</a>
+                        <li class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide sm:px-0">Company</li>
+                        <li><router-link to="/about-us"  class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline">About Us</router-link>
                         </li>
-                        <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">Help</a></li>
+                        <li><router-link to="/help-center" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Help</router-link></li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                       <li class="inline-block px-3 py-2 font-medium tracking-wide ">Privacy Policy</li>
-                          <router-link to="/privacy-policy"> <li><a  class="inline-block py-1 pl-3 pr-5 text-white no-underline">Privacy</a></li></router-link>
-                          <router-link to="/terms-and-condition"> <li><a class="inline-block py-1 pl-3 pr-5 no-underline ">Terms</a></li></router-link>
+                        <li class="inline-block px-3 py-0.5 font-medium tracking-wide text-sm ">Policies</li>
+                        <li><router-link to="/privacy-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Privacy Policy</router-link></li>
+                        <li><router-link to="/terms-and-condition" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Terms and Condition</router-link></li>
+                        <li><router-link to="/return-and-refund-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Return Refund</router-link></li>
+                        <li><router-link to="/cookies-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Cookies Policy</router-link></li>
                     </ul>
                     <div class="flex flex-col w-full sm:w-11/12">
-                        <div class="inline-block px-3 py-1 font-medium tracking-wide ">©Pasabuy 2021</div>
+                        <div class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide ">©Pasabuy 2021</div>
                         <ul class="flex flex-col w-full p-0 font-thin text-left">
-                            <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">Stay connected with us</a></li>
+                            <li><a href="#" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Stay connected with us</a></li>
                         </ul>
                         <div class="flex justify-start pl-4 mt-2">
                             <a class="flex items-center mr-6 text-gray-300 no-underline hover:text-white" href="#">
@@ -138,7 +145,7 @@
                     </div>
                 </div>
             </div>    
-    </footer>  <!---end of footer---->
+    </footer>       <!---end of footer---->
       
 
 </template>
@@ -172,31 +179,38 @@
 
 <script>
 import Acknowledgment from './termsAndConAcknowledgment'
-import ChangesToTheseTermsAndConditions from './termsAndConChanges'
+import Changes from './termsAndConChanges'
 import Disclaimer from './termsAndConDisclaimer'
-import InterpretationAndDefinitions from './termsAndConInterpAndDef'
-import DisputesResolution from './termsAndConDisputes'
-import GoverningLaw from './termsAndConLaw'
-import LimitationOfLiability from './termsAndConLimitation'
-import LinksToOtherWebsites from './termsAndConLinks'
+import Disputes from './termsAndConDisputes'
+import InterandDef from './termsAndConInterpAndDef'
+import Law from './termsAndConLaw'
+import Limitation from './termsAndConLimitation'
+import Links from './termsAndConLinks'
 import Termination from './termsAndConTermination'
-import TranslationInterpretation from './termsAndConTranslation'
-import SeverabilityAndWaiver from './termsAndConWaiver'
+import Translation from './termsAndConTranslation'
+import Waiver from './termsAndConWaiver'
+import US from './termsAndConUS'
+import ForEuro from './termsAndConForEuro'
 import $ from 'jquery'
+
+
 export default {
   data(){
         return{
-            component: "InterpretationAndDefinitions",
-            component1: "Acknowledgment",
-            component2: "LinksToOtherWebsites",
+            new_component:"InterandDef",
+            component: "Acknowledgment",
+            component2: "Links",
             component3: "Termination",
-            component4: "LimitationOfLiability",
+            component4: "Limitation",
             component5: "Disclaimer",
-            component6: "GoverningLaw",
-            component7: "DisputesResolution",
-            component8: "SeverabilityAndWaiver",
-            component9: "TranslationInterpretation",
-            component10: "ChangesToTheseTermsAndConditions",
+            component6: "Law",
+            component7: "Disputes",
+            component8: "Translation",
+            component9: "Waiver",
+            component10: "Changes",
+            component12: "US",
+            component13: "ForEuro",
+            
             
             isOpen: false,
             isClick: false,
@@ -209,52 +223,60 @@ export default {
  
   },
   components:{
-        InterpretationAndDefinitions,
-        Acknowledgment,
-        LinksToOtherWebsites,
-        Termination,
-        LimitationOfLiability,
-        Disclaimer,
-        GoverningLaw,
-        SeverabilityAndWaiver,
-        TranslationInterpretation,
-        ChangesToTheseTermsAndConditions,
-        DisputesResolution,
+    Acknowledgment,
+    Links,
+    Termination,
+    Limitation,
+    Disclaimer,
+    Law,
+    Disputes,
+    Translation,
+    Waiver,
+    Changes,
+    InterandDef,
+    US,
+    ForEuro,
   },
   methods:{
     toggle(){
-      if(this.new_component != InterpretationAndDefinitions)
-        this.new_component = InterpretationAndDefinitions;
-    },
-    toggle1(){
-        this.component = this.Acknowledgment;
+      if(this.component != Acknowledgment)
+        this.component = Acknowledgment;
     },
     toggle2(){
-        this.component = this.LinksToOtherWebsites;
+      this.component=Links;
     },
     toggle3(){
-        this.component = this.Termination;
+        this.component = Termination;
     },
     toggle4(){
-        this.component = this.LimitationOfLiability;
+        this.component = Limitation;
     },
     toggle5(){
-        this.component = this.Disclaimer;
+        this.component = Disclaimer;
     },
     toggle6(){
-        this.component = this.GoverningLaw;
+        this.component = Law;
     },
     toggle7(){
-        this.component = this.SeverabilityAndWaiver;
+        this.component = Disputes;
     },
     toggle8(){
-        this.component = this.TranslationInterpretation;
+        this.component = Waiver;
     },
-    toggle0(){
-        this.component = this.ChangesToTheseTermsAndConditions;
-    },
+    toggle9(){
+        this.component = Translation;
+    },    
     toggle10(){
-        this.component = this.DisputesResolution;
+        this.component = Changes;
+    },   
+    toggle12(){
+        this.component = US;
+    },   
+    toggle13(){
+        this.component = ForEuro;
+    },
+     toggle11(){
+      this.new_component=InterandDef;
     },
     isActive_function(el){
      if(el=='btn1'){
@@ -266,6 +288,7 @@ export default {
     selectButton(){
       $(".notSelected").toggleClass("isSelected");
     }
+    
   }
 }
 </script>

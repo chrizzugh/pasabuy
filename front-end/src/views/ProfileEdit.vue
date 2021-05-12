@@ -370,8 +370,8 @@ export default {
 </script>
 <style scoped>
 .active {
-  color: red;
-  border-bottom: solid red 5px;
+  color:red;  
+  border-bottom: solid red 3px;
 }
 .active button {
   color: red;

@@ -279,76 +279,40 @@
           </div>
           <div v-for="(transaction,index) in transactions" :key="index">
           <div class="flex-auto flex-col w-full vs:px-0 px-2 space-y-3.5 pb-2 pt-2">
-            <div class="flex flex-row justify-between">
+            <div v-for="Request in computedRequestReceived" :key="Request" class="flex flex-row justify-between">
               <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
-              <img class="w-10 h-10 vs:w-8 vs:h-8 rounded-full" src="img/asta.jpeg"/>
+              <img class="w-10 h-10 vs:w-8 vs:h-8 rounded-full" :src="Request.img"/>
               <div class="flex flex-col space-y-1">
                 <div class="flex flex-row vs:space-x-1 space-x-2">
-                  <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">Asta Staria</p>
+                  <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">{{Request.userName}}</p>
                   <span class="text-blue-900 align-middle material-icons md-14 ">
                   verified
                 </span>
                 </div>
-                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">5 minutes ago</p>
+                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">{{Request.time}}</p>
               </div>
               </div>
               <div class="flex flex-row items-center vs:space-x-1 space-x-2">
-                <button class="focus:outline-none inline-flex items-start justify-start vs:px-2 vs:py-1 px-3 py-2 bg-red-700 rounded-full">
+                <button @click="toggleViewDetails" class="focus:outline-none inline-flex items-start justify-start vs:px-2 vs:py-1 px-3 py-2 bg-red-700 rounded-full">
                 <p class="text-sm vs:text-xs ssm:text-xs font-bold leading-none text-white">View Details</p>
                 </button>
-                <button class="focus:outline-none">
+                <div>
+                <button @click="Request.messageUser = !Request.messageUser" class="focus:outline-none mt-1.5">
                 <span class="material-icons vs:text-xs">
                   more_vert
                 </span>
                 </button>
+                <div class="relative w-full">
+              <div v-if="Request.messageUser" class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
+              <button class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+               <span class=" material-icons text-base  text-gray-900 ">
+                forum
+               </span>
+                Chat
+              </button>
               </div>
-            </div>
-            <div class="flex flex-row justify-between">
-              <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
-              <img class="w-10 h-10 rounded-full" src="img/julius.png"/>
-              <div class="flex flex-col space-y-1">
-                <div class="flex flex-row vs:space-x-1 space-x-2">
-                  <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">Julius Novachrono</p>
-                  <span class="text-blue-900 align-middle material-icons md-14 ">
-                  verified
-                </span>
+              </div>
                 </div>
-                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">5 minutes ago</p>
-              </div>
-              </div>
-              <div class="flex flex-row items-center vs:space-x-1 space-x-2">
-                <button class="focus:outline-none inline-flex items-start justify-start vs:px-2 vs:py-1 px-3 py-2 bg-red-700 rounded-full">
-                <p class="text-sm vs:text-xs ssm:text-xs font-bold leading-none text-white">View Details</p>
-                </button>
-                <button class="focus:outline-none">
-                <span class="material-icons vs:text-xs">
-                  more_vert
-                </span>
-                </button>
-              </div>
-            </div>
-            <div class="flex flex-row justify-between">
-              <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
-              <img class="w-10 h-10 rounded-full" src="img/baha.jpg"/>
-              <div class="flex flex-col space-y-1">
-                <div class="flex flex-row vs:space-x-1 space-x-2">
-                  <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">Baha-bahaha</p>
-                  <span class="text-blue-900 align-middle material-icons md-14 ">
-                  verified
-                </span>
-                </div>
-                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">5 minutes ago</p>
-              </div>
-              </div>
-              <div class="flex flex-row items-center vs:space-x-1 space-x-2">
-                <button class="focus:outline-none inline-flex items-start justify-start vs:px-2 vs:py-1 px-3 py-2 bg-red-700 rounded-full">
-                <p class="text-sm vs:text-xs ssm:text-xs font-bold leading-none text-white">View Details</p>
-                </button>
-                <button class="focus:outline-none">
-                <span class="material-icons vs:text-xs">
-                  more_vert
-                </span>
-                </button>
               </div>
             </div>
           </div>
@@ -735,5 +699,30 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
+}
+.fadeSlide-enter-from{
+  transform: translateX(100%);
+  transform: translateX(150px);
+  opacity:0
+}
+.fadeSlide-enter-to{
+  transform: translateX(0);
+  opacity:1
+}
+.fadeSlide-enter-active{
+  transition: all .3s ease-in-out;
+}
+
+.fadeSlide-leave-from{
+  transform: translateX(0);
+  opacity:1
+}
+.fadeSlide-leave-to{
+  transform: translateX(100%);
+  transform: translateX(150px);
+  opacity:0
+}
+.fadeSlide-leave-active{
+  transition: all .3s ease-in-out
 }
 </style>

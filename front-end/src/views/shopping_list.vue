@@ -33,9 +33,9 @@
               
           ">
           <div class="flex  flex-row items-center space-x-2">
-           <p class="font-bold text-gray-500 select-none">Title</p>
-           <input v-if="addtitle" type="text" id="new_title" class="focus:outline-none bg-gray-100"/>
-            <span @click="addtitle=!addtitle" class="cursor-pointer select-none material-icons text-md text-gray-500">
+          
+           <input type="text" placeholder="Title" id="new_title" class=" font-bold h-10 pl-3 focus:outline-none bg-gray-100"/>
+            <span  class="cursor-pointer select-none material-icons text-md text-gray-500">
             mode  
             </span>
           </div>
@@ -149,12 +149,15 @@
             </span>
           </div>
           <div class="flex flex-row items-center space-x-3 select-none pl-3">
-              <span @click="view_list(item.title+'addlist')"  class="cursor-pointer material-icons">
+              <span @click="view_list(item.title+'addlist'+item.id)"  class="cursor-pointer material-icons">
               add_circle
               </span>
               <p class="">Add new item</p>
             </div>
-            <div :id="item.title+'addlist'" class="ring-1 ring-gray-400 p-5 mt-4 space-y-3 rounded-xl">
+            <div class="addlist_x">
+              
+            </div>
+            <div :id="item.title+'addlist'+item.id"  class="ring-1 hidden  ring-gray-400 p-5 mt-4 space-y-3 rounded-xl">
               <input :id="item.title+'product'" type="text" placeholder="Product" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
             <div class="flex flex-row space-x-2">
                 <input :id="item.title+'brand'" type="text" placeholder="Brand" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
@@ -177,8 +180,9 @@
                </div>
             </div>
             </div>
+            <!---->
           </div>
-          <div :id="item.title+'shop'">
+          <div :id="item.title+'shop'+item.id">
       <ul id="example-1" class=" text-sm list-inside  space-y-2 p-5  w-full ">
        <li v-for="item_list in item.items" :key="item_list.product" class=" grid-cols-2  w-ful list-none">
          <div class=" flex flex-row  justify-between w-full ">
@@ -220,7 +224,7 @@
         <hr>
         <div class="flex flex-row items-center justify-between px-3 pt-2">
             <div class="space-x-3 text-gray-500">
-            <span @click="item.items=[]" class="material-icons cursor-pointer select-none">
+            <span @click="toggle_delete=!toggle_delete, shoplist=item.title" class="material-icons cursor-pointer select-none">
               delete
             </span>
             <span  @click="item.title" class="material-icons cursor-pointer select-none"> 
@@ -228,10 +232,49 @@
             </span>
           
           </div>
-           <span @click="view_list(item.title+'shop')" class="cursor-pointer text-blue-700 font-bold select-none">Close</span>
+           <span @click="view_list(item.title+'shop'+item.id),change_close(item.title+item.id+'close')" :id="item.title+item.id+'close'" class="cursor-pointer text-blue-700 font-bold select-none">Close</span>
            </div>
     </div>
+     
   </div>
+  <!---->
+  <div v-if="toggle_delete"   class=" fixed bg-black z-100 h-max w-screen   bg-opacity-75 overflow-y-auto items-center  inset-0 ">
+        <div class="flex   mt-4 w-full p-3  items-center justify-center
+        py-20
+        ">
+          <div class=" bg-white ring-1  ring-gray-300  p-5 w-full rounded-xl
+             2xl:w-97 
+              lg:w-97
+              xl:w-97   xl:mr-16
+              md:w-8/12
+              sm:w-10/12
+              shadow-2xl
+              h-auto
+          ">
+            <div class="flex flex-row items-center  justify-between p-3">
+            <p class="hidden lg:block 2xl:block xl:block"></p>
+            <p class="text-lg font-extrabold xl:ml-8 lg:ml-8 2xl:ml-8">Delete Shipping Address</p>
+            <p class="font-bold text-blue-700 cursor-pointer left-10" @click="toggle_delete=false"> Close</p>
+          </div>
+          <div class="text-center pb-5 ">
+          <p class="text-lg">
+            Are you sure you want to remove this shopping list?
+          </p>
+          </div>
+         <hr>
+          <div class=" ">
+           <div class="flex justify-between mt-4 px-5 space-x-4 items-center">
+             <button @click="toggle_delete=false" class="px-4 bg-white text-black focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Cancel</button>
+             
+             <button @click="toggle_delete=false,delete_shoppinglist()" class="px-4 bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Delete</button>
+              
+            </div>
+            
+          </div>
+           
+          </div>
+        </div>
+    </div>
 <!---eND--->
       
       <div class="text-center">
@@ -256,10 +299,11 @@ export default {
   },
   created: function () {
     document.body.style.backgroundColor = "rgb(235,235,235)";
-    console.log(this.shoppingLists);
+   
   },
   data(){
     return{
+      toggle_delete:false,
       hidden_list:false,
        hidden:false,
         hide_input:false,
@@ -270,6 +314,7 @@ export default {
         editVisible: false,
         quantity:1,
         n:2,
+        shoplist:'',
         id_num:3,
         new_title:'',
         list_number:0,
@@ -313,6 +358,19 @@ export default {
 }
 },
 methods:{
+  change_close(e){
+    let str=document.getElementById(e).innerHTML;
+    if(str=="Close"){
+      document.getElementById(e).innerHTML="View";
+    }
+    else{
+      document.getElementById(e).innerHTML="Close"
+    }
+  },
+  delete_shoppinglist(){
+       const index = this.shopping_list.findIndex(x=>x.title==this.shoplist);
+       this.shopping_list.splice(index,1);
+  },
   update_shoppinglist(e){
     alert(e);
   },

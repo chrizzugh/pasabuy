@@ -1,24 +1,24 @@
 <template>
-    <div class="bg-gray- pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-9 pb-16 px-3 ">
-            <div class="overflow-hidden font-bold  w-full rounded-xl divide-y divide-gray-400 divide-solid">
+    <div class="pt-6 bg-gray- font-nunito">
+        <div id="helpCreateAcc" class="flex items-center justify-center w-full px-3 pb-16 mt-9 ">
+            <div class="w-full overflow-hidden font-bold rounded-xl divide-solid">
                 <div class="pb-1">
                     <h1 class="space-x-1 space-y-1 text-xl">Limitation of Liability</h1>
                 </div> 
                 <div class="pt-2">
-                    <div class="w-full text-align-left justify">
-                                <p class="justify">Notwithstanding any damages that You might incur, the entire liability of the Company and any of its suppliers under any provision of 
+                    <div class="w-full font-normal text-justify text-align-left sm:text-sm vs:text-xs md:text-sm dv:text-base">
+                                <p class="pb-5">Notwithstanding any damages that You might incur, the entire liability of the Company and any of its suppliers under any provision of 
                                     this Terms and Your exclusive remedy for all of the foregoing shall be limited to the amount actually paid by You through the Service or 100 USD if 
                                     You haven't purchased anything through the Service.</p>
 
-                                <p class="justify">To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any 
+                                <p class="pb-5">To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any 
                                     special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits, loss 
                                     of data or other information, for business interruption, for personal injury, loss of privacy arising out of or in any way related to 
                                     the use of or inability to use the Service, third-party software and/or third-party hardware used with the Service, or otherwise in 
                                     connection with any provision of this Terms), even if the Company or any supplier has been advised of the possibility of such damages and 
                                     even if the remedy fails of its essential purpose.</p>
 
-                                <p class="justify">Some states do not allow the exclusion of implied warranties or limitation of liability for incidental or consequential damages, 
+                                <p class="pb-5">Some states do not allow the exclusion of implied warranties or limitation of liability for incidental or consequential damages, 
                                     which means that some of the above limitations may not apply. In these states, each party's liability will be limited to the greatest extent 
                                     permitted by law.</p>
                     </div>

@@ -1,13 +1,13 @@
 <template>
-    <div class="bg-gray- pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-9 pb-16 px-3 ">
-            <div class="overflow-hidden font-bold  w-full rounded-xl divide-y divide-gray-400 divide-solid">
+    <div class="pt-6 bg-gray- font-nunito">
+        <div id="termsAndcond" class="flex items-center justify-center w-full px-3 pb-16 mt-9 ">
+            <div class="w-full overflow-hidden font-bold rounded-xl divide-solid">
                 <div class="pb-1">
-                    <h1 class="space-x-1 space-y-1 text-xl">Changes to These Terms and Conditions</h1>
+                    <h1 class="pb-2 space-x-1 space-y-1 text-xl ">Changes to These Terms and Conditions</h1>
                 </div> 
                 <div class="pt-2">
-                    <div class="w-full text-align-left justify">
-                                <p class="justify">We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material We will 
+                    <div class="w-full font-normal text-justify text-align-left sm:text-sm vs:text-xs md:text-sm dv:text-base">
+                                <p class="pb-5">We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material We will 
                                     make reasonable efforts to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be 
                                     determined at Our sole discretion.</p>
                                 <p class="justify">By continuing to access or use Our Service after those revisions become effective, You agree to be bound by the revised terms. 

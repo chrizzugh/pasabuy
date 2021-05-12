@@ -291,31 +291,40 @@
           </div>
           <div v-for="(transaction,index) in transactions" :key="index">
           <div class="flex-auto flex-col w-full px-2 vs:px-0 space-y-3.5 pb-2 pt-2">
-            <div class="flex flex-row justify-between">
+            <div v-for="Offers in computedOffersReceived" :key="Offers" class="flex flex-row justify-between">
               <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
               <img class="w-10 h-10 vs:w-8 vs:h-8 rounded-full" :src="transaction.transationSender.profilePicture"/>
               <div class="flex flex-col space-y-1">
                 <div class="flex flex-row vs:space-x-1 space-x-2">
-                  <p class="text-base vs:text-sm ssm:text-xs font-bold leading-none text-gray-900">Asta Staria</p>
+                  <p class="text-base vs:text-sm ssm:text-xs font-bold leading-none text-gray-900">{{Offers.userName}}</p>
                   <span class="text-blue-900 align-middle material-icons md-14 ">
                   verified
                 </span>
                 </div>
-                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">5 minutes ago</p>
+                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">{{Offers.time}}</p>
               </div>
               </div>
               <div class="flex flex-row items-center vs:space-x-1 space-x-2">
-                <button class="focus:outline-none inline-flex items-start justify-start  vs:px-2.5 px-3.5 py-1.5 vs:py-1 border-2 rounded-full border-red-700">
+                <button @click="declineDisOffer" class="focus:outline-none inline-flex items-start justify-start  vs:px-2.5 px-3.5 py-1.5 vs:py-1 border-2 rounded-full border-red-700">
                 <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">Decline</p>
                 </button>
-                <button class="focus:outline-none inline-flex items-start justify-start vs:px-3 px-4 vs:py-1.5 py-2 bg-red-700 rounded-full">
+                <button @click="acceptDisOffer" class="focus:outline-none inline-flex items-start justify-start vs:px-3 px-4 vs:py-1.5 py-2 bg-red-700 rounded-full">
                 <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-white">Accept</p>
                 </button>
-                <button class="focus:outline-none">
+                <div>
+                <button @click="Offers.messageUser = !Offers.messageUser" class="focus:outline-none mt-1.5">
                 <span class="material-icons vs:text-xs">
                   more_vert
                 </span>
                 </button>
+                <div class="relative w-full">
+              <div v-if="Offers.messageUser" class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
+              <button class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+               <span class=" material-icons text-base  text-gray-900 ">
+                forum
+               </span>
+                Chat
+              </button>
               </div>
             </div>
           </div>
@@ -462,6 +471,8 @@
     </div>
     <!--end-->
   </div>
+<!--end-->
+
 </template>
 
 

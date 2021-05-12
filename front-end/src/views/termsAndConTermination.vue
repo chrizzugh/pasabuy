@@ -1,15 +1,15 @@
 <template>
-    <div class="bg-gray- pt-6 font-nunito">
-        <div id="helpCreateAcc" class="items-center flex justify-center w-full mt-9 pb-16 px-3 ">
-            <div class="overflow-hidden font-bold  w-full rounded-xl divide-y divide-gray-400 divide-solid">
+    <div class="pt-6 bg-gray- font-nunito">
+        <div id="helpCreateAcc" class="flex items-center justify-center w-full px-3 pb-16 mt-9 ">
+            <div class="w-full overflow-hidden font-bold rounded-xl divide-solid">
                 <div class="pb-1">
                     <h1 class="space-x-1 space-y-1 text-xl">Termination</h1>
                 </div> 
                 <div class="pt-2">
-                    <div class="w-full text-align-left justify">
-                                <p class="justify">We may terminate or suspend Your access immediately, without prior notice or liability, for any reason whatsoever, 
+                    <div class="w-full font-normal text-justify text-align-left sm:text-sm vs:text-xs md:text-sm dv:text-base">
+                                <p class="pt-2">We may terminate or suspend Your access immediately, without prior notice or liability, for any reason whatsoever, 
                                     including without limitation if You breach these Terms and Conditions.</p>
-                                <p class="justify">Upon termination, Your right to use the Service will cease immediately.</p>
+                                <p class="pt-5">Upon termination, Your right to use the Service will cease immediately.</p>
                     </div>
                 </div>
             </div><!----->

@@ -64,25 +64,25 @@
         <div class="flex flex-wrap items-center justify-center px-20 bg-white 2xl:pt-48 sm:pt-20 sm:px-12 vs:px-12 vs:w-full pt-28 vs:pt-16 font-nunito">
             <div class="p-1 sm:p-0 sm:w-full vs:p-0 md:p-5 sm:px-4 vs:w-full md:justify-center md:w-full w-1/4 bg-white h-96.7 rounded-xl 2xl:pl-5 ">    
                 <h2 class="pt-5 text-3xl font-bold leading-snug tracking-wide text-left lg:text-2xl 2xl:pt-0 md:text-3xl leading-1">We deliver<br class="vs:hidden sm:hidden md:hidden"> more than just groceries</h2>
-                <p class="py-3 mb-6 font-semibold justify text-justify leading-loose text-left text-md xl:mr-3 pt-9 2xl:mr-8 2xl:text-xl 2xl:leading-loose sm:text-lg md:text-lg lg:text-md lg:leading-loose lg:mr-3 lg:mb-0 lg:pt-6" >
+                <p class="py-3 mb-6 font-semibold leading-loose text-left text-justify justify text-md xl:mr-3 pt-9 2xl:mr-8 2xl:text-xl 2xl:leading-loose sm:text-lg md:text-lg lg:text-md lg:leading-loose lg:mr-3 lg:mb-0 lg:pt-6" >
                     Wanting to buy that branded shirt on sale? Need party supplies for a surprise birthday celebration? Shop for things with just a few clicks! With pasaBuy, your other essentials are just at the end of your fingertips.</p>
                     <button class="h-8 px-5 font-semibold tracking-wider text-white transition-colors duration-150 w-26 bg-red-buttons rounded-3xl focus:shadow-outline 2xl:h-10 hover:bg-red-700">
                         <router-link to="/log-in" >Try Now</router-link>
                     </button>
             </div>
             <div class="xl:w-2/4 2xl:w-150 lg:w-99.5  sm:w-full">
-                <img class="float-right rounded-xl object-contain w-full h-full" src="img/image3.png">
+                <img class="float-right object-contain w-full h-full rounded-xl" src="img/image3.png">
             </div> 
         </div>
 
-        <div class="flex flex-wrap items-center justify-center px-20  sm:px-12 sm:pt-20 vs:px-12 pt-36 2xl:pb-90 2xl:pt-56 xl:pb-40 vs:pb-20 vs:pt-20 md:pb-20 md:pt-20 lg:pb-40">
+        <div class="flex flex-wrap items-center justify-center px-20 sm:px-12 sm:pt-20 vs:px-12 pt-36 2xl:pb-90 2xl:pt-56 xl:pb-40 vs:pb-20 vs:pt-20 md:pb-20 md:pt-20 lg:pb-40">
                 <div class="float-left sm:justify-center sm:mb-28 xl:w-2/4 2xl:w-150 lg:w-99.5 sm:w-full">
-                    <img class="w-full h-full rounded-xl object-contain" src="img/image2.png">
+                    <img class="object-contain w-full h-full rounded-xl" src="img/image2.png">
             </div>
 
                 <div class="ml-6 vs:ml-0 sm:pl-0 sm:w-full vs:p-0 md:ml-20 p-1 vs:justify-center md:w-full vs:w-full w-1/4 bg-white h-96.7 rounded-xl">  
                 <h2 class="pt-2 text-3xl font-bold leading-snug tracking-wide text-left 2xl:pt-8 leading-1">We value your <br class="vs:hidden md:hidden sm:hidden 2xl:hidden"> health and <br class="vs:hidden sm:hidden"> safety.</h2>
-                <p class="py-3 mb-6 font-semibold justify text-justify leading-loose text-left md:text-lg 2xl:text-xl 2xl:leading-loose pt-11 text-md xl:mr-8 2xl:mr-8">
+                <p class="py-3 mb-6 font-semibold leading-loose text-left text-justify justify md:text-lg 2xl:text-xl 2xl:leading-loose pt-11 text-md xl:mr-8 2xl:mr-8">
                    pasaBuy limits your presence outside reducing your possibility of contracting the virus. Its security features ensure safe and worry-free transactions with other users on the platform.</p>
                     <button class="h-8 px-5 mt-2 font-semibold tracking-wider text-white transition-colors duration-150 w-26 bg-red-buttons 2xl:h-10 rounded-3xl focus:shadow-outline hover:bg-red-700">
                         <router-link to="/sign-up" >Sign Up Now</router-link>
@@ -91,28 +91,29 @@
         </div>
         
 <!--FOOTER-->
-        <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille">
+        <footer class="px-4 text-sm text-white lg:pb-5 lg:pt-8 pb-7 xl:pt-5 md:pt-12 bg-bastille">
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
                 <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-1 font-medium tracking-wide ">Pasabuy</li>
+                        <li class="inline-block px-3 py-1 text-sm font-medium tracking-wide ">Pasabuy</li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-1 font-medium tracking-wide sm:px-0">Company</li>
-                        <li><router-link to="#"  class="inline-block py-1 pl-3 pr-5 no-underline">About Us</router-link>
+                        <li class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide sm:px-0">Company</li>
+                        <li><router-link to="/about-us"  class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline">About Us</router-link>
                         </li>
-                        <li><router-link to="/help-center" class="inline-block py-1 pl-3 pr-5 no-underline ">Help</router-link></li>
+                        <li><router-link to="/help-center" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Help</router-link></li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-2 font-medium tracking-wide ">Policies</li>
-                        <li><router-link to="/privacy-policy" class="inline-block py-1 pl-3 pr-5 text-white no-underline">Privacy Policy</router-link></li>
-                        <li><router-link to="/terms-and-condition" class="inline-block py-1 pl-3 pr-5 text-white no-underline">Terms and Condition</router-link></li>
-                        <li><router-link to="/return-and-refund-policy" class="inline-block py-1 pl-3 pr-5 text-white no-underline">Return Refund</router-link></li>
+                        <li class="inline-block px-3 py-0.5 font-medium tracking-wide text-sm ">Policies</li>
+                        <li><router-link to="/privacy-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Privacy Policy</router-link></li>
+                        <li><router-link to="/terms-and-condition" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Terms and Condition</router-link></li>
+                        <li><router-link to="/return-and-refund-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Return Refund</router-link></li>
+                        <li><router-link to="/cookies-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Cookies Policy</router-link></li>
                     </ul>
                     <div class="flex flex-col w-full sm:w-11/12">
-                        <div class="inline-block px-3 py-1 font-medium tracking-wide ">©Pasabuy 2021</div>
+                        <div class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide ">©Pasabuy 2021</div>
                         <ul class="flex flex-col w-full p-0 font-thin text-left">
-                            <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">Stay connected with us</a></li>
+                            <li><a href="#" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Stay connected with us</a></li>
                         </ul>
                         <div class="flex justify-start pl-4 mt-2">
                             <a class="flex items-center mr-6 text-gray-300 no-underline hover:text-white" href="#">

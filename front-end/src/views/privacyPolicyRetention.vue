@@ -1,6 +1,6 @@
 <template>
-   <h2 class="text-4xl mt-10 text-blue-800 font-bold py-3">Retention of Your Personal Data</h2>
-    <div class="space-y-3">
+   <h2 class="py-3 mt-10 text-3xl font-bold text-blue-800 sm:text-2xl vs:text-lg md:text-2xl">Retention of Your Personal Data</h2>
+    <div class="space-y-3 text-justify vs:text-xs">
     <p>The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy 
         Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations 
         (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our 
