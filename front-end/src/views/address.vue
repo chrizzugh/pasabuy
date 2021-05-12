@@ -35,9 +35,7 @@
               <div class="w-full ">
                 <input aria-label="House Number" name="" type="text" required class="relative block w-full px-3 py-2 mt-4 mb-4 font-semibold tracking-wide placeholder-gray-500 border appearance-none focus:outline-none bg-gray-bgcolor rounded-xl h-14 focus:border-red-600 focus:z-10 sm:text-sm" placeholder="House Number"  v-model="addressInfo.houseNumber"/>
               </div>
-              <div class="w-full ">
-                <input aria-label="Landmark" name="" type="text" required class="relative block w-full px-3 py-2 mt-4 mb-4 font-semibold tracking-wide placeholder-gray-500 border appearance-none focus:outline-none bg-gray-bgcolor rounded-xl h-14 focus:border-red-600 focus:z-10 sm:text-sm" placeholder="Landmark"  v-model="addressInfo.landMark" />
-              </div>
+              
               <div class="flex mb-2 -mx-1">
                 <div class="w-1/2 px-1 mt-6 text-left text-grey-dark">
                   <router-link to="/sign-up" class="font-bold underline-none text-blue" >Back</router-link>
@@ -104,7 +102,6 @@ export default {
         barangay: null,
         cityMunicipality: null,
         province: null,
-        landMark: null,
 
       },
       errors:null,
@@ -132,9 +129,7 @@ export default {
             errors.response.data.barangay = "";
           if(errors.response.data.houseNumber == undefined)
             errors.response.data.houseNumber = "";
-          if(errors.response.data.landMark == undefined)
-            errors.response.data.landMark = "";
-          this.errors =errors.response.data.province+' '+ errors.response.data.cityMunicipality+' '+errors.response.data.barangay+' '+errors.response.data.houseNumber+' '+errors.response.data.landMark;
+          this.errors =errors.response.data.province+' '+ errors.response.data.cityMunicipality+' '+errors.response.data.barangay+' '+errors.response.data.houseNumber;
       })//end catch
     },
 
