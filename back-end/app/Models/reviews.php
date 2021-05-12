@@ -10,7 +10,13 @@ class reviews extends Model
     use HasFactory;
     protected $table = 'tbl_reviews';
     protected $primaryKey = 'indexReview ';
-
+    public $timestamps = false;
+    protected $fillable = [
+    	'revieweeEmail',
+    	'reviewerEmail',
+    	'rate',
+    	'feedback'
+    ];
     // public function transaction()
     // {
     //     # code...

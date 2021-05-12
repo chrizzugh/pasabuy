@@ -91,20 +91,33 @@
 <!--end of rating code-->
 
 <!--user post comments about reviews-->
-  <div class="flex flex-col ssm:mt-6 ssm:w-full ssm:h-auto vs:mt-6 sm:mt-6 sm:h-auto md:mt-6 md:h-auto h-auto vs:w-full min-w-0 px-2 sm:w-full vs:h-auto">
 
+
+  <div class="flex flex-col ssm:mt-6 ssm:w-full ssm:h-auto vs:mt-6 sm:mt-6 sm:h-auto md:mt-6 md:h-auto h-auto vs:w-full min-w-0 px-2 sm:w-full vs:h-auto">
     <!--Modal-->
    <PostReviewModal v-if="postModalVisible" @closeReviewModal="listener"/>
    <!--end--> 
-     <!-- <div class="flex pb-6"> -->
-     <div v-if="transactions.length && user.email!=profile.email" class="flex pb-6">
-    <div class="inline-flex space-x-4 ssm:space-x-2 items-center vs:w-full sm:w-full ssm:w-full ssm:p-2 justify-center vs:p-4 p-6 bg-white shadow rounded-xl">
-        <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/>
-        <button @click="togglePostModal" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500 py-5 pl-6 bg-gray-100 rounded-full vs:h-12 ssm:h-10 h-14 w-448 vs:w-full ssm:w-full">
-        Post a review for Yami...</button>
-        
+     
+    <div class="flex flex-col ssm:h-auto vs:h-auto sm:h-auto md:h-auto h-auto pb-6">
+        <div v-if="transactions.length && user.email!=profile.email" class="flex flex-col ssm:h-auto vs:h-auto sm:h-auto md:h-auto h-auto">
+          <div class="inline-flex space-x-4 ssm:space-x-2 items-center vs:w-full sm:w-full ssm:w-full ssm:p-2 justify-center vs:p-4 p-6 bg-white shadow rounded-xl">
+              <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/>
+              <button @click="togglePostModal" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500 py-5 pl-6 bg-gray-100 rounded-full vs:h-12 ssm:h-10 h-14 w-448 vs:w-full ssm:w-full">
+              Post a review for Yami...</button>
+          </div>
+        </div>
     </div>
-  </div>
+    
+
+      <!-- <div class="flex flex-col ssm:h-auto vs:h-auto sm:h-auto md:h-auto h-auto"> -->
+        <div class="flex pb-6">
+          <div  v-if="reviews.length==0" class="inline-flex space-x-4 ssm:space-x-2 items-center vs:w-full sm:w-full ssm:w-full ssm:p-2 justify-center vs:p-4 p-6 bg-white shadow rounded-xl">
+                <!-- <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/> -->
+                <p class="flex items-center focus:outline-none justify-center lvs:text-sm vs:text-xs ssm:text-xs  text-base outline-none leading-none  py-5 pl-6 vs:h-12 ssm:h-10 h-14 w-99 vs:w-full ssm:w-full">
+                  NO REVIEWS</p>
+          </div>
+        </div>
+     <!-- </div> -->
 
     <!--post 1-->
     <div v-for="review in reviews" v-bind:key="review.indexReview" class="flex pb-6 ssm:w-full vs:w-full sm:w-full">
@@ -146,7 +159,7 @@
               </div>
             </div>
         </div>
-        <div class="flex items-start justify-start px-6 py-4  bg-gray-100 rounded-xl h-auto mt-3 w-99 ssm:w-full vs:w-full sm:w-full">
+        <div v-if="review.feedback" class="flex items-start justify-start px-6 py-4  bg-gray-100 rounded-xl h-auto mt-3 w-99 ssm:w-full vs:w-full sm:w-full">
           <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900">{{review.feedback}}</p>
       </div>
       </div>    
@@ -230,7 +243,6 @@ export default {
     },
   },
   computed: {
-    
       profile(){
         return store.getters.getUserInfo
       },

@@ -24,7 +24,10 @@ const store =  new Vuex.Store({
         userInfo:[],
         notAuthUserAddress:[],
         allShares:[],
-        allReviews: []
+        allReviews: [],
+        allLanguages: [],
+        allUserAbout: [],
+
 
 
 
@@ -84,7 +87,14 @@ const store =  new Vuex.Store({
         },
         setAllReviews(state,data){
             state.allReviews = data
+        },
+        setAllLanguages(state,languages){
+            state.allLanguages = languages
+        },
+        setAllUserAbout(state,userAbout){
+            state.allUserAbout = userAbout
         }
+
     },
     actions:{
         async createPostOffer(state,post){
@@ -196,6 +206,17 @@ const store =  new Vuex.Store({
                 console.log(error)
             })
         },
+        async getAllLangauges(state){
+            return api
+            .get('api/allLanguages')
+            .then((res)=>{
+                let languages = res.data
+                state.commit('setAllLanguages',languages)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
         async getUserTransactions(state){
             return api
             .get('api/getTransaction')
@@ -286,6 +307,18 @@ const store =  new Vuex.Store({
                 console.log(error)
             })
         },
+        async getAllUserAbout(state){
+            return api
+            .get('api/getUserAbout')
+            .then((res)=>{
+                //console.log("RESPONSE",res)
+                let userAbout = res.data
+                state.commit('setAllUserAbout',userAbout)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
     },
     modules:{},
     getters:{
@@ -305,6 +338,8 @@ const store =  new Vuex.Store({
         getNotAuthUserAddress:(state) => state.notAuthUserAddress,
         getAllShares:(state) => state.allShares,
         getAllReviews:(state) => state.allReviews,
+        getAllLangauges:(state) => state.allLanguages,
+        getAllUserAbout:(state) => state.allUserAbout,
     }
 })
 

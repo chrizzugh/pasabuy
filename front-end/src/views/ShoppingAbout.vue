@@ -12,7 +12,8 @@
         <div class="flex flex-row space-x-4 ssm:space-x-2">
           <div class="inline-flex flex-col " >
             <div class="inline-flex space-x-1 items-center justify-center">
-              <span class="text-2xl ssm:text-xl vs:text-xl lvs:text-2xl font-bold leading-normal text-gray-900">{{rating}}</span>
+              <span v-if="ratings=='No Ratings'" class="text-2xl ssm:text-xl vs:text-xl lvs:text-2xl font-bold leading-normal text-gray-900">0</span>
+              <span v-if="ratings!='No Ratings'" class="text-2xl ssm:text-xl vs:text-xl lvs:text-2xl font-bold leading-normal text-gray-900">{{ratings}}</span>
                <span class="text-yellow-500 align-middle material-icons md-24">
                   star_rate
                 </span>
@@ -56,7 +57,7 @@
         <div class="flex flex-col">
           <div class="inline-flex justify-between">
             <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Education</p>
-            <button @click="$router.push('account-settings')" class="text-sm ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
+            <button v-if="userPersonal.email == account_infos.email" @click="$router.push('/account-settings')" class="text-sm ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
           </div>
           <div class="inline-flex space-x-2 py-4">
             <img class="w-6 h-6 rounded-full" src="img/graduation_cap.svg"/>
@@ -74,19 +75,19 @@
         <div class="flex flex-col">
           <div class="inline-flex justify-between">
             <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Places Lived</p>
-            <button @click="$router.push('account-settings')" class="text-sm ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
+            <button v-if="userPersonal.email == account_infos.email" @click="$router.push('/account-settings')" class="text-sm ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
           </div>
           <div class="inline-flex space-x-2 py-4">
            <span class="rounded-full material-icons text-gray-500">
               location_on
               </span>
-            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">From <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{address_info.barangay}}, {{address_info.city}}</span></p>
+            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">From <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{accountaddress.barangay}}, {{accountaddress.cityMunicipality}}</span></p>
           </div>
           <div class="inline-flex space-x-2">
             <span class="rounded-full material-icons text-gray-500">
               location_on
               </span>
-            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">Lives in <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{address_info.barangay}}, {{address_info.city}}</span></p>
+            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">Lives in <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{accountaddress.barangay}}, {{accountaddress.cityMunicipality}}</span></p>
           </div>
         </div>
       </div> 
@@ -101,7 +102,7 @@
       <div class="flex flex-col">
         <div class="inline-flex justify-between">
           <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Basic Info</p>
-          <button @click="$router.push('account-settings')" class="text-sm ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
+          <button v-if="userPersonal.email == account_infos.email" @click="$router.push('/account-settings')" class="text-sm ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
         </div>
         <div class="flex flex-row space-x-4 py-4">
           <div class="flex flex-col space-y-1.5">
@@ -141,7 +142,7 @@
               <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{timestamp(account_infos.birthDate)}}</p>
             </div>
             <div class="inline-flex">
-              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{userLang.languages}}</p>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{userLang}}</p>
             </div>
           </div>
         </div>
@@ -160,36 +161,40 @@
     <div class="flex flex-col w-full">
 
       <!--Skills section-->
-      <div class="flex flex-col">
-        <div class="inline-flex items-start justify-between">
+      <div class="flex flex-col py-6">
+        <div class="h-10 inline-flex items-start justify-between">
           <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Skills</p>
-          <button @click="toggleSkillsModal" class="text-sm focus:outline-none ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
+           <button v-if="userPersonal.email == account_infos.email" @click="toggleSkillsModal" class="text-sm focus:outline-none ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
           <!--Modal-->
           <EditSkillsModal v-if="postModalVisible" @closeEditSkillsModal="listener"/>
           <!--end-->
         </div>
-        <div class="flex-1 space-y-6 items-start justify-start w-full h-auto item-start space-x-4 mb-6">
-        <div v-for="userSkill in userSkills" v-bind:key="userSkill.indexSkills" class="ml-4 inline-flex flex-grow-0 items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{ userSkill.skills }}</p>
+        <div v-for="userAbout in userAbouts" v-bind:key="userAbout.indexUserAbout " class="flex-1 space-y-6 flex-row justify-start item-start space-x-4">
+            <div v-if="userAbout.skills!=null" class="overflow-y-auto space-y-4">
+              <div v-for="skill in (userAbout.skills.split(','))" v-bind:key="skill.skills " class="ml-4 inline-flex space-x-4 items-center justify-start px-4 py-1 bg-gray-100 rounded-full mr-3">
+                <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{skill}}</p>
+              </div>
+            </div>
         </div>
-        </div>
-        <hr class="border-gray-200 h-2 w-full">
       </div>
+      <hr class="border-gray-200 h-2 w-full">
       <!--end-->
 
       <!--Interest section-->
       <div class="flex flex-col py-6">
-        <div class="inline-flex items-start justify-between">
+        <div class="h-10 inline-flex items-start justify-between">
           <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Interest</p>
-          <button @click="toggleInterestModal1" class="text-sm focus:outline-none ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
+          <button v-if="userPersonal.email == account_infos.email" @click="toggleInterestModal1" class="text-sm focus:outline-none ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
           <!--Modal-->
           <EditInterestModal v-if="postModalVisible1" @closeEditInterestModal="listener1"/>
           <!--end-->
         </div>
-        <div class="flex-1 space-y-6 flex-row justify-start w-full h-auto item-start space-x-4">
-          <div v-for="interest in interests" v-bind:key="interest.indexInterest" class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{ interest.interests }}</p>
-          </div>
+        <div v-for="userAbout in userAbouts" v-bind:key="userAbout.indexUserAbout " class="flex-1 space-y-6 flex-row justify-start item-start space-x-4">
+            <div v-if="userAbout.interests!=null" class="overflow-y-auto space-y-4">
+              <div v-for="interest in (userAbout.interests.split(','))" v-bind:key="interest.interests " class="ml-4 inline-flex space-x-4 items-center justify-start px-4 py-1 bg-gray-100 rounded-full mr-3">
+                <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{interest}}</p>
+              </div>
+            </div>
         </div>
       </div>
       <hr class="border-gray-200 h-2 w-full">
@@ -199,36 +204,18 @@
       <div class="flex flex-col py-6">
         <div class="inline-flex items-start justify-between">
           <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Visited Place</p>
-          <button @click="toggleVisitedPlaceModal2" class="text-sm focus:outline-none ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
+          <button v-if="userPersonal.email == account_infos.email" @click="toggleVisitedPlaceModal2" class="text-sm focus:outline-none ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
           <!--Modal-->
           <EditVisitedPlaceModal v-if="postModalVisible2" @closeEditVisitedPlaceModal="listener2"/>
           <!--end-->
         </div>
-        <div class="flex-1 space-y-6 flex-row justify-start item-start space-x-4">
-          <div class="ml-4 inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Sorsogon</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Masbate</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Tiwi-Albay</p>
-        </div>
-        <div class="vs:hidden inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Joroan, Albay</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Cebu</p>
-        </div>
-         <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Taguig City</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Davao City</p>
-        </div>
-        <div class="inline-flex items-start justify-start px-4 py-1 bg-gray-100 rounded-full">
-        <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">Catanduanes</p>
-        </div>
+          <div v-for="userAbout in userAbouts" v-bind:key="userAbout.indexUserAbout " class="flex-1 space-y-6 flex-row justify-start item-start space-x-4">
+            <div v-if="userAbout.visitedPlace!=null"  class="overflow-y-auto space-y-4">
+              <div v-for="visitedPlaces in (userAbout.visitedPlace.split(','))" v-bind:key="visitedPlaces.visitedPlace " class="ml-4 inline-flex space-x-4 items-center justify-start px-4 py-1 bg-gray-100 rounded-full mr-3">
+                <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{visitedPlaces}}</p>
+              </div>
+                <!-- <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{userAbout}}</p> -->
+            </div>
         </div>
       </div>
       <!--end-->
@@ -244,7 +231,6 @@
 </template>
 
 <script>
-import api from '../api'
 import EditSkillsModal from './profileEditSkillsModal'
 import EditInterestModal from './profileEditInterestModal'
 import EditVisitedPlaceModal from './profileEditVisitedPlaceModal'
@@ -253,7 +239,7 @@ import moment from 'moment'
 export default {
   data(){
     return{
-      rating: '4.9',
+      // rating: '4.9',
       deliveries: '20',
       orders: '13',
       postModalVisible: false,
@@ -275,8 +261,17 @@ export default {
           },
       userID:null,
       interests: [],
-      userSkills: [],
+      listinterests: [],
+      listSkills: [],
+      skilled: [],
+      pasabuyers: '20',
+      rating: 0,
+      counter: 0
+
     }
+  },
+  mounted(){
+    this.userID =  atob(this.$route.query.ID)
   },
    components: {
     EditSkillsModal,
@@ -296,22 +291,15 @@ export default {
     listener1(){
       this.postModalVisible1 = false;
   },
-  loadinterest(){
-      api.get("api/userinterest").then((data) => {this.interests = data.data; console.log("interest",this.interests)});
-      api.get("api/userSkills").then((data) => {this.userSkills = data.data; console.log("skills",this.userSkills)});
-    },
    toggleVisitedPlaceModal2(){
       this.postModalVisible2 = !this.postModalVisible2
     },
     listener2(){
       this.postModalVisible2 = false;
-  },
+    },
     timestamp(datetime){
       return moment(datetime).format('LL');
-    }
-  },
-  mounted(){
-    this.userID =  atob(this.$route.query.ID)
+    },
   },
   computed:{
     account_infos(){
@@ -323,13 +311,29 @@ export default {
     userPersonal(){
       return store.getters.getPersonal
     },
-    userLang(){
-      return store.getters.getUserLang
+    userAbouts(){
+      return store.getters.getAllUserAbout.filter((userAbout) => {return (userAbout.email ==  this.account_infos.email)})
     },
+    reviews(){
+        //console.log('user',this.store.getters.getPersonal)
+        return store.getters.getAllReviews.filter((rev)=>{
+          return (rev.revieweeEmail == this.account_infos.email)
+        })
+      },
+      ratings(){
+        //console.log('user',this.store.getters.getPersonal)
+        if(this.reviews == 0)
+          return "No Ratings"
+        this.reviews.filter((rev)=>{
+            this.rating = this.rating + rev.rate
+            this.counter++
+        })
+        return (this.rating/this.counter).toFixed(1)
+      },
+    
+    
   },
   created(){
-    this.loadinterest();
-    //api.get("api/user").then((data) => {this.user_email = data.data.email; console.log("email",this.user_email)});
   },
   
 }

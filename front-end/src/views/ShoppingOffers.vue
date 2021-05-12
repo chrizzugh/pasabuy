@@ -17,7 +17,7 @@
   <!--end-->
 
   <!--user post-->
-  <div v-for="shoppingOffer_info in shoppingOffer_infos" v-bind:key="shoppingOffer_info.offer_post.indexShoppingOfferPost" class="flex items-center justify-center pt-6">
+  <div v-for="shoppingOffer_info in shoppingOffer_infos" v-bind:key="shoppingOffer_info.offer_post.indexShoppingOfferPost" class="p-6 flex items-center justify-center pt-6">
     <div class="space-x-4 h-auto p-6 vs:p-4 ssm:p-2 ssm:w-full vs:w-full sm:w-full w-608 bg-white shadow rounded-xl">
       <div class="flex flex-col items-start justify-start">
 
@@ -39,7 +39,7 @@
               </div>
             </div>
           </div>
-          <div v-if="userID === user.email" class="vs:mt-1">
+          <div v-if="userID == user.email" id="3dotmenu" class="vs:mt-1">
             <button @click="edit1=!edit1, shoppingOffer_postNumber = shoppingOffer_info.offer_post.indexShoppingOfferPost" class="focus:outline-none">
               <img class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto" src="img/3dot.svg"/>
             </button>
@@ -136,7 +136,7 @@
         <!--section 4-->
 
         <!--section 5-->
-        <div v-if="shoppingOffer_info.email !== shoppingOffer_info.user.email" class="flex justify-evenly w-full vs:space-x-3 vs:min-w-0 vs:px-2 ssm:space-x-1 ssm:px-0 pr-8 ssm:pr-0 vs:pr-0 mt-4 space-x-6">
+        <div v-if="userID != user.email" class="flex justify-evenly w-full vs:space-x-3 vs:min-w-0 vs:px-2 ssm:space-x-1 ssm:px-0 pr-8 ssm:pr-0 vs:pr-0 mt-4 space-x-6">
           <SendRequest v-if="postSendModal" @closeSendRequest="listener3"/>
           <button @click="toggleSendModal" class="flex focus:outline-none items-center space-x-2 ssm:space-x-1">
             <span class="pr-2 ssm:pr-0 material-icons md-24 ">

@@ -44,17 +44,6 @@ class shoppingOffersController extends Controller
         $record->paymentMethod = $request->paymentMethod;
         $record->caption = $request->caption;
         $record->save();
-        // return $record;
-        // if($record->save()){
-        //     return response()->json(['message'=>'Success, Information saved'],200);
-        // }
-        // else{
-        //     return response()->json(['error'=>'An error occured'],422);
-        // }
     }
-
-    // function update(){
-    //     return shoppingOffers::update('update tbl_shoppingOfferPost set deliveryArea = 100 where indexShoppingOfferPost  = 3');
-    // }
         
 }

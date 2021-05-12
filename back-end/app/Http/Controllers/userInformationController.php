@@ -46,11 +46,17 @@ class userInformationController extends Controller
     {
         # code...
         $user = Auth::user();
-        $data = DB::select('SELECT * FROM tbl_userLanguages WHERE email = \''.$user->email.'\'');
+        $data = DB::select('SELECT * FROM tbl_userlanguages WHERE email = \''.$user->email.'\'');
 
         if($data == null)
             return response()->json([]);
         return response()->json($data[0]);
+    }
+
+    public function getAllLanguages()
+    {
+        # code...
+        return userLanguages::all();
     }
 
     public function getValidID()

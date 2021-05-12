@@ -14,74 +14,59 @@
         <div class="flex flex-col px-4">
 
         <div class="flex flex-col pb-8">
-         <div class="flex pl-4 pb-1.5">
-            <p class="text-sm font-bold tracking-wide leading-none text-gray-500 uppercase">Add Visited Place</p>
-         </div>
-          <input class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-5 pl-4 bg-gray-100 rounded-xl vs:h-10 ssm:h-8 h-12 w-full vs:w-full ssm:w-full" placeholder="Share the places you've been to!">
+          <div class="flex pl-4 pb-1.5">
+            <p class="text-sm font-bold tracking-wide leading-none text-gray-500 uppercase">Add Place</p>
+          </div>
+          <div class="flex w-full flex-row justify-between space-x-3 items-center">
+                <select id="visitedPlace" v-model="tempVisitedPlaces" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-3 pl-4 bg-gray-100 rounded-xl h-auto w-full vs:w-full ssm:w-full" placeholder="What do you activities like?">
+                  <option value="Interest" selected disabled>Choose Interest</option>
+                  <option
+                    v-for="listVisitedPlace in listVisitedPlaces"
+                    v-bind:key="listVisitedPlace.id"
+                    v-bind:value="listVisitedPlace.provDesc"
+                  >
+                  {{ listVisitedPlace.provDesc }}
+                  </option>
+                </select>
+                <!-- <input @keyup="add" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-5 pl-4 bg-gray-100 rounded-xl vs:h-10 ssm:h-8 h-12 w-full vs:w-full ssm:w-full" placeholder="What do you activities like?"> -->
+                <button v-if="tempVisitedPlaces == ''" :style="{opacity: 0.5}" @click="addVisitedPlace" class="focus:outline-none" disabled>
+                  <span class="text-gray-700 material-icons text-3xl">
+                  add_circle
+                  </span>
+                </button>
+                <button v-if="tempVisitedPlaces != ''" @click="addVisitedPlace" class="focus:outline-none">
+                  <span class="text-gray-700 material-icons text-3xl">
+                  add_circle
+                  </span>
+                </button>
+            </div>
         </div>
 
         <div class="flex flex-col pb-6">
-         <div class="flex pl-4">
-            <p class="text-base font-bold leading-none text-gray-900 uppercase">Your Visited Places</p>
-         </div>
-         <div class="flex-1 py-1 space-y-4 items-start justify-start w-full h-auto item-start">
-        <div class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
-        <p class="text-sm leading-loose text-center text-gray-900">Sorsogon</p>
-        <button class="focus:outline-none">
-        <span class="material-icons md-14 mt-2">clear</span>
-        </button>
-        </div>
-        <div class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
-        <p class="text-sm leading-loose text-center text-gray-900">Masbate</p>
-        <button class="focus:outline-none">
-        <span class="material-icons md-14 mt-2">clear</span>
-        </button>
-        </div>
-        <div class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
-        <p class="text-sm leading-loose text-center text-gray-900">Tiwi-Albay</p>
-        <button class="focus:outline-none">
-        <span class="material-icons md-14 mt-2">clear</span>
-        </button>
-        </div>
-        <div class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
-        <p class="text-sm leading-loose text-center text-gray-900">Joroan,Albay</p>
-        <button class="focus:outline-none">
-        <span class="material-icons md-14 mt-2">clear</span>
-        </button>
-        </div>
-        <div class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
-        <p class="text-sm leading-loose text-center text-gray-900">Cebu</p>
-        <button class="focus:outline-none">
-        <span class="material-icons md-14 mt-2">clear</span>
-        </button>
-        </div>
-        <div class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
-        <p class="text-sm leading-loose text-center text-gray-900">Taguig City</p>
-        <button class="focus:outline-none">
-        <span class="material-icons md-14 mt-2">clear</span>
-        </button>
-        </div>
-        <div class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
-        <p class="text-sm leading-loose text-center text-gray-900">Davao City</p>
-        <button class="focus:outline-none">
-        <span class="material-icons md-14 mt-2">clear</span>
-        </button>
-        </div>
-        <div class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
-        <p class="text-sm leading-loose text-center text-gray-900">Catanduanes</p>
-        <button class="focus:outline-none">
-        <span class="material-icons md-14 mt-2">clear</span>
-        </button>
-        </div>
-        </div>
-        </div>
+          <div class="flex pl-4">
+              <p class="text-base font-bold leading-none text-gray-900 uppercase">Visited Places</p>
+          </div>
+          <div class="flex w-full h-48 overflow-y-auto">
+            <div class="flex-1 space-y-4 items-start justify-start w-full item-start">
+              <div v-for="visitedPlace in visitedPlaces" :key="visitedPlace" class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
+                <p class="text-sm leading-loose text-center text-gray-900">{{ visitedPlace }}</p>
+                <button @click="deleteInterest(visitedPlace)" class="focus:outline-none">
+                <span class="material-icons md-14 mt-2">clear</span>
+                </button>
+              </div>
+            </div>
+          </div>
+      </div>
         
         <div class="flex space-x-4 pb-4 flex-row w-full justify-center items-center">
             <button class="focus:outline-none inline-flex items-center justify-center w-full px-4 py-0.5 border-2 rounded-full border-gray-900">
             <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
             </button>
-            <button class="focus:outline-none inline-flex items-center justify-center w-full px-4 py-1.5 bg-red-700 rounded-full">
-            <p class="text-base font-bold leading-normal text-center text-white">Save</p>
+            <button v-if="useremail" @click="update" class="focus:outline-none inline-flex items-center justify-center w-full px-4 py-1.5 bg-red-700 rounded-full">
+              <p class="text-base font-bold leading-normal text-center text-white">Update</p>
+            </button>
+            <button v-if="!useremail" @click="submit" class="focus:outline-none inline-flex items-center justify-center w-full px-4 py-1.5 bg-red-700 rounded-full">
+              <p class="text-base font-bold leading-normal text-center text-white">Save</p>
             </button>
         </div>
         
@@ -92,18 +77,116 @@
 </template>
 
 <script>
-
+import api from '../api'
+import VueSimpleAlert from 'vue-simple-alert'
+import store from "../store/index"
 export default {
 
     data(){
       return{
+        userindex: null,
+        useremail: null,
+        userskills: null,
+        userinterests: null,
+        listVisitedPlaces: [],
+        tempVisitedPlaces: '',
+        visitedPlaces: [],
       }
     },
     methods: {
         close(){
             this.$emit('closeEditVisitedPlaceModal')
         },
-  }
+        loadMunicipality(){
+          api.get("api/refProvince").then((data) => {this.listVisitedPlaces = data.data; console.log("VisitedPlaces",this.listVisitedPlaces)});
+        },
+        addVisitedPlace(){
+          // console.log(e)
+          if(!this.visitedPlaces.includes(this.tempVisitedPlaces)){
+          this.visitedPlaces.push(this.tempVisitedPlaces)
+          this.tempVisitedPlaces = ''
+          }
+          else{
+            alert("You already visited this Place");
+          }
+        },
+        submit(){
+          this.$emit('closeEditVisitedPlaceModal')
+            if(this.visitedPlaces==''){
+              this.visitedPlaces = null
+            }
+            var info = {
+              indexUserAbout:this.userindex,
+              email:this.userPersonal.email,
+              skills:this.userskills,
+              interests:this.userinterests,
+              visitedPlace:this.visitedPlaces,
+            }
+            api.post('/api/postVisitedPlace', info).then(()=>{
+              store.dispatch('getAllUserAbout')
+              VueSimpleAlert.alert("Visited Places created successfully", "Sucess","success")
+                this.$emit('closeEditVisitedPlaceModal')
+            //this.user = res.data;
+            //VueSimpleAlert.alert(res.data.message,"Success","success")
+            //store.dispatch('getPosts')//this will get the updated version of posts state from the states
+            //window.location.reload();
+            }).catch((errors) => {
+                console.log(errors)
+            })
+        },
+        update(){
+            this.$emit('closeEditVisitedPlaceModal')
+            console.log("skilleded",this.visitedPlaces)
+            if(this.visitedPlaces==''){
+              this.visitedPlaces = null
+            }
+            var info = {
+              indexUserAbout:this.userindex,
+              email:this.userPersonal.email,
+              skills:this.userskills,
+              interests:this.userinterests,
+              visitedPlace:this.visitedPlaces,
+            }
+
+            api.post('/api/updateVisitedPlace', info).then(()=>{
+              store.dispatch('getAllUserAbout')
+              VueSimpleAlert.alert("Visited Places updated successfully", "Sucess","success")
+                this.$emit('closeEditInterestModal')
+            }).catch((errors) => {
+                console.log(errors)
+            })
+        },
+        deleteInterest(visitedPlace){
+          this.visitedPlaces = this.visitedPlaces.filter((item) => {
+            return visitedPlace !== item
+          })
+        },
+    },
+    computed: {
+      userPersonal(){
+        return store.getters.getPersonal
+      },
+      userAbouts(){
+        return store.getters.getAllUserAbout.filter((userAbout) => {return (userAbout.email ==  this.userPersonal.email)})
+      },
+    },
+    created(){
+      this.loadMunicipality();
+      let arr = [];
+
+      this.userAbouts.forEach((value, index) => {
+      arr.push(value);
+      
+      console.log(index);
+      this.userindex = value.indexUserAbout;
+      this.useremail = value.email;
+      this.userskills = value.skills;
+      this.userinterests = value.interests;
+      console.log("Mabuhay: ",this.userindex, this.useremail, this.userinterests, this.uservisitedPlace);
+      if(value.visitedPlace!=null)
+        this.visitedPlaces = (value.visitedPlace).split(',');
+      });
+    }
 }
 </script>
 
