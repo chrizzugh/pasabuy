@@ -420,7 +420,7 @@ export default {
         shoppingList: null,
       },
       shopping_info: {
-        shoppingID: this.post.request_post.shopping_list.indexShoppingList,
+        shoppingID: this.post.request_post.indexShoppingList,
         items: this.post.request_post.shopping_list.shoppingListContent.split(
           ", "
         ),

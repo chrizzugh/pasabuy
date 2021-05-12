@@ -293,10 +293,9 @@
                           </div>
                         </div>
                       </div>
-
                       <div
                         id="3dotmenu"
-                        class="vs:mt-1"
+                        class="vs:mt-1 relative"
                         v-if="
                           post_info.email == user.email &&
                           post_info.offer_post != null
@@ -318,7 +317,7 @@
                         <div class="flex w-full">
                           <div
                             v-if="edit1 && edit2 == post_info.postNumber"
-                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-95 md:right-5 xl:right-99.1 h-min w-30"
+                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-0 md:right-5 xl:right-0 h-min w-30"
                           >
                             <EditShoppingOfferPostVue
                               v-if="postModalVisible1"
@@ -371,7 +370,7 @@
                       </div>
                       <div
                         id="3dotmenu"
-                        class="vs:mt-1"
+                        class="vs:mt-1 relative"
                         v-if="
                           post_info.email == user.email &&
                           post_info.request_post != null
@@ -392,7 +391,7 @@
                         <div class="flex w-full">
                           <div
                             v-if="edit1 && edit2 == post_info.postNumber"
-                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-95 md:right-5 xl:right-99.1 h-min w-30"
+                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-0 md:right-5 xl:right-0 h-min w-40"
                           >
                             <EditOrderRequest
                               v-if="postModalVisible1"
@@ -1128,42 +1127,53 @@
 
                       <!--section 4-->
                       <div
-                        class="flex items-center justify-start w-full p-2 mt-4 space-x-4 rounded-lg bg-gray-bgcolor ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start vs:space-x-0"
-                        v-if="post_info.post.request_post != null"
-                      >
-                        <div class="flex-col items-start w-full">
-                          <span
-                            class="pb-2 pl-2 text-sm font-bold vs:text-sm sm:text-sm sm:font-bold"
-                            >Shopping List
-                            <label class="font-normal text-gray-500"
-                              >({{
-                                post_info.post.request_post.shoppingListContent
-                                  .length
-                              }}
-                              items)</label
-                            >
-                          </span>
-                          <ul
-                            id="shop-list"
-                            class="pl-4 leading-loose list-disc list-inside"
+                       class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
+                      v-if="post_info.post.request_post != null"
+                    >
+                      <div class="flex-col items-start w-full">
+                        <span
+                          class="pb-2 pl-2 text-sm font-bold vs:text-sm sm:text-sm sm:font-bold"
+                          >Shopping List
+                          <label class="font-normal text-gray-500"
+                            >{{
+                              post_info.post.request_post.shoppingListContent.length
+                            }}
+                            items</label
                           >
-                            <li
-                              v-for="(shoppingList, index) in post_info.post
-                                .request_post.shoppingListContent"
-                              :key="index"
-                              class="text-xl"
+                        </span>
+                        <ul
+                          id="shop-list"
+                          class="pl-4 leading-loose list-disc list-inside"
+                        >
+                          <li
+                            v-for="(
+                              shoppingList, index
+                            ) in computedShopItemList(post_info.post.request_post.shoppingListContent)"
+                            :key="index"
+                            class="text-xl"
+                          >
+                            <span class="text-sm"
+                              >{{ shoppingList.product }} ·
+                              {{ shoppingList.brand }} [{{
+                                shoppingList.quantity
+                              }}
+                              units]</span
                             >
-                              <span class="text-sm"
-                                >{{ shoppingList.product }} ·
-                                {{ shoppingList.brand }} [{{
-                                  shoppingList.quantity
-                                }}
-                                units]</span
-                              >
-                            </li>
-                          </ul>
-                        </div>
+                          </li>
+                        </ul>
                       </div>
+                      <button
+                        @click="showMoreshowLess"
+                        v-if="
+                          !isFew(
+                            post_info.post.request_post.shoppingListContent
+                          )
+                        "
+                        class="focus:outline-none items-start justify-start text-sm text-gray-500"
+                      >
+                        {{ showListStatus }}
+                      </button>
+                    </div>
                       <div
                         class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
                         v-if="post_info.post.offer_post != null"
