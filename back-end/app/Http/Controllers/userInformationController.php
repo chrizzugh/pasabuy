@@ -185,7 +185,7 @@ class userInformationController extends Controller
         $validator=Validator::make($request->all(),[
             'firstname' => ['required','regex:/^[\pL\s\-]+$/u','max:255'],
              'lastname' => ['required','regex:/^[\pL\s\-]+$/u','max:255'],
-             'phone_number' => ['required','numeric','digits:11'],
+             'phone_number' =>  ['required','regex:(\+?[6][3]?\s?[9]\d{2}\s?\d{3}\s?\d{4})'],
         ]);
         if($validator->fails()) {
             return response()->json($validator->errors(),422);
@@ -198,24 +198,11 @@ class userInformationController extends Controller
         $user->phoneNumber = $request->phone_number;
         $user->gender = $request->gender;
         $user->birthDate = $request->birdate;
+        $user->work = $request->work;
+        $user->language = $request->language;
+
        
         if($user->save()){
-            //updating user languages
-            $userLang = userLanguages::find(Auth::User()->email);
-            if($userLang == null){
-                $userLang= new userLanguages();
-                $userLang->email = Auth::User()->email;
-                $userLang->languages = $request->language;
-                $userLang->save();
-                return response()->json(['message'=>'Success, Information saved.'],200);
-            }
-            else{
-                $userLang = userLanguages::where('email',Auth::User()->email)->first();
-                $userLang->languages = $request->language;
-                $userLang->save();
-                return response()->json(['message'=>'Success, Information saved.'],200);
-            }
-            
         }
         else{
             return response()->json('error, information not saved');

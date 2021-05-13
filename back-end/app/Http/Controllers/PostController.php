@@ -43,11 +43,6 @@ class PostController extends Controller
 			'transportMode' => ['required', 'max:200'],
 			'capacity' => ['required', 'max:100'],
 			'paymentMethod' => ['required', 'max:200'],
-<<<<<<< HEAD
-
-=======
-			'caption' => ['nullable', 'max:200'],
->>>>>>> a68294c1c14e655bff943c90bba624c5495b7926
 		]);
 
 		$user = Auth::User();
