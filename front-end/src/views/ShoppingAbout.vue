@@ -202,19 +202,18 @@
     
       <!--Visited place section-->
       <div class="flex flex-col py-6">
-        <div class="inline-flex items-start justify-between">
+        <div class="h-10 inline-flex items-start justify-between">
           <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Visited Place</p>
           <button v-if="userPersonal.email == account_infos.email" @click="toggleVisitedPlaceModal2" class="text-sm focus:outline-none ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
           <!--Modal-->
           <EditVisitedPlaceModal v-if="postModalVisible2" @closeEditVisitedPlaceModal="listener2"/>
           <!--end-->
         </div>
-          <div v-for="userAbout in userAbouts" v-bind:key="userAbout.indexUserAbout " class="flex-1 space-y-6 flex-row justify-start item-start space-x-4">
-            <div v-if="userAbout.visitedPlace!=null"  class="overflow-y-auto space-y-4">
+        <div v-for="userAbout in userAbouts" v-bind:key="userAbout.indexUserAbout " class="flex-1 space-y-6 flex-row justify-start item-start space-x-4">
+            <div v-if="userAbout.visitedPlace!=null" class="overflow-y-auto space-y-4">
               <div v-for="visitedPlaces in (userAbout.visitedPlace.split(','))" v-bind:key="visitedPlaces.visitedPlace " class="ml-4 inline-flex space-x-4 items-center justify-start px-4 py-1 bg-gray-100 rounded-full mr-3">
                 <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{visitedPlaces}}</p>
               </div>
-                <!-- <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-center text-gray-900">{{userAbout}}</p> -->
             </div>
         </div>
       </div>

@@ -50,10 +50,14 @@ class userAboutController extends Controller
             if($request->skills!=null)
             $record = implode("," , $request->skills);
             else
+
+            date_default_timezone_set('Asia/Manila');
+            $date = date('Y-m-d h:i:s');
+            
             $record = null;
             DB::table('tbl_userabout')
             ->where('indexUserAbout', $request->indexUserAbout)
-            ->update(['skills' => $record]);
+            ->update(['skills' => $record,'dateModified' => $date]);
     }
 
     public function postUserInterests(Request $request)
@@ -91,9 +95,13 @@ class userAboutController extends Controller
                 $record = implode("," , $request->interests);
             else
                 $record = null;
+
+            date_default_timezone_set('Asia/Manila');
+            $date = date('Y-m-d h:i:s');
+
             DB::table('tbl_userabout')
             ->where('indexUserAbout', $request->indexUserAbout)
-            ->update(['interests' => $record]);
+            ->update(['interests' => $record,'dateModified' => $date]);
     }
 
     public function postUserVisitedPlaces(Request $request)
@@ -128,8 +136,12 @@ class userAboutController extends Controller
                 $record = implode("," , $request->visitedPlace);
             else
                 $record = null;
+
+            date_default_timezone_set('Asia/Manila');
+            $date = date('Y-m-d h:i:s');
+            
             DB::table('tbl_userabout')
             ->where('indexUserAbout', $request->indexUserAbout)
-            ->update(['visitedPlace' => $record]);
+            ->update(['visitedPlace' => $record,'dateModified' => $date]);
     }
 }
