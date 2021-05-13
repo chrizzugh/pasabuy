@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js');
 @import url('https://fonts.googleapis.com/css2?family=Material+Icons+Round');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 @tailwind base;
 @tailwind components;
