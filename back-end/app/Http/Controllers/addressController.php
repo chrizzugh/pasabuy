@@ -61,7 +61,7 @@ class addressController extends Controller
         $user->province = $request->province;
         $user->cityMunicipality = $request->city;
         $user->barangay = $request->barangay;
-        $user->landMark = $request->landmark;
+        // $user->landMark = $request->landmark;
        
         if($user->save()){
             return response()->json(['message'=>'Success, Information saved'],200);
@@ -91,7 +91,6 @@ class addressController extends Controller
         if(DB::table('tbl_userShippingAddress')->insert([
             'shippingAddressNumber'=> '115-'.str_pad($user->indexUserInformation,4,'0',STR_PAD_LEFT).'-'.str_pad($count+1,5,'0',STR_PAD_LEFT),
             'email' => $userEmail,
-            'landMark' => $request->landmark,
             'houseNumber' => $request->house_number,
             'province' => $request->province,
             'cityMunicipality' => $request->city,

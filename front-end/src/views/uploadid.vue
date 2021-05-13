@@ -128,6 +128,11 @@
           <router-link to="/address-book">
             <span class="font-bold">Back</span></router-link
           >
+          <!-- <div class="flex justify-center py-5" v-if="logginIn">
+                      <button class="relative w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none" disabled>
+                        <img src="/img/loading.gif" class="w-35 h-20 ml-14 absolute" style="margin-top:-7%;" /> <span class="ml-10"> Logging In</span>
+                      </button>
+                    </div> -->
           <div class="space-x-4">
             <button class="font-bold" @click="saveUser">Skip for now</button>
             <button
@@ -188,6 +193,7 @@ export default {
       filename2: null,
       file_front: "",
       file_back: "",
+      logginIn: false
     };
   },
   methods: {
@@ -229,6 +235,7 @@ export default {
       this.edit2 = null;
     },
     saveUser() {
+      this.logginIn = !this.logginIn
       this.show = !this.show;
       var dataform = {
         personal: JSON.parse(localStorage.getItem("personal")),
@@ -268,6 +275,7 @@ export default {
               this.$router.push({ name: "accountsettings" });
             });
           } else {
+            this.logginIn = !this.logginIn
             console.log("informmation not saved");
           }
         })

@@ -55,10 +55,15 @@
                         <router-link to="/log-in" >Log instead</router-link>
                     </div>
                     <div class="flex justify-end w-1/2 px-1 mt-3">
-                        <button @click="nextPage" class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none">
-                           NEXT
+                        <button @click="nextPage" v-if="!next" class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none">
+                            NEXT
                         </button>
                     </div>
+                         <div class="flex justify-end w-1/2 px-1 mt-3" v-if="next" >
+                            <button class=" relative h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none" disabled>
+                                <img src="/img/loading.gif" class="w-40 h-20 absolute" style="margin-top:-28%;margin-left:30px" /> <span > NEXT</span>
+                            </button>
+                         </div>
                 </div>
                 <div class="mt-4 text-xs font-bold tracking-wide text-left text-gray-500 text-grey-dark">
                     By signing up, you agree to the 
@@ -107,6 +112,7 @@ export default {
     data(){
         return{
             max: 16,
+            next: false,
             showPass: false,
             showPass1: false,
             PersonalInfo:{
@@ -134,6 +140,7 @@ export default {
                  else e.preventDefault(); // If not match, don't add to input text
         },
         nextPage(){
+            this.next = true;
             api.get('/sanctum/csrf-cookie').then(() => {
             api.post('/api/postPersonal',this.PersonalInfo).then((res)=>{
                 if(res!=null){
@@ -147,6 +154,7 @@ export default {
                     console.log('error, email not sent');
                 }//end else
             }).catch((errors)=>{
+                this.next = false;
                 if(errors.response.data.firstName == undefined)
                     errors.response.data.firstName = "";
                 if(errors.response.data.lastName == undefined)

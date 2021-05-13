@@ -1383,7 +1383,7 @@
 
                 <p class="text-sm font-normal font-nunito">
                   <span class="inline-block align-middle"
-                    >{{ activeOrders[0].rating }}
+                    >{{ starRate(userReviews(onfirmedOrders[0].post.email)) }}
                   </span>
                   <span
                     class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
@@ -1431,7 +1431,8 @@
 
                 <p class="text-sm font-normal font-nunito">
                   <span class="inline-block align-middle"
-                    >{{ activeOrders[0].rating }}
+                  >{{ starRate(userReviews(confirmedOrders[0].transaction_sender.email)) }}
+
                   </span>
                   <span
                     class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
@@ -1553,7 +1554,7 @@
                 </h5>
                 <p class="text-sm font-normal font-nunito">
                   <span class="inline-block align-middle"
-                    >{{ activeDeliveries[0].rate }}
+                    >{{ starRate(userReviews(confirmedDeliveries[0].post.email)) }}
                   </span>
                   <span
                     class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
@@ -1600,7 +1601,7 @@
                 </h5>
                 <p class="text-sm font-normal font-nunito">
                   <span class="inline-block align-middle"
-                    >{{ activeDeliveries[0].rate }}
+                    >{{ starRate(userReviews(confirmedDeliveries[0].transaction_sender.email)) }}
                   </span>
                   <span
                     class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
@@ -3228,6 +3229,22 @@ export default {
       $(".target").hide();
       this.share1 = !this.share1;
     },
+    starRate(reviews){
+      var temp = reviews
+      var ctr=0;
+      for (var i=0; i<temp.length;i++){
+        ctr = ctr + temp[i].rate
+      }
+      var rate = ctr/(i+1).toFixed(1)
+      return rate == null ? 0 : rate
+    },
+     userReviews(userEmail) {
+      return this.reviews.filter((x) => {
+        return (
+          x.revieweeEmail == userEmail
+        );
+      });
+    },
   },
   computed: {
     user() {
@@ -3285,6 +3302,9 @@ export default {
               x.post.email == this.user.email))
         );
       });
+    },
+     reviews() {
+      return store.getters.getAllReviews
     },
     userHomeAddress() {
       return store.getters.getAddress;
