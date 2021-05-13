@@ -1511,7 +1511,7 @@ export default {
       this.showEditShopListModal = !this.showEditShopListModal;
       this.ctr = this.selectedList.shoppingListContent.id+1
       this.oldList = JSON.parse(JSON.stringify(this.selectedList))
-      // $(".hideIf").fadeIn();
+      $(".hideIf").fadeIn();
     },
     showPreviousModal3() {
       this.showEditShopListModal = !this.showEditShopListModal;

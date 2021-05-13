@@ -477,8 +477,8 @@ class PostController extends Controller
 				$post->request_post->shoppingPlace = $request->shoppingPlace;
 				$post->request_post->deliverySchedule = $request->deliverySchedule;
 				$post->request_post->paymentMethod = $request->paymentMethod;
-				$post->request_post->shoppingListTitle = $request->shoppingListTitle;
-				$post->request_post->shoppingListContent = $request->shoppingListContent;
+				$post->request_post->shoppingListTitle = $request->shoppingList['shoppingListName'];
+				$post->request_post->shoppingListContent = $request->shoppingList['items'];
 				$post->request_post->caption = $request->caption;
 
 				//check if shopping place already exist in tbl_shoppingPlace
@@ -490,7 +490,7 @@ class PostController extends Controller
 						'shoppingPlaceNumber' => '112' . str_pad(DB::table('tbl_shoppingPlace')->count() + 1, 6, '0', STR_PAD_LEFT),
 					]);
 				}
-				$post->shoppingList->shoppingListContent = $request->shoppingList;
+				// $post->shoppingList->shoppingListContent = $request->shoppingList;
 
 				DB::transaction(function () use ($post) {
 					$post->save();
