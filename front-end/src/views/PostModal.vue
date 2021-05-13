@@ -704,10 +704,10 @@
                   <p
                     class="text-base ssm:text-sm font-bold leading-none text-gray-900"
                   >
-                    Shopping List
+                    {{selectedList.shoppingListTitle}}
                   </p>
-                  <p class="text-base ssm:text-sm leading-none text-gray-500">
-                    ({{selectedList.shoppingListContent.length }} items)
+                  <p class="text-base ssm:text-sm leading-none text-gray-500" >
+                    ({{isFew()}} items)
                   </p>
                 </div>
                 <button
@@ -721,18 +721,22 @@
                 id="scroll1"
                 class="flex flex-col justify-start items-start px-4 text-sm w-full overflow-y-auto space-y-4 mt-4 h-22"
               >
+              <span   v-for="shoppingItems in computedShopItemList"
+                  :key="shoppingItems">
                 <li
-                  v-for="shoppingItems in computedShopItemList"
-                  :key="shoppingItems"
                   class="text-base w-full vs:text-sm ssm:text-sm leading-none text-gray-900"
+                  v-if="shoppingItems.status == 1 "
                 >
-                  {{ shoppingItems.product }} ({{ shoppingItems.size }}) ·
+                
+                 {{ shoppingItems.product }} ({{ shoppingItems.size }}) ·
                   {{ shoppingItems.brand }} [{{ shoppingItems.quantity }}]
+     
                 </li>
+              </span>
               </div>
               <button
                 @click="showMoreshowLess"
-                v-if="!isFew"
+                v-if="isFew() > 4"
                 class="focus:outline-none flex justify-start items-start text-sm text-gray-500"
               >
                 {{ showListStatus }}
@@ -861,7 +865,7 @@
       >
         <div class="flex justify-between items-center p-4 flex-row">
           <button
-            @click="showPreviousModal2"
+            @click="showPreviousModal2;"
             class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
           >
             Back
@@ -898,50 +902,36 @@
             </button>
           </div>
           <div class="flex space-y-2 flex-col w-full overflow-y-auto h-64 px-4">
-            <button class="flex items-center flex-row space-x-2">
-              <span class="text-gray-900 material-icons"> add_circle </span>
-              <p class="text-base leading-none text-gray-900">Add new item</p>
-            </button>
-            <div v-if="item1" class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white">
-          <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
-            <p class="text-sm leading-3 text-gray-500">Product</p>
-            <input v-model="filter_itemList[0].item" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
-          </div>
-          <div class="flex flex-row space-x-2">
-            <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
-             <p class="text-sm leading-3 text-gray-500">Brand</p>
-             <input v-model="filter_itemList[0].brand" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
+            <div class="flex flex-row items-center space-x-3 select-none pl-3">
+              <span @click="new_item=!new_item" class="cursor-pointer material-icons">
+              add_circle
+              </span>
+              <p class="">Add new item</p>
+             
             </div>
-            <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
-             <p class="text-sm leading-3 text-gray-500">Size</p>
-             <input v-model="filter_itemList[0].amount" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
-            </div>
-          </div>
-          <div class="flex flex-row items-center pt-2 space-x-4">
-            <p class="text-base ssm:text-sm se:text-sm leading-7 text-gray-900">Quantity</p>
+            <div v-if="new_item" class="ring-1 ring-gray-400 p-5 space-y-3 rounded-xl">
+              <input id="product" type="text" placeholder="Product" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
             <div class="flex flex-row space-x-2">
-              <button class="focus:outline-none">
-                <span class="material-icons bg-gray-100  text-red-700">
-                add
-                </span>
-              </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none">
-                <span class="material-icons bg-gray-100 text-red-700">
-                remove
-                </span>
-              </button>
+                <input id="brand" type="text" placeholder="Brand" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
+                <input id="size" type="text" placeholder="Size" class="w-40 rounded-xl pl-5 focus:outline-none h-10  bg-gray-100"/>
             </div>
-          </div>
-          <div class="flex flex-row justify-end items-center ssm:space-x-1 space-x-2">
-            <button @click="createList1" class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700">
-             <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-gray-900">Cancel</p>
-            </button>
-            <button @click="savedItem1" class="focus:outline-none inline-flex px-4 py-2.5 bg-red-700 rounded-full">
-             <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-white">Save</p>
-            </button>
-          </div>
-          </div>
+            <div class="flex flex-row space-x-2">
+              <p class="font-bold">Quantity</p>
+             <span @click="quantity++" class="material-icons select-none cursor-pointer text-red-700">
+              add
+            </span>
+              <p id="quants">asd{{quantity}}</p>
+            <span @click="quantity--" class="material-icons select-none cursor-pointer text-red-700">
+            remove
+            </span>
+            </div>
+             <div class="flex justify-end">
+               <div class="space-x-3">   
+              <button @click="new_item=false;" class="ring-2 rounded-2xl h-6 w-20 font-bold  ring-red-buttons focus:outline-none">Cancel</button>
+              <button  @click="add_newItem()" class="ring-2 rounded-2xl h-6 w-20 font-bold text-white  ring-red-buttons focus:outline-none bg-red-buttons">Add</button>
+               </div>
+            </div>
+            </div>
 
           <div v-if="saveItem1" class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4 px-0.5">
             <div class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900">
@@ -1003,7 +993,7 @@
           class="flex flex-row w-full justify-around vs:space-x-2 sm:space-x-4 items-center p-4"
         >
           <button
-            @click="showPreviousModal2"
+            @click="showPreviousModal2;"
             class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700"
           >
             <p class="text-base font-bold leading-none text-gray-900">Cancel</p>
@@ -1052,7 +1042,7 @@
             <input
               id="editTitle"
               type="text"
-              value="Weekly Shopping List"
+              v-model="selectedList.shoppingListTitle"
               class="w-46 text-gray-900 font-bold text-lg focus:outline-none"
               oninput='this.style.width = 0; this.style.width = this.scrollWidth + "px";'
             />
@@ -1065,173 +1055,73 @@
               </span>
             </button>
           </div>
-          <div class="flex items-center flex-row px-2 space-x-2">
-            <span class="text-gray-900 material-icons"> add_circle </span>
-            <p class="text-base leading-none text-gray-900">Add new item</p>
-          </div>
-          <div
-            class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white"
-          >
-            <div
-              class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2"
-            >
-              <p class="text-sm leading-3 text-gray-500">Product</p>
-              <input
-                v-model="filter_itemList[0].item"
-                class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900"
-              />
+          <div class="flex flex-row items-center space-x-3 select-none pl-3">
+              <span @click="new_item=!new_item" class="cursor-pointer material-icons">
+              add_circle
+              </span>
+              <p class="">Add new item</p>
+             
+            </div>
+            <div v-if="new_item" class="ring-1 ring-gray-400 p-5 space-y-3 rounded-xl">
+              <input id="product1" type="text" placeholder="Product" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
+            <div class="flex flex-row space-x-2">
+                <input id="brand1" type="text" placeholder="Brand" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
+                <input id="size1" type="text" placeholder="Size" class="w-40 rounded-xl pl-5 focus:outline-none h-10  bg-gray-100"/>
             </div>
             <div class="flex flex-row space-x-2">
-              <div
-                class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2"
-              >
-                <p class="text-sm leading-3 text-gray-500">Brand</p>
-                <input
-                  v-model="filter_itemList[0].brand"
-                  class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900"
-                />
-              </div>
-              <div
-                class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2"
-              >
-                <p class="text-sm leading-3 text-gray-500">Size</p>
-                <input
-                  v-model="filter_itemList[0].amount"
-                  class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900"
-                />
-              </div>
+              <p class="font-bold">Quantity</p>
+             <span @click="quantity++" class="material-icons select-none cursor-pointer text-red-700">
+              add
+            </span>
+              <p id="quants">{{quantity}}</p>
+            <span @click="quantity = minusQty(quantity)" class="material-icons select-none cursor-pointer text-red-700">
+            remove
+            </span>
             </div>
-            <div class="flex flex-row items-center pt-2 space-x-4">
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-7 text-gray-900"
-              >
-                Quantity
-              </p>
-              <div class="flex flex-row space-x-2">
-                <button class="focus:outline-none">
-                  <span class="material-icons bg-gray-100 text-red-700">
-                    add
-                  </span>
-                </button>
-                <p
-                  class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900"
-                >
-                  {{ Quantity }}
-                </p>
-                <button class="focus:outline-none">
-                  <span class="material-icons bg-gray-100 text-red-700">
-                    remove
-                  </span>
-                </button>
-              </div>
+             <div class="flex justify-end">
+               <div class="space-x-3">   
+              <button @click="new_item=false;" class="ring-2 rounded-2xl h-6 w-20 font-bold  ring-red-buttons focus:outline-none">Cancel</button>
+              <button  @click="add_newItem()" class="ring-2 rounded-2xl h-6 w-20 font-bold text-white  ring-red-buttons focus:outline-none bg-red-buttons">Add</button>
+               </div>
             </div>
-            <div
-              class="flex flex-row justify-end items-center ssm:space-x-1 space-x-2"
-            >
-              <button
-                class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700"
-              >
-                <p
-                  class="text-base ssm:text-sm se:text-sm font-bold leading-none text-gray-900"
-                >
-                  Cancel
-                </p>
-              </button>
-              <button
-                class="focus:outline-none inline-flex px-4 py-2.5 bg-red-700 rounded-full"
-              >
-                <p
-                  class="text-base ssm:text-sm se:text-sm font-bold leading-none text-white"
-                >
-                  Save
-                </p>
-              </button>
             </div>
-          </div>
         </div>
         <div
           id="scroll1"
           class="flex flex-col py-1 px-2 vs:px-2 ssm:px-1 overflow-y-auto h-40 vs:h-36 ssm:space-y-1 vs:space-y-2 space-y-4 w-full"
         >
+         <div class="flex flex-row w-full justify-between items-center space-x-3" v-for="item in selectedList.shoppingListContent" :key="item.id">
           <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
             <div
               class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
             >
-              <input type="checkbox" class="opacity-0 absolute" />
+              <input type="checkbox" class="opacity-0" :checked="item.status ==1" :id="'check'+item.id"/>
               <img
                 src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"
+                class="fill-current hidden w-3 h-3 text-black mr-3 font-bold pointer-events-none"
               />
             </div>
             <div class="flex flex-col space-y-2">
               <p
                 class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
               >
-                Powdered Sugar (1 kg)
+                {{item.product}} ({{item.size}})
               </p>
               <p
                 class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
               >
-                Any brand
-              </p>
-            </div>
-          </div>
-          <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
-            <div
-              class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
-            >
-              <input type="checkbox" class="opacity-0 absolute" />
-              <img
-                src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"
-              />
-            </div>
-            <div class="flex flex-col space-y-2">
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Powdered Sugar (1 kg)
-              </p>
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Any brand
-              </p>
-            </div>
-          </div>
-
-          <div class="flex flex-row w-full justify-between items-center space-x-3">
-          <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
-            <div
-              class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
-            >
-              <input type="checkbox" class="opacity-0 absolute" />
-              <img
-                src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"
-              />
-            </div>
-            <div class="flex flex-col space-y-2">
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Powdered Sugar (1 kg)
-              </p>
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Any brand
+                {{item.brand}}
               </p>
             </div>
           </div>
           <div class="flex flex-row space-x-2 items-center">
-              <button class="focus:outline-none flex">
+              <button class="focus:outline-none flex" @click="item.quantity++">
                 <span class="material-icons bg-gray-100  text-red-700">
                 add
                 </span>
               </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none flex">
+              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{item.quantity}}</p>
+              <button class="focus:outline-none flex" @click="item.quantity = minusQty(item.quantity)">
                 <span class="material-icons bg-gray-100 text-red-700">
                 remove
                 </span>
@@ -1244,182 +1134,7 @@
             </div>
           </div>
 
-          <div class="flex flex-row w-full justify-between items-center space-x-3">
-          <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
-            <div
-              class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
-            >
-              <input type="checkbox" class="opacity-0 absolute" />
-              <img
-                src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"
-              />
-            </div>
-            <div class="flex flex-col space-y-2">
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Powdered Sugar (1 kg)
-              </p>
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Any brand
-              </p>
-            </div>
-          </div>
-          <div class="flex flex-row space-x-2 items-center">
-              <button class="focus:outline-none flex">
-                <span class="material-icons bg-gray-100  text-red-700">
-                add
-                </span>
-              </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none flex">
-                <span class="material-icons bg-gray-100 text-red-700">
-                remove
-                </span>
-              </button>
-              <button class="focus:outline-none flex">
-                <span class="material-icons">
-                more_vert
-                </span>
-              </button>
-            </div>
-          </div>
-
-          <div class="flex flex-row w-full justify-between items-center space-x-3">
-          <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
-            <div
-              class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
-            >
-              <input type="checkbox" class="opacity-0 absolute" />
-              <img
-                src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"
-              />
-            </div>
-            <div class="flex flex-col space-y-2">
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Powdered Sugar (1 kg)
-              </p>
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Any brand
-              </p>
-            </div>
-          </div>
-          <div class="flex flex-row items-center space-x-2">
-              <button class="focus:outline-none flex">
-                <span class="material-icons bg-gray-100  text-red-700">
-                add
-                </span>
-              </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none flex">
-                <span class="material-icons bg-gray-100 text-red-700">
-                remove
-                </span>
-              </button>
-              <button class="focus:outline-none flex">
-                <span class="material-icons">
-                more_vert
-                </span>
-              </button>
-            </div>
-          </div>
-
-          <div class="flex flex-row w-full justify-between items-center space-x-3">
-          <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
-            <div
-              class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
-            >
-              <input type="checkbox" class="opacity-0 absolute" />
-              <img
-                src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"
-              />
-            </div>
-            <div class="flex flex-col space-y-2">
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Powdered Sugar (1 kg)
-              </p>
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Any brand
-              </p>
-            </div>
-          </div>
-          <div class="flex items-center flex-row space-x-2">
-              <button class="flex focus:outline-none">
-                <span class="material-icons bg-gray-100  text-red-700">
-                add
-                </span>
-              </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="flex focus:outline-none">
-                <span class="material-icons bg-gray-100 text-red-700">
-                remove
-                </span>
-              </button>
-              <button class="flex focus:outline-none">
-                <span class="material-icons">
-                more_vert
-                </span>
-              </button>
-            </div>
-          </div>
-          
-          <div class="flex flex-row w-full justify-between items-center space-x-3">
-          <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
-            <div
-              class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
-            >
-              <input type="checkbox" class="opacity-0 absolute" />
-              <img
-                src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"
-              />
-            </div>
-            <div class="flex flex-col space-y-2">
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Powdered Sugar (1 kg)
-              </p>
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                Any brand
-              </p>
-            </div>
-          </div>
-          <div class="flex items-center flex-row space-x-2">
-              <button class="flex focus:outline-none">
-                <span class="material-icons bg-gray-100  text-red-700">
-                add
-                </span>
-              </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="flex focus:outline-none">
-                <span class="material-icons bg-gray-100 text-red-700">
-                remove
-                </span>
-              </button>
-              <button class="flex focus:outline-none">
-                <span class="material-icons">
-                more_vert
-                </span>
-              </button>
-            </div>
-          </div>
-
+       
         </div>
         <div
           class="flex flex-row w-full justify-around vs:space-x-2 ssm:space-x-1 sm:space-x-4 items-center py-4"
@@ -1435,6 +1150,7 @@
             </p>
           </button>
           <button
+          @click="editShoppingList"
             class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full"
           >
             <p
@@ -1473,7 +1189,7 @@ export default {
       showShopListButton: !this.showList,
       showItemList: this.showList,
       selectedList:this.activeList,
-      countItems: 8,
+      countItems: 8, 
       ShoppingListTitle: "Weekly Grocery List",
       showEditShopListModal: false,
       Quantity: 1,
@@ -1578,11 +1294,17 @@ export default {
       default_limit: 3,
       showListStatus: "See More",
       showLessStatus: "See Less",
+      new_item:false,
+      new_items:[],
+      quantity:1,
+      ctr:0,
+      oldList:[]
       //end
     };
   },
   created(){
     console.log('fter',this.selectedList,this.showList)
+    
   },
   methods: {
     postOffer() {
@@ -1634,6 +1356,59 @@ export default {
         });
       });
     },
+    editShoppingList(){
+      for (var i = 0; i < this.selectedList.shoppingListContent.length; i++) {
+        console.log(this.selectedList.shoppingListContent[i].id)
+        console.log(!document.getElementById("check" + this.selectedList.shoppingListContent[i].id).checked)
+
+        if (!document.getElementById("check" + this.selectedList.shoppingListContent[i].id).checked) {
+          //if true uncheck the status
+          this.selectedList.shoppingListContent[i].status = 0;
+        } else {
+          this.selectedList.shoppingListContent[i].status = 1;
+        }
+      }
+      console.log('asdadadadsw',this.selectedList)
+      api.post('api/editList/'+this.selectedList.shoppingListNumber, {listName:this.selectedList.shoppingListTitle, list:this.selectedList.shoppingListContent}).then(()=>{
+         store.dispatch("getUserShoppingList").then(() => {
+            this.showEditShopListModal = !this.showEditShopListModal;
+            $(".hideIf").fadeIn();
+         })
+      }).catch(()=>{
+        console.log("error editing lsit")
+      })
+    },
+  add_newItem() {
+      let x = document.getElementById("product1").value;
+      let y = document.getElementById("brand1").value;
+      let z = document.getElementById("size1").value;
+      let n = this.quantity;
+      if (x == "" || y == "" || z == "" || n <= 0) {
+        alert("Empty Field");
+        return false;
+      } else {
+        let datax = {
+          id: this.ctr,
+          product: x,
+          brand: y,
+          size: z,
+          quantity: n,
+          status: 1,
+          statusDeliver: 0,
+        };
+        this.ctr++;
+        this.selectedList.shoppingListContent.push(datax);
+        // this.new_items.push(datax);
+        this.new_item = false;
+        console.log('new list',this.selectedList.shoppingListContent);
+      }
+    },
+    minusQty(q){
+      q--
+      if(q<=0)
+        return 1
+      return q
+    },
     setShoppingPlaceRequest(index){
         this.shoppingPlaceRequest = document.getElementById('spR'+index).innerHTML
     },
@@ -1673,21 +1448,18 @@ export default {
     showPreviousModal2() {
       this.showCreateNewShopListModal = !this.showCreateNewShopListModal;
       $(".hideIf2").fadeIn();
+      console.log('exiting',this.selectedList)
     },
     confirmShopList() {
       this.showShopListButton = false;
       var tempList = this.shoppingLists;
       for(var i=0; i< tempList.length;i++){
         if(document.getElementById('listNumber'+tempList[i].shoppingListNumber).checked){
-         var tempList2 = JSON.parse(JSON.stringify(tempList[i]))
-         var filtered_list =tempList2.shoppingListContent.filter(e=> e.status === 1)
-         tempList2.shoppingListContent = filtered_list
-         this.selectedList = tempList2
+         this.selectedList = tempList[i]
         //  this.selectedList.shoppingListContent = filtered_list
         }
       }
-      console.log('selected list',this.selectedList)
-
+      console.log('selected List',this.selectedList)
       this.showItemList = true;
       this.showSelectShopListModal = !this.showSelectShopListModal;
       $(".hideIf").fadeIn();
@@ -1695,10 +1467,17 @@ export default {
     showPreviousModal3() {
       this.showEditShopListModal = !this.showEditShopListModal;
       $(".hideIf").fadeIn();
+      console.log('exiting selected',this.selectedList)
+      this.selectedList = this.oldList
+      console.log('exiting active',this.selectedList)
+
+
     },
     editShopList() {
       $(".hideIf").fadeOut();
       this.showEditShopListModal = !this.showEditShopListModal;
+      this.ctr = this.selectedList.shoppingListContent.id+1
+      this.oldList = JSON.parse(JSON.stringify(this.selectedList))
     },
     showMoreshowLess() {
       this.isActive = !this.isActive;
@@ -1934,6 +1713,11 @@ export default {
           console.log(errors);
         });
     },
+     isFew(){
+      var temp = this.selectedList.shoppingListContent
+      var temp1 = temp.filter((x)=>{return x.status ==1})
+      return temp1.length
+    },
     //end
   },
   mounted() {
@@ -1951,9 +1735,6 @@ export default {
       return (this.limit_by 
         ? this.selectedList.shoppingListContent.slice(0, this.limit_by)
         : this.selectedList.shoppingListContent);
-    },
-    isFew(){
-      return this.selectedList.shoppingListContent.length < 4
     },
     user() {
       console.log("user personal", store.getters.getPersonal);

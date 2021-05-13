@@ -58,7 +58,7 @@
               add
             </span>
               <p id="quants">{{quantity}}</p>
-            <span @click="quantity--" class="material-icons select-none cursor-pointer text-red-700">
+            <span @click="quantity=minusQty(quantity)" class="material-icons select-none cursor-pointer text-red-700">
             remove
             </span>
             </div>
@@ -169,7 +169,7 @@
               add
             </span>
               <p :id="item.title+'quants'">{{quantity}}</p>
-            <span @click="quantity--" class="material-icons select-none cursor-pointer text-red-700">
+            <span @click="quantity=minusQty(quantity)" class="material-icons select-none cursor-pointer text-red-700">
             remove
             </span>
             </div>
@@ -358,6 +358,12 @@ export default {
 }
 },
 methods:{
+    minusQty(q){
+      q--
+      if(q<=0)
+        return 1
+      return q
+    },
   change_close(e){
     let str=document.getElementById(e).innerHTML;
     if(str=="Close"){

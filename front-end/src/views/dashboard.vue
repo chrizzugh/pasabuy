@@ -1712,7 +1712,7 @@
                         (Editlist = true),
                           (option_more = false),
                           (new_items = shoppingLists[0].shoppingListContent),
-                          (ctr = shoppingLists[0].shoppingListContent.length)
+                          (ctr = shoppingLists[-1].shoppingListContent.id+1)
                       "
                       class="flex cursor-pointer items-center space-x-2"
                     >
@@ -1845,7 +1845,7 @@
                         </span>
                         <p id="quants">{{ quantity }}</p>
                         <span
-                          @click="quantity--"
+                          @click="quantity=minusQty(quantity)"
                           class="material-icons select-none cursor-pointer text-red-700"
                         >
                           remove
@@ -2032,7 +2032,7 @@
                         </span>
                         <p id="s_quants">{{ quantity }}</p>
                         <span
-                          @click="quantity--"
+                          @click="quantity=minusQty(quantity)"
                           class="material-icons select-none cursor-pointer text-red-700"
                         >
                           remove
@@ -2605,7 +2605,12 @@ export default {
     },
   },
   methods: {
-    //
+    minusQty(q){
+      q--
+      if(q<=0)
+        return 1
+      return q
+    },
     showMoreshowLess() {
       this.isActive = !this.isActive;
       this.limit_by = null;
@@ -2737,10 +2742,6 @@ export default {
         .post("api/editList/" + listNumber, obj)
         .then((res) => {
           store.dispatch("getUserShoppingList").then(() => {
-            var tempChecked = res.data.shoppingListContent.filter((x) => {
-              return x.status === 1;
-            });
-            res.data.shoppingListContent = tempChecked;
             this.selectedList = res.data;
             this.showItemList = true;
             console.log("before", this.selectedList, this.showItemList);
@@ -2820,10 +2821,7 @@ export default {
         .post("api/createList", obj)
         .then((res) => {
           store.dispatch("getUserShoppingList").then(() => {
-            var tempChecked = res.data.shoppingListContent.filter((x) => {
-              return x.status === 1;
-            });
-            res.data.shoppingListContent = tempChecked;
+    
             this.selectedList = res.data;
             this.showItemList = true;
             console.log("before", this.selectedList, this.showItemList);

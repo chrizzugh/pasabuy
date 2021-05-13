@@ -334,7 +334,7 @@
               <p
                 class="text-base ssm:text-sm vs:text-sm lvs:text-base leading-none text-gray-900"
               >
-                {{ shopping_info.shoppingListName }}
+                <strong>{{ shopping_info.shoppingListName }}</strong> {{shopping_info.items.length}} items
               </p>
             </div>
             <div
@@ -343,16 +343,41 @@
               <div
                 id="userList"
                 class="flex flex-wrap w-full py-5 overflow-hidden bg-gray-100 rounded-lg editable focus:outline-red-700"
-                contenteditable="true"
+                contenteditable="false"
               >
                 <ul
-                  id="shoplist"
-                  class="pl-3 text-xs font-semibold leading-relaxed list-disc list-inside"
-                >
-                  <li v-for="shopList in shopping_info.items" :key="shopList">
-                    {{ shopList }}
-                  </li>
-                </ul>
+                          id="shop-list"
+                          class="pl-4 leading-loose list-disc list-inside"
+                        >
+                          <li
+                            v-for="(
+                              shoppingList, index
+                            ) in computedShopItemList(shopping_info.items)"
+                            :key="index"
+                            class="text-xl"
+                          >
+                            <span class="text-sm"
+                              >{{ shoppingList.product }} ·
+                              {{ shoppingList.brand }} [{{
+                                shoppingList.quantity
+                              }}
+                              units]</span
+                            >
+                          </li>
+                        </ul>
+              </div>
+              <div class="flex items-end ">
+               <button
+                        @click="showMoreshowLess"
+                        v-if="
+                          !isFew(
+                            shopping_info.items
+                          )
+                        "
+                        class="focus:outline-none items-start justify-start text-sm text-gray-500"
+                      >
+                        {{ showListStatus }}
+                      </button>
               </div>
             </div>
           </div>
@@ -420,21 +445,38 @@ export default {
         shoppingList: null,
       },
       shopping_info: {
-        shoppingID: this.post.request_post.indexShoppingList,
-        items: this.post.request_post.shopping_list.shoppingListContent.split(
-          ", "
-        ),
-        shoppingListName: this.post.request_post.shopping_list
-          .shoppingListTitle,
+        items: this.post.request_post.shoppingListContent,
+        shoppingListName: this.post.request_post.shoppingListTitle,
       },
       addAddress: false,
       dropdown1: false,
       dropdown2: false,
       dropdown3: false,
       dropdown4: false,
+      limit_by: 4,
+      default_limit: 4,
+      showListStatus: "See More",
+      showLessStatus: "See Less",
+      isActive: false,
     };
   },
   methods: {
+      showMoreshowLess() {
+      this.isActive = !this.isActive;
+      this.limit_by = null;
+      if (this.showListStatus != this.showLessStatus) {
+        this.showListStatus = this.showLessStatus;
+      } else {
+        this.showListStatus = "See More";
+        this.limit_by = this.default_limit;
+      }
+    },
+     computedShopItemList(list) {
+      return this.limit_by ? list.slice(0, this.limit_by) : list;
+    },
+    isFew(filter_itemList) {
+      filter_itemList.length < 5;
+    },
     close2() {
       this.$emit("closeModal1");
     },
