@@ -45,6 +45,18 @@ class shoppingListController extends Controller
 
         }
 	}
+    public function deleteList($listNum)
+	{
+		# code...
+		// $data = DB::select('SELECT * FROM tbl_shoppingList WHERE email = \''.Auth::user()->email.'\'');
+		// return $data[0];
+        
+		if(ShoppingList::where('shoppingListNumber', '=', $listNum)->delete()){
+        }else{
+            return response()->json(["error"=>"error in delete list"],422);
+
+        }
+	}
     public function createList(Request $request)
 	{
 		# code...

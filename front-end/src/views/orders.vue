@@ -59,7 +59,7 @@
         </button>
       </div>
     </div>
-    <div v-for="itemx in transaction_filter" :key="itemx.id">
+    <div v-for="itemx in allOrders" :key="itemx.indexTransactionPost">
       <div
         class="p-5 w-full flex flex-col space-y-4 items-center 2xl:p-0 xl:p-0 lg:p-0"
       >
@@ -70,53 +70,46 @@
             <div class="flex flex-col gap-4">
               <span class="flex vs:flex-col gap-x-3">
                 <p class="font-bold font-nunito">
-                  Transaction#{{ itemx.order_number }}
+                  Transaction #{{ itemx.transactionNumber }}
                 </p>
                 <div>
                   <p
-                    v-if="itemx.selected == 'Completed'"
+                    v-if="itemx.transactionStatus == 'Completed'"
                     class="text-center rounded-md tracking-wider text-green-150 ring-1 ring-green-150 bg-white text-xs h-min w-18 self-center p-1 font-nunito font-bold"
                   >
-                    {{ itemx.selected }}
+                    {{ itemx.transactionStatus }}
                   </p>
                   <p
-                    v-else-if="itemx.selected == 'Confirmed'"
+                    v-else-if="itemx.transactionStatus == 'Confirmed'"
                     class="text-center rounded-md tracking-wider text-blue-700 ring-1 ring-blue-700 bg-gray-200 text-xs h-min w-18 self-center p-1 font-nunito font-bold"
                   >
-                    {{ itemx.selected }}
+                    {{ itemx.transactionStatus }}
                   </p>
                   <p
                     v-else
                     class="text-center tracking-wider text-yellow-600 rounded-md bg-white ring-1 ring-yellow-600 text-xs h-min w-18 self-center p-1 font-nunito font-bold"
                   >
-                    {{ itemx.selected }}
+                    {{ itemx.transactionStatus }}
                   </p>
                 </div>
               </span>
             </div>
-            <div class="vs:flex-col vs:space-x-2">
-              <button
-                class="font-bold focus:outline-none"
-                @click="(toggle_status = !toggle_status), (trans_id = itemx.id)"
-              >
-                Update Status
-              </button>
-            </div>
+           
           </div>
           <span class="text-gray-500 mt-2"
-            >Place on {{ itemx.date }},{{ itemx.time }}</span
+            >Place on {{ timestamp(itemx.dateCreated) }}</span
           >
           <div
             class="flex items-start gap-x-8 my-3 flex-col 2xl:items-center 2xl:flex-row xl:items-center xl:flex-row lg:items-center lg:flex-row md:flex-row"
           >
-            <p class="uppercase font-bold text-gray-500">customer</p>
-            <div class="flex gap-x-3 items-center space-x-3">
+            <p class="uppercase font-bold text-gray-500">customer:</p>
+            <div class="flex gap-x-3 items-center space-x-3" v-if="itemx.post.email != user.email">
               <img
                 class="w-8 h-8 border rounded-full border-gray-700 shadow-md"
-                :src="itemx.profile_image"
+                :src="itemx.post.user.profilePicture"
               /><!--Profile Pic-->
               <span class="flex flex-col">
-                <p class="font-bold">{{ itemx.name }}</p>
+                <p class="font-bold">{{ itemx.post.user.firstName }} {{ itemx.post.user.lastName }}</p>
                 <!--name-->
                 <span class="flex gap-x-1">
                   <p class="font-bold text-gray-500 text-sm">
@@ -126,22 +119,45 @@
                 </span>
               </span>
               <!--chat button-->
-              <button
+              <router-link :to="'/messages/?ID='+toEncrypt(itemx.post.email)"
                 class="flex items-center gap-x-2 focus:outline-none bg-green-150 rounded-2xl p-2"
               >
                 <p class="material-icons text-white text-sm">chat</p>
                 <p class="font-bold text-white text-sm">Chat Shopper</p>
-              </button>
+              </router-link>
+              <!--/chat button-->
+            </div>
+            <div class="flex gap-x-3 items-center space-x-3" v-else>
+              <img
+                class="w-8 h-8 border rounded-full border-gray-700 shadow-md"
+                :src="itemx.transaction_sender.profilePicture"
+              /><!--Profile Pic-->
+              <span class="flex flex-col">
+                <p class="font-bold">{{ itemx.transaction_sender.firstName }} {{ itemx.transaction_sender.lastName }}</p>
+                <!--name-->
+                <span class="flex gap-x-1">
+                  <p class="font-bold text-gray-500 text-sm">
+                    {{ itemx.rate }}
+                  </p>
+                  <p class="material-icons text-sm text-red-700">star</p>
+                </span>
+              </span>
+              <!--chat button-->
+              <router-link :to="'/messages/?ID='+toEncrypt(itemx.transaction_sender.email)"
+                class="flex items-center gap-x-2 focus:outline-none bg-green-150 rounded-2xl p-2"
+              >
+                <p class="material-icons text-white text-sm">chat</p>
+                <p class="font-bold text-white text-sm">Chat Shopper</p>
+              </router-link>
               <!--/chat button-->
             </div>
           </div>
           <div
-            v-if="itemx.selected == 'Completed'"
+            v-if="itemx.transactionStatus == 'Completed'"
             class="space-y-2 w-full p-4 ring-2 ring-gray-300 rounded-xl"
           >
             <p class="text-sm select-none">
-              Transaction marked as completed on {{ itemx.currentDate }},at
-              {{ itemx.currenTime }}
+              Transaction marked as completed on {{ timestamp(itemx.dateModified) }}
             </p>
             <span class="flex space-x-2"
               ><p class="text-gray-400">
@@ -153,28 +169,28 @@
           <div class="grid grid-cols-2 p-5 gap-y-4 text-sm">
             <div class="flex items-center space-x-2">
               <span class="material-icons text-red-buttons"> fmd_good </span>
-              <p>{{ itemx.street }},{{ itemx.city }}</p>
+              <p>{{ itemx.transactionData.deliveryAddress }}</p>
             </div>
             <div class="flex items-center space-x-2">
               <span class="material-icons text-red-buttons">
                 shopping_cart
               </span>
-              <p>{{ itemx.store }}</p>
+              <p>{{ itemx.transactionData.shoppingPlace }}</p>
             </div>
             <div class="flex items-center space-x-2">
               <span class="material-icons text-red-buttons"> watch_later </span>
-              <p>{{ itemx.date }},{{ itemx.time }}</p>
+              <p>{{ timestampSched(itemx.transactionData.deliverySchedule) }}</p>
             </div>
             <div class="flex items-center space-x-2">
               <span class="material-icons text-red-buttons"> payments </span>
-              <p>{{ itemx.payment }}</p>
+              <p>{{ itemx.transactionData.paymentMethod }}</p>
             </div>
           </div>
           <div class="bg-gray-200 py-1 px-3 rounded-2xl">
             <div class="flex text-sm sm: space-x-2">
               <p>Shopping List</p>
-              <p class="text-gray-500">{{ itemx.items.length }}</p>
-              <p v-if="itemx.items.length > 1" class="text-gray-500">items</p>
+              <p class="text-gray-500">{{ itemx.transactionShoppingList.length }}</p>
+              <p v-if="itemx.transactionShoppingList.length > 1" class="text-gray-500">items</p>
               <p v-else class="text-gray-500">item</p>
             </div>
             <ul
@@ -182,12 +198,12 @@
               class="list-disc text-sm space-y-2 list-inside p-5"
             >
               <li
-                v-for="item in itemx.items"
-                :key="item.list"
+                v-for="item in itemx.transactionShoppingList"
+                :key="item.id"
                 class="list-disc items-center"
               >
                 <label class="text-md" style="font-size: 16px"
-                  >{{ item.list }}({{ item.size }})-{{ item.brand }} [{{
+                  >{{ item.product }}({{ item.size }})-{{ item.brand }} [{{
                     item.quantity
                   }}unit/s]</label
                 >
@@ -454,7 +470,14 @@ export default {
           return x.transactionStatus == "Completed";
         });
         console.log("completed ", this.allOrders);
-      } else {
+      } else if (el == "btn5") {
+        this.activeBtn = el;
+        this.allOrders = this.orders.filter((x) => {
+          return x.transactionStatus == "In Transit";
+        });
+        console.log("completed ", this.allOrders);
+      }
+       else {
         this.activeBtn = 0;
         this.allOrders = this.orders;
       }

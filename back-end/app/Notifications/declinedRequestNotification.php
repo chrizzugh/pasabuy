@@ -19,11 +19,15 @@ class declinedRequestNotification extends Notification
      *
      * @return void
      */
+    public $identity;
     public $postNumber;
-    public function __construct($postNumber)
+
+    public function __construct($postNumber,$identity)
     {
         //
         $this->postNumber = $postNumber;
+        $this->identity = $identity;
+
     }
 
     /**
@@ -51,6 +55,7 @@ class declinedRequestNotification extends Notification
             'decliner' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
             'declinerPic' => $user[0]->profilePicture,
+            'identity' => $this->identity,
 
         ];
     }
@@ -62,6 +67,8 @@ class declinedRequestNotification extends Notification
             'decliner' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
             'declinerPic' => $user[0]->profilePicture,
+            'identity' => $this->identity,
+
 
             
         ]);

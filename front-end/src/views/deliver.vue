@@ -48,7 +48,7 @@ xsm:w-max
   </div>
 </div>
 
-<div v-for="itemx in transaction_filter" :key="itemx.id" >
+<div v-for="itemx in allDeliveries" :key="itemx.id" >
 
 <div class="p-5 w-full  flex flex-col space-y-4 items-center 
 2xl:p-0
@@ -65,29 +65,29 @@ lg:p-0
         <div class=" flex justify-between">
             <div class="flex flex-col gap-4">
             <span class="flex vs:flex-col gap-x-3"> 
-            <p class="font-bold font-nunito">Transaction#{{itemx.order_number}}</p>
+            <p class="font-bold font-nunito">Transaction #{{itemx.transactionNumber}}</p>
               <div>
-              <p v-if="itemx.selected=='Completed'" class="text-center rounded-md  tracking-wider text-green-150 ring-1 ring-green-150 bg-white text-xs h-min w-18 self-center p-1 font-nunito font-bold">
-            {{itemx.selected}}
+              <p v-if="itemx.transactionStatus=='Completed'" class="text-center rounded-md  tracking-wider text-green-150 ring-1 ring-green-150 bg-white text-xs h-min w-18 self-center p-1 font-nunito font-bold">
+            {{itemx.transactionStatus}}
             </p>
-            <p v-else-if="itemx.selected=='Confirmed'" class=" text-center rounded-md tracking-wider text-blue-700 ring-1 ring-blue-700 bg-gray-200 text-xs   h-min w-18 self-center p-1 font-nunito font-bold">
-            {{itemx.selected}}
+            <p v-else-if="itemx.transactionStatus=='Confirmed'" class=" text-center rounded-md tracking-wider text-blue-700 ring-1 ring-blue-700 bg-gray-200 text-xs   h-min w-18 self-center p-1 font-nunito font-bold">
+            {{itemx.transactionStatus}}
             </p>
             <p v-else class=" text-center  tracking-wider text-yellow-600 rounded-md bg-white ring-1 ring-yellow-600 text-xs  h-min w-18 self-center p-1 font-nunito font-bold">
-            {{itemx.selected}}
+            {{itemx.transactionStatus}}
             </p>
               </div>
             </span>
            
             </div>
-            <div class="vs:flex-col vs:space-x-2"> 
-             
-      <button  class=" font-bold focus:outline-none" @click="toggle_status=!toggle_status,trans_id=itemx.id">Update Status</button>
-     
-           
+            <div class="vs:flex-col vs:space-x-2" v-if="(itemx.transactionStatus=='Confirmed' || itemx.transactionStatus=='In Transit') && itemx.post.email != user.email"> 
+              <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status, setDataToSave(itemx.post.email,itemx.indexTransactionPost,itemx.postNumber)">Update Status</span>
+           </div>
+           <div class="vs:flex-col vs:space-x-2" v-else-if="(itemx.transactionStatus=='Confirmed' || itemx.transactionStatus=='In Transit')"> 
+              <span class="text-blue-600 font-bold cursor-pointer" @click="toggle_status=!toggle_status, setDataToSave(itemx.transaction_sender.email,itemx.indexTransactionPost,itemx.postNumber)">Update Status</span>
            </div>
          </div>
-          <span class="text-gray-500 mt-2">Place on {{itemx.date}},{{itemx.time}}</span>
+          <span class="text-gray-500 mt-2">Place on {{timestamp(itemx.dateCreated)}}</span>
        <div class="flex  items-start gap-x-8 my-3  flex-col
             2xl:items-center 2xl:flex-row
             xl:items-center  xl:flex-row
@@ -95,53 +95,68 @@ lg:p-0
             md:flex-row
            ">
             <p class="uppercase font-bold text-gray-500 ">customer</p>
-            <div class=" flex gap-x-3 items-center space-x-3">
-           <img class="w-8 h-8 border rounded-full border-gray-700 shadow-md  " :src="itemx.profile_image"/><!--Profile Pic-->
+            <div class=" flex gap-x-3 items-center space-x-3" v-if="itemx.post.email != user.email">
+           <img class="w-8 h-8 border rounded-full border-gray-700 shadow-md  " :src="itemx.post.user.profilePicture"/><!--Profile Pic-->
             <span class="flex flex-col">
-              <p class="font-bold">{{itemx.name}}</p> <!--name-->
+              <p class="font-bold">{{itemx.firstName}} {{itemx.lastName}}</p> <!--name-->
               <span class="flex gap-x-1">
               <p class="font-bold text-gray-500 text-sm">{{itemx.rate}}</p>
               <p class="material-icons text-sm text-red-700">star</p>
               </span>
             </span>
             <!--chat button-->
-              <button class="  flex items-center gap-x-2 focus:outline-none  bg-green-150 rounded-2xl p-2">
+              <router-link :to="'/messages/?ID='+toEncrypt(itemx.post.email)" class="  flex items-center gap-x-2 focus:outline-none  bg-green-150 rounded-2xl p-2">
                 <p class="material-icons text-white text-sm">chat</p>
                 <p class=" font-bold text-white text-sm "> Chat Shopper</p>
-              </button>
+              </router-link>
+              <!--/chat button-->
+            </div>
+             <div class=" flex gap-x-3 items-center space-x-3" v-else>
+           <img class="w-8 h-8 border rounded-full border-gray-700 shadow-md  " :src="itemx.transaction_sender.profilePicture"/><!--Profile Pic-->
+            <span class="flex flex-col">
+              <p class="font-bold">{{itemx.transaction_sender.firstName}} {{itemx.transaction_sender.lastName}}</p> <!--name-->
+              <span class="flex gap-x-1">
+              <p class="font-bold text-gray-500 text-sm">{{itemx.rate}}</p>
+              <p class="material-icons text-sm text-red-700">star</p>
+              </span>
+            </span>
+            <!--chat button-->
+              <router-link :to="'/messages/?ID='+toEncrypt(itemx.transaction_sender.email)" class="  flex items-center gap-x-2 focus:outline-none  bg-green-150 rounded-2xl p-2">
+                <p class="material-icons text-white text-sm">chat</p>
+                <p class=" font-bold text-white text-sm "> Chat Shopper</p>
+              </router-link>
               <!--/chat button-->
             </div>
             
         </div>
-        <div v-if="itemx.selected=='Completed'" class=" space-y-2 w-full p-4 ring-2 ring-gray-300 rounded-xl">
-              <p class="text-sm select-none">Transaction marked as completed on {{itemx.currentDate}},at {{itemx.currenTime}}</p>
-              <span class="flex space-x-2"><p class=" text-gray-400">Would you like to review the shopper?</p><b class="cursor-pointer">Write a review.</b></span>
+        <div v-if="itemx.transactionStatus=='Completed'" class=" space-y-2 w-full p-4 ring-2 ring-gray-300 rounded-xl">
+              <p class="text-sm select-none">Transaction marked as completed on {{timestamp(itemx.dateModified)}}</p>
         </div>
+       
         <div class=" grid grid-cols-2  p-5 gap-y-4 text-sm">
           <div class="flex items-center space-x-2"><span class="material-icons  text-red-buttons ">
           fmd_good
-          </span><p>{{itemx.street}},{{itemx.city}}</p></div>
+          </span><p>{{itemx.transactionData.deliveryAddress}}</p></div>
           <div class="flex items-center space-x-2"><span class="material-icons text-red-buttons">
           shopping_cart
-          </span><p>{{itemx.store}}</p></div>
+          </span><p>{{itemx.transactionData.shoppingPlace}}</p></div>
           <div class="flex items-center space-x-2"><span class="material-icons text-red-buttons">
           watch_later
-          </span><p>{{itemx.date}},{{itemx.time}}</p></div>
+          </span><p>{{timestampSched(itemx.transactionData.deliverySchedule)}}</p></div>
           <div class="flex items-center space-x-2"><span class="material-icons text-red-buttons">
          payments
-          </span><p>{{itemx.payment}}</p></div>
+          </span><p>{{itemx.transactionData.paymentMethod}}</p></div>
         </div>  
         <div class="bg-gray-200  py-1 px-3 rounded-2xl">
-        <div class="flex text-sm  sm: space-x-2"><p>Shopping List</p><p class=" text-gray-500">{{itemx.items.length}}</p>
-        <p v-if="itemx.items.length>1" class="text-gray-500">items</p>
+        <div class="flex text-sm  sm: space-x-2"><p>Shopping List</p><p class=" text-gray-500">{{itemx.transactionShoppingList.length}}</p>
+        <p v-if="itemx.transactionShoppingList.length>1" class="text-gray-500">items</p>
          <p v-else class="text-gray-500">item</p>
         </div>
         <ul id="example-1" class="list-disc text-sm list-inside space-y-2 grid grid-cols-1 p-5">
-       <li v-for="item in itemx.items" :key="item.list" class="list-none">
+       <li v-for="item in itemx.transactionShoppingList" :key="item.id" class="list-none">
          <div class="flex items-center">
-           <input type="checkbox" :id="itemx.order_number" :value="item.list" />
-           
-         <label class="ml-3 text-md" style="font-size:16px">{{ item.list }}({{item.size}})-{{item.brand}} [{{item.quantity}}unit/s]</label>
+           <input @click="checkDeliver(item,itemx.transactionNumber,itemx.transactionShoppingList)" type="checkbox" :id="item.id" :value="itemx.product" :checked="item.statusDeliver == 1" :disabled="itemx.transactionStatus != 'Confirmed'"/>
+         <label class="ml-3 text-md" style="font-size:16px">{{ item.product }}({{item.size}})-{{item.brand}} [{{item.quantity}}unit/s]</label>
          </div>
        </li>
         </ul>
@@ -169,22 +184,21 @@ lg:p-0
             <div class="flex flex-row items-center  justify-between p-3">
             <p class="hidden lg:block 2xl:block xl:block"></p>
             <p class="text-lg font-bold xl:ml-8 lg:ml-8 2xl:ml-8">Update Delivery Status</p>
-            <p class="font-bold text-blue-700 cursor-pointer left-10" @click="toggle_status=false"> Close</p>
+            <p class="font-bold text-blue-700 cursor-pointer left-10" @click="toggle_status=false, userNotif=null,updatingTransaction=null, updatingPost=null"> Close</p>
           </div>
          <hr>
           <div class=" ">
             <div class="flex flex-col p-3 space-y-4
             ">
-            <span class="flex items-center space-x-2"><input type="radio" name="status" value="Completed"/><span>Completed</span></span>
-            <span class="flex items-center space-x-2"><input type="radio" name="status" value="Comfirmed"/><span>Confirmed</span></span>
-            <span class="flex items-center space-x-2"><input type="radio" name="status" value="In Transit"/><span>In Transit</span></span>
-            <span class="flex items-center space-x-2"><input type="radio" name="status" value="Cancelled"/><span>Cancelled</span></span>
+            <span class="flex items-center space-x-2"><input type="radio" name="status" value="Completed" id="completedDeliver"/><span>Completed</span></span>
+            <span class="flex items-center space-x-2"><input type="radio" name="status" value="In Transit" id="inTransitDeliver"/><span>In Transit</span></span>
+            <span class="flex items-center space-x-2"><input type="radio" name="status" value="Cancelled" id="cancelledDeliver"/><span>Cancelled</span></span>
            
               </div>
             
           </div>
            <div class="flex justify-between mt-4  items-center">
-             <button @click="toggle_status=false,update_stat()" class="bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Update</button>
+             <button @click="toggle_status=false,updateStatus()" class="bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Update</button>
             </div>
           </div>
         </div>
@@ -207,149 +221,200 @@ lg:p-0
 </div>
 </template>
 <script>
-// import Nav from "../views/Navbar.vue";
-// import store from "../store/index";
-// import moment from "moment";
-// import api from "../api";
+import Nav from "../views/Navbar.vue";
+import store from "../store/index";
+import moment from "moment";
+import api from "../api";
 // import VueSimpleAlert from "vue-simple-alert";
-import Nav from '../views/Navbar.vue'
+import _ from "lodash"
 export default {
   name: "Deliver",
   components: {
     Nav,
   },
-   created: function () {
-    document.body.style.backgroundColor = "#EBEBEB";
-    this.transaction_filter=this.transaction
+  data() {
+    return {
+      togglef: false,
+      toggle_status: false,
+      activeBtn: 0,
+      name: "Yamete",
+      rate: "4.5",
+      items: [{ list: "Pork" }, { list: "Pork" }],
+      hide_selected: false,
+      order_number: "1234",
+      selected: "Confirmed",
+      options: [
+        { text: "Completed", value: "Completed" },
+        { text: "Cancelled", value: "Cancalled" },
+      ],
+      allDeliveries: [],
+      updatingTransaction: null,
+      updatingPost: null,
+      userNotif: null,
+    };
   },
-  data(){
-    return{
-     
-      toggle_status:false,
-       activeBtn:0,
-       trans_id:'',
-       transaction_filter:[],
-       transaction:[
-          {
-          id:1,
-          street:'Rizal Street',
-          city:'Legazpi City',
-          store:'SM City Legazpi',
-          payment:'Payment First',
-          profile_image:'https://i.pinimg.com/564x/80/e2/f6/80e2f60c9e41907b97300c337a40fa45.jpg',
-          name:'Yamete',
-          rate:'4.5',
-          order_number:'1234',
-          date:'February 23,2021',
-          time:'12:31 PM',   
-          currenTime:'',
-          currentDate:'',
-          selected: 'Confirmed',
-          items:[
-            {
-              list:'Pork',size:'1kl',brand:'Anybrand',quantity:2
-            }
-          ]
-        },
-       {
-          id:2,
-          street:'Rizal Street',
-          city:'Legazpi City',
-          store:'SM City Legazpi',
-          payment:'Payment First',
-          profile_image:'https://i.pinimg.com/564x/80/e2/f6/80e2f60c9e41907b97300c337a40fa45.jpg',
-          name:'Yamete',
-          rate:'4.5',
-          order_number:'1234',
-          date:'February 23,2021',
-          time:'12:31 PM',   
-          currenTime:'',
-          currentDate:'',
-          selected: 'Confirmed',
-          items:[
-            {
-              list:'Pork',size:'1kl',brand:'Anybrand',quantity:2
-            }
-          ]
-        },
-        {
-          id:3,
-          street:'Rizal Street',
-          city:'Legazpi City',
-          store:'SM City Legazpi',
-          payment:'Payment First',
-          profile_image:'https://i.pinimg.com/564x/80/e2/f6/80e2f60c9e41907b97300c337a40fa45.jpg',
-          name:'Yamete',
-          rate:'4.5',
-          order_number:'1234',
-          date:'February 23,2021',
-          time:'12:31 PM',   
-          currenTime:'',
-          currentDate:'',
-          selected: 'Confirmed',
-          items:[
-            {
-              list:'Pork',size:'1kl',brand:'Anybrand',quantity:2
-            }
-          ]
-        },
-        {
-          id:4,
-          street:'Rizal Street',
-          city:'Legazpi City',
-          store:'SM City Legazpi',
-          payment:'Payment First',
-          profile_image:'https://i.pinimg.com/564x/6d/0b/9b/6d0b9bf23569450a8f93d4e0d44741d1.jpg',
-          name:'Asta',
-          rate:'4.5',
-          order_number:'12345',
-          date:'February 23,2021',
-          time:'12:31 PM',   
-          currenTime:'',
-          currentDate:'',
-          selected: 'Completed',
-          items:[
-            {
-              list:'Milk',size:'1kl',brand:'Anybrand',quantity:1
-            },
-            {
-              list:'Pork',size:'1kl',brand:'Anybrand',quantity:2
-            }
-          ]
+  methods: {
+ 
+    debounceCheckDeliver: _.debounce((item,transactionNumber,list) => {
+       for(var i=0;i<list.length;i++){
+         console.log(list[i].id)
+        if(document.getElementById(list[i].id).checked){
+          list[i].statusDeliver = 1
+        }else{
+          list[i].statusDeliver = 0
         }
-    ]
-        
-}
-},
-methods:{
-    filter_obj(e){
-        if(e=='Deliveries'){
-         this.transaction_filter=[];
-         return this.transaction_filter=this.transaction
-        }
-        this.transaction_filter= this.transaction.filter(trans=>trans.selected==e)
-    
-    },
-  update_stat(){
-    let new_time=new Date();
-    const index = this.transaction.findIndex(x=>x.id==this.trans_id);
-    this.transaction[index].currenTime=new_time.toLocaleTimeString();
-    this.transaction[index].currentDate=new_time.toDateString();
-    
-   this.transaction[index].selected=document.querySelector('input[name="status"]:checked').value;
-  },
-     isActive_function(el){
-     if(el=='btn1'){
-      this.  activeBtn= 0;
-    }
-    else {
-        this.  activeBtn= el;
-        }
-    },
-  
-}
-}
+      }
+      api.post('/api/editListDeliverStatus/'+transactionNumber, {list: list}).then(()=>{
+          store.dispatch('getUserTransactions')
+          console.log('scuess in check unchec dliver')
+        })
+    }, 2000),
 
+    checkDeliver(item,transactionNumber,list){
+     
+      this.debounceCheckDeliver(item,transactionNumber,list)
+    },
+    isActive_function(el) {
+      if (el == "btn4") {
+        this.activeBtn = el;
+        this.allDeliveries = this.deliveries.filter((x) => {
+          return (
+            x.transactionStatus == "cancelled" || x.transactionStatus == "Cancelled"||
+            x.transactionStatus == "declined" || x.transactionStatus == "Declined"
+          );
+        });
+        console.log("cancelled ", this.allDeliveries);
+      } else if (el == "btn3") {
+        this.activeBtn = el;
+        this.allDeliveries = this.deliveries.filter((x) => {
+          return x.transactionStatus == "Confirmed";
+        });
+        console.log("confirmed ", this.allDeliveries);
+      } else if (el == "btn2") {
+        this.activeBtn = el;
+        this.allDeliveries = this.deliveries.filter((x) => {
+          return x.transactionStatus == "Completed";
+        });
+        console.log("completed ", this.allDeliveries);
+      } else if (el == "btn5") {
+        this.activeBtn = el;
+        this.allDeliveries = this.deliveries.filter((x) => {
+          return x.transactionStatus == "In Transit";
+        });
+        console.log("completed ", this.allDeliveries);
+      } else {
+        this.activeBtn = 0;
+        this.allDeliveries = this.deliveries;
+      }
+    },
+    timestampSched(datetime) {
+      var schedDate = new Date(datetime);
+      var dateToday = new Date();
+      var dateDiff = schedDate.getTime() - dateToday.getTime();
+      dateDiff = dateDiff / (1000 * 3600 * 24);
+      console.log(dateDiff);
+      if (dateDiff < 1 && dateDiff > 0)
+        return moment(datetime).format("[Today at] h:mm a");
+      else if (dateDiff >= 1 && dateDiff < 2)
+        return moment(datetime).format("[Tommorow at] h:mm a");
+      else return moment(datetime).format("[From] MMM DD, YYYY [at] h:mm a");
+    },
+    timestamp(datetime) {
+      return moment(datetime).format("MMM DD, YYYY [at] h:mm a");
+    },
+    toEncrypt(val) {
+      return btoa(val);
+    },
+    updateStatus() {
+      var complete = document.getElementById("completedDeliver").checked;
+      var cancel = document.getElementById("cancelledDeliver").checked;
+      var inTransit = document.getElementById("inTransitDeliver").checked;
+
+      if (complete) {
+        api
+          .post("api/updateTransaction", {
+            userNotif: this.userNotif,
+            status: "Completed",
+            ID: this.updatingTransaction,
+            postNumber: this.updatingPost,
+          })
+          .then(() => {
+            store.dispatch("getUserTransactions").then(() => {
+              this.toggle_status = false;
+              this.updatingTransaction = null;
+              this.updatingPost = null;
+              this.allDeliveries = this.deliveries
+            });
+          })
+          .catch((error) => {
+            console.log(error.response.data.error, "Error", "error");
+          });
+      } else if (cancel) {
+        api
+          .post("api/updateTransaction", {
+            userNotif: this.userNotif,
+            status: "Cancelled",
+            ID: this.updatingTransaction,
+            postNumber: this.updatingPost,
+          })
+          .then(() => {
+            store.dispatch("getUserTransactions").then(() => {
+              this.toggle_status = false;
+              this.updatingTransaction = null;
+              this.updatingPost = null;
+              this.allDeliveries = this.deliveries 
+            });
+          })
+          .catch((error) => {
+            console.log(error.response.data.error, "Error", "error");
+          });
+      } else if (inTransit) {
+        api
+          .post("api/updateTransaction", {
+            userNotif: this.userNotif,
+            status: "In Transit",
+            ID: this.updatingTransaction,
+            postNumber: this.updatingPost,
+          })
+          .then(() => {
+            store.dispatch("getUserTransactions").then(() => {
+              this.toggle_status = false;
+              this.updatingTransaction = null;
+              this.updatingPost = null;
+              this.allDeliveries = this.deliveries 
+            });
+          })
+          .catch((error) => {
+            console.log(error.response.data.error, "Error", "error");
+          });
+      }
+    },
+    setDataToSave(email, indexTransactionPost, postNumber) {
+      this.userNotif = email;
+      this.updatingTransaction = indexTransactionPost;
+      this.updatingPost = postNumber;
+    },
+  },
+  mounted() {
+    this.allDeliveries = this.deliveries;
+    console.log("all deliveries ", this.allDeliveries);
+  },
+  computed: {
+    user() {
+      return store.getters.getUser;
+    },
+    deliveries() {
+      return store.getters.getUserTransactions.filter((x) => {
+        return (
+          (x.post.postIdentity == "request_post" &&
+            x.post.email != this.user.email) ||
+          (x.post.postIdentity == "offer_post" &&
+            x.post.email == this.user.email)
+        );
+      });
+    },
+  },
+};
 </script>
 <style scoped>
 .active {

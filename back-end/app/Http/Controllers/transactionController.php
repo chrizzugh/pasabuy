@@ -11,6 +11,7 @@ use App\Notifications\confirmRequestNotification;
 use App\Notifications\declinedRequestNotification;
 use App\Notifications\newTransactionNotification;
 use App\Notifications\UpdateRequestNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,18 @@ class transactionController extends Controller
         }
 
     }
+    public function editListDeliverStatus(Request $request,$transNum)
+    {
+        # code...
+        $transaction = transaction::where('transactionNumber', $transNum)->first();
+        $transaction->transactionShoppingList = $request->list;
+        if($transaction->save()){
+            //find the right user to notify, in this case the owner of the post
+        }
+        else 
+            return response()->json(["error"=>"Error updating transaction."],201);
+
+    }
     public function getTransaction()
     {
 
@@ -69,6 +82,8 @@ class transactionController extends Controller
  
         $transaction = transaction::find($request->ID);
         $transaction->transactionStatus = "Cancelled";
+        $transaction->dateModified = Carbon::now('Asia/Manila');
+
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = Post::where('postNumber',$request->postNumber)->get();
@@ -87,11 +102,13 @@ class transactionController extends Controller
  
         $transaction = transaction::find($request->ID);
         $transaction->transactionStatus = "Declined";
+        $transaction->dateModified = Carbon::now('Asia/Manila');
+
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = User::where('email',$request->userNotif)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-			$userToNotif->notify(new declinedRequestNotification($request->postNumber));
+			$userToNotif->notify(new declinedRequestNotification($request->postNumber,$request->postIdentity));
             return response()->json('ok');
         }
         else 
@@ -104,11 +121,13 @@ class transactionController extends Controller
  
         $transaction = transaction::find($request->ID);
         $transaction->transactionStatus = "Confirmed";
+        $transaction->dateModified = Carbon::now('Asia/Manila');
+
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = User::where('email',$request->userNotif)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-			$userToNotif->notify(new confirmRequestNotification($request->postNumber));
+			$userToNotif->notify(new confirmRequestNotification($request->postNumber, $request->postIdentity));
 
             if($request->postIdentity == "offer"){
                 $transaction = transaction::with('post')->where('transactionStatus', 'pending')->where('postNumber', $request->postNumber)->get();
@@ -120,7 +139,7 @@ class transactionController extends Controller
                     $trans->post->save();
                     $userToNotif = User::where('email',$trans->emailCustomerShopper)->get();
                     $userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-                    $userToNotif->notify(new declinedRequestNotification($request->postNumber));
+                    $userToNotif->notify(new declinedRequestNotification($request->postNumber, $request->postIdentity));
                 }
                 return response()->json('ok');
             }
@@ -135,6 +154,8 @@ class transactionController extends Controller
         # code...
         $transaction = transaction::find($request->ID);
         $transaction->transactionStatus = $request->status;
+        $transaction->dateModified = Carbon::now('Asia/Manila');
+
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = User::where('email',$request->userNotif)->get();

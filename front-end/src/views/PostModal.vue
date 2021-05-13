@@ -710,12 +710,29 @@
                     ({{isFew()}} items)
                   </p>
                 </div>
-                <button
-                  @click="editShopList"
-                  class="focus:outline-none text-sm font-bold leading-none text-indigo-900"
-                >
-                  Change
-                </button>
+                   <div>
+               <button @click="listEdit = !listEdit" class="focus:outline-none">
+                 <span class="material-icons text-lg vs:text-sm ssm:text-sm">
+                  more_vert
+                </span>
+               </button>
+               <div class="relative w-full">
+              <div v-if="listEdit" class="absolute flex flex-col space-y-2 p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
+              <button @click="editShopList" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+               <span class=" material-icons text-base  text-gray-900 ">
+                mode
+               </span>
+                Edit
+              </button>
+              <button @click="hidePrevious" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+               <span class=" material-icons text-base  text-gray-900 ">
+                autorenew
+               </span>
+                Change
+              </button>
+              </div>
+              </div>
+               </div>
               </div>
               <div
                 id="scroll1"
@@ -823,11 +840,23 @@
                   >
                 </label>
               </div>
-              <button class="focus:outline-none">
-                <span class="material-icons text-xl vs:text-lg">
+                <div>
+                <button  @click="edit2=list.shoppingListNumber; edit3=!edit3" class="focus:outline-none">
+                <span class="material-icons vs:text-xs">
                   more_vert
                 </span>
+                </button>
+                <div class="relative w-full">
+              <div v-if="edit2==list.shoppingListNumber && edit3 " class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
+              <button @click="editShopListAtSelectShopList" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+               <span class=" material-icons text-base  text-gray-900 ">
+                mode
+               </span>
+                Edit
               </button>
+              </div>
+              </div>
+                </div>
             </div>
           </div>
         </div>
@@ -1175,6 +1204,7 @@ export default {
   props:['activeList','showList'],
   data() {
     return {
+      listEdit:false,
       component: "shopOfferPost",
       component2: "orderRequestPost",
       isVisible: true,
@@ -1298,7 +1328,11 @@ export default {
       new_items:[],
       quantity:1,
       ctr:0,
-      oldList:[]
+      oldList:[],
+      edit2:null,
+      edit3:false,
+      editListFlag:false
+
       //end
     };
   },
@@ -1433,10 +1467,11 @@ export default {
         this.activeBtn = el;
       }
     },
-    hidePrevious() {
-      this.showSelectShopListModal = true;
-      $(".hideIf").fadeOut();
-    },
+     hidePrevious(){
+        this.showSelectShopListModal= !this.showSelectShopListModal;
+        $('.hideIf').fadeOut()
+        this.listEdit = false
+        },
     showPreviousModal1() {
       this.showSelectShopListModal = false;
       $(".hideIf").fadeIn();
@@ -1464,13 +1499,27 @@ export default {
       this.showSelectShopListModal = !this.showSelectShopListModal;
       $(".hideIf").fadeIn();
     },
+    editShopListAtSelectShopList(){
+       this.showShopListButton = false;
+      this.showItemList = true;
+      var tempList = this.shoppingLists;
+      console.log('selected List',tempList, this.edit2)
+      var temp = tempList.filter((x)=>{return x.shoppingListNumber === this.edit2})
+      this.selectedList = temp[0]
+      console.log('selected List',this.selectedList)
+      this.showSelectShopListModal = !this.showSelectShopListModal;
+      this.showEditShopListModal = !this.showEditShopListModal;
+      this.ctr = this.selectedList.shoppingListContent.id+1
+      this.oldList = JSON.parse(JSON.stringify(this.selectedList))
+      // $(".hideIf").fadeIn();
+    },
     showPreviousModal3() {
       this.showEditShopListModal = !this.showEditShopListModal;
       $(".hideIf").fadeIn();
       console.log('exiting selected',this.selectedList)
       this.selectedList = this.oldList
       console.log('exiting active',this.selectedList)
-
+      this.edit2=false
 
     },
     editShopList() {

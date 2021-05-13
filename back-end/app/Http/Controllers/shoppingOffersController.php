@@ -30,8 +30,7 @@ class shoppingOffersController extends Controller
             'deliverySchedule' => ['required'],
             'transportMode' => ['required'],
             'capacity' => ['required'],
-            'paymentMethod' => ['required'],
-            'caption' => ['required']
+            'paymentMethod' => ['required']
        ]);
 
         $record = shoppingOffers::where('indexShoppingOfferPost',$request->indexShoppingOfferPost)->first();

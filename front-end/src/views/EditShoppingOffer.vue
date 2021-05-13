@@ -398,7 +398,7 @@
 <script>
 import api from "../api";
 import store from "../store/index";
-import VueSimpleAlert from "vue-simple-alert";
+// import VueSimpleAlert from "vue-simple-alert";
 import moment from "moment";
 export default {
   props: ["btnText"],
@@ -424,6 +424,7 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+      
   },
   data() {
     return {
@@ -600,11 +601,7 @@ export default {
             store.dispatch("getTransportModes");
             this.$emit("getSortPosts");
             this.$emit("closeModal1");
-            VueSimpleAlert.alert(
-            "Offer post created successfully",
-            "Sucess",
-            "success"
-          );
+            
           });
           // window.location.reload();
         })

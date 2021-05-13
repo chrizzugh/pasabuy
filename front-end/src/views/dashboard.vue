@@ -317,7 +317,7 @@
                         <div class="flex w-full">
                           <div
                             v-if="edit1 && edit2 == post_info.postNumber"
-                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-0 md:right-5 xl:right-0 h-min w-30"
+                            class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-0 md:right-5 xl:right-0 h-min w-40"
                           >
                             <EditShoppingOfferPostVue
                               v-if="postModalVisible1"
@@ -630,7 +630,7 @@
 
                     <!--section 4-->
                     <div
-                       class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
+                      class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
                       v-if="post_info.request_post != null"
                     >
                       <div class="flex-col items-start w-full">
@@ -651,7 +651,9 @@
                           <li
                             v-for="(
                               shoppingList, index
-                            ) in computedShopItemList(post_info.request_post.shoppingListContent)"
+                            ) in computedShopItemList(
+                              post_info.request_post.shoppingListContent
+                            )"
                             :key="index"
                             class="text-xl"
                           >
@@ -668,9 +670,7 @@
                       <button
                         @click="showMoreshowLess"
                         v-if="
-                          !isFew(
-                            post_info.request_post.shoppingListContent
-                          )
+                          !isFew(post_info.request_post.shoppingListContent)
                         "
                         class="focus:outline-none items-start justify-start text-sm text-gray-500"
                       >
@@ -1127,53 +1127,56 @@
 
                       <!--section 4-->
                       <div
-                       class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
-                      v-if="post_info.post.request_post != null"
-                    >
-                      <div class="flex-col items-start w-full">
-                        <span
-                          class="pb-2 pl-2 text-sm font-bold vs:text-sm sm:text-sm sm:font-bold"
-                          >Shopping List
-                          <label class="font-normal text-gray-500"
-                            >{{
-                              post_info.post.request_post.shoppingListContent.length
-                            }}
-                            items</label
-                          >
-                        </span>
-                        <ul
-                          id="shop-list"
-                          class="pl-4 leading-loose list-disc list-inside"
-                        >
-                          <li
-                            v-for="(
-                              shoppingList, index
-                            ) in computedShopItemList(post_info.post.request_post.shoppingListContent)"
-                            :key="index"
-                            class="text-xl"
-                          >
-                            <span class="text-sm"
-                              >{{ shoppingList.product }} ·
-                              {{ shoppingList.brand }} [{{
-                                shoppingList.quantity
-                              }}
-                              units]</span
-                            >
-                          </li>
-                        </ul>
-                      </div>
-                      <button
-                        @click="showMoreshowLess"
-                        v-if="
-                          !isFew(
-                            post_info.post.request_post.shoppingListContent
-                          )
-                        "
-                        class="focus:outline-none items-start justify-start text-sm text-gray-500"
+                        class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
+                        v-if="post_info.post.request_post != null"
                       >
-                        {{ showListStatus }}
-                      </button>
-                    </div>
+                        <div class="flex-col items-start w-full">
+                          <span
+                            class="pb-2 pl-2 text-sm font-bold vs:text-sm sm:text-sm sm:font-bold"
+                            >Shopping List
+                            <label class="font-normal text-gray-500"
+                              >{{
+                                post_info.post.request_post.shoppingListContent
+                                  .length
+                              }}
+                              items</label
+                            >
+                          </span>
+                          <ul
+                            id="shop-list"
+                            class="pl-4 leading-loose list-disc list-inside"
+                          >
+                            <li
+                              v-for="(
+                                shoppingList, index
+                              ) in computedShopItemList(
+                                post_info.post.request_post.shoppingListContent
+                              )"
+                              :key="index"
+                              class="text-xl"
+                            >
+                              <span class="text-sm"
+                                >{{ shoppingList.product }} ·
+                                {{ shoppingList.brand }} [{{
+                                  shoppingList.quantity
+                                }}
+                                units]</span
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                        <button
+                          @click="showMoreshowLess"
+                          v-if="
+                            !isFew(
+                              post_info.post.request_post.shoppingListContent
+                            )
+                          "
+                          class="focus:outline-none items-start justify-start text-sm text-gray-500"
+                        >
+                          {{ showListStatus }}
+                        </button>
+                      </div>
                       <div
                         class="flex items-start justify-start flex-grow-0 w-full p-4 mt-4 bg-gray-100 ssm:mt-2 vs:mt-2 rounded-xl"
                         v-if="post_info.post.offer_post != null"
@@ -1708,12 +1711,7 @@
                     class="absolute bg-white drop-shadow-2xl right-3 rounded-xl shadow-2xl p-1"
                   >
                     <div
-                      @click="
-                        (Editlist = true),
-                          (option_more = false),
-                          (new_items = shoppingLists[0].shoppingListContent),
-                          (ctr = shoppingLists[-1].shoppingListContent.id+1)
-                      "
+                      @click="editListFromDashboard()"
                       class="flex cursor-pointer items-center space-x-2"
                     >
                       <span class="material-icons text-gray-400"> mode </span>
@@ -1750,6 +1748,7 @@
                       type="checkbox"
                       name=""
                       id=""
+                      disabled
                       class="pr-4 overflow-hidden truncate whitespace-nowrap"
                       :checked="item.status === 1"
                     />
@@ -1845,7 +1844,7 @@
                         </span>
                         <p id="quants">{{ quantity }}</p>
                         <span
-                          @click="quantity=minusQty(quantity)"
+                          @click="quantity = minusQty(quantity)"
                           class="material-icons select-none cursor-pointer text-red-700"
                         >
                           remove
@@ -1932,16 +1931,16 @@
                     <div class="flex flex-row items-center justify-between">
                       <div class="space-x-3 text-gray-500">
                         <span
-                          @click="new_items = []"
+                          @click="deleteList"
                           class="material-icons cursor-pointer select-none"
                         >
                           delete
                         </span>
                         <span
                           @click="
-                            (addlist = false),
-                              (listToggleFlag = true),
-                              add_shopping_list()
+                            addlist = false;
+                            listToggleFlag = true;
+                            add_shopping_list();
                           "
                           class="material-icons cursor-pointer select-none"
                         >
@@ -2032,7 +2031,7 @@
                         </span>
                         <p id="s_quants">{{ quantity }}</p>
                         <span
-                          @click="quantity=minusQty(quantity)"
+                          @click="quantity = minusQty(quantity)"
                           class="material-icons select-none cursor-pointer text-red-700"
                         >
                           remove
@@ -2074,7 +2073,7 @@
                         class="text-sm list-inside space-y-2 p-5 w-full"
                       >
                         <li
-                          v-for="item in shoppingLists[0].shoppingListContent"
+                          v-for="item in new_items"
                           :key="item.product"
                           class="grid-cols-2 w-ful list-none"
                         >
@@ -2126,7 +2125,7 @@
                     <div class="flex flex-row items-center justify-between">
                       <div class="space-x-3 text-gray-500">
                         <span
-                          @click="new_items = []"
+                          @click="deleteList"
                           class="material-icons cursor-pointer select-none"
                         >
                           delete
@@ -2186,7 +2185,7 @@
                     </div>
                     <div class="text-center pb-5">
                       <p class="text-lg">
-                        Are you sure you want to remove this shipping Address?
+                        Are you sure you want to remove this shopping list?
                       </p>
                     </div>
                     <hr />
@@ -2202,9 +2201,7 @@
                         </button>
 
                         <button
-                          @click="
-                            (toggle_delete = false), shopping_list.shift()
-                          "
+                          @click="deleteListFrom()"
                           class="px-4 bg-red-buttons text-white focus:outline-none w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl"
                         >
                           Delete
@@ -2237,7 +2234,7 @@
   <!-----pop ups--->
   <div class="bg-transparent fixed bottom-3 w-full flex flex-col items-end">
     <div
-      v-if="popupTriggers.popUp1"
+      v-if="false"
       :TogglePopup="() => TogglePopup('popUpUp1')"
       class="transition delay-150 mb-1 sm:w-z md:w-z lg:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z md:right-7 lg:right-7 llg:right-7 xl:right-7 xll:right-7 2xl:right-7 2xxl:right-7 mx-2 rounded-xl flex justify-between flex-row shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto"
     >
@@ -2263,7 +2260,7 @@
       </div>
     </div>
     <div
-      v-if="popupTriggers.popUp2"
+      v-if="false"
       :TogglePopup="() => TogglePopup('popUpUp2')"
       class="mb-1 sm:w-z md:w-z lg:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z md:right-7 lg:right-7 llg:right-7 xl:right-7 xll:right-7 2xl:right-7 2xxl:right-7 mx-2 rounded-xl flex justify-between flex-row shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto"
     >
@@ -2329,20 +2326,32 @@
       </div>
     </div>
     <!---popup cookies--->
-  <!---popup cookies--->
-          <div v-if="popupTriggers.timedTrigger"
-                :TogglePopup="() => TogglePopup('timedTrigger')" class="md:w-z lg:w-z sm:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z 
-                      md:right-3 lg:right-3 llg:right-3 xl:right-3 xll:right-3 2xl:right-3 2xxl:right-3 h-u mx-2 rounded-xl flex justify items-center shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto">
-            <div class="text-sm w-full h-full px-3 rounded pt-4">
-              <h1 class="font-semibold text-lg">This website use cookies</h1>
-              <p class="text-justify font-normal pt-1">We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. 
-                We also share information about your use of our site with our social media, advertising and analytics partners who may combine 
-                it with other information that you’ve provided to them or that they’ve collected from your use of their services</p>
-                <div class="flex justify-end relative">
-                <button @click="popupTriggers.timedTrigger=false" class ="mx-2 mt-2 h-7 px-2 mb-2 bg-gray-100 text-black hover:text-white hover:bg-gray-400 focus:outline-none rounded-full border border-gray-700 "><span>Accept all cookies</span></button>
-                </div>
-            </div>
-          </div>
+    <!---popup cookies--->
+    <div
+      v-if="popupTriggers.timedTrigger"
+      :TogglePopup="() => TogglePopup('timedTrigger')"
+      class="md:w-z lg:w-z sm:w-z llg:w-z xl:w-z xll:w-z 2xl:w-z 2xxl:w-z md:right-3 lg:right-3 llg:right-3 xl:right-3 xll:right-3 2xl:right-3 2xxl:right-3 h-u mx-2 rounded-xl flex justify items-center shadow-lg bg-black text-white border px-4 pb-4 pt-4 xsm:h-auto ssm:h-auto vsv:h-auto vsvs:h-auto lvs:h-auto sm:h-auto md:h-auto"
+    >
+      <div class="text-sm w-full h-full px-3 rounded pt-4">
+        <h1 class="font-semibold text-lg">This website use cookies</h1>
+        <p class="text-justify font-normal pt-1">
+          We use cookies to personalise content and ads, to provide social media
+          features and to analyse our traffic. We also share information about
+          your use of our site with our social media, advertising and analytics
+          partners who may combine it with other information that you’ve
+          provided to them or that they’ve collected from your use of their
+          services
+        </p>
+        <div class="flex justify-end relative">
+          <button
+            @click="popupTriggers.timedTrigger = false"
+            class="mx-2 mt-2 h-7 px-2 mb-2 bg-gray-100 text-black hover:text-white hover:bg-gray-400 focus:outline-none rounded-full border border-gray-700"
+          >
+            <span>Accept all cookies</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -2592,7 +2601,7 @@ export default {
     SendRequest,
     createShopList,
     EditOrderRequest,
-    SendOffer
+    SendOffer,
   },
   watch: {
     posts() {
@@ -2605,11 +2614,23 @@ export default {
     },
   },
   methods: {
-    minusQty(q){
-      q--
-      if(q<=0)
-        return 1
-      return q
+    editListFromDashboard() {
+      this.Editlist = true;
+      this.option_more = false;
+      this.new_items = this.shoppingLists[0].shoppingListContent;
+      this.ctr =
+        this.shoppingLists[0].shoppingListContent[
+          this.shoppingLists[0].shoppingListContent.length - 1
+        ].id + 1;
+    },
+    deleteList() {
+      this.new_items = [];
+      console.log(this.new_items);
+    },
+    minusQty(q) {
+      q--;
+      if (q <= 0) return 1;
+      return q;
     },
     showMoreshowLess() {
       this.isActive = !this.isActive;
@@ -2719,6 +2740,10 @@ export default {
       // let timex = new_time.toLocaleTimeString();
       // let datex = new_time.toDateString();
       // let new_date = datex + " " + timex;
+      if (this.new_items.length <= 0) {
+        this.listError = "Please add at least one item";
+        return;
+      }
       for (var i = 0; i < this.new_items.length; i++) {
         if (
           !document.getElementById("checkEdit" + this.new_items[i].id).checked
@@ -2760,16 +2785,18 @@ export default {
             error.response.data.list + error.response.data.listName;
         });
     },
-    delete_shopping_list() {
-      /* if(this.shopping_list.length>0){
-        this.shopping_list.shift();
-    }
-    else{
-      this.shopping_list.pop();
-
-    }*/
+    deleteListFrom(){
+      console.log("delete");
       this.toggle_delete = false;
-      console.log(this.toggle_delete);
+      api
+        .delete("api/deleteList/" + this.shoppingLists[0].shoppingListNumber)
+        .then(() => {
+        store.dispatch('getUserShoppingList')
+        this.shoppingLists.shift()
+        })
+        .catch((e) => {
+          console.log(e.response.data.error);
+        });
     },
     add_item_shopping_list(a, b, c, e) {
       let productx = document.getElementById(a).value;
@@ -2821,7 +2848,6 @@ export default {
         .post("api/createList", obj)
         .then((res) => {
           store.dispatch("getUserShoppingList").then(() => {
-    
             this.selectedList = res.data;
             this.showItemList = true;
             console.log("before", this.selectedList, this.showItemList);
@@ -2919,22 +2945,22 @@ export default {
               if (x.postIdentity == "offer_post") {
                 return x.offer_post.deliveryArea.includes(
                   this.userHomeAddress.province
-                );
+                ) || x.email == this.user.email;
               } else {
                 return x.request_post.deliveryAddress.includes(
                   this.userHomeAddress.province
-                );
+                ) || x.email == this.user.email;
               }
             } else {
               //for shared posts
               if (x.post.postIdentity == "offer_post") {
                 return x.post.offer_post.deliveryArea.includes(
                   this.userHomeAddress.province
-                );
+                 ) || x.email == this.user.email;
               } else {
                 return x.post.request_post.deliveryAddress.includes(
                   this.userHomeAddress.province
-                );
+                  ) || x.email == this.user.email;
               }
             }
           });

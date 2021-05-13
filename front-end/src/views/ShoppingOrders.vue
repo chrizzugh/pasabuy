@@ -286,54 +286,58 @@
           <div class="inline-flex justify-start items-center flex-row space-x-4">
             <p class="text-base font-bold leading-none text-gray-900">Offers Received</p>
             <div class="inline-flex px-2 py-1 bg-red-700 rounded-full">
-              <p class="text-base font-bold leading-none text-white">{{transactions.length}}</p>
+              <p class="text-base font-bold leading-none text-white">{{filteredTransacation(shoppingOrder_info.postNumber).length}}</p>
             </div>
           </div>
-          <div v-for="(transaction,index) in transactions" :key="index">
+          
           <div class="flex-auto flex-col w-full px-2 vs:px-0 space-y-3.5 pb-2 pt-2">
-            <div v-for="Offers in computedOffersReceived" :key="Offers" class="flex flex-row justify-between">
+            <div class="flex flex-row justify-between" v-for="(transaction,index) in filteredTransacation(shoppingOrder_info.postNumber)" :key="index" >
               <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
-              <img class="w-10 h-10 vs:w-8 vs:h-8 rounded-full" :src="transaction.transationSender.profilePicture"/>
+              <img class="w-10 h-10 vs:w-8 vs:h-8 rounded-full" :src="transaction.transaction_sender.profilePicture"/>
               <div class="flex flex-col space-y-1">
                 <div class="flex flex-row vs:space-x-1 space-x-2">
-                  <p class="text-base vs:text-sm ssm:text-xs font-bold leading-none text-gray-900">{{Offers.userName}}</p>
+                  <p class="text-base vs:text-sm ssm:text-xs font-bold leading-none text-gray-900">{{transaction.transaction_sender.firstName}} {{transaction.transaction_sender.lastName}}</p>
                   <span class="text-blue-900 align-middle material-icons md-14 ">
                   verified
                 </span>
                 </div>
-                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">{{Offers.time}}</p>
+                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">{{timestamp(transaction.dateCreated)}}</p>
               </div>
               </div>
               <div class="flex flex-row items-center vs:space-x-1 space-x-2">
-                <button @click="declineDisOffer" class="focus:outline-none inline-flex items-start justify-start  vs:px-2.5 px-3.5 py-1.5 vs:py-1 border-2 rounded-full border-red-700">
+                <button @click="decline_transact(transaction)" class="focus:outline-none inline-flex items-start justify-start  vs:px-2.5 px-3.5 py-1.5 vs:py-1 border-2 rounded-full border-red-700">
                 <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">Decline</p>
                 </button>
-                <button @click="acceptDisOffer" class="focus:outline-none inline-flex items-start justify-start vs:px-3 px-4 vs:py-1.5 py-2 bg-red-700 rounded-full">
+                <button @click="accept_transact(transaction)" class="focus:outline-none inline-flex items-start justify-start vs:px-3 px-4 vs:py-1.5 py-2 bg-red-700 rounded-full">
                 <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-white">Accept</p>
                 </button>
                 <div>
-                <button @click="Offers.messageUser = !Offers.messageUser" class="focus:outline-none mt-1.5">
+                <button @click="threeDotUser = transaction.transactionNumber; threeDot=!threeDot" class="focus:outline-none mt-1.5">
                 <span class="material-icons vs:text-xs">
                   more_vert
                 </span>
                 </button>
                 <div class="relative w-full">
-              <div v-if="Offers.messageUser" class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
-              <button class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+              <div v-if="threeDotUser == transaction.transactionNumber && threeDot" class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
+              <router-link  :to="'/messages/?ID=' + toEncrypt(transaction.transaction_sender.email)" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
                <span class=" material-icons text-base  text-gray-900 ">
                 forum
                </span>
                 Chat
-              </button>
+              </router-link>
               </div>
             </div>
           </div>
           </div>
-          <div class="flex flex-row w-full justify-between items-center" v-if="transactions.length>0">
+          </div>
+          <div class="flex flex-row w-full justify-between items-center" v-if="filteredTransacation(shoppingOrder_info.postNumber).length>0">
               <button class="focus:outline-none inline-flex text-base font-bold leading-none text-gray-500">View more</button>
               <p class="inline-flex text-base font-bold leading-none text-gray-500">3 of 4</p>
           </div>
-        </div>
+        
+          </div>
+           
+           </div>
 
           <!--section 5-->
           <div
@@ -408,9 +412,7 @@
             </div>
           </div>
           <!--end-->
-        </div>
-      </div>
-    </div>
+        
     <!--end of user post-->
 
     <!--user post-->
@@ -473,6 +475,183 @@
   </div>
       </div>
     </div>
+
+  <!--Accept Offer Modal-->
+  <div
+    v-if="accept"
+    class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2"
+  >
+    <div
+      class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-96.5 space-y-4 p-4 ssm:w-full vs:w-full"
+    >
+      <div class="flex justify-between items-center flex-row">
+        <button
+          @click="accept = false"
+          class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
+        >
+          Back</button
+        ><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+        <p
+          class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
+        >
+          Accept {{ currentPostViewDetails.transaction_sender.firstName }} {{ currentPostViewDetails.transaction_sender.lastName }}'s Offer
+        </p>
+        <button
+          @click="accept = false"
+          class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
+        >
+          Close
+        </button>
+      </div>
+      <hr class="w-full" />
+      <div class="flex w-full">
+        <p class="block items-start leading-normal text-base text-gray-900">
+          Are you sure you want to accept {{ currentPostViewDetails.transaction_sender.firstName }} {{ currentPostViewDetails.transaction_sender.lastName }}'s Offer? This would
+          decline all other offers you received for this post and will
+          automatically update your post status
+          <span class="font-bold text-green-600 leading-normal"
+            >Order Taken</span
+          >.
+        </p>
+      </div>
+      <div class="justify-between flex flex-row space-x-2 w-full">
+        <button
+          @click="accept = false"
+          class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700"
+        >
+          <p
+            class="text-base font-bold leading-normal text-center text-gray-900"
+          >
+            Cancel
+          </p>
+        </button>
+        <button
+          @click="confirmAcceptTransact"
+          class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full"
+        >
+          <p class="text-base font-bold leading-normal text-center text-white">
+            Confirm
+          </p>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--end-->
+
+     <!--Decline Offer Modal-->
+  <div
+    v-if="decline"
+    class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2"
+  >
+    <div
+      class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 space-y-4 p-4 ssm:w-full vs:w-full"
+    >
+      <div class="flex justify-between items-center flex-row">
+        <button
+          class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
+        >
+          Back</button
+        ><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+        <p
+          class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
+        >
+          Decline {{ currentPostViewDetails.transaction_sender.firstName }} {{ currentPostViewDetails.transaction_sender.lastName }}'s  Offer
+        </p>
+        <button
+          @click="declineDisRequest1"
+          class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
+        >
+          Close
+        </button>
+      </div>
+      <hr class="w-full" />
+      <div class="flex w-full">
+        <p class="block items-start leading-normal text-base text-gray-900">
+          Are you sure you want to decline {{ currentPostViewDetails.transaction_sender.firstName }} {{ currentPostViewDetails.transaction_sender.lastName }}'s Offer? You can not
+          undo this.
+        </p>
+      </div>
+      <div class="justify-between flex flex-row space-x-2 w-full">
+        <button
+          @click="declineDisRequest1"
+          class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700"
+        >
+          <p
+            class="text-base font-bold leading-normal text-center text-gray-900"
+          >
+            Cancel
+          </p>
+        </button>
+        <button
+          @click="confirmDeclineTransact"
+          class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full"
+        >
+          <p class="text-base font-bold leading-normal text-center text-white">
+            Confirm
+          </p>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--end-->
+  
+  <!--Decline PopUp Notification-->
+  <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
+    <div
+      v-if="declineReqNotiPop"
+      class="declineRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto"
+      role="alert"
+    >
+      <div class="flex w-full flex-row justify-between items-center">
+        <div class="flex flex-row w-full space-x-2">
+          <span class="w-6 h-6 rounded-full material-icons text-white">
+            check_circle
+          </span>
+          <p class="text-base leading-normal text-white">
+            Successfully Declined {{ currentPostViewDetails.transaction_sender.firstName }} {{ currentPostViewDetails.transaction_sender.lastName }}'s Offer
+          </p>
+        </div>
+        <button
+          @click="declineReqNotiPop=!declineReqNotiPop"
+          class="focus:outline-none flex"
+        >
+          <span class="w-6 h-6 rounded-full material-icons text-white">
+            cancel
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+    <!--end-->
+
+       <!--Accept PopUp Notification-->
+  <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
+    <div
+      v-if="acceptReqNotiPop"
+      class="acceptRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto"
+      role="alert"
+    >
+      <div class="flex w-full flex-row justify-between items-center">
+        <div class="flex flex-row w-full space-x-2">
+          <span class="w-6 h-6 rounded-full material-icons text-white">
+            check_circle
+          </span>
+          <p class="text-base leading-normal text-white">
+            Successfully Accepted {{currentPostViewDetails.transaction_sender.firstName}} {{ currentPostViewDetails.transaction_sender.lastName }}'s Offer
+          </p>
+        </div>
+        <button
+          @click="acceptReqNotiPop=!acceptReqNotiPop"
+          class="focus:outline-none flex"
+        >
+          <span class="w-6 h-6 rounded-full material-icons text-white">
+            cancel
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--end-->
   </div>
 <!--end-->
 
@@ -490,10 +669,18 @@ import moment from "moment";
 import api from "../api";
 import VueSimpleAlert from "vue-simple-alert";
 import $ from "jquery";
+import Axios from "axios"
 export default {
   props: ["userID"],
   data() {
     return {
+      currentPostViewDetails:null,
+      acceptReqNotiPop:false,
+      declineReqNotiPop:false,
+      decline: null,
+      accept:false,
+      threeDotUser:null,
+      threeDot:false,
       postModalVisible: false,
       postModalVisible2: false,
       postModalVisible3: false,
@@ -584,6 +771,11 @@ export default {
       showListStatus: "See More",
       showLessStatus: "See Less",
       isActive: false,
+      currentPostIdentity: null,
+      activePostNum: null,
+      activeIndexTransNum: null,
+      activeUser: null, 
+      activeDisplayingTransaction:null,
     };
   },
   components: {
@@ -593,6 +785,107 @@ export default {
     SendRequest,
   },
   methods: {
+     declineDisRequest1() {
+      this.decline = !this.decline;
+      $(".hideMe1").fadeIn();
+    },
+     confirmAcceptTransact() {
+      this.accept = !this.accept;
+      this.toggleViewDetails = !this.toggleViewDetails;
+      var temp = this.rooms.filter((x)=>{return (x.email1 == this.user.email || x.email2 == this.user.email) && (x.email1 == this.currentPostViewDetails.transaction_sender.email || x.email2 == this.currentPostViewDetails.transaction_sender.email )})
+      var activeRoom = temp[0].messageRoomNumber
+      var dataMessage = {
+        roomID: activeRoom,
+        message: JSON.stringify({
+          param: "this_is_a_message_transaction",
+          sender:
+            this.user.firstName + " " + this.user.lastName,
+          receiver: this.currentPostViewDetails.transaction_sender.firstName + ' '+this.currentPostViewDetails.transaction_sender.lastName,
+          status: "Accepted",
+          postIdentity: "offer",
+        }),
+      };
+      var dataMessage2 = {
+              roomID: activeRoom,
+              message: JSON.stringify(this.currentPostViewDetails.transactionData)
+            };
+            console.log(dataMessage,dataMessage2)
+      Axios.all([
+        api.post("api/confirmRequest", {
+          postNumber: this.currentPostViewDetails.postNumber,
+          ID: this.currentPostViewDetails.indexTransactionPost,
+          userNotif: this.currentPostViewDetails.transaction_sender.email,
+          postIdentity: 'offer',
+        }),
+        api.post("/api/sendMessage", dataMessage),
+        api.post("/api/sendMessage", dataMessage2),
+        api.get("/api/getTransaction"),
+      ]).then((resArr) => {
+        store.commit("setUserTransactions", resArr[3].data);
+        store.commit("FETCH_ROOMS", resArr[2].data);
+           $(".acceptRequestNotiPop").fadeIn(), (this.acceptReqNotiPop = true); 
+        setTimeout(function () {
+          this.acceptReqNotiPop = false;
+          $(".acceptRequestNotiPop").fadeOut();
+          this.currentPostViewDetails=null
+        }, 4000);
+      });
+     
+    },
+      confirmDeclineTransact() {
+      this.decline = !this.decline;
+      this.toggleViewDetails = false;
+      var temp = this.rooms.filter((x)=>{return (x.email1 == this.user.email || x.email2 == this.user.email) && (x.email1 == this.currentPostViewDetails.transaction_sender.email || x.email2 == this.currentPostViewDetails.transaction_sender.email )})
+      var activeRoom = temp[0].messageRoomNumber
+      var dataMessage = {
+        roomID: activeRoom,
+        message: JSON.stringify({
+          param: "this_is_a_message_transaction",
+          sender:
+            this.user.firstName + " " + this.user.lastName,
+          receiver: this.currentPostViewDetails.transaction_sender.firstName + ' '+this.currentPostViewDetails.transaction_sender.lastName,
+          status: "Declined",
+          postIdentity: "offer",
+        }),
+      };
+      Axios.all([
+        api.post("api/declineRequest", {
+          postNumber: this.currentPostViewDetails.postNumber,
+          ID: this.currentPostViewDetails.indexTransactionPost,
+          userNotif: this.currentPostViewDetails.transaction_sender.email,
+          postIdentity: "offer",
+        }),
+        api.post("/api/sendMessage", dataMessage),
+        api.get("/api/getTransaction"),
+      ]).then((resArr) => {
+        store.commit("setUserTransactions", resArr[2].data);
+        store.commit("FETCH_ROOMS", resArr[1].data);
+        setTimeout(() => {
+          $(".declineRequestNotiPop").fadeIn(), (this.declineReqNotiPop = true);
+        }, 500);
+        setTimeout(function () {
+          this.declineReqNotiPop = false;
+          $(".declineRequestNotiPop").fadeOut();
+          this.currentPostViewDetails=null
+        }, 4000);
+        
+      });
+    },
+    accept_transact(transact) {
+      $(".hideMe1").fadeOut();
+      this.accept = !this.accept;
+      this.currentPostViewDetails = transact
+      console.log('accept')
+    },
+    decline_transact(transact) {
+      this.decline = !this.decline;
+        this.currentPostViewDetails = transact
+      console.log('decline')
+
+    },
+    filteredTransacation(postNum){
+      return this.transactions.filter(x=>{return x.postNumber == postNum})
+    },
     togglePostModal() {
       this.postModalVisible = !this.postModalVisible;
     },
@@ -669,8 +962,7 @@ export default {
       var shareData = { postNum: postNumber };
       api
         .post("/api/share", shareData)
-        .then((res) => {
-          VueSimpleAlert.alert(res.data.message, "Success", "success");
+        .then(( ) => {
           this.share1 = false;
           store.dispatch("getAllShares").then(() => {
             this.sortPosts();
@@ -731,6 +1023,9 @@ export default {
         return x.transactionStatus == "pending";
       });
     },
+    rooms(){
+      return store.getters.getRooms
+    }
   },
 };
 </script>

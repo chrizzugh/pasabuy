@@ -405,7 +405,7 @@
                     @click="
                       cancel_transact(
                         transaction.postNumber,
-                        transaction.indexTransactionPostm,
+                        transaction.indexTransactionPost,
                         'offer'
                       )
                     "
@@ -414,6 +414,7 @@
                     <span>Cancel Offer</span>
                   </button>
                   <button
+                   @click="viewDetailsBtn(transaction.transactionNumber)"
                     class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
                   >
                     <span>View Post</span>
@@ -464,7 +465,7 @@
                     <span>Cancel Request</span>
                   </button>
                   <button
-                    @click="alert('single page post')"
+                     @click="viewDetailsBtn(transaction.transactionNumber)"
                     class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
                   >
                     <span>View Post</span>
@@ -604,7 +605,7 @@
             <!--------------transaction details confirmed------>
 
             <div
-              v-if="transaction.transactionStatus === 'Confirmed'"
+              v-if="transaction.transactionStatus === 'Confirmed' || transaction.transactionStatus === 'In Transit'"
               class="text-sm w-full"
             >
               <div class="flex flex-row justify-between">
@@ -617,7 +618,7 @@
 
                 <div class="flex items-center ml-2">
                   <span class="rounded border h-6 border-blue-700 px-1"
-                    >Confirmed</span
+                    >{{transaction.transactionStatus}}</span
                   >
 
                   <button
@@ -633,6 +634,7 @@
               </div>
               <div class="flex justify-end pr-3">
                 <button
+                @click="viewDetailsBtn(transaction.transactionNumber)"
                   class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
                 >
                   <span>View Details</span>
@@ -664,8 +666,8 @@
                 </span>
                 <div class="flex items-center ml-2">
                   <span
-                    class="rounded border h-6 border-crimsonRed text-crimsonRed px-1"
-                    >Cancelled</span
+                    class="rounded border h-6 px-1"
+                    >{{transaction.transactionStatus}}</span
                   >
                   <button
                     @click="vertiDots"
@@ -680,6 +682,7 @@
               </div>
               <div class="flex justify-end pr-3">
                 <button
+                @click="viewDetailsBtn(transaction.transactionNumber)"
                   class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
                 >
                   <span>View Details</span>
@@ -760,7 +763,7 @@
                       @click="active_transact(transact.transactionNumber)"
                     >
                       <span
-                        v-if="transact.transactionStatus === 'Confirmed'"
+                        v-if="transact.transactionStatus === 'Confirmed' || transact.transactionStatus === 'In Transit' "
                         class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white text-blue-500 justify-start pl-4"
                         >Transaction #{{ index + 1 }}</span
                       >
@@ -878,14 +881,14 @@
                     <!-- if the message is a post--->
                     <!-----------------incoming post message------------------------>
                     <div
-                      class="p-1 ml-12"
+           
                       v-for="(msgPost, index) in parseString(msg.messageText)"
                       :key="index"
                     >
                       <div class="flex items-end pr-10 mt-1">
                         <img
                           :src="msg.get_message_sender.profilePicture"
-                          class="rounded-lg h-8 w-8"
+                          class="rounded-lg h-8 w-8 mr-3"
                         />
                         <div class="flex flex-col bg-gray-100 py-2 rounded-lg">
                           <div>
@@ -941,7 +944,7 @@
                                 <span class="font-semibold"
                                   >Shopping List<span class="ml-3 text-gray-500"
                                     >{{
-                                      msgPost.shoppingListContent.length + 1
+                                      msgPost.shoppingListContent.length
                                     }}
                                     items</span
                                   ></span
@@ -975,7 +978,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="flex items-end pr-10 mt-1">
+                      <div class="flex items-end pr-10 mt-1" v-if="msgPost.message != null">
                         <img
                           :src="msg.get_message_sender.profilePicture"
                           class="rounded-lg h-8 w-8"
@@ -1121,7 +1124,7 @@
                                 <span class="font-semibold"
                                   >Shopping List<span class="ml-3 text-gray-500"
                                     >{{
-                                      msgPost.shoppingListContent.length + 1
+                                      msgPost.shoppingListContent.length
                                     }}
                                     items</span
                                   ></span
@@ -1155,10 +1158,10 @@
                           </div>
                         </div>
                       </div>
-                      <div class="flex justify-end pr-0 mt-1">
+                      <div class="flex justify-end p-2" v-if="msgPost.message != null">
                         <div class="rounded-lg">
                           <div
-                            class="ml-4 mr-10 p-3 bg-gray-100 text-sm rounded-lg"
+                            class="ml-32 pt-2 pl-4 pb-3 pr-4 bg-gray-200 text-sm rounded-lg"
                           >
                             <p>{{ msgPost.message }}</p>
 
@@ -1314,10 +1317,10 @@
                       >
                         <span>Cancel Offer</span>
                       </button>
-                      <router-link
-                        to="/dashboard"
+                      <button
+                        @click="viewDetailsBtn(transaction.transactionNumber)"
                         class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
-                        ><span>View Post</span></router-link
+                        ><span>View Post</span></button
                       >
                     </div>
                   </div>
@@ -1364,10 +1367,10 @@
                       >
                         <span>Cancel Request</span>
                       </button>
-                      <router-link
-                        to="/dashboard"
+                      <button
+                         @click="viewDetailsBtn(transaction.transactionNumber)"
                         class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
-                        ><span>View Post</span></router-link
+                        ><span>View Post</span></button
                       >
                     </div>
                   </div>
@@ -1507,7 +1510,7 @@
                     <span
                       >Transaction
                       <span class="font-semibold ml-2"
-                        >{{ transaction.transactionNumber }}
+                        >#{{ transaction.transactionNumber }}
                       </span>
                     </span>
 
@@ -1529,7 +1532,7 @@
                   </div>
                   <div class="flex justify-end pr-3">
                     <button
-                      @click="toggleViewDetails"
+                      @click="viewDetailsBtn(transaction.transactionNumber)"
                       class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
                     >
                       <span>View Details</span>
@@ -1555,7 +1558,7 @@
                     <span
                       >Transaction
                       <span class="font-semibold ml-2"
-                        >{{ transaction.postNumber }}
+                        >#{{ transaction.postNumber }}
                       </span>
                     </span>
 
@@ -1578,7 +1581,7 @@
                   </div>
                   <div class="flex justify-end pr-3">
                     <button
-                      @click="toggleViewDetails"
+                      @click="viewDetailsBtn(transaction.transactionNumber)"
                       class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
                     >
                       <span>View Details</span>
@@ -1786,14 +1789,14 @@
                     <!-----------------incoming post message------------------------>
                     <div v-else>
                       <div
-                        class="p-1 ml-12"
+                       
                         v-for="(msgPost, index) in parseString(msg.messageText)"
                         :key="index"
                       >
                         <div class="flex items-end pr-10 mt-1">
                           <img
                             :src="msg.get_message_sender.profilePicture"
-                            class="rounded-lg h-8 w-8"
+                            class="rounded-lg h-8 w-8 mr-2"
                           />
                           <div
                             class="flex flex-col bg-gray-100 py-2 rounded-lg"
@@ -1852,7 +1855,7 @@
                                     >Shopping List<span
                                       class="ml-3 text-gray-500"
                                       >{{
-                                        msgPost.shoppingListContent.length + 1
+                                        msgPost.shoppingListContent.length
                                       }}
                                       items</span
                                     ></span
@@ -1886,7 +1889,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="flex items-end pr-10 mt-1">
+                        <div class="flex items-end pr-10 mt-1" v-if="msgPost.message != null">
                           <img
                             :src="msg.get_message_sender.profilePicture"
                             class="rounded-lg h-8 w-8"
@@ -2039,7 +2042,7 @@
                                     >Shopping List<span
                                       class="ml-3 text-gray-500"
                                       >{{
-                                        msgPost.shoppingListContent.length + 1
+                                        msgPost.shoppingListContent.length
                                       }}
                                       items</span
                                     ></span
@@ -2073,7 +2076,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="flex justify-end pr-0 mt-1">
+                        <div class="flex justify-end pr-0 mt-1" v-if="msgPost.message != null">
                           <div class="rounded-lg">
                             <div
                               class="ml-4 mr-10 p-3 bg-gray-100 text-sm rounded-lg"
@@ -2457,9 +2460,9 @@
   </div>
   <!--close mobile view-->
 
-  <!--Accept User Request Modal-->
+  <!--view details/post Modal-->
   <div
-    v-if="false"
+    v-if="toggleViewDetails"
     class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2"
   >
     <div
@@ -2471,13 +2474,18 @@
         >
           Back</button
         ><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
-        <p
+        <p v-if="currentPostViewDetails.post.request_post!=null"
           class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
         >
-          Request from Asta
+          Offer from {{recipient}}
+        </p>
+        <p v-else
+          class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
+        >
+          Request from {{recipient}}
         </p>
         <button
-          @click="toggleViewDetails"
+          @click="toggleViewDetails=!toggleViewDetails; currentPostViewDetails=[]"
           class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
         >
           Close
@@ -2485,17 +2493,17 @@
       </div>
       <hr class="w-full" />
       <div class="flex w-full flex-row items-center space-x-4">
-        <img src="img/asta.jpeg" class="rounded-full w-10 h-10" />
+        <img :src="currentPostViewDetails.transaction_sender.profilePicture" class="rounded-full w-10 h-10" />
         <div class="flex flex-col">
           <div class="flex-row flex space-x-1 items-center">
             <p class="text-base font-bold leading-none text-gray-900">
-              Asta Staria
+              {{recipient}}
             </p>
             <span class="text-blue-900 align-middle material-icons text-base">
               verified
             </span>
           </div>
-          <p class="text-sm leading-none text-gray-500">5 minutes ago</p>
+          <p class="text-sm leading-none text-gray-500">{{timestamp(currentPostViewDetails.dateCreated)}}</p>
         </div>
       </div>
       <div class="flex flex-col w-full">
@@ -2506,9 +2514,10 @@
           <p
             class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1"
           >
-            {{ request_info.delivery_area }}
+            {{ currentPostViewDetails.transactionData.deliveryAddress }}
           </p>
         </div>
+ 
         <div class="flex space-x-2 py-2">
           <span class="w-6 h-6 rounded-full material-icons text-red-600">
             alarm
@@ -2516,7 +2525,7 @@
           <p
             class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1"
           >
-            {{ request_info.schedule }}
+            {{ timestampSched(currentPostViewDetails.transactionData.deliverySchedule) }}
           </p>
         </div>
         <div class="flex space-x-2">
@@ -2526,7 +2535,7 @@
           <p
             class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1"
           >
-            {{ request_info.shopping_place }}
+            {{ currentPostViewDetails.transactionData.shoppingPlace }}
           </p>
         </div>
         <div class="flex space-x-2 py-2">
@@ -2536,7 +2545,7 @@
           <p
             class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1"
           >
-            {{ request_info.payment_method }}
+            {{ currentPostViewDetails.transactionData.paymentMethod }}
           </p>
         </div>
       </div>
@@ -2548,24 +2557,24 @@
             >Shopping List</span
           >
           <span class="text-base ssm:text-sm leading-none text-gray-500"
-            >{{ countItems }} items</span
+            >{{ currentPostViewDetails.transactionShoppingList.length }} items</span
           >
         </div>
         <div
           class="inline-flex flex-col ssm:px-0 w-full vs:px-0 space-y-2 py-4 px-4"
         >
           <li
-            v-for="shoppingItems in computedShopItemList"
+            v-for="shoppingItems in computedShopItemList(currentPostViewDetails.transactionShoppingList)"
             :key="shoppingItems"
             class="text-sm leading-none text-gray-900"
           >
-            {{ shoppingItems.item }} ({{ shoppingItems.amount }}) ·
-            {{ shoppingItems.brand }} [{{ shoppingItems.unit }}]
+            {{ shoppingItems.product }} ({{ shoppingItems.size }}) ·
+            {{ shoppingItems.brand }} [{{ shoppingItems.quantity }}]
           </li>
         </div>
         <button
           @click="showMoreshowLess"
-          v-if="!isFew"
+          v-if="isFew"
           class="focus:outline-none items-start justify-start text-sm text-gray-500"
         >
           {{ showListStatus }}
@@ -2577,10 +2586,10 @@
         <p
           class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal w-auto text-gray-900"
         >
-          {{ request_info.comment }}
+          {{ currentPostViewDetails.transactionData.caption }}
         </p>
       </div>
-      <div
+      <div v-if="currentPostViewDetails.transactionStatus == 'pending' && currentPostViewDetails.post.postIdentity=='request_post'"
         class="justify-between flex flex-row vs:space-x-2 ssm:space-x-2 sm:space-x-2 w-full"
       >
         <button
@@ -2907,7 +2916,7 @@
   <!--Accept PopUp Notification-->
   <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
     <div
-      v-if="false"
+      v-if="acceptReqNotiPop"
       class="acceptRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto"
       role="alert"
     >
@@ -2917,7 +2926,7 @@
             check_circle
           </span>
           <p class="text-base leading-normal text-white">
-            Successfully Accepted Asta's Request
+            Successfully Accepted {{recipient}}'s {{currentPostIdentity}}
           </p>
         </div>
         <button
@@ -2936,7 +2945,7 @@
   <!--Decline PopUp Notification-->
   <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
     <div
-      v-if="false"
+      v-if="declineReqNotiPop"
       class="declineRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto"
       role="alert"
     >
@@ -2946,7 +2955,7 @@
             check_circle
           </span>
           <p class="text-base leading-normal text-white">
-            Successfully Declined Asta's Request
+            Successfully Declined {{recipient}}'s {{currentPostIdentity}}
           </p>
         </div>
         <button
@@ -3174,7 +3183,14 @@ export default {
       decline: null,
       activeUser: null,
       accept: null,
-      activeDisplayingTransaction:null
+      activeDisplayingTransaction:null,
+      toggleViewDetails:false,
+      currentPostViewDetails:[],
+      limit_by: 4,
+      default_limit: 4,
+      showListStatus: "See More",
+      showLessStatus: "See Less",
+      isActive: false,
     };
   },
   watch: {
@@ -3183,6 +3199,7 @@ export default {
       this.connect();
     },
     room() {
+      console.log("room changed")
       this.getChatRooms();
     },
     transactions() {
@@ -3193,6 +3210,18 @@ export default {
     },
   },
   methods: {
+    computedShopItemList(list) {
+      return this.limit_by ? list.slice(0, this.limit_by) : list;
+    },
+    isFew(filter_itemList) {
+      filter_itemList.length < 5;
+    },
+    viewDetailsBtn(transactionNumber){
+    var temp = this.transactions.filter((x)=>{return x.transactionNumber == transactionNumber})
+    this.currentPostViewDetails =temp[0]
+    this.toggleViewDetails=!this.toggleViewDetails
+    console.log('detailss')
+    },
     isRequestPost(transactionData) {
       return JSON.stringify(transactionData).search("indexOrderRequestPost");
     },
@@ -3402,7 +3431,11 @@ export default {
       //filtering the message room where there are no message and not the active room if there is
       var z = 0;
       for (i = 0; i < this.room.length; i++) {
-        if (this.room[i].get_messages.length == 0) {
+        console.log('chatroom temp',this.transactions)
+        var temp = this.transactions.filter(x=>{return (x.emailCustomerShopper == this.room[i].email1 || x.emailCustomerShopper == this.room[i].email2) && (x.transactionReceiver == this.room[i].email1 || x.transactionReceiver == this.room[i].email2)})
+        console.log('chatroom temp',temp)
+        console.log(this.room[i].get_messages.length == 0 && !(temp.length>0))
+        if (this.room[i].get_messages.length == 0 && !(temp.length>0)) {
           //means epmty messages on room
           if (
             (this.authUser.email === this.room[i].email1 ||
@@ -3524,6 +3557,7 @@ export default {
         params = this.$route.query.postNum.split("/?p=");
         var postNum = atob(params[0]);
         var email = atob(params[1]);
+        this.userQueryID = email;
         var requestData = { message: JSON.parse(atob(params[2])) };
         params = { userEmail: email };
         console.log(requestData);
@@ -3538,10 +3572,10 @@ export default {
           return x.email1 == params.userEmail || x.email2 == params.userEmail;
         });
         //if null execute create chat room, if exists, set room an render rooms
-        if (temp == 0) {
+        console.log('temp room',temp)
+        if (temp.length == 0) {
           //if dont exists, create room
           Axios.all([
-            api.get("/sanctum/csrf-cookie"),
             api.post("api/createChatRoom", params),
           ]).then(() => {
             var foundPost = this.posts.find((x) => x.postNumber === postNum); //find the passed post in the stored objects in vuex
@@ -3554,8 +3588,9 @@ export default {
                 email: email,
                 postNumber: postNum,
                 transactionData: requestData.message,
-                transactionShoppingList: requestData.message.shopping_list,
+                transactionShoppingList: requestData.message.shoppingListContent,
               };
+              
             } else {
               foundPost.request_post["message"] = requestData.message.message;
               foundPost.request_post["param"] = requestData.message.param;
@@ -3571,15 +3606,18 @@ export default {
                   foundPost.request_post.shoppingListContent,
               };
             }
+           
             Axios.all([
               // api.post("/api/sendMessage", dataMessage),
               api.post("/api/createTransaction", transactionDetails),
-              // api.get("/api/getTransaction")
+              api.get("/api/getChatroom")
             ])
               .then((responseArr) => {
                 store.commit("setUserTransactions", responseArr[0].data);
-                // store.commit("FETCH_ROOMS", responseArr[0].data);
+                store.commit("FETCH_ROOMS", responseArr[1].data);
                 // this.getChatRooms();
+                console.log('response rooms',responseArr[1].data);
+                console.log('rooms', this.room)
               })
               .catch(() => {
                 console.log("error in creating transaction");
@@ -3599,7 +3637,7 @@ export default {
               email: email,
               postNumber: postNum,
               transactionData: requestData.message,
-              transactionShoppingList: requestData.message.shopping_list,
+              transactionShoppingList: requestData.message.shoppingListContent,
             };
           } else {
             foundPost.request_post["message"] = requestData.message.message;
@@ -3616,6 +3654,7 @@ export default {
                 foundPost.request_post.shoppingListContent,
             };
           }
+           console.log('asdfas',transactionDetails)
           Axios.all([
             // api.post("/api/sendMessage", dataMessage),
             api.post("/api/createTransaction", transactionDetails),
@@ -3841,6 +3880,8 @@ export default {
       $(".hideMe1").fadeIn();
     },
     confirmAcceptTransact() {
+      this.accept = !this.accept;
+      this.toggleViewDetails = false;
       var dataMessage = {
         roomID: this.activeRoom,
         message: JSON.stringify({
@@ -3852,6 +3893,13 @@ export default {
           postIdentity: this.currentPostIdentity,
         }),
       };
+      var currTrans = this.transactionsReceived.filter((x)=>{return x.indexTransactionPost == this.activeIndexTransNum})
+      console.log(currTrans)
+      var dataMessage2 = {
+              roomID: this.activeRoom,
+              message: JSON.stringify(currTrans[0].transactionData)
+            };
+            console.log(dataMessage,dataMessage2)
       Axios.all([
         api.post("api/confirmRequest", {
           postNumber: this.activePostNum,
@@ -3860,13 +3908,12 @@ export default {
           postIdentity: this.currentPostIdentity,
         }),
         api.post("/api/sendMessage", dataMessage),
+        api.post("/api/sendMessage", dataMessage2),
         api.get("/api/getTransaction"),
       ]).then((resArr) => {
-        store.commit("setUserTransactions", resArr[2].data);
-        store.commit("FETCH_ROOMS", resArr[1].data);
-        setTimeout(() => {
-          $(".acceptRequestNotiPop").fadeIn(), (this.acceptReqNotiPop = true);
-        }, 500);
+        store.commit("setUserTransactions", resArr[3].data);
+        store.commit("FETCH_ROOMS", resArr[2].data);
+        $(".acceptRequestNotiPop").fadeIn(), (this.acceptReqNotiPop = true); 
         setTimeout(function () {
           this.acceptReqNotiPop = false;
           $(".acceptRequestNotiPop").fadeOut();
@@ -3876,8 +3923,7 @@ export default {
         this.activeUser = null;
         this.currentPostIdentity = null;
       });
-      // this.acceptRequest = !this.acceptRequest;
-      // this.viewDetails = !this.viewDetails;
+     
     },
     confirmAcceptDisRequest2() {
       this.acceptOffer = !this.acceptOffer;
@@ -3894,8 +3940,8 @@ export default {
       $(".acceptRequestNotiPop").fadeOut();
     },
     confirmDeclineDisRequest() {
-      this.declineRequest = !this.declineRequest;
-      // this.viewDetails = !this.viewDetails;
+      this.decline = !this.decline;
+      this.toggleViewDetails = false;
       var dataMessage = {
         roomID: this.activeRoom,
         message: JSON.stringify({
