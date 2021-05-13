@@ -37,8 +37,8 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), [
             'firstName' => ['required', 'regex:/^[a-zA-Z ]+$/'],
             'lastName' => ['required', 'regex:/^[a-zA-Z ]+$/'],
-            'email' => ['required', 'email', 'unique:tbl_userAuthentication'],
-            'phoneNumber' => ['required'],
+            'email' => ['required', 'email', 'unique:tbl_userAuthentication', 'regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'],
+            'phoneNumber' => ['required','regex:(\+?[6][3]?\s?[9]\d{2}\s?\d{3}\s?\d{4})'],
             'password' => [
                 'required',
                 'min:8',
@@ -94,7 +94,7 @@ class RegisterController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $this->addressInfo = ['landMark' => $request->landMark, 'houseNumber' => $request->houseNumber, 'province' => $request->province, 'barangay' => $request->barangay, 'cityMunicipality' => $request->cityMunicipality];
+        $this->addressInfo = ['houseNumber' => $request->houseNumber, 'province' => $request->province, 'barangay' => $request->barangay, 'cityMunicipality' => $request->cityMunicipality];
 
 
         return response()->json($this->addressInfo);
@@ -111,6 +111,15 @@ class RegisterController extends Controller
     {
         # code...
 
+        
+        $validator = Validator::make($request->all(),[
+            'front_image' => 'image|size:25000',
+            'back_image' => 'image|size:25000'
+        ]);
+        if($validator->fails()) {
+            return response()->json($validator->errors(),422);
+        }
+
         $userInfo = new userInformation();
         $userInfo->email = $request->email;
         $userInfo->firstName = $request->firstName;
@@ -126,9 +135,9 @@ class RegisterController extends Controller
             if ($userAuth->save()) {
                 $userAddress = new userAddress();
                 $userAddress->email = $request->email;
+                $userAddress->houseNumber = $request->houseNumber;
                 if($request->houseNumber==null)
                     $userAddress->houseNumber = '';
-                $userAddress->houseNumber = $request->houseNumber;
                 $userAddress->province = $request->province;
                 $userAddress->barangay = $request->barangay;
                 $userAddress->cityMunicipality = $request->cityMunicipality;
@@ -136,6 +145,7 @@ class RegisterController extends Controller
                 if ($userAddress->save()) {
                     $user = new userid;
                     if (($request->file('front_image') != NULL) && ($request->file('back_image') != NULL)) {
+
                         $user->email = $request->email;
                         $image = $request->file('front_image');
                         $file_name = $request->file('front_image')->hashName();

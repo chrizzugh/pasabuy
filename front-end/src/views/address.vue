@@ -103,7 +103,6 @@ export default {
         barangay: null,
         cityMunicipality: null,
         province: null,
-        landMark: null,
 
       },
       errors:null,
@@ -131,9 +130,7 @@ export default {
             errors.response.data.barangay = "";
           if(errors.response.data.houseNumber == undefined)
             errors.response.data.houseNumber = "";
-          if(errors.response.data.landMark == undefined)
-            errors.response.data.landMark = "";
-          this.errors =errors.response.data.province+' '+ errors.response.data.cityMunicipality+' '+errors.response.data.barangay+' '+errors.response.data.houseNumber+' '+errors.response.data.landMark;
+          this.errors =errors.response.data.province+' '+ errors.response.data.cityMunicipality+' '+errors.response.data.barangay+' '+errors.response.data.houseNumber;
       })//end catch
     },
 

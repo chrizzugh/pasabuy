@@ -19,6 +19,7 @@ use App\Models\Follower;
 use App\Models\transaction;
 use App\Notifications\postStatusNotification;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -38,11 +39,15 @@ class PostController extends Controller
 			'postStatus' => ['required', 'string', 'max:50'],
 			'deliveryArea' => ['required', 'max:500'],
 			'shoppingPlace' => ['required', 'max:2000'],
-			'deliverySchedule' => ['required', 'date'],
+			'deliverySchedule' => ['required', 'date', 'after_or_equal:today'],
 			'transportMode' => ['required', 'max:200'],
 			'capacity' => ['required', 'max:100'],
 			'paymentMethod' => ['required', 'max:200'],
+<<<<<<< HEAD
 
+=======
+			'caption' => ['nullable', 'max:200'],
+>>>>>>> a68294c1c14e655bff943c90bba624c5495b7926
 		]);
 
 		$user = Auth::User();
@@ -106,7 +111,7 @@ class PostController extends Controller
 			'postStatus' => 'required|string|max:50',
 			'deliveryArea' => 'required|string|max:500',
 			'shoppingPlace' => 'required|string|max:500',
-			'deliverySchedule' => 'required|date',
+			'deliverySchedule' => 'required|date|after_or_equal:today',
 			'paymentMethod' => 'required|string|max:200',
 			'shoppingListContent' => 'required',
 			'shoppingListTitle' => 'required',
@@ -131,11 +136,6 @@ class PostController extends Controller
 		$request_post->shoppingListContent = json_encode($request->shoppingListContent);
 		$request_post->caption = $request->caption;
 
-		// $shopping_list = new shoppingList;
-		// $shopping_list->shoppingListNumber = '076-'.str_pad(Auth::user()->indexUserAuthentication,4,'0',STR_PAD_LEFT).'-'.str_pad(ShoppingList::count()+1,5,'0',STR_PAD_LEFT);
-		// $shopping_list->email = $user;
-		// $shopping_list->shoppingListTitle = $request->shoppingListTitle;
-		// $shopping_list->shoppingListContent = $request->shoppingListContent;
 
 		// save to database
 
@@ -149,12 +149,10 @@ class PostController extends Controller
 			]);
 		}
 
-		// DB::transaction(function () use ($post, $request_post, $shopping_list) {
 		DB::transaction(function () use ($post, $request_post) {
 
 			$post->save();
 			$post->request_post()->save($request_post);
-			// $shopping_list->save();
 		});
 
 		broadcast(new newPostEvent())->toOthers();

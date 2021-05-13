@@ -20,35 +20,36 @@
                 lg:flex-row lg:justify-between lg:space-x-6
                  ">
                     <div  class="w-full">
-                        <input name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="First Name" v-model="PersonalInfo.firstName" v-on:keypress=isLetter($event) />
+                        <input name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="First Name" v-model="PersonalInfo.firstName" v-on:keypress=isLetter($event) v-mask="'Aaaa Aaaaaaaaaaaaaaaaa, Aaaaa Aaaaaaaaaaaa, Aaaaaaaaaaaaaa, Aaaaaa Aaaaaaaaaaaaa, Aaaaaaa Aaaaaaaaaaaaaaaaaaaa, Aaaaaaaa Aaaaaaaaaaaaaaaa, Aaaaaaaaa Aaaaaaaaaaaaaaaaaaa'"/>
                     </div>
                     <div  class="w-full">
-                        <input aria-label="Last Name" name="" type="name" required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Last Name" v-model="PersonalInfo.lastName" v-on:keypress=isLetter($event) />
+                        <input aria-label="Last Name" name="" type="name" required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Last Name" v-model="PersonalInfo.lastName" v-on:keypress=isLetter($event) v-mask="'Aaaaaaaaaaaaaaaaaaaaaaaaaaaa'"/>
                     </div>
                 </div>
                 <div class="mb-6">
                     <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" v-model="PersonalInfo.email"  />
                 </div>
-                <div class="relative flex mb-10">
-                    <div class="flex">
-                        <img class="absolute w-8 h-12 rounded-md left-3 " src="img/Philippines-Flag.svg ">
-                        <input aria-label="Phone Number" name="" type="text" required class="block w-full px-3 py-2 pl-8 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max" v-mask="'+63 ### ### ####'"/>
-                    </div>
+                <div class="mb-10">
+                
+                    <input aria-label="Phone Number" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max" v-mask="'+63 ### ### ####'"/>
                 </div>
                 <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between 2xl:space-x-6 lg:flex-row lg:justify-between lg:space-x-6 ">
                     <div class="w-full" >
                          <input aria-label="Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300 " placeholder="Password" v-model="PersonalInfo.password" v-show="!showPass"/> 
                          <input aria-label="Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300 " placeholder="Password" v-model="PersonalInfo.password" v-show="showPass"/>  
+                       
+                    </div>
+                    <div class="w-full" >
+                         <input aria-label="Confirm Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="!showPass"/>
+                        <input aria-label="Confirm Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="showPass"/>
+                    </div>   
+                </div>
+                <div class="w-full">
                         <button @click="showPass = !showPass">
                         <span v-show="!showPass">Show Password</span>
                         <span v-show="showPass">Hide Password</span>
                         </button>
                     </div>
-                    <div class="w-full" >
-                         <input aria-label="Confirm Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="!showPass"/>
-                        <input aria-label="Confirm Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="showPass"/>
-                    </div>
-                </div>
                 <div class="flex mb-2 -mx-1 ">
                     <div class="w-1/2 px-1 mt-6 text-lg font-bold text-left text-grey-dark text-blue">
                         <router-link to="/log-in" >Log instead</router-link>
