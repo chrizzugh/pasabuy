@@ -1383,7 +1383,7 @@
 
                 <p class="text-sm font-normal font-nunito">
                   <span class="inline-block align-middle"
-                    >{{ starRate(userReviews(onfirmedOrders[0].post.email)) }}
+                    >{{ starRate(userReviews(confirmedOrders[0].post.email)) }}
                   </span>
                   <span
                     class="top-0 inline-block text-red-700 align-top material-icons-round md-20"

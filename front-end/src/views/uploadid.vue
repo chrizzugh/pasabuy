@@ -30,9 +30,12 @@
           A government ID helps us check you're really you. It also helps us
           keep Pasabuy secure, fight fraud, and more.
         </p>
+        <p class="text-center text-red-500">{{errors}}</p>
         <div
           class="flex flex-col justify-between space-y-4 sm:flex-row sm:space-y-0 sm:space-x-8 md:flex-row md:space-y-0 md:space-x-8 lg:flex-row lg:space-y-0 lg:space-x-8 xl:flex-row xl:space-y-0 xl:space-x-8 2xl:flex-row 2xl:space-y-0 2xl:space-x-8"
         >
+
+       
           <!--front id--->
           <div
             class="text-left text-gray-500 md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 sm:w-1/2"
@@ -193,7 +196,8 @@ export default {
       filename2: null,
       file_front: "",
       file_back: "",
-      logginIn: false
+      logginIn: false,
+      errors:null
     };
   },
   methods: {
@@ -279,8 +283,13 @@ export default {
             console.log("informmation not saved");
           }
         })
-        .catch(() => {
+        .catch((errors) => {
           this.show = !this.show;
+          if(errors.response.data.front_image == null)
+            errors.response.data.front_image = ''
+          if(errors.response.data.back_image == null)
+            errors.response.data.back_image = ''
+          this.errors = errors.response.data.front_image + ' '+errors.response.data.back_image
         });
     },
     async dispatches() {

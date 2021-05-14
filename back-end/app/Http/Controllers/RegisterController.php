@@ -113,8 +113,8 @@ class RegisterController extends Controller
 
         
         $validator = Validator::make($request->all(),[
-            'front_image' => 'image|size:25000',
-            'back_image' => 'image|size:25000'
+            'front_image' => 'image|max:25000',
+            'back_image' => 'image|max:25000'
         ]);
         if($validator->fails()) {
             return response()->json($validator->errors(),422);
@@ -136,8 +136,6 @@ class RegisterController extends Controller
                 $userAddress = new userAddress();
                 $userAddress->email = $request->email;
                 $userAddress->houseNumber = $request->houseNumber;
-                if($request->houseNumber==null)
-                    $userAddress->houseNumber = '';
                 $userAddress->province = $request->province;
                 $userAddress->barangay = $request->barangay;
                 $userAddress->cityMunicipality = $request->cityMunicipality;

@@ -775,7 +775,7 @@ export default {
     },
     save_newShippingAdd() {
       let dataX = {
-        landmark: document.getElementById("Landmark_add").value,
+        // landmark: document.getElementById("Landmark_add").value,
         house_number: document.getElementById("H_number_add").value,
         province: document.getElementById("Province").options[
           document.getElementById("Province").selectedIndex
