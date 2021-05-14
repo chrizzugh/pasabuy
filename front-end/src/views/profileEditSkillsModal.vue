@@ -18,8 +18,8 @@
             <p class="text-sm font-bold tracking-wide leading-none text-gray-500 uppercase">Add skill</p>
           </div>
           <div class="flex w-full flex-row justify-between space-x-3 items-center">
-                <select id="Interest" v-model="tempSkill" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-3 pl-4 bg-gray-100 rounded-xl h-auto w-full vs:w-full ssm:w-full" placeholder="What do you activities like?">
-                  <option value="Interest" disabled selected>Choose Interest</option>
+                <select id="Interest" v-model="tempSkill" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-3 pl-4 bg-gray-100 rounded-xl h-auto w-full vs:w-full ssm:w-full">
+                  <option value="Defaultt" disabled>What do you activities like?</option>
                   <option
                     v-for="listSkill in listSkills"
                     v-bind:key="listSkill.indexSkills"
@@ -166,12 +166,12 @@ export default {
 
             api.post('/api/updateSkill', info).then(()=>{
               store.dispatch('getAllUserAbout')
-              VueSimpleAlert.alert("Skills update successfully", "Sucess","success")
+              VueSimpleAlert.alert("Skills created successfully", "Sucess","success")
                 this.$emit('closeEditSkillsModal')
             }).catch((errors) => {
                 console.log(errors)
             })
-        },
+        }
         
     },
     created(){

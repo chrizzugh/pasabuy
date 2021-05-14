@@ -38,26 +38,26 @@ class userAboutController extends Controller
 
     public function updateUserSkills(Request $request)
     {
-            $request->validate([
-                'indexUserAbout' => ['required'],
-                'email' => ['required'],
-                'skills' => [''],
-                'interests' => [],
-                'visitedPlace' => [],
-                'dateCreated' => [],
-            ]);
-            // $skill = implode("," , $request->skills);
-            if($request->skills!=null)
+        $request->validate([
+            'indexUserAbout' => ['required'],
+            'email' => ['required'],
+            'skills' => [''],
+            'interests' => [],
+            'visitedPlace' => [],
+            'dateCreated' => [],
+        ]);
+        // $skill = implode("," , $request->skills);
+        if($request->skills!=null)
             $record = implode("," , $request->skills);
-            else
-
-            date_default_timezone_set('Asia/Manila');
-            $date = date('Y-m-d h:i:s');
-            
+        else
             $record = null;
-            DB::table('tbl_userabout')
-            ->where('indexUserAbout', $request->indexUserAbout)
-            ->update(['skills' => $record,'dateModified' => $date]);
+
+        date_default_timezone_set('Asia/Manila');
+        $date = date('Y-m-d h:i:s');
+
+        DB::table('tbl_userabout')
+        ->where('indexUserAbout', $request->indexUserAbout)
+        ->update(['skills' => $record,'dateModified' => $date]);
     }
 
     public function postUserInterests(Request $request)
