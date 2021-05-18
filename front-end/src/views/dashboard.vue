@@ -1431,8 +1431,11 @@
 
                 <p class="text-sm font-normal font-nunito">
                   <span class="inline-block align-middle"
-                  >{{ starRate(userReviews(confirmedOrders[0].transaction_sender.email)) }}
-
+                    >{{
+                      starRate(
+                        userReviews(confirmedOrders[0].transaction_sender.email)
+                      )
+                    }}
                   </span>
                   <span
                     class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
@@ -1554,7 +1557,9 @@
                 </h5>
                 <p class="text-sm font-normal font-nunito">
                   <span class="inline-block align-middle"
-                    >{{ starRate(userReviews(confirmedDeliveries[0].post.email)) }}
+                    >{{
+                      starRate(userReviews(confirmedDeliveries[0].post.email))
+                    }}
                   </span>
                   <span
                     class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
@@ -1601,7 +1606,13 @@
                 </h5>
                 <p class="text-sm font-normal font-nunito">
                   <span class="inline-block align-middle"
-                    >{{ starRate(userReviews(confirmedDeliveries[0].transaction_sender.email)) }}
+                    >{{
+                      starRate(
+                        userReviews(
+                          confirmedDeliveries[0].transaction_sender.email
+                        )
+                      )
+                    }}
                   </span>
                   <span
                     class="top-0 inline-block text-red-700 align-top material-icons-round md-20"
@@ -1827,6 +1838,7 @@
                           type="text"
                           placeholder="Brand"
                           class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
+                          @keyup="brand()"
                         />
                         <input
                           id="size"
@@ -1835,6 +1847,8 @@
                           class="w-40 rounded-xl pl-5 focus:outline-none h-10 bg-gray-100"
                         />
                       </div>
+                      <span v-for="brand,index in brands" :key="index">{{brand}}<br></span>
+                      
                       <div class="flex flex-row space-x-2">
                         <p class="font-bold">Quantity</p>
                         <span
@@ -2370,6 +2384,8 @@ import SendOffer from "./sendOffer.vue";
 import store from "../store/index";
 import moment from "moment";
 import VueSimpleAlert from "vue-simple-alert";
+import axios from "axios";
+import _ from "lodash";
 
 export default {
   el: "#shop-list",
@@ -2592,6 +2608,7 @@ export default {
       showListStatus: "See More",
       showLessStatus: "See Less",
       isActive: false,
+      brands:null
     };
   },
   components: {
@@ -2615,6 +2632,34 @@ export default {
     },
   },
   methods: {
+    brand(){
+      let vm = this
+      this.debounceSearchBrand(vm)
+      console.log('brandssssssssssssss', this.brands)
+    },
+    debounceSearchBrand: _.debounce((vm) => {
+      var data = document.getElementById("brand").value;
+      var brand = data.replace(" ", "%20");
+      var returnBrands = [];
+      console.log(brand);
+      var link =  "https://api.edamam.com/api/food-database/v2/parser?ingr=" +
+            brand +
+            "&app_id=df56563c&app_key=2ac03d7a37a55354a941d0e1289ac4b2"
+      //get the mathced brand names from product brands api
+      axios
+        .get(link)
+        .then((res) => {
+          //then set the result to array
+          console.log("search res: ", res.data);
+          for (var i = 0; i < res.data.hints.length; i++) {
+            console.log("brands: ", res.data.hints[i].food.label);
+            returnBrands.push(res.data.hints[i].food.label)
+          }
+          console.log('returnint this',returnBrands)
+          vm.brands = returnBrands;
+        }).catch(()=>{vm.brands = null});
+        
+    }, 1000),
     editListFromDashboard() {
       this.Editlist = true;
       this.option_more = false;
@@ -2786,14 +2831,14 @@ export default {
             error.response.data.list + error.response.data.listName;
         });
     },
-    deleteListFrom(){
+    deleteListFrom() {
       console.log("delete");
       this.toggle_delete = false;
       api
         .delete("api/deleteList/" + this.shoppingLists[0].shoppingListNumber)
         .then(() => {
-        store.dispatch('getUserShoppingList')
-        this.shoppingLists.shift()
+          store.dispatch("getUserShoppingList");
+          this.shoppingLists.shift();
         })
         .catch((e) => {
           console.log(e.response.data.error);
@@ -2944,24 +2989,32 @@ export default {
             if (x.indexShare == null) {
               //for posts
               if (x.postIdentity == "offer_post") {
-                return x.offer_post.deliveryArea.includes(
-                  this.userHomeAddress.province
-                ) || x.email == this.user.email;
+                return (
+                  x.offer_post.deliveryArea.includes(
+                    this.userHomeAddress.province
+                  ) || x.email == this.user.email
+                );
               } else {
-                return x.request_post.deliveryAddress.includes(
-                  this.userHomeAddress.province
-                ) || x.email == this.user.email;
+                return (
+                  x.request_post.deliveryAddress.includes(
+                    this.userHomeAddress.province
+                  ) || x.email == this.user.email
+                );
               }
             } else {
               //for shared posts
               if (x.post.postIdentity == "offer_post") {
-                return x.post.offer_post.deliveryArea.includes(
-                  this.userHomeAddress.province
-                 ) || x.email == this.user.email;
+                return (
+                  x.post.offer_post.deliveryArea.includes(
+                    this.userHomeAddress.province
+                  ) || x.email == this.user.email
+                );
               } else {
-                return x.post.request_post.deliveryAddress.includes(
-                  this.userHomeAddress.province
-                  ) || x.email == this.user.email;
+                return (
+                  x.post.request_post.deliveryAddress.includes(
+                    this.userHomeAddress.province
+                  ) || x.email == this.user.email
+                );
               }
             }
           });
@@ -3229,20 +3282,18 @@ export default {
       $(".target").hide();
       this.share1 = !this.share1;
     },
-    starRate(reviews){
-      var temp = reviews
-      var ctr=0;
-      for (var i=0; i<temp.length;i++){
-        ctr = ctr + temp[i].rate
+    starRate(reviews) {
+      var temp = reviews;
+      var ctr = 0;
+      for (var i = 0; i < temp.length; i++) {
+        ctr = ctr + temp[i].rate;
       }
-      var rate = ctr/(i+1).toFixed(1)
-      return rate == null ? 0 : rate
+      var rate = ctr / (i + 1).toFixed(1);
+      return rate == null ? 0 : rate;
     },
-     userReviews(userEmail) {
+    userReviews(userEmail) {
       return this.reviews.filter((x) => {
-        return (
-          x.revieweeEmail == userEmail
-        );
+        return x.revieweeEmail == userEmail;
       });
     },
   },
@@ -3303,8 +3354,8 @@ export default {
         );
       });
     },
-     reviews() {
-      return store.getters.getAllReviews
+    reviews() {
+      return store.getters.getAllReviews;
     },
     userHomeAddress() {
       return store.getters.getAddress;
