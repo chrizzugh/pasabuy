@@ -243,17 +243,6 @@ const store = new Vuex.Store({
                     console.log(error)
                 })
         },
-        async getUserInfo(state, ID) {
-            return api
-            .get('api/getLanguages')
-            .then((res)=>{
-                let lang = res.data
-                state.commit('setUserLang',lang)
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-        },
         async getAllLangauges(state){
             return api
             .get('api/allLanguages')
@@ -265,7 +254,7 @@ const store = new Vuex.Store({
                 console.log(error)
             })
         },
-        async getUserTransactions(state){
+        async getUserInfo(state, ID) {
             return api
                 .get('api/getUserInfo', { params: { email: ID } })
                 .then((res) => {
@@ -384,6 +373,7 @@ const store = new Vuex.Store({
         getUserFollow: (state) => state.userFollow,
         getAllReviews:(state) => state.allReviews,
         getAuthUserFollow: (state) => state.authUserFollow,
+
         getAllLangauges:(state) => state.allLanguages,
         getAllUserAbout:(state) => state.allUserAbout,
     }

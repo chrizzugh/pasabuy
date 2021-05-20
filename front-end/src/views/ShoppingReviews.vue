@@ -222,159 +222,152 @@
   <!--end-->
   </div>
 <!--end of user post comments about reviews-->
-</div>
-</div>
 <!--end of reviews-->
 </template>
 
 <script>
-import store from '../store/index'
-import PostReviewModal from './postReviewModal'
-import moment from 'moment'
+import store from "../store/index";
+import PostReviewModal from "./postReviewModal";
+import moment from "moment";
 export default {
-  data(){
-    return{
+  data() {
+    return {
       star1: 0,
       star2: 0,
       star3: 0,
       star4: 0,
       star5: 0,
-      pasabuyers: '20',
+      pasabuyers: "20",
       rating: 0,
       max_rate: 5,
-      counters:{
-      counter: 0,
-      counter1S: 0,
-      counter2S: 0,
-      counter3S: 0,
-      counter4S: 0,
-      counter5S: 0,        
+      counters: {
+        counter: 0,
+        counter1S: 0,
+        counter2S: 0,
+        counter3S: 0,
+        counter4S: 0,
+        counter5S: 0,
       },
       postModalVisible: false,
 
-      datePosted:{
-        date1: '4 hours ago',
-        date2: 'February 16,2021',
-        date3: 'February 12, 2021'
+      datePosted: {
+        date1: "4 hours ago",
+        date2: "February 16,2021",
+        date3: "February 12, 2021",
       },
-      comments:{
-        comment1: 'My items arrived complete and in safe condition. The delivery is also fast, got all the things I needed just before our party starts. Definitely recommended!'
+      comments: {
+        comment1:
+          "My items arrived complete and in safe condition. The delivery is also fast, got all the things I needed just before our party starts. Definitely recommended!",
       },
-      users:{
-        user1: 'Asta Staria',
-        user2: 'Julius Novachrono',
-        user3: 'Baha-haha-haha'
+      users: {
+        user1: "Asta Staria",
+        user2: "Julius Novachrono",
+        user3: "Baha-haha-haha",
       },
       //rates: this.reviews.length
-      
-    }
-    
+    };
   },
-   components: {
-    PostReviewModal
+  components: {
+    PostReviewModal,
   },
-  methods:{
-    togglePostModal(){
-      this.postModalVisible = !this.postModalVisible
+  methods: {
+    togglePostModal() {
+      this.postModalVisible = !this.postModalVisible;
     },
-    listener(){
+    listener() {
       this.postModalVisible = false;
-  },
-  // rates(){
-  //   return this.reviews.length
-  // },
-  timestamp(datetime){
-      var postedDate = new Date(datetime)
-      var dateToday = new Date()
-      var dateDiff = dateToday.getTime() - postedDate.getTime()
-      dateDiff = dateDiff/(1000 * 3600 * 24)
-      if(dateDiff<1)
-        return moment(datetime).format("[Today at] h:mm a");
-      else if(dateDiff>=1 &&  dateDiff <2)
+    },
+    // rates(){
+    //   return this.reviews.length
+    // },
+    timestamp(datetime) {
+      var postedDate = new Date(datetime);
+      var dateToday = new Date();
+      var dateDiff = dateToday.getTime() - postedDate.getTime();
+      dateDiff = dateDiff / (1000 * 3600 * 24);
+      if (dateDiff < 1) return moment(datetime).format("[Today at] h:mm a");
+      else if (dateDiff >= 1 && dateDiff < 2)
         return moment(datetime).format("[Yesterday at] h:mm a");
-      else
-        return moment(datetime).format("MMM DD, YYYY [at] h:mm a");
+      else return moment(datetime).format("MMM DD, YYYY [at] h:mm a");
     },
   },
   computed: {
-      profile(){
-        return store.getters.getUserInfo
-      },
-      user(){
-        //console.log('user',this.store.getters.getPersonal)
-        return store.getters.getPersonal
-      },
-      reviews(){
-        //console.log('user',this.store.getters.getPersonal)
-        return store.getters.getAllReviews.filter((rev)=>{
-          return (rev.revieweeEmail == this.profile.email)
-        })
-      },
-      ratings(){
-        //console.log('user',this.store.getters.getPersonal)
-        if(this.reviews == 0)
-          return "No Ratings"
-        this.reviews.filter((rev)=>{
-            this.rating = this.rating + rev.rate
-            this.counters.counter++
-        })
-        return (this.rating/this.counters.counter).toFixed(1)
-      },
-      transactions() {
-        // return store.getters.getUserTransactions
-        return store.getters.getUserTransactions.filter((x)=>{
-          return (x.emailCustomerShopper == this.profile.email || x.transactionReceiver == this.profile.email)  && x.transactionStatus == "Completed" 
-      })
-      },
-      rate1(){
-        //console.log('user',this.store.getters.getPersonal)
-        this.reviews.filter((rev)=>{
-          if(rev.rate==1)
-            this.counters.counter1S++
-        })
-        return this.counters.counter1S
-      },
-      rate2(){
-        //console.log('user',this.store.getters.getPersonal)
-        this.reviews.filter((rev)=>{
-          if(rev.rate==2)
-            this.counters.counter2S++
-        })
-        return this.counters.counter2S
-      },
-      rate3(){
-        //console.log('user',this.store.getters.getPersonal)
-        this.reviews.filter((rev)=>{
-          if(rev.rate==3)
-            this.counters.counter3S++
-        })
-        return this.counters.counter3S
-      },
-      rate4(){
-        //console.log('user',this.store.getters.getPersonal)
-        this.reviews.filter((rev)=>{
-          if(rev.rate==4)
-            this.counters.counter4S++
-        })
-        return this.counters.counter4S
-      },
-      rate5(){
-        //console.log('user',this.store.getters.getPersonal)
-        this.reviews.filter((rev)=>{
-          if(rev.rate==5)
-            this.counters.counter5S++
-        })
-        return this.counters.counter5S
-      },
+    profile() {
+      return store.getters.getUserInfo;
+    },
+    user() {
+      //console.log('user',this.store.getters.getPersonal)
+      return store.getters.getPersonal;
+    },
+    reviews() {
+      //console.log('user',this.store.getters.getPersonal)
+      return store.getters.getAllReviews.filter((rev) => {
+        return rev.revieweeEmail == this.profile.email;
+      });
+    },
+    ratings() {
+      //console.log('user',this.store.getters.getPersonal)
+      if (this.reviews == 0) return "No Ratings";
+      this.reviews.filter((rev) => {
+        this.rating = this.rating + rev.rate;
+        this.counters.counter++;
+      });
+      return (this.rating / this.counters.counter).toFixed(1);
+    },
+    transactions() {
+      // return store.getters.getUserTransactions
+      return store.getters.getUserTransactions.filter((x) => {
+        return (
+          (x.emailCustomerShopper == this.profile.email ||
+            x.transactionReceiver == this.profile.email) &&
+          x.transactionStatus == "Completed"
+        );
+      });
+    },
+    rate1() {
+      //console.log('user',this.store.getters.getPersonal)
+      this.reviews.filter((rev) => {
+        if (rev.rate == 1) this.counters.counter1S++;
+      });
+      return this.counters.counter1S;
+    },
+    rate2() {
+      //console.log('user',this.store.getters.getPersonal)
+      this.reviews.filter((rev) => {
+        if (rev.rate == 2) this.counters.counter2S++;
+      });
+      return this.counters.counter2S;
+    },
+    rate3() {
+      //console.log('user',this.store.getters.getPersonal)
+      this.reviews.filter((rev) => {
+        if (rev.rate == 3) this.counters.counter3S++;
+      });
+      return this.counters.counter3S;
+    },
+    rate4() {
+      //console.log('user',this.store.getters.getPersonal)
+      this.reviews.filter((rev) => {
+        if (rev.rate == 4) this.counters.counter4S++;
+      });
+      return this.counters.counter4S;
+    },
+    rate5() {
+      //console.log('user',this.store.getters.getPersonal)
+      this.reviews.filter((rev) => {
+        if (rev.rate == 5) this.counters.counter5S++;
+      });
+      return this.counters.counter5S;
+    },
   },
 
   created() {
     // let i=1;
-    this.star1 = ((this.rate1/this.reviews.length) * 100).toFixed();
-    this.star2 = ((this.rate2/this.reviews.length) * 100).toFixed();
-    this.star3 = ((this.rate3/this.reviews.length) * 100).toFixed();
-    this.star4 = ((this.rate4/this.reviews.length) * 100).toFixed();
-    this.star5 = ((this.rate5/this.reviews.length) * 100).toFixed();
+    this.star1 = ((this.rate1 / this.reviews.length) * 100).toFixed();
+    this.star2 = ((this.rate2 / this.reviews.length) * 100).toFixed();
+    this.star3 = ((this.rate3 / this.reviews.length) * 100).toFixed();
+    this.star4 = ((this.rate4 / this.reviews.length) * 100).toFixed();
+    this.star5 = ((this.rate5 / this.reviews.length) * 100).toFixed();
     //this.percentage = (this.rate1) * 10;
     //this.percentage = (this.rate1 + this.rate5) * 10;
     // let twoStar = 0;
@@ -382,12 +375,9 @@ export default {
     // let fourStar = 0;
     // let fiveStar = 0;
     //let percentage = 0;
-          
-  }
-
-}
+  },
+};
 </script>
 
 <style>
-
 </style>
