@@ -51,7 +51,10 @@
 <!--end-->
 <!--Post button-->
                     <div class="justify-center flex mt-3 pb-3 px-2 ">
-                        <button @click="submit" class="inline-flex items-center justify-center focus:outline-none px-4 py-2 bg-red-700 rounded-full w-31.75 ssm:w-full ssm:h-8 vs:w-full h-10">
+                        <button v-if="value == 0" :style="{opacity: 0.5}" @click="submit" class="inline-flex items-center justify-center focus:outline-none px-4 py-2 bg-red-700 rounded-full w-31.75 ssm:w-full ssm:h-8 vs:w-full h-10" disabled>
+                            <p class="text-base ssm:text-sm vs:text-sm font-bold leading-normal text-center text-white">Post</p>
+                        </button>
+                        <button v-if="value != 0" @click="submit" class="inline-flex items-center justify-center focus:outline-none px-4 py-2 bg-red-700 rounded-full w-31.75 ssm:w-full ssm:h-8 vs:w-full h-10" >
                             <p class="text-base ssm:text-sm vs:text-sm font-bold leading-normal text-center text-white">Post</p>
                         </button>
                     </div>
@@ -70,7 +73,7 @@ export default {
         value: '0',
         visitorUser: 'Asta Staria',
         maxStarRate: '5',
-        rate: '',
+        rate: 0,
         feedback: '',
         revieweeEmail: '',
         reviewerEmail: '',
@@ -119,6 +122,8 @@ export default {
         async dispatches() {
           await store.dispatch("getAllReviews");
         }
+    },
+    created(){
     }
 }
 </script>

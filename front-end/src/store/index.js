@@ -8,25 +8,25 @@ const store = new Vuex.Store({
     plugins: [createPersistedState({
         storage: window.sessionStorage,
     })],
-    state: {
-        authUser: [],
-        authUserPersonal: [],
-        posts: [],
-        allNotif: [],
-        unreadNotif: [],
-        userAddress: [],
-        userChatRooms: [],
-        userTransactions: [],
-        userShippingAddress: [],
-        transportModes: [],
-        shoppingPlaces: [],
-        userInfo: [],
-        notAuthUserAddress: [],
-        allShares: [],
-        shoppingList: [],
-        onlineUsers: [],
-        userFollow: [],
+    state:{
+        authUser:[],
+        authUserPersonal:[],
+        posts:[],
+        allNotif:[],
+        unreadNotif:[],
+        userAddress:[],
+        userChatRooms:[],
+        userLang:[],
+        userTransactions:[],
+        userShippingAddress:[],
+        transportModes:[],
+        shoppingPlaces:[],  
+        userInfo:[],
+        notAuthUserAddress:[],
+        allShares:[],
         allReviews: [],
+        allLanguages: [],
+        allUserAbout: [],
         authUserFollow: []
 
 
@@ -101,7 +101,14 @@ const store = new Vuex.Store({
         },
         setAuthUserFollow(state,data){
             state.authUserFollow = data
+        },
+        setAllLanguages(state,languages){
+            state.allLanguages = languages
+        },
+        setAllUserAbout(state,userAbout){
+            state.allUserAbout = userAbout
         }
+
     },
     actions: {
         async createPostOffer(state, post) {
@@ -238,6 +245,28 @@ const store = new Vuex.Store({
         },
         async getUserInfo(state, ID) {
             return api
+            .get('api/getLanguages')
+            .then((res)=>{
+                let lang = res.data
+                state.commit('setUserLang',lang)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
+        async getAllLangauges(state){
+            return api
+            .get('api/allLanguages')
+            .then((res)=>{
+                let languages = res.data
+                state.commit('setAllLanguages',languages)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
+        async getUserTransactions(state){
+            return api
                 .get('api/getUserInfo', { params: { email: ID } })
                 .then((res) => {
                     let data = res.data
@@ -321,6 +350,18 @@ const store = new Vuex.Store({
                     console.log(error)
                 })
         },
+        async getAllUserAbout(state){
+            return api
+            .get('api/getUserAbout')
+            .then((res)=>{
+                //console.log("RESPONSE",res)
+                let userAbout = res.data
+                state.commit('setAllUserAbout',userAbout)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
     },
     modules: {},
     getters: {
@@ -343,7 +384,8 @@ const store = new Vuex.Store({
         getUserFollow: (state) => state.userFollow,
         getAllReviews:(state) => state.allReviews,
         getAuthUserFollow: (state) => state.authUserFollow,
-
+        getAllLangauges:(state) => state.allLanguages,
+        getAllUserAbout:(state) => state.allUserAbout,
     }
 })
 

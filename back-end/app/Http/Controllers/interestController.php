@@ -3,33 +3,16 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\interest;
-use App\Models\skill;
+// use App\Models\listInterest;
+//use App\Models\skill;
 use Illuminate\Http\Request;
 
 class interestController extends Controller
 {
-    public function getInterest()
+    public function getListInterests()
     {
-        return interest::all();
-        # code...
-        // $user = Auth::user();
-        // $data = DB::select('SELECT * FROM tbl_interest WHERE email = \''.$user->email.'\'');
-
-        // if($data == null)
-        //     return response()->json([]);
-        // return response()->json($data[0]);
+        return interest::select("*")
+                        ->orderBy("interests")
+                        ->get();
     }
-
-    public function getSkills()
-    {
-        return skill::all();
-        # code...
-        // $user = Auth::user();
-        // $data = DB::select('SELECT * FROM tbl_interest WHERE email = \''.$user->email.'\'');
-
-        // if($data == null)
-        //     return response()->json([]);
-        // return response()->json($data[0]);
-    }
-
 }

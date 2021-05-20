@@ -17,6 +17,8 @@ use App\Http\Controllers\reviewsController;
 use App\Http\Controllers\shoppingListController;
 use App\Http\Controllers\reviewController;
 use App\Http\Controllers\interestController;
+use App\Http\Controllers\skillsController;
+use App\Http\Controllers\userAboutController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
@@ -115,3 +117,25 @@ Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode
 Route::get('user/feed', [PostController::class, 'getFeeds']);
 
 Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode']);
+Route::get("shoppingoffers",[shoppingOffersController::class, 'listShoppingOffers']);
+//Route::post("shoppingoffers",[shoppingOffersController::class, 'addShoppingOffers']);
+Route::post("/editshoppingoffers",[shoppingOffersController::class, 'editshoppingoffers']);
+Route::get("shoppingorders",[shoppingOrdersController::class, 'listShoppingOrders']);
+//Route::put("editShoppingOffers",[shoppingOffersController::class, 'update']);
+Route::get("/getReviews",[reviewController::class, 'listReviews']);
+Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode']);
+//Route::get("/userinterest", [interestController::class, 'getInterest']);
+//Route::get("/userSkills", [interestController::class, 'getSkills']);
+Route::post("/userReviews", [reviewController::class, 'saveReview']);
+Route::get("/listInterest", [interestController::class, 'getListInterests']);
+//Route::get("/listSkills", [skillsController::class, 'getListSkills']);
+//Route::get("/listSkills", [skillsController::class, 'getListSkills']);
+Route::get("/listSkills", [skillsController::class, 'getListSkills'] );
+Route::post("/postSkill", [userAboutController::class, 'postUserSkills'] );
+Route::post("/updateSkill", [userAboutController::class, 'updateUserSkills'] );
+Route::post("/postInterest", [userAboutController::class, 'postUserInterests'] );
+Route::post("/updateInterest", [userAboutController::class, 'updateUserInterests'] );
+Route::post("/postVisitedPlace", [userAboutController::class, 'postUserVisitedPlaces'] );
+Route::post("/updateVisitedPlace", [userAboutController::class, 'updateUserVisitedPlaces'] );
+Route::get("/allLanguages", [userInformationController::class, 'getAllLanguages'] );
+Route::get("/getUserAbout", [userAboutController::class, 'getUserAbout'] );

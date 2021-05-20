@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class userLanguages extends Model
 {
     use HasFactory;
-    protected $table = 'tbl_userLanguages';
-    protected $primaryKey = 'email';
+    protected $table = 'tbl_userlanguages';
+    protected $primaryKey = 'indexUserInformation ';
     public $timestamps = false;
 }
