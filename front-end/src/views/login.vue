@@ -150,6 +150,7 @@ export default {
             this.dispatches().then(() => {
               //wait for the dispatches to finish
               sessionStorage.setItem("isLoggedIn", true);
+              sessionStorage.setItem("sessionCookieNotify", true)
               this.show = !this.show
               this.$router.push({ name: "dashboard" });
             });

@@ -1833,13 +1833,46 @@
                         class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
                       />
                       <div class="flex flex-row space-x-2">
+                        <div class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100">
                         <input
                           id="brand"
                           type="text"
                           placeholder="Brand"
                           class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
                           @keyup="brand()"
+                          @click="brand(), brandSearchTag = !brandSearchTag"
                         />
+                          <div class="relative">
+                              <div
+                                v-if="brandSearchTag"
+                                class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-full"
+                              >
+                                <div
+                                  class="flex flex-col w-full px-2 justify-start items-start"
+                                >
+                                  <div
+                                    id="scroll1"
+                                    class="flex px-2 flex-col overflow-y-scroll w-full h-24"
+                                  >
+                                    <ul id="myUL" class="space-y-1">
+                                      <li
+                                        v-for="(brand, index) in brands"
+                                        :key="index"
+                                        @click="
+                                          setBrand(index);
+                                          brandSearchTag = !brandSearchTag;
+                                        "
+                                      >
+                                        <a href="#" :id="'brand' + index">{{
+                                          brand
+                                        }}</a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
                         <input
                           id="size"
                           type="text"
@@ -1847,7 +1880,7 @@
                           class="w-40 rounded-xl pl-5 focus:outline-none h-10 bg-gray-100"
                         />
                       </div>
-                      <span v-for="brand,index in brands" :key="index">{{brand}}<br></span>
+                      
                       
                       <div class="flex flex-row space-x-2">
                         <p class="font-bold">Quantity</p>
@@ -2414,6 +2447,7 @@ export default {
   },
   data() {
     return {
+      brandSearchTag:false,
       popUp3: false,
       popUpPost: false,
       shift: 0,
@@ -2632,6 +2666,9 @@ export default {
     },
   },
   methods: {
+    setBrand(index){
+      document.getElementById("brand").value = document.getElementById('brand'+index).innerHTML
+    },
     brand(){
       let vm = this
       this.debounceSearchBrand(vm)
@@ -2652,9 +2689,14 @@ export default {
           //then set the result to array
           console.log("search res: ", res.data);
           for (var i = 0; i < res.data.hints.length; i++) {
-            console.log("brands: ", res.data.hints[i].food.label);
-            returnBrands.push(res.data.hints[i].food.label)
+            console.log("brands: ", res.data.hints[i].food.brand);
+            returnBrands.push(res.data.hints[i].food.brand)
           }
+          var temp = returnBrands;
+          returnBrands = []; 
+          $.each(temp, function(i, el){
+              if($.inArray(el, returnBrands) === -1) returnBrands.push(el);
+          });
           console.log('returnint this',returnBrands)
           vm.brands = returnBrands;
         }).catch(()=>{vm.brands = null});
