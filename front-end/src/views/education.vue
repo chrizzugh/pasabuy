@@ -16,13 +16,13 @@
         <span class="  font-raleways font-bold grid grid-cols-2 "> 
         <p class="text-gray-500 uppercase">College</p>
        <span>
-           <p>{{college}}</p>
+           <p>{{userEduc.schoolName}}</p>
        </span>
         </span>
         <span class=" font-raleways font-bold  grid grid-cols-2"> 
         <p  class="text-gray-500 uppercase">Highshool</p>
         <span>
-          {{junior_high}}
+          {{userEduc.schoolName}}
         </span>
         </span>
         </div>
@@ -63,12 +63,12 @@
                     <input type="radio"  checked name="satatus_edoc"><p>Previous</p>
                   </div>
                  </div> 
-                 <div class="flex items-center space-x-3 font-bold">
+                 <!-- <div class="flex items-center space-x-3 font-bold">
                 <p class="material-icons font-bold text-3xl text-blue-800 select-none cursor-pointer">
                 add_circle
                 </p>
                 <p class=" font-bold text-md  font-nunito_sans text-blue-800 select-none">Add School</p>
-                 </div>
+                 </div> -->
             </div>
            <div class="flex justify-between items-center mt-4  space-x-4 ">
               <button @click="toggle=false" class="px-3 focus:outline-none h-6 w-full bg-white ring-1 ring-black   rounded-2xl">Cancel</button>
@@ -82,6 +82,8 @@
     </div>
 </template>
 <script>
+import store from "../store/index"
+import api from "../api"
 export default {
    
 data(){
@@ -95,6 +97,9 @@ data(){
       college:'Bicol University',
       junior_high:'Legaspi City Science High School',
       senior_high:'Legaspi City Science High School',
+      schoolName:null,
+      schoolStatus:null,
+      educationLevel:null
   
     }
   
@@ -103,8 +108,21 @@ methods:{
      save_data(){
         this.college=document.getElementById('college').value;
         this.junior_high=document.getElementById('high_school').value;
+        api.post('api/updateEduc', {schoolName:this.schoolName, status:this.schoolStatus, educationLeve:this.educationLevel}).then(res =>{
+          console.log(res)
+        })
        
      },
-}
+},
+mounted(){
+  this.schoolName=this.userEduc.schoolName
+  this.schoolStatus=this.userEduc.schoolStatus
+  this.educationLevel=this.userEduc.educationLevel
+},
+ computed:{
+    userEduc(){
+      return store.getters.getAuthEducation;
+    }
+  }
 }
 </script>

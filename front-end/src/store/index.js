@@ -27,7 +27,9 @@ const store = new Vuex.Store({
         allReviews: [],
         allLanguages: [],
         allUserAbout: [],
-        authUserFollow: []
+        authUserFollow: [],
+        authEducation: []
+
 
 
 
@@ -107,6 +109,9 @@ const store = new Vuex.Store({
         },
         setAllUserAbout(state,userAbout){
             state.allUserAbout = userAbout
+        },
+        setAuthEducation(state,data){
+            state.authEducation = data
         }
 
     },
@@ -351,6 +356,18 @@ const store = new Vuex.Store({
                 console.log(error)
             })
         },
+        async getAuthEducation(state){
+            return api
+            .get('api/getEduc')
+            .then((res)=>{
+                //console.log("RESPONSE",res)
+                let data = res.data
+                state.commit('setAuthEducation',data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
     },
     modules: {},
     getters: {
@@ -373,7 +390,7 @@ const store = new Vuex.Store({
         getUserFollow: (state) => state.userFollow,
         getAllReviews:(state) => state.allReviews,
         getAuthUserFollow: (state) => state.authUserFollow,
-
+        getAuthEducation: (state) => state.authEducation,
         getAllLangauges:(state) => state.allLanguages,
         getAllUserAbout:(state) => state.allUserAbout,
     }

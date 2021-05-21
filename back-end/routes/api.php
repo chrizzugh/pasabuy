@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\messageController;
 use App\Http\Controllers\userInformationController;
 use App\Http\Controllers\addressController;
+use App\Http\Controllers\educationController;
 use App\Http\Controllers\followController;
 use App\Http\Controllers\forgotPasswordController;
 use App\Http\Controllers\NotificationController;
@@ -85,6 +86,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("/userSkills", [interestController::class, 'getSkills']);
     Route::post("/userReviews", [reviewController::class, 'saveReview']);
     Route::delete("/clearNotif", [NotificationController::class, 'clearNotif']);
+    Route::post("/updateEduc", [educationController::class, 'updateEduc']);
+    Route::get("/getEduc", [educationController::class, 'getEduc']);
+
 
 
     
