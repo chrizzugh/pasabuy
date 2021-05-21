@@ -21,7 +21,7 @@ import HelpCenter from '../views/helpCenter.vue'
 import privacyPolicy from '../views/privacyPolicy.vue'
 import TermsAndCondition from '../views/termsAndCon.vue'
 import ReturnAndRefundPolicy from '../views/returnPolicy.vue'
-
+import AboutUs from '../views/aboutUs.vue'
 
 
 const routes = [
@@ -157,6 +157,11 @@ const routes = [
     path: '/return-and-refund-policy',
     name: 'ReturnAndRefundPolicy',
     component: ReturnAndRefundPolicy
+  },
+  {
+    path: '/AboutUs',
+    name: 'AboutUs',
+    component: AboutUs
   },
 
 ]
