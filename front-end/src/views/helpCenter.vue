@@ -1,159 +1,83 @@
 <template class=" bg-gray-bgcolor font-nunito">
 
-<!----nav bar--->
-<!------navigation--->
-  <nav class=" w-full flex items-center shadow-md bg-red-buttons py-2 px-2 sticky top-0 ">
-        <router-link to="/">
-       <div class="flex items-center">
-        <img src="/img/pasaBUYwhiteLogo.png" class="w-16 h-16 block">
-        <h1 class="absolute text-xl font-black tracking-widest pl-4 left-16 font-raleway text-white block">pasaBUY</h1>
-       </div>
-       </router-link>
-        <div class="border-black items-align-right justify justify-right absolute right-3">
-          <button @click="isOpen=!isOpen" class="uppercase focus:outline-none w-20 h-8 text-sm text-white  border-2 rounded-2xl border-white items-right justify-right">
-          Log In
-          </button>
+<!----nav bar (!logged In)--->
+<nav class="sticky top-0 flex items-center w-full h-12 py-5 shadow-md bg-red-buttons">
+      <div class="flex items-center justify-center pl-4">
+      <img src="/img/pasaBUYwhiteLogo.png" class="block w-8 h-8 pl-1">
+        <h1 class="block pl-1 text-lg font-black tracking-widest text-white font-raleway">pasaBUY</h1>
         </div>
-        <!--
+        <div class="absolute border-black items-align-right justify justify-right right-7">
+          <button class="px-3 text-xs font-semibold text-white uppercase bg-transparent border border-white rounded-full focus:outline-none h-7">
+        <router-link to="/log-in"> Log in</router-link>
+      </button>
+        </div>
+        
         <div class="w-full">
-          <div v-if="isOpen" class="shadow-xl fixed bg-white space-y-2  h-auto w-30 ring-2 ring-gray-200 right-0 rounded-lg py-2 pl-4 pr-4 pt-2 mr-16 mt-2">
-            <router-link to="/dashboard"  class="flex flex-row gap-x-2 text-black">Go to Pasabuy<span class="material-icons text-gray-500">launch</span></router-link>
-            <router-link to="/"  class="flex flex-row gap-x-2 text-black">Log out</router-link>
+          <div v-if="isOpen" class="fixed right-0 h-auto py-2 pt-2 pl-4 pr-4 mt-2 mr-16 space-y-2 bg-white rounded-lg shadow-xl w-30 ring-2 ring-gray-200">
+            <router-link to="/dashboard"  class="flex flex-row text-black gap-x-2">Go to Pasabuy<span class="text-gray-500 material-icons">launch</span></router-link>
+            <router-link to="/"  class="flex flex-row text-black gap-x-2">Log out</router-link>
           </div>
-        </div>-->
+        </div>
   </nav> <!----end of nav bar--->
 
   <!------->
-  
-  <div class="flex justify-center
-  xl:mt-10 xl:mb-20
-  2xl:mt-10 2xl:mb-20
-  lg:mt-10 lg:mb-20
-  ">
-    <div class="flex justify-center self-center
-    2xl:w-150 
-    xl:w-150
-    lg:w-150 bg-white overflow-y-auto
-      w-full h-98" >
-      <div id="helpCenterCreateAcc" class="w-full 
-      2xl:w-2/5 xl:block 2xl:block lg:block
-      xl:w-2/5  bg-white rounded-l-md hidden ">
+  <div class="flex justify-center xl:mt-10 xl:mb-20 2xl:mt-10 2xl:mb-20 lg:mt-10 lg:mb-20 ">
+    <div class="flex self-center justify-center w-full 2xl:w-3/5 xl:w-3/5 lg:w-3/5 h-98" >
+      <div id="helpCenterCreateAcc" class="w-full bg-white md:w-3/5 sm:w-7/12 vs:w-10/12 2xl:w-2/4 xl:w-2/4 lg:w-2/4 rounded-l-md ">
         <!---Option Buttons--->
-          <div class=" overflow-hidden   flex justify-start"> <!-- parent card box--->
+          <div class="flex justify-start overflow-hidden "> <!-- parent card box--->
               
               <!---left---->
-              <div class="bg-transparent  w-full  "> <!---child1 card box-->
+              <div class="w-full bg-transparent "> <!---child1 card box-->
                   <div class=" text-align-left"> 
-                    <h1 class="font-bold text-xl mb-5 mt-5 ml-3">Help Center</h1>
+                    <h1 class="mt-5 mb-5 ml-5 text-2xl font-bold vs:text-lg">Help Center</h1>
                   </div>
-                  <div class=" pb-2 w-full px-3
-                   flex flex-col justify-center
-                  
-                   ">
+                  <div class="flex flex-col justify-center w-full px-3 md:px-7 2xl:pl-3 xl:pl-3 lg:pl-3">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            
-                      <button @click="toggle" class="rounded-full w-full xl:w-50 2xl:w-50 lg:w-50 px-3  focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none  py-2 mb-2">
-                       <div class="flex items-center  justify-left ">
-                         <a class="material-icons text-black">person</a>
-                        <a class="text-black pl-2">Creating an Account</a>
-                       </div>
-                        </button>
+                            <button @click="toggle" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Creating an Account</a></button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="rounded-full w-full xl:w-50 2xl:w-50 lg:w-50 px-3  focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2">
-                              <div class="flex  items-center justify-left ">
-                         <a class="material-icons text-black">apps</a>
-                        <a class="text-black pl-2 ">Navigating Pasabuy</a>
-                       </div>
-                            </button>
+                            <button @click ="toggle2" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Navigating Pasabuy</a></button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="rounded-full w-full xl:w-50 2xl:w-50 lg:w-50 px-3  focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2">
-                              <div class="flex items-center justify-left ">
-                               <a class="material-icons text-black">manage_accounts</a>
-                               <a class="text-black pl-2">Managing Your Profile</a>
-                              </div>
-                              </button>
+                            <button @click="toggle3" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Managing Your Profile </a></button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="rounded-full w-full xl:w-62 2xl:w-62 lg:w-62 px-3   focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2">
-                               <div class="flex items-center justify-left space-x-1">
-                               <a class="material-icons text-black ">people</a>
-                               <a class="text-black pl-2">Expanding Your Connections</a>
-                              </div>
-                            </button>
+                            <button @click="toggle4" class="w-full py-2 pl-5 mb-2 leading-none text-left bg-transparent rounded-full text-md vs:pl-7 focus:bg-crimsonRed vs:text-sm text-red-buttons focus:outline-none font-nunito"><a class="text-black">Expanding Your Connections </a></button>
                         </div>
 
                   </div>
               </div>
           </div><!--End--></div>
-          <div class="flex-col w-full ">
-          <div class=" grid grid-flow-col grid-cols-4 overflow-auto grid-rows-1 pt-2 w-full 2xl:hidden lg:hidden xl:hidden justify-between px-2 items-center">
-        <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            
-                      <button @click="toggle" class=" w-24 h-24  px-3  focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none  py-2 mb-2">
-                       <div class="flex-col items-center  justify-left ">
-                         <a class="material-icons text-black">person</a>
-                        <a class="text-black ">Creating an Account</a>
-                       </div>
-                        </button>
-        </div>
-         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class=" w-24 h-24 px-3  focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2">
-                              <div class="flex-col items-center justify-left ">
-                         <a class="material-icons text-black">apps</a>
-                        <a class="text-black ">Navigating Pasabuy</a>
-                       </div>
-                            </button>
-        </div>
-
-        <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="w-24 h-24 px-3  focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none   py-2 mb-2">
-                              <div class="flex-col items-center justify-left ">
-                               <a class="material-icons text-black">manage_accounts</a>
-                               <a class="text-black ">Managing Your Profile</a>
-                              </div>
-                              </button>
-         </div>
-           <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="w-24 h-24 px-3   focus:bg-crimsonRed text-red-buttons focus:outline-none duration-150 text-sm font-nunito leading-none    py-2">
-                               <div class="flex-col items-center justify-left space-x-1">
-                               <a class="material-icons text-black ">people</a>
-                               <a class="text-black ">Expanding Your Connections</a>
-                              </div>
-                            </button>
-            </div>
-
-     </div>
-     <div class="w-full bg-white rounded-r-md pr-8 pl-2 overflow-auto"><component :is="component" /></div>
-     </div>
+     <div class="w-full pl-2 pr-8 overflow-auto bg-white sm:pr-3 md:pr-3 vs:pr-3 rounded-r-md"><component :is="component" /></div>
     </div>
 
   </div>
     
 <!--FOOTER-->
-         <footer class="px-4 pb-8 text-white xl:pt-12 md:pt-12 bg-bastille">
+        <footer class="px-4 text-sm text-white lg:pb-5 lg:pt-8 pb-7 xl:pt-5 md:pt-12 bg-bastille">
             <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
                 <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                       <router-link to="/" ><li class="inline-block px-3 py-1 font-medium tracking-wide cursor-pointer">Pasabuy</li> </router-link>
+                        <li class="inline-block px-3 py-1 text-sm font-medium tracking-wide ">Pasabuy</li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-1 font-medium tracking-wide sm:px-0">Company</li>
-                        <li><router-link to="/AboutUs"  class="inline-block py-1 pl-3 pr-5 no-underline">About Us</router-link>
+                        <li class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide sm:px-0">Company</li>
+                        <li><router-link to="/about-us"  class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline">About Us</router-link>
                         </li>
-                        <li><router-link to="/help-center" class="inline-block py-1 pl-3 pr-5 no-underline ">Help</router-link></li>
+                        <li><router-link to="/help-center" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Help</router-link></li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-2 font-medium tracking-wide ">Policies</li>
-                        <li><router-link to="/privacy-policy" class="inline-block py-1 pl-3 pr-5 text-white no-underline">Privacy Policy</router-link></li>
-                        <li><router-link to="/terms-and-condition" class="inline-block py-1 pl-3 pr-5 text-white no-underline">Terms and Condition</router-link></li>
-                        <li><router-link to="/return-and-refund-policy" class="inline-block py-1 pl-3 pr-5 text-white no-underline">Return Refund</router-link></li>
+                        <li class="inline-block px-3 py-0.5 font-medium tracking-wide text-sm ">Policies</li>
+                        <li><router-link to="/privacy-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Privacy Policy</router-link></li>
+                        <li><router-link to="/terms-and-condition" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Terms and Condition</router-link></li>
+                        <li><router-link to="/return-and-refund-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Return Refund</router-link></li>
+                        <li><router-link to="/cookies-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Cookies Policy</router-link></li>
                     </ul>
                     <div class="flex flex-col w-full sm:w-11/12">
-                        <div class="inline-block px-3 py-1 font-medium tracking-wide ">©Pasabuy 2021</div>
+                        <div class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide ">©Pasabuy 2021</div>
                         <ul class="flex flex-col w-full p-0 font-thin text-left">
-                            <li><a href="#" class="inline-block py-1 pl-3 pr-5 no-underline ">Stay connected with us</a></li>
+                            <li><a href="#" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Stay connected with us</a></li>
                         </ul>
                         <div class="flex justify-start pl-4 mt-2">
                             <a class="flex items-center mr-6 text-gray-300 no-underline hover:text-white" href="#">
@@ -172,7 +96,7 @@
                     </div>
                 </div>
             </div>    
-    </footer>  <!---end of footer---->
+    </footer>     <!---end of footer---->
       
 
 </template>
@@ -275,15 +199,12 @@ export default {
 }
 .active button{
    background-color: currentColor;
-}
-.active div{
-  display: flex;
-  justify-content: center;
+   height:48px;
+   padding-bottom: 8px;
+   
 }
 .active a{
   color:white;
-  font-weight:bold;
- 
 }
 .notSelected{
   background-color: rgba(220, 20, 60, 1);
