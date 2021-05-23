@@ -15,12 +15,23 @@
                     <div class="w-full">
                         <input name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="First Name" value="" />
                     </div>
-                    <div  class="w-full">
+                    <div  class="flex-row w-full">
                         <input aria-label="Last Name" name="" type="name" required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Last Name" value="" />
+                        
+                    </div>
+                    <div class="absolute mt-5 inline-flex right-15.5">
+                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                            <p class="text-base leading-none text-white">Are you sure you typed your name correctly?</p>
+                        </div>
                     </div>
                 </div>
-                <div class="mb-6">
-                    <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" value="" />
+                <div class="flex flex-row">
+                    <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" value="" />
+                    <div class="absolute inline-flex right-32">
+                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                            <p class="text-base leading-none text-white">Please enter a valid email address?</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="relative flex mb-10 ">
                     
@@ -34,6 +45,16 @@
                     </div>
                     <div class="w-full" >
                         <input aria-label="Confirm Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" value="" />
+                    </div>
+                    <div class="absolute inline-flex right-37">
+                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                            <p class="text-base leading-none text-white">Those password did not match.</p>
+                        </div>
+                    </div>
+                    <div class="absolute invisible inline-flex right-0"> <!--cant fit sa screen so tig set ko lng na invi for the mean time-->
+                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                            <p class="text-base leading-none text-white">Use 8 or more characters.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="flex mb-2 -mx-1 ">
@@ -84,6 +105,18 @@
 #iMessage{
   font-size:24px;
   color:rgb(22, 22, 141);
+}
+.arrowLeft::before {
+  content: '';
+  position: absolute;
+  display: block;    
+  width: 0px;        
+  left: 0;
+  top: 50%;
+  border: 10px solid transparent;
+  border-left: 0;
+  border-right: 15px solid rgba(220, 38, 38, 1);
+  transform: translate(calc(-100%), -50%);
 }
 </style>
 
