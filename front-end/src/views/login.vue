@@ -1,5 +1,6 @@
 <template class="">
-<div>
+ <loading v-if="logginIn"/>
+<div v-if="!logginIn">
  <!-- <loading
      :show="show"
      :label="label"
@@ -60,15 +61,16 @@
               </router-link>
             </a>
           </div>
-          <div class="flex justify-center py-5" v-if="!logginIn">
+          <div class="flex justify-center py-5" v-if="!logginIn1">
             <button
               class="w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none"
             >
               Log in
             </button>
           </div>
+         
               <!-- --- Loging in loading -->
-                    <div class="flex justify-center py-5" v-if="logginIn">
+                    <div class="flex justify-center py-5" v-if="logginIn1">
                       <button class="relative w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none" disabled>
                         <img src="/img/loading.gif" class="w-35 h-20 ml-14 absolute" style="margin-top:-7%;" /> <span class="ml-10"> Logging In</span>
                       </button>
@@ -122,10 +124,11 @@
 import api from "../api";
 import store from "../store/index";
 // import loading from 'vue-full-loading'
+import loading from './loading';
 export default {
-  // components: {
-  //   loading,
-  // },
+  components: {
+    loading
+  },
   data() {
     return {
       dataForm: {
@@ -135,18 +138,23 @@ export default {
       errors: null,
       show: false,
       label: 'Loading...',
-      logginIn:false
+      logginIn:false,
+      logginIn1:false
+
     };
   },
   methods: {
     loginUser() {
       this.show = !this.show
-      this.logginIn = true
+      this.logginIn1 = !this.logginIn1
+      
       api.get("/sanctum/csrf-cookie").then(() => {
         // Login...
         api
           .post("/api/login", this.dataForm)
           .then(() => {
+            this.logginIn1 = !this.logginIn1
+            this.logginIn = true
             this.dispatches().then(() => {
               //wait for the dispatches to finish
               sessionStorage.setItem("isLoggedIn", true);
@@ -158,7 +166,8 @@ export default {
           .catch((errors) => {
             this.show = !this.show
             this.errors = errors.response.data.errors.invalid.join();
-            this.logginIn = false
+            // this.logginIn = false
+            this.logginIn1 = !this.logginIn1
           });
       });
       // setTimeout(() => {
