@@ -5,6 +5,7 @@ import './assets/css/tailwind.css'
 import api from './api'
 import Echo from 'laravel-echo'
 import VueTheMask from 'vue-the-mask'
+import feather from 'vue-icon'
 // import VueProgressBar from "@aacassandra/vue3-progressbar";
 
 window.Pusher = require('pusher-js');
@@ -58,6 +59,6 @@ window.Echo = new Echo({
 // });
 import './assets/css/tailwind.css'
 window.$ = window.jQuery = require('jquery');
-const app = createApp(App).use(router).use(VueTheMask).mount('#app')
+const app = createApp(App).use(router).use(VueTheMask).use(feather).mount('#app')
 export default app
 

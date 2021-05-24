@@ -28,7 +28,9 @@
                 lg:flex-row lg:justify-between lg:space-x-6
                  ">
                     <div  class="w-full">
-                        <input name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="First Name" v-model="PersonalInfo.firstName" v-on:keypress=isLetter($event) v-mask="'Aaaa Aaaaaaaaaaaaaaaaa, Aaaaa Aaaaaaaaaaaa, Aaaaaaaaaaaaaa, Aaaaaa Aaaaaaaaaaaaa, Aaaaaaa Aaaaaaaaaaaaaaaaaaaa, Aaaaaaaa Aaaaaaaaaaaaaaaa, Aaaaaaaaa Aaaaaaaaaaaaaaaaaaa'"/>
+                        <p class="text-center text-red-500">{{ errors.response.data.firstName}}</p>
+                        
+                        <input name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="First Name" v-model="PersonalInfo.firstName" v-on:keypress=isLetter($event) v-mask="'Aaaaaaaaaaaaaaaaaaaaaa'"/>
                     </div>
                     <div  class="w-full">
                         <input aria-label="Last Name" name="" type="name" required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Last Name" v-model="PersonalInfo.lastName" v-on:keypress=isLetter($event) v-mask="'Aaaaaaaaaaaaaaaaaaaaaaaaaaaa'"/>
@@ -117,7 +119,9 @@
 
 <script>
 import api from '../api'
+
 export default {
+    
     data(){
         return{
             max: 16,
