@@ -47,29 +47,24 @@
           </div>
            
          <div class=" ">
-            <div class="flex flex-col  space-y-5
+            <div id="school" class="flex flex-col  space-y-5
             ">
-                <div class="flex flex-col space-y-2">
-                   <span class="ml-2 uppercase font-bold text-sm text-gray-500">College</span> <input   type="text"  id="college" :value="college" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col space-y-2" id="schoolInput">
+                   <span class="ml-2 uppercase font-bold text-sm text-gray-500">School</span> <input   type="text"  id="college" v-model="college" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                   <div class="flex items-center space-x-3 font-bold">
                     <input type="radio" checked name="satatus_ed" class="text-black"><p>Current</p>
                     <input type="radio" name="satatus_ed"><p>Previous</p>
                   </div>
                  </div> 
-                <div class="flex flex-col space-y-2">
-                   <span class="ml-2 uppercase text-sm font-bold text-gray-500">Highschool</span> <input   type="text"  id="high_school" :value="junior_high" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
-                <div class="flex items-center space-x-3 font-bold">
-                    <input type="radio" name="satatus_edoc" class="text-black"><p>Current</p>
-                    <input type="radio"  checked name="satatus_edoc"><p>Previous</p>
-                  </div>
-                 </div> 
-                 <!-- <div class="flex items-center space-x-3 font-bold">
+    
+                
+            </div>
+             <div @click="addSchool" class="flex items-center space-x-3 font-bold">
                 <p class="material-icons font-bold text-3xl text-blue-800 select-none cursor-pointer">
                 add_circle
                 </p>
                 <p class=" font-bold text-md  font-nunito_sans text-blue-800 select-none">Add School</p>
-                 </div> -->
-            </div>
+                 </div>
            <div class="flex justify-between items-center mt-4  space-x-4 ">
               <button @click="toggle=false" class="px-3 focus:outline-none h-6 w-full bg-white ring-1 ring-black   rounded-2xl">Cancel</button>
               <button @click="toggle=false ,save_data()" class="focus:outline-none px-5 bg-red-700 text-white w-full h-7 shadow-xl ring-1 ring-gray-300 rounded-2xl">Save</button>
@@ -94,7 +89,7 @@ data(){
     show:true,
     show2:true,
     
-      college:'Bicol University',
+      college:null,
       junior_high:'Legaspi City Science High School',
       senior_high:'Legaspi City Science High School',
       schoolName:null,
@@ -105,6 +100,12 @@ data(){
   
 },
 methods:{
+  addSchool(){
+    if(this.college !=null)
+   { var original =document.getElementById('schoolInput');
+     var clone = original.cloneNode(true); // "deep" clone
+     original.parentNode.appendChild(clone);}
+  },
      save_data(){
         this.college=document.getElementById('college').value;
         this.junior_high=document.getElementById('high_school').value;

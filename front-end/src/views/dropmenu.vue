@@ -42,6 +42,7 @@ export default {
       api.post("api/logout").then(() => {
         sessionStorage.removeItem("vuex");
         sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("sessionCookieNotify");
         this.$router.push({ name: "Home" });
       });
     },
