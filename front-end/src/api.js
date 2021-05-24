@@ -7,7 +7,8 @@ const api = axios.create({
     baseURL: `http://localhost:8000/`,
     headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': 'Bearer' + sessionStorage.getItem('Authorization')
     },
     xsrfCookieName: 'XSRF-TOKEN',
     xsrfHeaderName: 'X-XSRF-TOKEN',

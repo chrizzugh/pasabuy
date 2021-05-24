@@ -152,13 +152,14 @@ export default {
         // Login...
         api
           .post("/api/login", this.dataForm)
-          .then(() => {
+          .then((res) => {
             this.logginIn1 = !this.logginIn1
             this.logginIn = true
             this.dispatches().then(() => {
               //wait for the dispatches to finish
               sessionStorage.setItem("isLoggedIn", true);
               sessionStorage.setItem("sessionCookieNotify", true)
+              sessionStorage.setItem("Authorization", res.data.token)
               this.show = !this.show
               this.$router.push({ name: "dashboard" });
             });

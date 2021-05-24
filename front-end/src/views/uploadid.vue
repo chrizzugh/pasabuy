@@ -276,6 +276,7 @@ export default {
               localStorage.removeItem("address");
               this.show = !this.show;
               sessionStorage.setItem("isLoggedIn", true);
+              sessionStorage.setItem("Authorization", res.data.token)
               this.$router.push({ name: "accountsettings" });
             });
           } else {

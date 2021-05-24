@@ -152,6 +152,10 @@ class RegisterController extends Controller
             $userAuth->email = $request->email;
             $userAuth->password = $request->password;
 
+            $token = $userAuth->createToken('myapptoken')->plainTextToken;
+
+            $response = ["user"=>$userAuth, "token"=>$token];
+
             if ($userAuth->save()) {
                 $userAddress = new userAddress();
                 $userAddress->email = $request->email;
@@ -187,7 +191,7 @@ class RegisterController extends Controller
 
                 Auth::login($userAuth);
 
-                return true;
+                return response()->json($response,201);
             } else {
                 return response()->json('error, information address not saved');
             }

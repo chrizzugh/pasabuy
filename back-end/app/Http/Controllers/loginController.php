@@ -22,20 +22,27 @@ class loginController extends Controller
         ]);
        
         $user = Auth::attempt($request->only('email','password'));
-        if ($user) {
-            return response()->json(Auth::user(),200);
+        $user = User::where('email',$request->email)->first();
+
+        if(!$user || !Hash::check($request->password, $user->password)){
+            return  response()->json(['invalid'=>['The provided credentials are incorrect.']],401);
+        }else{
+
+            $token = $user->createToken('myapptoken')->plainTextToken;
+
+            $response = ["user"=>$user, "token"=>$token];
+            return $response;
         }
-        throw ValidationException::withMessages([
-            'invalid'=>['The provided credentials are incorrect.']
-        ]);
+
     }
 
     public function logout(Request $request)
     {
         # code...
-        Auth::logout();
+        Auth::user()->tokens->delete();
+        // Auth::logout();
     
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
     }
 }
