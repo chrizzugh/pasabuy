@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use Vonage\Client\Credentials\Basic;
+use Vonage\Client;
+use Vonage\SMS\Message\SMS;
 
 class RegisterController extends Controller
 {
@@ -73,7 +76,24 @@ class RegisterController extends Controller
 
         $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code];
         if ($request != null) {
-            Mail::to($email)->send(new emailConfirmation($data));
+            if($request->verificationChoice === "email"){
+                Mail::to($email)->send(new emailConfirmation($data));
+            }else{
+                $basic  = new Basic("63d7c27e", "CQWTBBpgA6eChJT6");
+                $client = new Client($basic);
+                $message = "This message is to verify your phone number.\nHere is your 6-digit code \nCode: ".$data['verification_code']."\n";
+                $response = $client->sms()->send(
+                    new SMS($request->phoneNumber, 'pasaBUY',$message)
+                );
+                $message = $response->current();
+                
+                if ($message->getStatus() == 0) {
+                    return response()->json($returnValue);
+                } else {
+                    return "The message failed with status: " . $message->getStatus() . "\n";
+                }
+            }
+            
             return response()->json($returnValue);
         }
         return response()->json($returnValue);
