@@ -12,26 +12,35 @@
             <h1 class="pb-5 space-x-1 space-y-1 text-2xl font-bold">Create an account</h1>
               <div action="#" class="space-y-3">
                 <p class="text-center text-red-500">{{errors}}</p>
-               <div class="flex flex-col 
-                md:flex-row md:justify-between md:space-x-6
-                sm:flex-row sm:justify-between sm:space-x-6
-                xl:flex-row xl:justify-between xl:space-x-6
-                2xl:flex-row 2xl:justify-between 2xl:space-x-6
-                lg:flex-row lg:justify-between lg:space-x-6
-                 ">
-                    <div  class="w-full">
+
+
+                 <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between 2xl:space-x-6 lg:flex-row lg:justify-between lg:space-x-6 ">
+                    <div class="w-full">
                         <input name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="First Name" v-model="PersonalInfo.firstName" v-on:keypress=isLetter($event) v-mask="'Aaaa Aaaaaaaaaaaaaaaaa, Aaaaa Aaaaaaaaaaaa, Aaaaaaaaaaaaaa, Aaaaaa Aaaaaaaaaaaaa, Aaaaaaa Aaaaaaaaaaaaaaaaaaaa, Aaaaaaaa Aaaaaaaaaaaaaaaa, Aaaaaaaaa Aaaaaaaaaaaaaaaaaaa'"/>
                     </div>
-                    <div  class="w-full">
+                    <div class="w-full">
                         <input aria-label="Last Name" name="" type="name" required class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Last Name" v-model="PersonalInfo.lastName" v-on:keypress=isLetter($event) v-mask="'Aaaaaaaaaaaaaaaaaaaaaaaaaaaa'"/>
+                        
+                    </div>
+                    <div class="absolute mt-5 inline-flex right-40" style="margin-left:985px">
+                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                            <p class="text-base leading-none text-white">Are you sure you typed your name correctly?</p>
+                        </div>
                     </div>
                 </div>
-                <div class="mb-6">
-                    <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" v-model="PersonalInfo.email"  />
+                <div class="flex flex-row">
+                    <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email" v-model="PersonalInfo.lastName" v-on:keypress=isLetter($event) v-mask="'Aaaaaaaaaaaaaaaaaaaaaaaaaaaa'"/>
+                    <div class="absolute inline-flex right-32">
+                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                            <p class="text-base leading-none text-white">Please enter a valid email address?</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-10">
-                
-                    <input aria-label="Phone Number" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max" v-mask="'+63 ### ### ####'"/>
+                <div class="relative flex mb-10 ">
+                    
+                        <span class="absolute z-20 bg-gray-200 top-2.5 left-4"><img class="w-9 h-9" src="img/philippines.png"></span>
+                        <input name="" type="text" class="w-full px-3 py-2 pl-16 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number" v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max" v-mask="'+63 ### ### ####'"/>
+                    
                 </div>
                 <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between 2xl:space-x-6 lg:flex-row lg:justify-between lg:space-x-6 ">
                     <div class="w-full" >
@@ -42,7 +51,17 @@
                     <div class="w-full" >
                          <input aria-label="Confirm Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="!showPass"/>
                         <input aria-label="Confirm Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="showPass"/>
-                    </div>   
+                    </div>              
+                    <div class="absolute inline-flex right-40">
+                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                            <p class="text-base leading-none text-white">Those password did not match.</p>
+                        </div>
+                    </div>
+                    <div class="absolute invisible inline-flex right-0"> <!--cant fit sa screen so tig set ko lng na invi for the mean time-->
+                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                            <p class="text-base leading-none text-white">Use 8 or more characters.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="w-full">
                         <button @click="showPass = !showPass">
@@ -103,6 +122,18 @@
 #iMessage{
   font-size:24px;
   color:rgb(22, 22, 141);
+}
+.arrowLeft::before {
+  content: '';
+  position: absolute;
+  display: block;    
+  width: 0px;        
+  left: 0;
+  top: 50%;
+  border: 10px solid transparent;
+  border-left: 0;
+  border-right: 15px solid rgba(220, 38, 38, 1);
+  transform: translate(calc(-100%), -50%);
 }
 </style>
 

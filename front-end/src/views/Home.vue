@@ -2,30 +2,30 @@
 <!-----nav bar----->
         <nav class="fixed z-10 flex items-center justify-between w-full py-4 xl:px-4 font-nunito" :class="{change_color: scrollPosition > 100}">
         <div class="absolute items-center ">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 "/>
-          <label for="" class="absolute text-xl font-black tracking-widest top-4 left-16 font-raleway text-red-buttons vs:hidden ssm:hidden 2xl:text-2xl">
+        <img src="/img/pasaBUYwhiteLogo.png" class="w-16 h-16 "/>
+          <label for="" class="absolute text-xl font-black tracking-widest top-4 left-16 font-raleway text-white vs:hidden ssm:hidden 2xl:text-2xl">
             pasaBUY
           </label>
       </div>
             <div class="flex items-center w-full mt-2 text-right ssm:flex ssm:justify-between sm:block xl:block 2xl:block vs:block lg:block md:block">
-                <button class="h-10 px-4 m-1 text-red-700 transition-colors duration-150 border-2 border-red-700 rounded-3xl focus:outline-none hover:bg-red-50 2xl:text-2xl">
+                <button class="h-10 px-4 m-1 text-white transition-colors duration-150 border-2 border-white rounded-3xl focus:outline-none hover:bg-white-80 2xl:text-2xl"> <!--change hover color-->
                     <router-link to="/log-in" class="font-bold">Log in</router-link>
                 </button>
-                <button  class="h-10 px-4 m-1 text-white transition-colors duration-150 bg-red-700 2xl:text-2xl rounded-3xl focus:outline-none hover:bg-red-800">
+                <button  class="h-10 px-4 m-1 text-crimsonRed transition-colors duration-150 bg-white 2xl:text-2xl rounded-3xl focus:outline-none hover:bg-white-80"> <!--change hover color-->
                     <router-link to="/sign-up" >Sign Up</router-link>
                 </button>
             </div>
         </nav>  
 
 <!-----FIRST----->
-    <div id="landing" class="w-full h-screen bg-no-repeat bg-cover xl:mx-auto ssm:w-full vs:bg-center md:bg-center vs:justify-center sm:bg-cover sm:bg-center ssm:bg-cover ssm:bg-center md:bg-no-repeat font-nunito" style="background-image: url('img/main-back.jpg')">
+    <div id="landing" class="w-full h-screen bg-no-repeat bg-cover xl:mx-auto ssm:w-full vs:bg-center md:bg-center vs:justify-center sm:bg-cover sm:bg-center ssm:bg-cover ssm:bg-center md:bg-no-repeat font-nunito" style="background-image: url('img/background.png')">
         <div class="flex items-center h-full xl:px-10 xl:ml-56 lg:ml-56 md:ml-28 2xl:pl-60 2xl:leading-loose">
             <section class="w-full ml-3 xl:w-6/12 md:w-7/12 lg:w-5/12 2xl:w-6/12 ">
-                <p class="mb-4 text-3xl font-bold tracking-wide xl:text-5xl 2xl:text-6xl ">
+                <p class="mb-4 text-3xl font-bold text-white tracking-wide xl:text-5xl 2xl:text-6xl ">
                     Need someone to do your groceries?</p>
-                <p class="text-lg leading-loose text-left 2xl:text-2xl">
+                <p class="text-lg text-white leading-loose text-left 2xl:text-2xl">
                Let your shopping list be taken care of while staying within the comforts of your home </p>
-                <button class="items-center px-4 m-1 mt-3 font-semibold tracking-wide text-white transition-colors duration-150 rounded-full 2xl:mt-7 lg:h-10 ssm:ml-8 sm:mt-8 vs:mt-7 md:mt-6 xl:mb-4 bg-red-buttons h-9 2xl:ml-0 hover:bg-red-800 2xl:text-xl">
+                <button class="items-center px-4 m-1 mt-3 font-semibold tracking-wide text-crimsonRed transition-colors duration-150 rounded-full 2xl:mt-7 lg:h-10 ssm:ml-8 sm:mt-8 vs:mt-7 md:mt-6 xl:mb-4 bg-white h-9 2xl:ml-0 hover:bg-white-80 2xl:text-xl"> <!--change hover color-->
                    <router-link to="/log-in" >Pasabuy Now</router-link>
                 </button>
             </section>
@@ -89,6 +89,96 @@
                     </button>
             </div>
         </div>
+
+<!--START OF ABOUT US-->
+<div class="flex flex-col justify-center w-full py-10 space-y-3 bg-white ">
+    <h1 class="px-3 text-4xl font-bold text-center"> About Us</h1>
+        <div class="flex items-center self-center justify-center w-full px-3 vs:pr-10 vs:pl-10 sm:w-94 md:w-97 lg:w-99 xl:w-608 2xl:w-1/2 2xl:text-center">
+            <p class="text-sm text-justify 2xl:text-center">
+                PasaBuy is a safe, secure, convenient, and streamlined platform for all Bicolanos for grocery delivery services. With PasaBuy, users can get help with their groceries and earn money by being shoppers.
+            </p>
+        </div>
+</div>
+<div class="">
+<div class="flex justify-center mb-4 bg-white">
+    <div class="flex self-center justify-center w-5/6 vs:flex-wrap vs:w-full 2xl:w-4/6 xl:w-4/6 lg:w-4/6">
+      <div id="helpCenterCreateAcc" class="w-full bg-white vs:flex-row vs:flex 2xl:w-2/3 xl:w-2/5 rounded-l-md ">
+
+        <!--1st--->
+          <div class="flex justify-start ">
+              <div class="w-full bg-transparent vs:flex-row vs:flex">                  
+                  <div class="flex flex-col w-full pb-2 mb-5 space-y-2 text-sm xl:mt-16 vs:mt-0 mt-28 justify-left 2xl:pr-20 2xl:pl-3 xl:pr-20 xl:pl-3 vs:pl-10 vs:pr-10 lg:pr-20 md:pl-12 vs:w-full md:pr-5 lg:pl-3 sm:mt-0 lg:mt-12 md:mt-12">                        
+                        <h1 class="pt-0 text-2xl font-bold vs:w-full">How we started</h1>
+                        <p class="text-sm text-justify">
+                          In 2020, pasaBuy started as a simple idea with a purpose of helping and keeping our 
+                          townsmen— Bicolanos safe from the cyber and environmental threats.
+                        </p>
+                        <p class="text-sm text-justify">
+                          Aside from that, we are really motivated to turn this idea into a reality because
+                          of this important agenda— avoid getting a failure grade.
+                        </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+          
+    <div class="w-full pr-8 overflow-auto bg-transparent xl:w-1/2 lpl-2 vs:pr-10 vs:pl-10 vs:flex-row vs:flex sm:w-608 md:w-full rounded-r-md">
+        <img src="/img/womanDev.png" class="w-full ">
+    </div>
+    </div>
+  </div>
+  
+<!---2nd--->
+  <div class="flex flex-wrap justify-around w-full py-16 pl-48 pr-56 bg-gray-200 vs:pl-10 vs:pr-10 sm:pl-0 sm:pr-0 md:justify-center md:pl-0 md:pr-0 lg:justify-start sm:justify-center lg:pl-0 lg:pr-0 lg:px-48">
+    <div class="w-1/3 vs:flex-row vs:w-full lg:w-1/4 sm:w-2/5 sm:pr-5 lg:ml-48 md:ml-3 md:w-1/4">
+      <h1 class="text-2xl font-bold text-crimsonRed">Our Vision</h1>
+                <p class="pt-3 text-sm text-justify vs:pt-5 vs:pb-10">Pasabuy aims to be the most trusted and best possible platform for the customers' pasabuy and delivery needs.</p>
+    </div>
+    <div class="w-2/5 bg-transparent vs:w-full vs:flex-row sm:pl-5 sm:w-2/5 lg:w-2/5 lg:ml-16 md:ml-16">
+      <h1 class="text-2xl font-bold text-crimsonRed">Our Mission</h1>
+                       <p class="pt-3 text-sm text-justify vs:pt-5">
+                         It is our commitment to provide our customers with smooth and secured transactions for their pasabuy and 
+                         delivery needs by allowing them to experience the convenience that technology provides. With our simple way, 
+                         we will offer income alternatives to unemployed individuals or even to people employed but who need additional 
+                         income and contribute to the improvement of their lives.
+                       </p>
+    </div>
+  </div>
+
+  <!---3RD SECTION---->
+
+   <div class="flex flex-wrap justify-around w-full py-16 pl-48 pr-56 bg-white md:pr-0 md:px-20 md:ml-0 md:mr-0 lg:px-20 lg:pr-0 lg:pl-36 md:justify-center sm:pl-0 sm:pr-0 sm:px-20 md:items-center vs:pl-10 vs:pr-10">
+     <h1 class="w-1/2 text-4xl font-bold text-center vs:text-2xl vs:pb-16 vs:w-full sm:w-5/6 sm:text-3xl md:w-3/5 md:text-3xl md:justify-center">No more ruined schedule when you pasaBuy with us!</h1>
+   <div class="flex pt-16 vs:flex-wrap-reverse xl:pl-16 sm:px-12 vs:pb-8 vs:pt-7 md:pt-20 ">
+                <div class="float-left bg-transparent vs:w-full vs:flex vs:flex-row sm:justify-center md:w-1/2 sm:mb-28 xl:w-5/12 2xl:w-150 sm:w-1/2">
+                    <img class="object-contain w-full h-full rounded-xl" src="img/manDev.png">
+            </div>
+
+                <div class="w-1/2 p-1 pt-20 pr-3 bg-transparent md:w-2/5 sm:w-1/2 pl-14 md:pl-0 lg:pl-0 lg:pr-0 sm:pt-16 vs:flex-row lg:w-2/5 sm:pl-0 vs:p-0 sm:p-0 md:pt-14 vs:justify-center vs:w-full rounded-xl vs:mb-5">  
+                <h2 class="pt-2 text-2xl font-bold leading-relaxed tracking-wide text-left vs:leading-tight sm:pt-0 2xl:pt-8 leading-1 vs:text-xl 2xl:3xl">We complete your<br class="vs:hidden"> essentials</h2>
+                <p class="py-3 pt-3 text-sm font-normal leading-normal text-justify 2xl:text-base sm:py-0 md:text-sm ">
+                You’re right, it’s really frustrating when you have a long unfinished list at your To-Dos, that’s why we’re here to get that list done in no time with just a few clicks!
+                </p>
+            </div>
+        </div>
+        <div class="flex xl:pl-16 sm:px-12 vs:flex-wrap ">
+               <div class="w-1/2 p-1 pr-3 bg-transparent pl-14 vs:flex-row md:w-2/5 lg:w-2/5 sm:pl-0 vs:p-0 md:ml-8 vs:justify-center vs:w-full sm:w-1/2 md:pl-0 vs:pl-20 vs:pr-20 md:pr-0 rounded-xl">  
+                <h2 class="pt-16 text-2xl font-bold leading-relaxed tracking-wide text-left vs:pt-0 vs:leading-tight vs:pr-0 vs:pl-0 sm:pt-0 md:pt-20 vs:text-xl 2xl:pt-8 leading-1"> We’re so glad to help you!</h2>
+                <p class="py-3 pt-3 text-sm font-normal leading-normal text-justify sm:pt-0 md:text-sm">
+               
+You’ll never know how much it means to our shoppers when you pasaBuy with them. Together, let’s start giving and receiving good things. Salamat po!
+                </p>
+            </div>
+             <div class="float-right ml-0 mr-0 bg-transparent vs:ml-10 vs:mr-10 vs:flex-row sm:w-1/2 md:w-1/2 lg:w-1/2 sm:justify-center sm:mb-0 xl:w-5/12 2xl:w-608">
+                    <img class="object-contain w-full rounded-xl" src="img/handshakes.png">
+            </div>
+
+                
+        </div>
+  </div>
+
+  
+</div>
         
 <!--FOOTER-->
         <footer class="px-4 text-sm text-white lg:pb-5 lg:pt-8 pb-7 xl:pt-5 md:pt-12 bg-bastille">
