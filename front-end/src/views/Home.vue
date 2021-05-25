@@ -2,8 +2,8 @@
 <!-----nav bar----->
         <nav class="fixed z-10 flex items-center justify-between w-full py-4 xl:px-4 font-nunito" :class="{change_color: scrollPosition > 100}">
         <div class="absolute items-center ">
-        <img src="/img/pasaBUYwhiteLogo.png" class="w-16 h-16 "/>
-          <label for="" class="absolute text-xl font-black tracking-widest top-4 left-16 font-raleway text-white vs:hidden ssm:hidden 2xl:text-2xl">
+        <img src="/img/pasaBUYwhiteLogo.png" class="w-12 h-12 mt-1 ml-3"/>
+          <label for="" class="absolute text-xl font-black tracking-widest text-white top-4 left-16 font-raleway vs:hidden ssm:hidden 2xl:text-2xl">
             pasaBUY
           </label>
       </div>
@@ -11,7 +11,7 @@
                 <button class="h-10 px-4 m-1 text-white transition-colors duration-150 border-2 border-white rounded-3xl focus:outline-none hover:bg-white-80 2xl:text-2xl"> <!--change hover color-->
                     <router-link to="/log-in" class="font-bold">Log in</router-link>
                 </button>
-                <button  class="h-10 px-4 m-1 text-crimsonRed transition-colors duration-150 bg-white 2xl:text-2xl rounded-3xl focus:outline-none hover:bg-white-80"> <!--change hover color-->
+                <button  class="h-10 px-4 m-1 transition-colors duration-150 bg-white text-crimsonRed 2xl:text-2xl rounded-3xl focus:outline-none hover:bg-white-80"> <!--change hover color-->
                     <router-link to="/sign-up" >Sign Up</router-link>
                 </button>
             </div>
@@ -21,11 +21,11 @@
     <div id="landing" class="w-full h-screen bg-no-repeat bg-cover xl:mx-auto ssm:w-full vs:bg-center md:bg-center vs:justify-center sm:bg-cover sm:bg-center ssm:bg-cover ssm:bg-center md:bg-no-repeat font-nunito" style="background-image: url('img/background.png')">
         <div class="flex items-center h-full xl:px-10 xl:ml-56 lg:ml-56 md:ml-28 2xl:pl-60 2xl:leading-loose">
             <section class="w-full ml-3 xl:w-6/12 md:w-7/12 lg:w-5/12 2xl:w-6/12 ">
-                <p class="mb-4 text-3xl font-bold text-white tracking-wide xl:text-5xl 2xl:text-6xl ">
+                <p class="mb-4 text-3xl font-bold tracking-wide text-white xl:text-5xl 2xl:text-6xl ">
                     Need someone to do your groceries?</p>
-                <p class="text-lg text-white leading-loose text-left 2xl:text-2xl">
+                <p class="text-lg leading-loose text-left text-white 2xl:text-2xl">
                Let your shopping list be taken care of while staying within the comforts of your home </p>
-                <button class="items-center px-4 m-1 mt-3 font-semibold tracking-wide text-crimsonRed transition-colors duration-150 rounded-full 2xl:mt-7 lg:h-10 ssm:ml-8 sm:mt-8 vs:mt-7 md:mt-6 xl:mb-4 bg-white h-9 2xl:ml-0 hover:bg-white-80 2xl:text-xl"> <!--change hover color-->
+                <button class="items-center px-4 m-1 mt-3 font-semibold tracking-wide transition-colors duration-150 bg-white rounded-full text-crimsonRed 2xl:mt-7 lg:h-10 ssm:ml-8 sm:mt-8 vs:mt-7 md:mt-6 xl:mb-4 h-9 2xl:ml-0 hover:bg-white-80 2xl:text-xl"> <!--change hover color-->
                    <router-link to="/log-in" >Pasabuy Now</router-link>
                 </button>
             </section>
@@ -91,7 +91,7 @@
         </div>
 
 <!--START OF ABOUT US-->
-<div class="flex flex-col justify-center w-full py-10 space-y-3 bg-white ">
+<div class="flex flex-col justify-center w-full py-16 space-y-3 bg-gray-200">
     <h1 class="px-3 text-4xl font-bold text-center"> About Us</h1>
         <div class="flex items-center self-center justify-center w-full px-3 vs:pr-10 vs:pl-10 sm:w-94 md:w-97 lg:w-99 xl:w-608 2xl:w-1/2 2xl:text-center">
             <p class="text-sm text-justify 2xl:text-center">
@@ -161,7 +161,7 @@
                 </p>
             </div>
         </div>
-        <div class="flex xl:pl-16 sm:px-12 vs:flex-wrap ">
+        <div class="flex pt-16 pb-16 xl:pl-16 sm:px-12 vs:flex-wrap">
                <div class="w-1/2 p-1 pr-3 bg-transparent pl-14 vs:flex-row md:w-2/5 lg:w-2/5 sm:pl-0 vs:p-0 md:ml-8 vs:justify-center vs:w-full sm:w-1/2 md:pl-0 vs:pl-20 vs:pr-20 md:pr-0 rounded-xl">  
                 <h2 class="pt-16 text-2xl font-bold leading-relaxed tracking-wide text-left vs:pt-0 vs:leading-tight vs:pr-0 vs:pl-0 sm:pt-0 md:pt-20 vs:text-xl 2xl:pt-8 leading-1"> We’re so glad to help you!</h2>
                 <p class="py-3 pt-3 text-sm font-normal leading-normal text-justify sm:pt-0 md:text-sm">
@@ -230,7 +230,8 @@ You’ll never know how much it means to our shoppers when you pasaBuy with them
 <style scoped>
    
  .change_color {
-       background-color:white;
+       background-color: rgba(205, 15, 15, 1);
+;
        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px
    }
    .scrollbehavior{
