@@ -1,5 +1,13 @@
 <template>
   <h2 class="py-3 mt-10 text-2xl font-bold sm:text-xl vs:text-lg md:text-xl">Conditions for Return</h2>
+  
+  <ul class="pl-12 space-y-3 text-justify list-disc list-outside vs:text-xs">
+         <li>Non-perishable items such as canned goods and packaged goods and Perishable items such as meat, fish, seafood, dairy products, fruits, vegetables, flowers, pharmaceutical products, and chemicals will only be accepted for return if there are issues with their expiration dates.</li>
+         <li>Apparels such as socks, sweaters, underwear, dresses, suits, shirts, trousers, foot wares as well as tools, and equipment are also eligible for return if they are found defective.</li>
+         <li>To be eligible for a return/exchange, customers must present the official receipt where the items were included.</li>
+         <li>Return/exchange policies may vary among different malls and stores so the validity of returning items will depend on where your items were purchased.</li>
+         <li>Charges and delivery fees for returning/exchanging items are the same when doing pasabuys.</li><br>
+    </ul>
 
   <p class="vs:text-xs">In order for the Goods to be eligible for a return, please make sure that:</p><br>
     <ul class="pl-12 space-y-3 text-justify list-disc list-outside vs:text-xs">
