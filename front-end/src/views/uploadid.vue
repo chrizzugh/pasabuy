@@ -18,7 +18,7 @@
             <div class="px-10 py-16">
                 <h1 class="mb-3 space-x-1 space-y-1 text-2xl font-bold">Upload a valid ID</h1>
                 <p class="mb-4 text-left sm:text-center lg:text-justify xl:text-center">
-                    A government ID helps us check you're really you. It also helps us keep Pasabuy secure, fight fraud, and more. </p>
+                    Verifying your identity by presenting any of your valid IDs will help keep Pasabuy secure and fraud-free. </p>
                 <div class="flex flex-col justify-between space-y-4
                 sm:flex-row sm:space-y-0  sm:space-x-8
                 md:flex-row md:space-y-0  md:space-x-8
