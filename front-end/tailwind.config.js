@@ -29,6 +29,7 @@ module.exports = {
          'dv':{'min': '1024px'},
       },
       colors:{
+        crimsonRed: '#CD0F0F',
         bastille: '#1E1825',
         red:{
           500: '#EF4444',
@@ -58,6 +59,7 @@ module.exports = {
         spacing: {
         0.5: '0.2rem',
         1.4: '0.300rem',
+        4.1: '1.20rem', //newnewnewnewnew latest
         15:'3.6rem',
         17: '4.3rem',
         122: '5.3rem',
@@ -112,6 +114,10 @@ module.exports = {
         500: '500rem',
         //px
         eh: '430px',
+        u: '264px',
+        w: '48px',
+        y: '56px',
+        z: '480px',
         ew: '844px',
         220: '267px',
 

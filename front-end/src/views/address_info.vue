@@ -22,12 +22,12 @@
           mode
         </span>
       </div>
-      <span class="font-raleways font-bold grid grid-cols-2">
+      <!-- <span class="font-raleways font-bold grid grid-cols-2">
         <p class="text-gray-500 uppercase">Landmark</p>
         <span>
           <p>{{ address_info.landmark }}</p>
         </span>
-      </span>
+      </span> -->
 
       <span class="font-raleways font-bold grid grid-cols-2">
         <p class="text-gray-500">HOUSE NUMBER</p>
@@ -85,12 +85,12 @@
           mode
         </span>
       </div>
-      <span class="font-raleways font-bold grid grid-cols-2">
+      <!-- <span class="font-raleways font-bold grid grid-cols-2">
         <p class="text-gray-500 uppercase">Landmark</p>
         <span>
           <p>{{ Landmark }}</p>
         </span>
-      </span>
+      </span> -->
 
       <span class="font-raleways font-bold grid grid-cols-2">
         <p class="text-gray-500">HOUSE NUMBER</p>
@@ -139,7 +139,7 @@
 
           <div class=" ">
             <div class="flex flex-col space-y-4">
-              <div class="flex flex-col">
+              <!-- <div class="flex flex-col">
                 <span class="ml-2 uppercase text-sm font-bold text-gray-500"
                   >Landmark</span
                 >
@@ -148,7 +148,7 @@
                   v-model="address_info.landmark"
                   class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"
                 />
-              </div>
+              </div> -->
 
               <div class="flex flex-col">
                 <span class="ml-2 uppercase text-sm font-bold text-gray-500"
@@ -266,7 +266,7 @@
 
           <div class=" ">
             <div class="flex flex-col space-y-4">
-              <div class="flex flex-col">
+              <!-- <div class="flex flex-col">
                 <span class="ml-2 uppercase text-sm font-bold text-gray-500"
                   >Landmark</span
                 >
@@ -276,7 +276,7 @@
                   v-model="Landmark"
                   class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"
                 />
-              </div>
+              </div> -->
 
               <div class="flex flex-col">
                 <span class="ml-2 uppercase text-sm font-bold text-gray-500"
@@ -395,7 +395,7 @@
 
           <div class=" ">
             <div class="flex flex-col space-y-4">
-              <div class="flex flex-col">
+              <!-- <div class="flex flex-col">
                 <span class="ml-2 uppercase text-sm font-bold text-gray-500"
                   >Landmark</span
                 >
@@ -404,7 +404,7 @@
                   id="Landmark_add"
                   class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"
                 />
-              </div>
+              </div> -->
 
               <div class="flex flex-col">
                 <span class="ml-2 uppercase text-sm font-bold text-gray-500"
@@ -775,7 +775,7 @@ export default {
     },
     save_newShippingAdd() {
       let dataX = {
-        landmark: document.getElementById("Landmark_add").value,
+        // landmark: document.getElementById("Landmark_add").value,
         house_number: document.getElementById("H_number_add").value,
         province: document.getElementById("Province").options[
           document.getElementById("Province").selectedIndex

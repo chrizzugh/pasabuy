@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\messageController;
 use App\Http\Controllers\userInformationController;
 use App\Http\Controllers\addressController;
+use App\Http\Controllers\educationController;
 use App\Http\Controllers\followController;
 use App\Http\Controllers\forgotPasswordController;
 use App\Http\Controllers\NotificationController;
@@ -17,6 +18,8 @@ use App\Http\Controllers\reviewsController;
 use App\Http\Controllers\shoppingListController;
 use App\Http\Controllers\reviewController;
 use App\Http\Controllers\interestController;
+use App\Http\Controllers\skillsController;
+use App\Http\Controllers\userAboutController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
@@ -44,6 +47,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getNotifications', [NotificationController::class, 'getAll']);
     Route::get('/getUnreadNotifications', [NotificationController::class, 'getUnread']);
     Route::post('/readNotif', [NotificationController::class, 'readNotif']);
+    Route::post('/readMessageNotif', [NotificationController::class, 'readMessageNotif']);
     Route::post('/changeEmail', [userInformationController::class, 'changeEmail']);
     Route::post('/changePassword', [userInformationController::class, 'changePassword']);
     Route::post('/confirmUser', [userInformationController::class, 'confirmUser']);
@@ -51,7 +55,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/createChatRoom', [messageController::class, 'createRoom']);
     Route::post('/createTransaction', [transactionController::class, 'createTransaction']);
     Route::get('/getTransaction', [transactionController::class, 'getTransaction']);
-    Route::post('/cancelRequest', [transactionController::class, 'cancelRequest']);
+    Route::post('/cancelTransaction', [transactionController::class, 'cancelTransaction']);
     Route::post('/declineRequest', [transactionController::class, 'declineRequest']);
     Route::get('/getShippingAddress', [addressController::class, 'getShippingAddress']);
     Route::get('/getTransportModes', [addressController::class, 'getTransportModes']);
@@ -62,9 +66,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/editShipping', [addressController::class, 'editShipping']);
     Route::post('/confirmRequest', [transactionController::class, 'confirmRequest']);
     Route::post('/updateTransaction', [transactionController::class, 'updateTransaction']);
+    Route::post('/editListDeliverStatus/{transNum}', [transactionController::class, 'editListDeliverStatus']);
     Route::get('/getShoppingList', [shoppingListController::class, 'getShoppingList']);
-    Route::post('/editList', [shoppingListController::class, 'editList']);
+    Route::post('/editList/{listNum}', [shoppingListController::class, 'editList']);
     Route::post('/createList', [shoppingListController::class, 'createList']);
+    Route::delete('/deleteList/{listNum}', [shoppingListController::class, 'deleteList']);
 	Route::post('/editPostStatus', [PostController::class, 'editPostStatus']);
 	Route::post('/followStatus', [followController::class, 'followStatus']);
 	Route::get('/getUserFollow', [followController::class, 'getUserFollow']);
@@ -80,6 +86,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get("/userSkills", [interestController::class, 'getSkills']);
     Route::post("/userReviews", [reviewController::class, 'saveReview']);
     Route::delete("/clearNotif", [NotificationController::class, 'clearNotif']);
+    Route::post("/updateEduc", [educationController::class, 'updateEduc']);
+    Route::get("/getEduc", [educationController::class, 'getEduc']);
+
 
 
     
@@ -112,3 +121,25 @@ Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode
 Route::get('user/feed', [PostController::class, 'getFeeds']);
 
 Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode']);
+Route::get("shoppingoffers",[shoppingOffersController::class, 'listShoppingOffers']);
+//Route::post("shoppingoffers",[shoppingOffersController::class, 'addShoppingOffers']);
+Route::post("/editshoppingoffers",[shoppingOffersController::class, 'editshoppingoffers']);
+Route::get("shoppingorders",[shoppingOrdersController::class, 'listShoppingOrders']);
+//Route::put("editShoppingOffers",[shoppingOffersController::class, 'update']);
+Route::get("/getReviews",[reviewController::class, 'listReviews']);
+Route::post('/confirmVerificationCode', [RegisterController::class, 'confirmCode']);
+//Route::get("/userinterest", [interestController::class, 'getInterest']);
+//Route::get("/userSkills", [interestController::class, 'getSkills']);
+Route::post("/userReviews", [reviewController::class, 'saveReview']);
+Route::get("/listInterest", [interestController::class, 'getListInterests']);
+//Route::get("/listSkills", [skillsController::class, 'getListSkills']);
+//Route::get("/listSkills", [skillsController::class, 'getListSkills']);
+Route::get("/listSkills", [skillsController::class, 'getListSkills'] );
+Route::post("/postSkill", [userAboutController::class, 'postUserSkills'] );
+Route::post("/updateSkill", [userAboutController::class, 'updateUserSkills'] );
+Route::post("/postInterest", [userAboutController::class, 'postUserInterests'] );
+Route::post("/updateInterest", [userAboutController::class, 'updateUserInterests'] );
+Route::post("/postVisitedPlace", [userAboutController::class, 'postUserVisitedPlaces'] );
+Route::post("/updateVisitedPlace", [userAboutController::class, 'updateUserVisitedPlaces'] );
+Route::get("/allLanguages", [userInformationController::class, 'getAllLanguages'] );
+Route::get("/getUserAbout", [userAboutController::class, 'getUserAbout'] );

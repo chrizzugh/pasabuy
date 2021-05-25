@@ -1,11 +1,11 @@
 <template>
   <div class="flex">
     <!-- mobile menu bar -->
-    <div class="bg-gray-800 text-gray-100 flex justify-between">
+    <div class="w-full bg-gray-800 text-gray-100 flex justify-between">
       <!-- logo -->
       <!-- mobile menu button -->
       <nav
-        class="z-40 h-20 bg-red-700 w-full fixed flex items-center justify-between font-nunito p-0 2xl:bg-white 2xl:shadow-md xl:bg-white xl:shadow-md lg:bg-white lg:shadow-md mt-0"
+        class="z-40 h-20 bg-red-buttons w-full fixed flex items-center justify-between font-nunito p-0 2xl:bg-white 2xl:shadow-md xl:bg-white xl:shadow-md lg:bg-white lg:shadow-md mt-0"
       >
         <!--Logo-->
         <div class="flex items-center">
@@ -23,7 +23,7 @@
           <div class="flex items-center">
             <img
               src="/img/pasaBUYLogoOnly.png"
-              class="w-20 h-16 hidden 2xl:block xl:block lg:block"
+              class="w-16 h-16 hidden 2xl:block xl:block lg:block"
             />
             <h1
               class="absolute text-xl font-black tracking-widest top-6 left-16 font-raleway 2xl:text-red-700 xl:text-red-700 lg:text-red-700 hidden 2xl:block xl:block lg:block"
@@ -38,7 +38,7 @@
           class="2xl:hidden xl:hidden lg:hidden block"
         />
         <div
-          class="hidden 2xl:flex 2xl:ml-60 xl:flex xl:ml-72 xl:mr-16 lg:flex lg:justify-between lg:gap-x-0 lg:ml-28 lg:px-3 lg:w-6/12 w-6/12 justify-center items-center font-bold gap-x-10 text-gray-500"
+          class="hidden 2xl:flex 2xl:ml-60 xl:flex xl:ml-72 lg:flex lg:ml-48 lg:space-x-0 lg:px-3 lg:w-97 w-608 justify-center items-center font-bold gap-x-10 text-gray-500"
         >
           <router-link to="/dashboard">
             <div class="flex gap-x-4 py-4">
@@ -46,16 +46,21 @@
               <p class="text text-gray-500">Home</p>
             </div>
           </router-link>
+
           <router-link to="/messages">
-            <div class="flex gap-x-4 py-4">
+            <div class="flex gap-x-4 py-4 relative">
               <span class="material-icons cursor-pointer"> chat </span>
+              <span
+                class="absolute left-3 top-2 rounded-full font-semibold bg-balticsea text-white text-xs px-1 h-4"
+                >{{ unreadNotifChat.length }}</span
+              >
               <p class="text-gray-500">Messages</p>
-              <!-- <span class="text-red-500">{{ unreadNotifChat.length }}</span> -->
             </div></router-link
           >
+
           <div
-            class="flex gap-x-4 py-4 cursor-pointer items-center"
-            @click="notif"
+            class="flex gap-x-4 py-4 relative cursor-pointer items-center"
+            @click="(activeBtn = !activeBtn), (show = !show)"
             :class="{ active_notif: activeBtn }"
           >
             <span id="notif" class="text-gray-500 material-icons \">
@@ -64,9 +69,12 @@
             <span
               id="btn_notif"
               class="text-base font-bold leading-none tracking-wide text-gray-500 outline-none"
-              >Notifications
-            </span>
-            <span class="text-red-500">{{ unreadNotif.length }}</span>
+              >Notifications</span
+            >
+            <span
+              class="absolute left-3 top-2 rounded-full font-semibold bg-balticsea text-white text-xs px-1 h-4"
+              >{{ unreadNotif.length }}</span
+            >
           </div>
         </div>
         <div class="flex mr-2 gap-x-5">
@@ -77,7 +85,7 @@
           >
             <input
               type="search"
-              class="w-auto focus:outline-none vs:w-28 text-black pl-3 rounded-2xl h-10"
+              class="focus:outline-none text-black lg:w-28 pl-3 rounded-2xl h-5"
               placeholder="Search"
             />
             <button class="material-icons mr-2 text-gray-400 w-full">
@@ -93,14 +101,12 @@
           class="fixed hidden xl:block lg:block pb-24 2xl:block overflow-y-auto top-20 h-full right-60 pt-2 bg-white rounded-lg shadow-lg left--1"
           style="min-width: 370px"
         >
-        <div class="flex justify-between">
           <h1
             class="mt-4 mb-4 ml-4 text-black font-bold border-b align-text-leftCorner cursor-pointer"
           >
             Notifications
           </h1>
-          <button @click ="clearNotif" class="mt-4 mb-4 mr-4  text-blue-500">Clear Notifications</button>
-          </div>
+
           <Notification />
         </div>
       </nav>
@@ -134,15 +140,14 @@
           <div class="mobile rounded-2xl items-center flex h-10 space-x-2 pl-2">
             <span class="material-icons"> notifications </span>
             <p class="text-gray-500">Notifications</p>
-             <span class="text-red-500">{{ unreadNotif.length }}</span>
           </div></router-link
         >
-        <button @click="setDispatches(userPersonal.email)" class="rounded-2xl">
+        <router-link to="/edit-profile" class="rounded-2xl">
           <div class="mobile rounded-2xl items-center flex h-10 pl-2 space-x-2">
             <span class="material-icons"> account_circle </span>
-            <p class="text-gray-500 font-bold">Profile</p>
+            <p class="text-gray-500">Profile</p>
           </div>
-        </button>
+        </router-link>
         <hr />
         <router-link to="/orders" class="rounded-2xl">
           <div
@@ -170,13 +175,17 @@
             <p class="text-gray-500">Account Settings</p>
           </div></router-link
         >
-        <button  @click="logout" class="rounded-2xl">
+        <button @click="logout" class="rounded-2xl">
           <div class="mobile rounded-2xl items-center flex h-10 space-x-2 pl-2">
             <span class="material-icons"> logout </span>
-            <p class="text-gray-500 font-bold">Log Out</p>
-          </div></button
-        >
+            <p class="text-gray-500">Log Out</p>
+          </div>
+        </button>
       </nav>
+      <p class="text-gray-500 text-sm">
+        Privacy Policy-Cookies Policy-Terms and Conditions Return and Refund
+        Policy-PasaBuy 2021
+      </p>
     </div>
   </div>
 </template>
@@ -216,7 +225,10 @@ export default {
       this.show = !this.show;
     },
     debounceMethod: _.debounce((notif) => {
-      if (notif == "App\\Notifications\\newTransactionNotification") {
+      if (
+        notif == "App\\Notifications\\newTransactionNotification" ||
+        notif == "App\\Notifications\\newMessageNotification"
+      ) {
         api.get("api/getChatroom").then((res) => {
           store.commit("FETCH_ROOMS", res.data);
         });
@@ -226,26 +238,25 @@ export default {
         api.get("api/getNotifications"),
         api.get("api/getTransaction"),
       ]).then((resArr) => {
-        store.commit("setUnreadNotifications", resArr[0].data),
-          store.commit("setNotifications", resArr[1].data),
-          store.commit("setUserTransactions", resArr[2].data);
+        store.commit("setUnreadNotifications", resArr[0].data);
+        store.commit("setNotifications", resArr[1].data);
+        store.commit("setUserTransactions", resArr[2].data);
       });
-    }, 1000),
+    }, 2000),
     debounceMethodGetPosts: _.debounce(() => {
-      Axios.all([
-        api.get("api/getPosts"),
-        api.get("api/getShares"),
-      ]).then((resArr) => {
-        store.commit("FETCH_POSTS", resArr[0].data),
-        store.commit("setAllShares", resArr[1].data)
+      Axios.all([api.get("api/getPosts"), api.get("api/getShares")]).then(
+        (resArr) => {
+          store.commit("FETCH_POSTS", resArr[0].data);
+          store.commit("setAllShares", resArr[1].data);
+        }
+      );
+    }, 2000),
+    clearNotif() {
+      api.delete("api/clearNotif/").then(() => {
+        store.dispatch("getAllNotifications");
       });
-    }, 1000),
-    clearNotif(){
-      api.delete('api/clearNotif/').then(()=>{
-         store.dispatch("getAllNotifications");
-      })
     },
-     setDispatches(email) {
+    setDispatches(email) {
       store.dispatch("getUserInfo", email).then(() => {
         store.dispatch("getNotAuthUserAddress", email).then(() => {
           store.dispatch("getUserFollow", email).then(() => {
@@ -267,7 +278,7 @@ export default {
         this.$router.push({ name: "Home" });
       });
     },
-      toEncrypt(val) {
+    toEncrypt(val) {
       return btoa(val);
     },
   },
@@ -278,39 +289,35 @@ export default {
     return { currentRoute };
   },
   mounted() {
-
-    var roomId = 123
+    var roomId = 123;
     window.Echo.join(`public.${roomId}`)
-    .here((users) => {
-    //set the users who's already online before you online
-    for(var i=0;i<users.length;i++){
-        store.commit('setOnlineUsers',users[i].email)
-    }
-    console.log(users)
-    })
-    .joining((user) => {
-       //add the user who just logged in tpo online
-        store.commit('setOnlineUsers',user.email)
+      .here((users) => {
+        //set the users who's already online before you online
+        for (var i = 0; i < users.length; i++) {
+          store.commit("setOnlineUsers", users[i].email);
+        }
+      })
+      .joining((user) => {
+        //add the user who just logged in tpo online
+        store.commit("setOnlineUsers", user.email);
         console.log(user.email, " is online");
-    })
-    .leaving((user) => {
-      //remove users who leave the channel to online
-        store.commit('removeFromOnlineUsers',user.email)
+      })
+      .leaving((user) => {
+        //remove users who leave the channel to online
+        store.commit("removeFromOnlineUsers", user.email);
         console.log(user.email, " leaved");
-    })
-    .listen('.post.new', () => {
+      })
+      .listen(".post.new", () => {
         //
-      console.log("someone posted")
-      this.debounceMethodGetPosts();
-    })
-    .error((error) => {
+        this.debounceMethodGetPosts();
+      })
+      .error((error) => {
         console.error(error);
-    });
+      });
 
     window.Echo.private(
       "App.Models.User." + this.user.indexUserAuthentication
     ).notification((notification) => {
-      console.log("in the navbar", notification.type);
       this.debounceMethod(notification.type);
     });
   },
@@ -318,12 +325,18 @@ export default {
   computed: {
     unreadNotif() {
       return store.getters.getUnreadNotif.filter((x) => {
-        return x.type != "App\\Notifications\\newTransactionNotification";
+        return (
+          x.type != "App\\Notifications\\newTransactionNotification" &&
+          x.type != "App\\Notifications\\newMessageNotification"
+        );
       });
     },
     unreadNotifChat() {
       return store.getters.getUnreadNotif.filter((x) => {
-        return x.type == "App\\Notifications\\newTransactionNotification";
+        return (
+          x.type == "App\\Notifications\\newTransactionNotification" ||
+          x.type == "App\\Notifications\\newMessageNotification"
+        );
       });
     },
     user() {
@@ -340,22 +353,23 @@ export default {
   background-color: rgba(236, 233, 233, 0.705);
 }
 .router-link-active .mobile p {
-  color: red;
+  color: #cd0f0f;
 }
 .router-link-active {
-  color: red;
+  color: #cd0f0f;
 }
 .router-link-active {
-  color: red;
-  border-bottom: 5px solid red;
+  color: #cd0f0f;
+  border-bottom: 5px solid #cd0f0f;
 }
 .router-link-active p {
-  color: red;
+  color: #cd0f0f;
 }
 .active_notif #notif {
-  color: red;
+  color: #cd0f0f;
 }
 .active_notif #btn_notif {
-  color: red;
+  color: #cd0f0f;
 }
 </style>
+ 

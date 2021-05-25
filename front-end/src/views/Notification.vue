@@ -35,7 +35,7 @@
       <p class="pl-1 mx-2 text-sm text-gray-800">
         <span class="font-bold" href="#">{{ notif.data.canceller }}</span>
         <span class="font-semibold">
-          has cancelled their Request to your post</span
+          has cancelled their {{notif.data.postIdentity}} to your post</span
         ><br />
         <router-link
           :to="'/orders/?postnum=' + notif.data.postNumber"
@@ -58,7 +58,7 @@
       />
       <p class="pl-1 mx-2 text-sm text-gray-800">
         <span class="font-bold" href="#">{{ notif.data.decliner }}</span>
-        <span class="font-semibold"> has declined your offer</span><br />
+        <span class="font-semibold"> has declined your {{ notif.data.identity}}</span><br />
         <router-link
           :to="'/orders/?postnum=' + notif.data.postNumber"
           class="font-bold text-blue-500"
@@ -80,7 +80,7 @@
       />
       <p class="pl-1 mx-2 text-sm text-gray-800">
         <span class="font-bold" href="#">{{ notif.data.accepter }}</span>
-        <span class="font-semibold"> has accepted your offer</span><br />
+        <span class="font-semibold"> has accepted your {{ notif.data.identity}}</span><br />
         <router-link
           :to="'/orders/?postnum=' + notif.data.postNumber"
           class="font-bold text-blue-500"
@@ -102,9 +102,11 @@
       />
       <p class="pl-1 mx-2 text-sm text-gray-800">
         <span class="font-bold" href="#">{{ notif.data.updater }}</span>
-        <span class="font-semibold">
-          has {{ notif.data.status }} your order</span
-        ><br />
+        <span class="font-semibold" v-if="notif.data.status == 'In Transit'">
+          Is now delivering your order</span
+        >
+         <span class="font-semibold" v-else>
+          has {{ notif.data.status }} your Order.</span><br />
         <router-link
           :to="'/orders/?postnum=' + notif.data.postNumber"
           class="font-bold text-blue-500"

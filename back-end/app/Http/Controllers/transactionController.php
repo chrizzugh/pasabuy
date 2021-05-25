@@ -11,6 +11,7 @@ use App\Notifications\confirmRequestNotification;
 use App\Notifications\declinedRequestNotification;
 use App\Notifications\newTransactionNotification;
 use App\Notifications\UpdateRequestNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,21 +28,34 @@ class transactionController extends Controller
         $newTransaction->transactionNumber = '084'.str_pad($postOwner->indexUserInformation,4,'0',STR_PAD_LEFT).str_pad($user->indexUserInformation,4,'0',STR_PAD_LEFT).str_pad(transaction::count()+1, 4, '0', STR_PAD_LEFT); 
         $newTransaction->postNumber = $request->postNumber;
         $newTransaction->transactionReceiver = $request->email;
-        $newTransaction->transactionData = serialize($request->transactionData);
+        $newTransaction->transactionData = json_encode($request->transactionData);
+        $newTransaction->transactionShoppingList = json_encode($request->transactionShoppingList);
         $newTransaction->emailCustomerShopper = Auth::user()->email;
 
         if($newTransaction->save()){
             $userToNotif = User::where('email',$request->email)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
 			$userToNotif->notify(new newTransactionNotification($request->postNumber));
-            return response()->json('ok');
+            return $this->getTransaction();
         }else{
-            return response()->json('not ok');
+            return response()->json(['error'],422);
 
         }
 
     }
-    public function getTransaction(Request $request)
+    public function editListDeliverStatus(Request $request,$transNum)
+    {
+        # code...
+        $transaction = transaction::where('transactionNumber', $transNum)->first();
+        $transaction->transactionShoppingList = $request->list;
+        if($transaction->save()){
+            //find the right user to notify, in this case the owner of the post
+        }
+        else 
+            return response()->json(["error"=>"Error updating transaction."],201);
+
+    }
+    public function getTransaction()
     {
 
         # code...
@@ -51,28 +65,31 @@ class transactionController extends Controller
                 ->orWhere('transactionReceiver', Auth::user()->email);
             })->orderBy('dateCreated','desc')
               ->get();
-        // $transaction = transaction::with('post','post.offer_post','post.request_post','transactionSender')->orWhere([['emailCustomerShopper','\''.Auth::user()->email.'\''],['transactionReceiversss','\''.Auth::user()->email.'\'']])->where('transactionStatus','\'pending\'')->orderBy('dateCreated','desc')->get();
-        // $transaction = transaction::with('post','post.offer_post','post.request_post','transactionSender')->where('emailCustomerShoppeasr',Auth::user()->email)->orWhere('transactionReceiver',Auth::user()->email)->where('transactionStatus','=','pending')->orderBy('dateCreated','desc')->get();
-        // $transaction = Post::has('transaction')->where('email',Auth::user()->email)->orWhere('email','hokage.igneel@gmail.com')->join('tbl_transaction.emailCustomerShopper','=','tbl_post.email')->where('tbl_transaction.emailCustomerShopper',Auth::user()->email)->orWhere('tbl_transaction.emailCustomerShopper','hokage.igneel@gmail.com')->where('tbl_transaction.transactionStatus','pending')->orderBy('tbl_transaction.dateCreated','desc')->get();
+   
         for($i=0;$i<$transaction->count();$i++){
-            $transaction[$i]->transactionData = unserialize($transaction[$i]->transactionData);
+            if (is_string($transaction[$i]->transactionData))
+                $transaction[$i]->transactionData = json_decode($transaction[$i]->transactionData);
+            if (is_string($transaction[$i]->transactionShoppingList))
+                $transaction[$i]->transactionShoppingList = json_decode($transaction[$i]->transactionShoppingList);
         }
         
         return response()->json($transaction);
     }
 
-    public function cancelRequest(Request $request)
+    public function cancelTransaction(Request $request)
     {
           # code...
  
         $transaction = transaction::find($request->ID);
         $transaction->transactionStatus = "Cancelled";
+        $transaction->dateModified = Carbon::now('Asia/Manila');
+
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = Post::where('postNumber',$request->postNumber)->get();
 			$userToNotif = User::where('email',$userToNotif[0]->email)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-			$userToNotif->notify(new cancelledRequestNotification($request->postNumber));
+			$userToNotif->notify(new cancelledRequestNotification($request->postNumber, $request->postIdentity));
             return response()->json('ok');
         }
         else 
@@ -85,11 +102,13 @@ class transactionController extends Controller
  
         $transaction = transaction::find($request->ID);
         $transaction->transactionStatus = "Declined";
+        $transaction->dateModified = Carbon::now('Asia/Manila');
+
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = User::where('email',$request->userNotif)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-			$userToNotif->notify(new declinedRequestNotification($request->postNumber));
+			$userToNotif->notify(new declinedRequestNotification($request->postNumber,$request->postIdentity));
             return response()->json('ok');
         }
         else 
@@ -102,13 +121,15 @@ class transactionController extends Controller
  
         $transaction = transaction::find($request->ID);
         $transaction->transactionStatus = "Confirmed";
+        $transaction->dateModified = Carbon::now('Asia/Manila');
+
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = User::where('email',$request->userNotif)->get();
 			$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-			$userToNotif->notify(new confirmRequestNotification($request->postNumber));
+			$userToNotif->notify(new confirmRequestNotification($request->postNumber, $request->postIdentity));
 
-            if($request->postIdentity == "request_post"){
+            if($request->postIdentity == "offer"){
                 $transaction = transaction::with('post')->where('transactionStatus', 'pending')->where('postNumber', $request->postNumber)->get();
                 if(!empty($transaction))
                 foreach($transaction as $trans){
@@ -118,7 +139,7 @@ class transactionController extends Controller
                     $trans->post->save();
                     $userToNotif = User::where('email',$trans->emailCustomerShopper)->get();
                     $userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-                    $userToNotif->notify(new declinedRequestNotification($request->postNumber));
+                    $userToNotif->notify(new declinedRequestNotification($request->postNumber, $request->postIdentity));
                 }
                 return response()->json('ok');
             }
@@ -133,6 +154,8 @@ class transactionController extends Controller
         # code...
         $transaction = transaction::find($request->ID);
         $transaction->transactionStatus = $request->status;
+        $transaction->dateModified = Carbon::now('Asia/Manila');
+
         if($transaction->save()){
             //find the right user to notify, in this case the owner of the post
 			$userToNotif = User::where('email',$request->userNotif)->get();

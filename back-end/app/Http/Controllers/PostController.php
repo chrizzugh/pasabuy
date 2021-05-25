@@ -43,7 +43,6 @@ class PostController extends Controller
 			'transportMode' => ['required', 'max:200'],
 			'capacity' => ['required', 'max:100'],
 			'paymentMethod' => ['required', 'max:200'],
-			'caption' => ['nullable', 'max:200'],
 		]);
 
 		$user = Auth::User();
@@ -87,7 +86,7 @@ class PostController extends Controller
 			$post->save();
 			$post->offer_post()->save($offer_post);
 		});
-        broadcast(new newPostEvent())->toOthers();
+		broadcast(new newPostEvent())->toOthers();
 
 		return response()->json(['message' => 'Offer post created successfully.'], 201);
 	}
@@ -109,8 +108,9 @@ class PostController extends Controller
 			'shoppingPlace' => 'required|string|max:500',
 			'deliverySchedule' => 'required|date|after_or_equal:today',
 			'paymentMethod' => 'required|string|max:200',
-			'shoppingListNumber' => 'required',
-			'caption' => 'nullable|string|max:200',
+			'shoppingListContent' => 'required',
+			'shoppingListTitle' => 'required',
+
 		]);
 
 		$user = Auth::User()->email;
@@ -127,9 +127,8 @@ class PostController extends Controller
 		$request_post->shoppingPlace = $request->shoppingPlace;
 		$request_post->deliverySchedule = $request->deliverySchedule;
 		$request_post->paymentMethod = $request->paymentMethod;
-		$request_post->shoppingListNumber = $request->shoppingListNumber;
 		$request_post->shoppingListTitle = $request->shoppingListTitle;
-		$request_post->shoppingListContent = $request->shoppingListContent;
+		$request_post->shoppingListContent = json_encode($request->shoppingListContent);
 		$request_post->caption = $request->caption;
 
 
@@ -151,7 +150,7 @@ class PostController extends Controller
 			$post->request_post()->save($request_post);
 		});
 
-        broadcast(new newPostEvent())->toOthers();
+		broadcast(new newPostEvent())->toOthers();
 
 		return response()->json(
 			[
@@ -187,20 +186,29 @@ class PostController extends Controller
 
 		$user = Auth::user();
 		// $data = PasabuyUser::has('post')->with('post','post.offer_post','post.request_post')->get();
-		$data = Post::with('offer_post', 'request_post', 'user', 'request_post.shoppingList')->where('tbl_post.postDeleteStatus', '=', 0)->orderBy('tbl_post.dateCreated', 'desc')->get();
+		$data = Post::with('offer_post', 'request_post', 'user')->where('tbl_post.postDeleteStatus', '=', 0)->orderBy('tbl_post.dateCreated', 'desc')->get();
 
+		for ($i = 0; $i < $data->count(); $i++) {
+			if ($data[$i]->postIdentity === 'request_post')
+				if (is_string($data[$i]->request_post->shoppingListContent))
+					$data[$i]->request_post->shoppingListContent = json_decode($data[$i]->request_post->shoppingListContent);
+		}
 		return response()->json($data);
 	}
 
 	public function getAllShares(Request $request)
 	{
 		# code...
-		// $data = Post::has('share')->with('offer_post','request_post','user','request_post.shoppingList','share.user')->whereHas('share', function($query){
-		//     $query->where('shareDeleteStatus', 0)
-		// 	->orderBy('dateCreated', 'desc');
-		// })->get();
-		$data = share::with('post', 'post.offer_post', 'post.request_post', 'post.user', 'post.request_post.shoppingList', 'user')->where('shareDeleteStatus', '=', 0)->orderBy('dateCreated', 'desc')->get();
+		$data = share::with('post', 'post.offer_post', 'post.user', 'user')->where('shareDeleteStatus', '=', 0)->orderBy('dateCreated', 'desc')->get();
 
+		for ($i = 0; $i < $data->count(); $i++) {
+			if ($data[$i]->post->postIdentity === 'request_post'){
+				if(is_string($data[$i]->post->request_post->shoppingListContent)){
+					$array = json_decode($data[$i]->post->request_post->shoppingListContent,true);
+					$data[$i]->post->request_post->shoppingListContent = $array;
+				}
+			}
+		}
 		return response()->json($data);
 	}
 
@@ -462,8 +470,8 @@ class PostController extends Controller
 				$post->request_post->shoppingPlace = $request->shoppingPlace;
 				$post->request_post->deliverySchedule = $request->deliverySchedule;
 				$post->request_post->paymentMethod = $request->paymentMethod;
-				$post->request_post->shoppingListTitle = $request->shoppingListTitle;
-				$post->request_post->shoppingListContent = $request->shoppingListContent;
+				$post->request_post->shoppingListTitle = $request->shoppingList['shoppingListName'];
+				$post->request_post->shoppingListContent = $request->shoppingList['items'];
 				$post->request_post->caption = $request->caption;
 
 				//check if shopping place already exist in tbl_shoppingPlace
@@ -475,8 +483,8 @@ class PostController extends Controller
 						'shoppingPlaceNumber' => '112' . str_pad(DB::table('tbl_shoppingPlace')->count() + 1, 6, '0', STR_PAD_LEFT),
 					]);
 				}
-				$post->shoppingList->shoppingListContent = $request->shoppingList;
-				
+				// $post->shoppingList->shoppingListContent = $request->shoppingList;
+
 				DB::transaction(function () use ($post) {
 					$post->save();
 					$post->request_post->save();
@@ -520,8 +528,8 @@ class PostController extends Controller
 
 		$post = Post::where('postNumber', '=', $request->postNumber)->where('email', '=',  Auth::user()->email)->firstOrFail();
 
-		$transactionPost = transaction::with('Post')->where('transactionStatus','=', 'pending')->where('postNumber', $request->postNumber)->where('transactionReceiver', Auth::user()->email)->get();
-		
+		$transactionPost = transaction::with('Post')->where('transactionStatus', '=', 'pending')->where('postNumber', $request->postNumber)->where('transactionReceiver', Auth::user()->email)->get();
+
 		// return $transactionPost;
 		$post->postStatus = $request->status;
 
@@ -530,15 +538,15 @@ class PostController extends Controller
 			if (!empty($transactionPost)) {
 				//get the user with an existing pending transactions with this post to notify them aboutthe changing of post status
 				foreach ($transactionPost as $transaction) {
-					if($request->status === "Cancelled"){
+					if ($request->status === "Cancelled") {
 						$transaction->transactionStatus = "Cancelled";
-					}else{
+					} else {
 						$transaction->transactionStatus = "Declined";
 					}
 					$transaction->save();
 					$userToNotif = User::where('email', $transaction->emailCustomerShopper)->get();
 					$userToNotif = User::find($userToNotif[0]->indexUserAuthentication);
-					$userToNotif->notify(new postStatusNotification($request->status,$request->postNumber));
+					$userToNotif->notify(new postStatusNotification($request->status, $request->postNumber));
 				}
 			}
 			return response()->json(["message" => "Successfully changed an order status"], 201);

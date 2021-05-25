@@ -85,7 +85,6 @@ class RegisterController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'houseNumber' => ['required'],
             'province' => ['required'],
             'barangay' => ['required'],
             'cityMunicipality' => ['required'],
@@ -112,6 +111,15 @@ class RegisterController extends Controller
     {
         # code...
 
+        
+        $validator = Validator::make($request->all(),[
+            'front_image' => 'image|max:25000',
+            'back_image' => 'image|max:25000'
+        ]);
+        if($validator->fails()) {
+            return response()->json($validator->errors(),422);
+        }
+
         $userInfo = new userInformation();
         $userInfo->email = $request->email;
         $userInfo->firstName = $request->firstName;
@@ -136,13 +144,6 @@ class RegisterController extends Controller
                     $user = new userid;
                     if (($request->file('front_image') != NULL) && ($request->file('back_image') != NULL)) {
 
-                        $validator = Validator::make($request->all(),[
-                            'front_image' => 'required|image|size:25000'
-                            'back_image' => 'required|image|size:25000'
-                        ]);
-                        if($validator->fails()) {
-                            return response()->json($validator->errors(),422);
-                        }
                         $user->email = $request->email;
                         $image = $request->file('front_image');
                         $file_name = $request->file('front_image')->hashName();

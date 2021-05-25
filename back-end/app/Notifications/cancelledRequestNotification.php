@@ -20,10 +20,14 @@ class cancelledRequestNotification extends Notification
      * @return void
      */
     public $postNumber;
-    public function __construct($postNumber)
+    public $postIdentity;
+
+    public function __construct($postNumber,$postIdentity)
     {
         //
         $this->postNumber = $postNumber;
+        $this->postIdentity = $postIdentity;
+
     }
 
     /**
@@ -51,6 +55,8 @@ class cancelledRequestNotification extends Notification
             'canceller' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
             'cancellerPic' =>  $user[0]->profilePicture,
+            'postIdentity' =>   $this->postIdentity,
+
         ];
     }
 
@@ -61,6 +67,8 @@ class cancelledRequestNotification extends Notification
             'canceller' => $user[0]->firstName.' '.$user[0]->lastName,
             'postNumber' => $this->postNumber,
             'cancellerPic' => $user[0]->profilePicture,
+            'postIdentity' =>   $this->postIdentity,
+
 
         ]);
     }

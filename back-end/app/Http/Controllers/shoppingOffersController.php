@@ -30,8 +30,7 @@ class shoppingOffersController extends Controller
             'deliverySchedule' => ['required'],
             'transportMode' => ['required'],
             'capacity' => ['required'],
-            'paymentMethod' => ['required'],
-            'caption' => ['required']
+            'paymentMethod' => ['required']
        ]);
 
         $record = shoppingOffers::where('indexShoppingOfferPost',$request->indexShoppingOfferPost)->first();
@@ -63,17 +62,6 @@ class shoppingOffersController extends Controller
 			]);
 		}
         $record->save();
-        // return $record;
-        // if($record->save()){
-        //     return response()->json(['message'=>'Success, Information saved'],200);
-        // }
-        // else{
-        //     return response()->json(['error'=>'An error occured'],422);
-        // }
     }
-
-    // function update(){
-    //     return shoppingOffers::update('update tbl_shoppingOfferPost set deliveryArea = 100 where indexShoppingOfferPost  = 3');
-    // }
         
 }

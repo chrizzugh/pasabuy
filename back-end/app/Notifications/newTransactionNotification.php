@@ -48,7 +48,7 @@ class newTransactionNotification extends Notification
     {
         $user = userInformation::where('email',Auth::user()->email)->get();
         return [
-            'sender' => $user[0]->firstName.' '.$user[0]->lastName,
+            'sender' => $user[0]->email,
             'postNumber' => $this->postNumber
 
         ];
@@ -58,7 +58,7 @@ class newTransactionNotification extends Notification
     {
         $user = userInformation::where('email',Auth::user()->email)->get();
         return new BroadcastMessage([
-            'sender' => $user[0]->firstName.' '.$user[0]->lastName,
+            'sender' => $user[0]->email,
             'postNumber' => $this->postNumber
         ]);
     }

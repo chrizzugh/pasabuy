@@ -2,7 +2,7 @@
 
     <div class="flex items-center ">
       <router-link to="/">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-20 h-16 block">
+        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16  block">
       </router-link>
         <h1 class="absolute text-xl font-black tracking-widest  left-16 font-raleway
           text-red-buttons block
@@ -20,7 +20,7 @@
             <p class="pb-10 text-base font-bold text-gray-700 ">
                 For your security, Pasabuy wants to make sure  it's really you. Kindly check the inbox of your email. We sent a 6-digit verification code
             </p>
-        
+            <p class="text-center text-red-500">{{errors}}</p>
             <div action="#" class="space-y-3">
               <div class="">
                     <input name="" type="text" required class="relative block w-full px-3 py-2 mb-6 text-base font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10" placeholder="Code" v-model="textCode" />
@@ -69,12 +69,13 @@
 
 <script>
 import api from "../api"
-import simpleAlert from "vue-simple-alert"
+// import simpleAlert from "vue-simple-alert"
 export default {
     data(){
         return{
            code: localStorage.getItem("code"),
-           textCode: null
+           textCode: null,
+           errors:null
         }
     }, 
     methods:{
@@ -86,7 +87,7 @@ export default {
                 this.$router.push({name:"address"});
               }
             }).catch((errors)=>{
-              simpleAlert.alert(errors.response.data.error,"Error","warning")
+              this.errors = errors.response.data.error
             })
         }
     },

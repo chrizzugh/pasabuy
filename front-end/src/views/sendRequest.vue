@@ -443,17 +443,22 @@ export default {
       }
     },
     toEncryptData(){
-      var stringList = JSON.stringify(this.shoppingLists.filter((x)=>{return x.shoppingListNumber === this.selectedListNumber}))
-      stringList = stringList.replace('[', ' ')
-      stringList = stringList.replace(']', ' ')
-      
+      var stringList = []
+      stringList = this.shoppingLists.filter((x)=>{return x.shoppingListNumber === this.selectedListNumber})
+      if(stringList.length >0){
+        stringList = stringList[0].shoppingListContent
+      }
+      // stringList = stringList.replace('[', ' ')
+      // stringList = stringList.replace(']', ' ')
+
+      // console.log('string list',stringList)
       return btoa(JSON.stringify({
         deliveryAddress:this.deliveryAddress,
         shoppingPlace:this.shoppingPlace,
         paymentMethod:this.payment,
         message:this.message,
         deliverySchedule:this.sched,
-        shopping_list: stringList,
+        shoppingListContent: stringList,
         param: 'this_is_a_parameter_post_message',
       }))
       // console.log('this is the requested data',this.requestData)

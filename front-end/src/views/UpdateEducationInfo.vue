@@ -77,19 +77,27 @@
 </template>
 
 <script>
-
+import store from "../store/index"
+import api from "../api"
 export default {
 
     data(){
       return{
-          schoolStudiedAt: 'Bicol University',
+          schoolStudiedAt: 'Bicol Universityasa',
           schoolWentTo: 'Banquerohan National High School',
+          schoolName: 'Banquerohan National High School',
+
       }
     },
     methods: {
         close(){
             this.$emit('closeEditEducationModal')
         },
+  },
+  computed:{
+    userEduc(){
+      return store.getters.getAuthEducation;
+    }
   }
 }
 </script>

@@ -1,0 +1,1010 @@
+<template> 
+    <!--post comment-->
+   <div class="flex flex-col bg-gray-100 pt-6 font-nunito h-scrren ssm:h-auto pb-6 ssm:pb-6 vs:h-auto vs:pb-6 sm:pb-6 w-full min-w-0 px-2">
+   <!--Modal-->
+   <PostModal v-if="postModalVisible" @closeModal="listener"/>
+   <!--end--> 
+   <div class="flex items-center justify-center">
+    <div class="inline-flex space-x-4 ssm:space-x-2 items-center vs:w-full sm:w-full ssm:w-full ssm:p-2 justify-center vs:p-4 p-6 bg-white shadow rounded-xl">
+        <img class="w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10 rounded-full" src="img/yami.jpg"/>
+        <button @click="togglePostModal" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500 py-5 pl-6 bg-gray-100 rounded-full vs:h-12 ssm:h-10 h-14 w-448 vs:w-full ssm:w-full">
+        Post a shopping offer</button>
+    </div>
+  </div>
+  <!--end-->
+
+  <!--user post-->
+  <div id="shopOffer-UserPost" class="flex items-center justify-center pt-6">
+    <div class="space-x-4 h-auto p-6 vs:p-4 ssm:p-2 ssm:w-full vs:w-full sm:w-full w-608 bg-white shadow rounded-xl">
+      <div class="flex flex-col items-start justify-start">
+
+        <!--section 1-->
+        <div class="flex flex-grow flex-wrap flex-row w-full justify-between">
+          <div class="inline-flex">
+            <img class="w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10 rounded-full" src="img/yami.jpg"/>
+            <div class="flex flex-col items-start w-full vs:px-1 se:px-2 ssm:px-2 px-4">
+              <div class="space-x-4 ssm:space-x-0 se:flex-col se:space-x-0 ssm:flex-col vs:space-x-1 sm:space-x-2 flex flex-row mt-1">
+                <p class="ssm:text-xs vs:text-xs lvs:text-sm text-base font-bold leading-none text-gray-900">{{user_info.firstname}} {{user_info.lastname}}
+                  <span class="text-blue-900 align-middle material-icons md-18 ">
+                  verified
+                </span>
+                </p>
+                <p class="ssm:text-xs vs:text-xs lvs:text-sm text-base leading-none text-gray-500">posted a shopping offer</p>
+              </div>
+              <div class="vs:flex vs:w-full ssm:w-full ssm:flex vs:pb-2">
+                <span class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-500">{{datePosted}}</span>
+              </div>
+            </div>
+          </div>
+          <div id="3dotmenu" class="vs:mt-1">
+            <button @click="EditModal" class="focus:outline-none">
+              <img class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto" src="img/3dot.svg"/>
+            </button>
+           <div class="flex w-full">
+            <div v-if="edit1" class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-56 md:right-24 xl:right-91 h-min w-30">
+             <EditShoppingOfferPostVue v-if="postModalVisible1" @closeModal1="listener1"/>
+              <button  @click="togglePostModal1" class="flex flex-row gap-x-2 text-base focus:outline-none">
+               <span class="font-medium text-gray-500 material-icons">
+                mode
+               </span>
+                Edit Post
+              </button>
+             <UpdateOfferStatus v-if="postModalVisible2" @closeModal2="listener2"/>
+              <button  @click="togglePostModal2" class="flex flex-row font-normal text-base focus:outline-none gap-x-2">
+               <span class="font-normal text-gray-500 material-icons">
+                autorenew
+               </span>
+                Update Status
+              </button>
+              <button class="flex flex-row gap-x-2 text-base"> 
+                <span class="text-gray-500 material-icons">delete</span>Delete</button>
+              </div>
+              </div>
+          </div>
+        </div>
+        <!--end-->
+
+        <!--section 2-->
+        <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full">
+          <span class="rounded-full material-icons text-red-600">
+              remove_circle_outline
+              </span>
+          <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600">
+              {{delivery_info.status}}</p>
+        </div>
+        <!--end-->
+
+        <!--section 3-->
+        <div class="flex ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start items-center justify-start mt-4 w-full space-x-4 vs:space-x-0">
+          <div class="flex-col items-start w-full">
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              delivery_dining  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.delivery_area}}</p>
+            </div>
+            <div class=" flex space-x-2 py-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              alarm  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.schedule}}</p>
+            </div>
+            <div class=" flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              shopping_bag  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.capacity}}</p>
+            </div>
+          </div>
+          <div class="flex-col w-full ssm:py-2 vs:py-3">
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              shopping_cart  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.shopping_place}}</p>
+            </div>
+            <div class="flex space-x-2 py-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              directions_car  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.public_transit}}</p>
+            </div>
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              payments  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.payment_method}}</p>
+            </div>
+          </div>
+        </div>
+        <!--end-->
+
+        <!--section 4-->
+        <div class="flex flex-grow-0 mt-4 ssm:mt-2 vs:mt-2 w-full items-start justify-start p-4 bg-gray-100 rounded-xl">
+          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-gray-900 h-auto w-full vs:min-w-0 vs:px-2">{{delivery_info.comment}}</p>
+        </div>
+        <!--section 4-->
+
+        <!--section 5-->
+        <div class="flex justify-evenly w-full vs:space-x-3 vs:min-w-0 vs:px-2 ssm:space-x-1 ssm:px-0 pr-8 ssm:pr-0 vs:pr-0 mt-4 space-x-6">
+          <SendRequest v-if="postSendModal" @closeSendRequest="listener3"/>
+          <button @click="toggleSendModal" class="flex focus:outline-none items-center space-x-2 ssm:space-x-1">
+            <span class="pr-2 ssm:pr-0 material-icons md-24 ">
+            send
+            </span>
+            <p class="text-base ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-gray-600">Send Request</p>
+          </button>
+          <router-link to="/messages">
+          <button class="flex focus:outline-none items-center space-x-2 ssm:space-x-1">
+           <span class="pr-2 ssm:pr-0 material-icons md-24 ">
+           forum
+           </span>
+            <p class="text-base ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-gray-600">Chat</p>
+          </button>
+          </router-link>
+          <div>
+          <button @click="closeOpen" class="flex focus:outline-none items-center space-x-2 ssm:space-x-1">
+           <span class="pr-2 ssm:pr-0 material-icons md-24 ">
+           share
+           </span>
+            <p class="text-base ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-gray-500">Share</p>
+          </button>
+          <div class="flex w-full">
+            <div  v-if="share" class="target absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-56 md:right-24 xl:right-91 h-min w-30">
+              <button @click="showShareModal" class="flex flex-row gap-x-2 text-base focus:outline-none">
+               <span class="font-medium text-gray-500 material-icons">
+                share
+               </span>
+                Share on Feed
+              </button>
+              <button class="flex py-2 flex-row font-normal text-base focus:outline-none gap-x-2">
+               <span class="font-normal text-gray-500 material-icons">
+                link
+               </span>
+                Copy link to this post
+              </button>
+              </div>
+              </div>
+          </div>
+        </div>
+        <!--end-->
+    <!--    
+    -->
+      </div>
+    </div>
+  </div>
+  <!--end of user post-->
+
+  <!--user post-->
+  <div id="shopOffer-UserPost" class="flex items-center justify-center pt-6">
+    <div class="space-x-4 h-auto p-6 vs:p-4 ssm:p-2 ssm:w-full vs:w-full sm:w-full w-608 bg-white shadow rounded-xl">
+      <div class="flex flex-col items-start justify-start">
+
+        <!--section 1-->
+        <div class="flex flex-grow flex-wrap flex-row w-full justify-between">
+          <div class="inline-flex">
+            <img class="w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10 rounded-full" src="img/yami.jpg"/>
+            <div class="flex flex-col items-start w-full vs:px-1 se:px-2 ssm:px-2 px-4">
+              <div class="space-x-4 ssm:space-x-0 se:flex-col se:space-x-0 ssm:flex-col vs:space-x-1 sm:space-x-2 flex flex-row mt-1">
+                <p class="ssm:text-xs vs:text-xs lvs:text-sm text-base font-bold leading-none text-gray-900">{{user_info.firstname}} {{user_info.lastname}}
+                  <span class="text-blue-900 align-middle material-icons md-18 ">
+                  verified
+                </span>
+                </p>
+                <p class="ssm:text-xs vs:text-xs lvs:text-sm text-base leading-none text-gray-500">posted a shopping offer</p>
+              </div>
+              <div class="vs:flex vs:w-full ssm:w-full ssm:flex vs:pb-2">
+                <span class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-500">{{datePosted}}</span>
+              </div>
+            </div>
+          </div>
+          <div id="3dotmenu" class="vs:mt-1">
+            <button @click="EditModal" class="focus:outline-none">
+              <img class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto" src="img/3dot.svg"/>
+            </button>
+           <div class="flex w-full">
+            <div v-if="edit1" class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-56 md:right-24 xl:right-91 h-min w-30">
+             <EditShoppingOfferPostVue v-if="postModalVisible1" @closeModal1="listener1"/>
+              <button  @click="togglePostModal1" class="flex flex-row gap-x-2 text-base focus:outline-none">
+               <span class="font-medium text-gray-500 material-icons">
+                mode
+               </span>
+                Edit Post
+              </button>
+             <UpdateOfferStatus v-if="postModalVisible2" @closeModal2="listener2"/>
+              <button  @click="togglePostModal2" class="flex flex-row font-normal text-base focus:outline-none gap-x-2">
+               <span class="font-normal text-gray-500 material-icons">
+                autorenew
+               </span>
+                Update Status
+              </button>
+              <button class="flex flex-row gap-x-2 text-base"> 
+                <span class="text-gray-500 material-icons">delete</span>Delete</button>
+              </div>
+              </div>
+          </div>
+        </div>
+        <!--end-->
+
+        <!--section 2-->
+        <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full">
+          <span class="rounded-full material-icons text-blue-600">
+              check_circle_outline
+              </span>
+          <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-blue-600">
+              {{delivery_info.status1}}</p>
+        </div>
+        <!--end-->
+
+        <!--section 3-->
+        <div class="flex ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start items-center justify-start mt-4 w-full space-x-4 vs:space-x-0">
+          <div class="flex-col items-start w-full">
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              delivery_dining  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.delivery_area}}</p>
+            </div>
+            <div class=" flex space-x-2 py-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              alarm  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.schedule}}</p>
+            </div>
+            <div class=" flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              shopping_bag  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.capacity}}</p>
+            </div>
+          </div>
+          <div class="flex-col w-full ssm:py-2 vs:py-3">
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              shopping_cart  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.shopping_place}}</p>
+            </div>
+            <div class="flex space-x-2 py-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              directions_car  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.public_transit}}</p>
+            </div>
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              payments  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.payment_method}}</p>
+            </div>
+          </div>
+        </div>
+        <!--end-->
+
+        <!--section 4-->
+        <div class="flex flex-grow-0 mt-4 ssm:mt-2 vs:mt-2 w-full items-start justify-start p-4 bg-gray-100 rounded-xl">
+          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-gray-900 h-auto w-full vs:min-w-0 vs:px-2">{{delivery_info.comment}}</p>
+        </div>
+        <!--section 4-->
+
+        <!--section 5: Request Received-->
+        <div class="flex flex-col justify-start items-start w-full space-y-2.5 mt-4">
+          <hr class="w-full">
+          <div class="inline-flex justify-start items-center flex-row space-x-4">
+            <p class="text-base font-bold leading-none text-gray-900">Requests Received</p>
+            <div class="inline-flex px-2 py-1 bg-red-700 rounded-full">
+              <p class="text-base font-bold leading-none text-white">{{maxRequestReceived}}</p>
+            </div>
+          </div>
+          <div class="flex-auto flex-col w-full vs:px-0 px-2 space-y-3.5 pb-2 pt-2">
+            <div v-for="Request in computedRequestReceived" :key="Request" class="flex flex-row justify-between">
+              <div class="flex flex-row vs:space-x-1 space-x-2 items-center">
+              <img class="w-10 h-10 vs:w-8 vs:h-8 rounded-full" :src="Request.img"/>
+              <div class="flex flex-col space-y-1">
+                <div class="flex flex-row vs:space-x-1 space-x-2">
+                  <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">{{Request.userName}}</p>
+                  <span class="text-blue-900 align-middle material-icons md-14 ">
+                  verified
+                </span>
+                </div>
+                <p class="text-sm vs:text-xs ssm:text-xs leading-none text-gray-500">{{Request.time}}</p>
+              </div>
+              </div>
+              <div class="flex flex-row items-center vs:space-x-1 space-x-2">
+                <button @click="toggleViewDetails" class="focus:outline-none inline-flex items-start justify-start vs:px-2 vs:py-1 px-3 py-2 bg-red-700 rounded-full">
+                <p class="text-sm vs:text-xs ssm:text-xs font-bold leading-none text-white">View Details</p>
+                </button>
+                <div>
+                <button @click="Request.messageUser = !Request.messageUser" class="focus:outline-none mt-1.5">
+                <span class="material-icons vs:text-xs">
+                  more_vert
+                </span>
+                </button>
+                <div class="relative w-full">
+              <div v-if="Request.messageUser" class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
+              <button class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+               <span class=" material-icons text-base  text-gray-900 ">
+                forum
+               </span>
+                Chat
+              </button>
+              </div>
+              </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-row w-full justify-between items-center">
+              <button @click="viewMoreviewLess" v-if="!isFew2" class="focus:outline-none inline-flex text-base font-bold leading-none text-gray-500">{{viewMoreStatus}}</button>
+              <p class="inline-flex text-base font-bold leading-none text-gray-500">{{limitRequestDisplay2}} of {{maxRequestReceived}}</p>
+          </div>
+        </div>
+        <!--end-->
+      </div>
+    </div>
+  </div>
+  <!--end of user post-->
+
+  <!--user post-->
+  <div id="shopOffer-UserPost" class="flex items-center justify-center pt-6">
+    <div class="space-x-4 h-auto p-6 vs:p-4 ssm:p-2 ssm:w-full vs:w-full sm:w-full w-608 bg-white shadow rounded-xl">
+      <div class="flex flex-col items-start justify-start">
+
+        <!--section 1-->
+        <div class="flex flex-grow flex-wrap flex-row w-full justify-between">
+          <div class="inline-flex">
+            <img class="w-14 h-14 vs:w-10 vs:h-10 ssm:w-10 ssm:h-10 rounded-full" src="img/yami.jpg"/>
+            <div class="flex flex-col items-start w-full vs:px-1 se:px-2 ssm:px-2 px-4">
+              <div class="space-x-4 ssm:space-x-0 se:flex-col se:space-x-0 ssm:flex-col vs:space-x-1 sm:space-x-2 flex flex-row mt-1">
+                <p class="ssm:text-xs vs:text-xs lvs:text-sm text-base font-bold leading-none text-gray-900">{{user_info.firstname}} {{user_info.lastname}}
+                  <span class="text-blue-900 align-middle material-icons md-18 ">
+                  verified
+                </span>
+                </p>
+                <p class="ssm:text-xs vs:text-xs lvs:text-sm text-base leading-none text-gray-500">posted a shopping offer</p>
+              </div>
+              <div class="vs:flex vs:w-full ssm:w-full ssm:flex vs:pb-2">
+                <span class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-500">{{datePosted}}</span>
+              </div>
+            </div>
+          </div>
+          <div id="3dotmenu" class="vs:mt-1">
+            <button @click="EditModal" class="focus:outline-none">
+              <img class="w-6 vs:w-4 lvs:w-5 ssm:w-4 h-auto" src="img/3dot.svg"/>
+            </button>
+           <div class="flex w-full">
+            <div v-if="edit1" class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-56 md:right-24 xl:right-91 h-min w-30">
+             <EditShoppingOfferPostVue v-if="postModalVisible1" @closeModal1="listener1"/>
+              <button  @click="togglePostModal1" class="flex flex-row gap-x-2 text-base focus:outline-none">
+               <span class="font-medium text-gray-500 material-icons">
+                mode
+               </span>
+                Edit Post
+              </button>
+             <UpdateOfferStatus v-if="postModalVisible2" @closeModal2="listener2"/>
+              <button  @click="togglePostModal2" class="flex flex-row font-normal text-base focus:outline-none gap-x-2">
+               <span class="font-normal text-gray-500 material-icons">
+                autorenew
+               </span>
+                Update Status
+              </button>
+              <button class="flex flex-row gap-x-2 text-base"> 
+                <span class="text-gray-500 material-icons">delete</span>Delete</button>
+              </div>
+              </div>
+          </div>
+        </div>
+        <!--end-->
+
+        <!--section 2-->
+        <div class="inline-flex mt-4 items-center space-x-2 justify-start  px-2 py-1 bg-gray-100 rounded-full">
+          <span class="rounded-full material-icons text-red-600">
+              remove_circle_outline
+              </span>
+          <p class="text-sm vs:text-xs ssm:text-xs lvs:text-sm font-bold leading-none items-center text-red-600">
+              {{delivery_info.status}}</p>
+        </div>
+        <!--end-->
+
+        <!--section 3-->
+        <div class="flex ssm:flex-col ssm:items-start ssm:space-x-0 vs:flex-col vs:items-start items-center justify-start mt-4 w-full space-x-4 vs:space-x-0">
+          <div class="flex-col items-start w-full">
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              delivery_dining  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.delivery_area}}</p>
+            </div>
+            <div class=" flex space-x-2 py-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              alarm  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.schedule}}</p>
+            </div>
+            <div class=" flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              shopping_bag  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.capacity}}</p>
+            </div>
+          </div>
+          <div class="flex-col w-full ssm:py-2 vs:py-3">
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              shopping_cart  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.shopping_place}}</p>
+            </div>
+            <div class="flex space-x-2 py-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              directions_car  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.public_transit}}</p>
+            </div>
+            <div class="flex space-x-2">
+              <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+              payments  
+              </span>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{delivery_info.payment_method}}</p>
+            </div>
+          </div>
+        </div>
+        <!--end-->
+
+        <!--section 4-->
+        <div class="flex flex-grow-0 mt-4 ssm:mt-2 vs:mt-2 w-full items-start justify-start p-4 bg-gray-100 rounded-xl">
+          <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-loose text-gray-900 h-auto w-full vs:min-w-0 vs:px-2">{{delivery_info.comment}}</p>
+        </div>
+        <!--section 4-->
+        
+      </div>
+    </div>
+  </div>
+  <!--end of user post-->
+
+
+  <!--Share Modal-->
+    <div @click.self="hideShareModal" id="modal-background" class="bg-opacity-25 z-50">
+<div id="modal-content" class="flex-col w-608 space-y-4 px-2 bg-white h-auto rounded-lg">
+      <div id="modal-header" class="flex flex-row pt-4 space-x-4 px-2 justify-between items-center">
+        <button @click="$router.push('edit-profile')" class="focus:outline-none flex items-center space-x-4">
+          <img class="w-12 h-12 rounded-full" src="img/asta.jpeg"/>
+        <p class="text-base font-bold leading-none text-gray-900">Asta Staria</p>
+        </button>
+      <button @click="hideShareModal" class="focus:outline-none flex items-center">
+        <span class="text-gray-500 material-icons allign-middle" style="font-size: 36px">
+        cancel
+        </span>
+      </button>
+      </div>
+     <div id="fkmouse" class="modal-body cursor-not-allowed"></div>
+     <div id="modal-footer" class="flex px-2  pb-4 items-center justify-center ssm:px-2 vs:px-2">
+        <button class="focus:outline-none inline-flex items-center justify-center px-4 py-2 bg-red-700 rounded-full w-full ssm:h-8 ssm:w-full vs:w-full">
+          <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-normal text-center text-white">Share Post</p>
+      </button>
+      </div>
+</div>
+</div>
+<!--end-->
+
+</div>
+
+<!--Accept User Request Modal-->
+<div v-if="viewDetails" class="z-50 fixed bg-black bg-opacity-25 inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="hideMe1 inline-flex flex-col bg-white shadow rounded-xl h-auto w-97 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Request from Asta</p>
+    <button @click="toggleViewDetails" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full flex-row items-center space-x-4">
+     <img src="img/asta.jpeg" class="rounded-full w-10 h-10">
+     <div class="flex flex-col">
+       <div class="flex-row flex space-x-1 items-center">
+        <p class="text-base font-bold leading-none text-gray-900">Asta Staria</p>
+         <span class="text-blue-900 align-middle material-icons text-base">
+          verified
+         </span>
+       </div>
+      <p class="text-sm leading-none text-gray-500">5 minutes ago</p> 
+     </div>
+   </div>
+   <div class="flex flex-col w-full">
+     <div class="flex space-x-2">
+       <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+        location_on  
+       </span>
+       <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{request_info.delivery_area}}</p>
+     </div>
+     <div class=" flex space-x-2 py-2">
+      <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+       alarm  
+       </span>
+       <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{request_info.schedule}}</p>
+      </div>
+     <div class="flex space-x-2">
+      <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+       shopping_cart  
+      </span>
+       <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{request_info.shopping_place}}</p>
+      </div>
+     <div class="flex space-x-2 py-2">
+      <span class=" w-6 h-6 rounded-full material-icons text-red-600">
+      payments  
+      </span>
+      <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1">{{request_info.payment_method}}</p>
+     </div>
+   </div>
+      <div class="flex flex-col  ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl">
+      <div class="inline-flex flex-row space-x-4">
+        <span class="text-base ssm:text-sm leading-none text-gray-900">Shopping List</span>
+        <span class="text-base ssm:text-sm leading-none text-gray-500">{{countItems}} items</span>
+       </div>
+       <div id="scroll1" class="inline-flex overflow-y-auto h-28.5 flex-col ssm:px-0 w-full vs:px-0 space-y-2 py-4 px-4">    
+       <li v-for="shoppingItems in computedShopItemList" :key="shoppingItems" class="text-sm leading-none text-gray-900">
+       {{shoppingItems.item}} ({{shoppingItems.amount}}) · {{shoppingItems.brand}} [{{shoppingItems.unit}}]
+       </li>
+       </div>
+      <button @click="showMoreshowLess" v-if="!isFew" class="focus:outline-none items-start justify-start text-sm text-gray-500">{{showListStatus}}</button>
+     </div>
+    <div class="inline-flex  items-start ssm:px-2 justify-start mt-3 rounded-xl h-auto bg-white w-full">
+     <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal w-auto text-gray-900">{{request_info.comment}}</p>
+    </div>
+   <div class="justify-between flex flex-row vs:space-x-2 ssm:space-x-2 sm:space-x-2 w-full">
+    <button @click="declineDisRequest" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Decline</p>
+    </button>
+    <button @click="acceptDisRequest" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Accept</p>
+    </button>
+  </div>
+ </div>
+</div>
+<!--end-->
+
+<!--Accept User Request Button Modal-->
+<transition name="fadeSlide">
+<div v-if="acceptRequest" class="z-50 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Accept Asta's Request</p>
+    <button @click="acceptDisRequest1" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full">
+    <p class="block items-start leading-normal text-base text-gray-900">Are you sure you want to accept Asta's request?</p>
+   </div>
+  <div class="justify-between flex flex-row space-x-2 w-full">
+    <button @click="acceptDisRequest1" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
+    </button>
+    <button  @click="confirmAcceptDisRequest1" class="focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Confirm</p>
+    </button>
+  </div>
+ </div>
+</div>
+</transition>
+<!--end-->
+
+<!--Decline User Request Button Modal-->
+<transition name="fadeSlide">
+<div v-if="declineRequest" class="z-50 fixed inset-0 flex justify-center items-center ssm:px-2 vs:px-2">
+ <div class="inline-flex flex-col bg-white shadow rounded-xl h-auto w-95 space-y-4 p-4 ssm:w-full vs:w-full" >
+  <div class="flex justify-between items-center flex-row">
+    <button class="invisible focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+    <p class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900">Decline Asta's Request</p>
+    <button @click="declineDisRequest1" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Close</button>
+  </div>
+  <hr class="w-full">
+   <div class="flex w-full">
+    <p class="block items-start leading-normal text-base text-gray-900">Are you sure you want to decline Asta's request? You can not undo this.</p>
+   </div>
+  <div class="justify-between flex flex-row space-x-2 w-full">
+    <button @click="declineDisRequest1" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 border-2 rounded-full border-red-700">
+    <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
+    </button>
+    <button @click="confirmDeclineDisRequest1" class=" focus:outline-none inline-flex items-center justify-center w-52 px-3 py-1 bg-red-700 rounded-full">
+    <p class="text-base font-bold leading-normal text-center text-white">Confirm</p>
+    </button>
+  </div>
+ </div>
+</div>
+</transition>
+<!--end-->
+
+<!--Accept PopUp Notification-->
+  <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
+  <div v-if="acceptReqNotiPop" class="acceptRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto" role="alert">
+    <div class="flex w-full flex-row justify-between items-center">
+      <div class="flex flex-row w-full space-x-2">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       check_circle 
+       </span>
+       <p class="text-base leading-normal text-white">Successfully Accepted Asta's Request</p>
+      </div>
+      <button @click="closeAcceptRequestNotiPop" class="focus:outline-none flex">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       cancel
+       </span>
+      </button>
+    </div>
+    </div>
+  </div>
+<!--end-->
+
+  <!--Decline PopUp Notification-->
+  <div class="z-100 fixed inset-x-0 bottom-2 flex justify-center items-center">
+  <div v-if="declineReqNotiPop" class="declineRequestNotiPop bg-gray-900 text-white px-4 py-2 rounded-xl w-95 h-auto" role="alert">
+    <div class="flex w-full flex-row justify-between items-center">
+      <div class="flex flex-row w-full space-x-2">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       check_circle 
+       </span>
+       <p class="text-base leading-normal text-white">Successfully Declined Asta's Request</p>
+      </div>
+      <button @click="closeDeclineRequestNotiPop" class="focus:outline-none flex">
+        <span class=" w-6 h-6 rounded-full material-icons text-white">
+       cancel
+       </span>
+      </button>
+    </div>
+    </div>
+  </div>
+<!--end-->
+
+</template>
+
+<script>
+import EditShoppingOfferPostVue from './EditShoppingOffer.vue'
+import PostModal from "./PostModal"
+import UpdateOfferStatus from './updateOfferStatus'
+import SendRequest from "./sendRequest"
+import $ from 'jquery'
+//import * as html2canvas from '../assets/js/html2canvas.js'
+export default {
+  data() {
+    return {
+      postModalVisible: false,
+      postModalVisible1: false,
+      postModalVisible2: false,
+      postSendModal: false,
+      postChatModal: false,
+      edit1: false,
+      share: false,
+      shareIt: false,
+      datePosted: '3 hours ago',
+      postStatus: 'posted',
+      countItems: 8,
+      viewDetails: false,
+      acceptRequest: false,
+      declineRequest: false,
+      acceptReqNotiPop: false,
+      declineReqNotiPop: false,
+      user_info:{
+        firstname: 'Yami',
+        lastname: 'Sukehiro'
+      },
+      request_info:{
+        delivery_area: 'Banquerohan Legazpi City',
+        shopping_place: 'SM City Legazpi',
+        schedule: 'Tomorrow at 5:00 PM',
+        payment_method: 'Payment First',
+        comment: 'Hello sis! Pwede pasabuy me? Wes akes time para gumora sa market huhuhu accept my request juseyo!! labyu hehehe',
+      },
+      delivery_info:{
+        delivery_area: 'Delivering to Banquerohan area only',
+        shopping_place: 'Shopping at SM City Legazpi',
+        schedule: 'Tomorrow at 2 PM',
+        public_transit: 'Public Transit',
+        capacity: 'Up to 3 medium bags or 2 large bags',
+        payment_method: 'Payment First',
+        comment: 'Hi! I’ll be  going to SM City Legazpi tomorrow. If there’s anyone who wants to pasabuy their groceries, I am willing to help out. Just send me a request!',
+        status: 'No Longer Accepting Requests',
+        status1: 'Accepting Requests',
+      },
+      RequsetReceived:[
+        {
+          userName: 'Asta Staria',
+          time: '5 minutes ago',
+          img: 'img/asta.jpeg',
+          messageUser: false
+        },
+        {
+          userName: 'Julius Novachrono',
+          time: '5 minutes ago',
+          img: 'img/julius.png',
+          messageUser: false
+        },
+        {
+          userName: 'Baha-bahaha',
+          time: '5 minutes ago',
+          img: 'img/baha.jpg',
+          messageUser: false
+        },
+        {
+          userName: 'Asta Staria',
+          time: '5 minutes ago',
+          img: 'img/asta.jpeg',
+          messageUser: false
+        },
+      ],
+      filter_itemList: [
+        {
+          item: 'flour',
+          amount: '1 kg',
+          brand: 'Any brand',
+          unit: '2 units',
+        },
+        {
+          item: 'flour',
+          amount: '1 kg',
+          brand: 'Any brand',
+          unit: '2 units',
+        },
+        {
+          item: 'flour',
+          amount: '1 kg',
+          brand: 'Any brand',
+          unit: '2 units',
+        },
+        {
+          item: 'flour',
+          amount: '1 kg',
+          brand: 'Any brand',
+          unit: '2 units',
+        },
+        {
+          item: 'flour',
+          amount: '1 kg',
+          brand: 'Any brand',
+          unit: '2 units',
+        },
+        {
+          item: 'flour',
+          amount: '1 kg',
+          brand: 'Any brand',
+          unit: '2 units',
+        },
+        {
+          item: 'flour',
+          amount: '1 kg',
+          brand: 'Any brand',
+          unit: '2 units',
+        },
+        {
+          item: 'flour',
+          amount: '1 kg',
+          brand: 'Any brand',
+          unit: '2 units',
+        },
+        ],
+        limitRequestDisplay: 3,
+        limitRequestDisplay2: 3,
+        defaultLimitRequestDisplay: 3,
+        viewMoreStatus: "View More",
+        viewLessStatus: "View Less",
+        limit_by: 5,
+        default_limit: 5,
+        showListStatus: "See More",
+        showLessStatus: "See Less",
+        isActive: false,
+    }
+  },
+  components: {
+    PostModal,
+    EditShoppingOfferPostVue,
+    UpdateOfferStatus,
+    SendRequest,
+  },
+  computed:{
+  computedShopItemList(){
+    return this.limit_by ? this.filter_itemList.slice(0,this.limit_by) : this.filter_itemList
+  },
+  isFew: ({ filter_itemList }) => filter_itemList.length < 6,
+  computedRequestReceived(){
+    return this.limitRequestDisplay ? this.RequsetReceived.slice(0,this.limitRequestDisplay) : this.RequsetReceived
+  },
+  isFew2: ({ RequsetReceived }) => RequsetReceived.length < 4,
+  maxRequestReceived: ({ RequsetReceived }) => RequsetReceived.length,
+},
+  methods:{
+    acceptDisRequest(){
+      $('.hideMe1').fadeOut()
+      this.acceptRequest = !this.acceptRequest
+    },
+    declineDisRequest(){
+      $('.hideMe1').fadeOut()
+      this.declineRequest = !this.declineRequest
+    },
+    acceptDisRequest1(){
+      this.acceptRequest = !this.acceptRequest
+      $('.hideMe1').fadeIn()
+    },
+    confirmAcceptDisRequest1(){
+      this.acceptRequest = !this.acceptRequest
+      this.viewDetails = !this.viewDetails
+      setTimeout(() => {$('.acceptRequestNotiPop').fadeIn(), this.acceptReqNotiPop = true}, 500);
+
+      setTimeout(function(){
+      this.acceptReqNotiPop=false
+      $('.acceptRequestNotiPop').fadeOut();
+      }, 4000);
+    },
+    closeAcceptRequestNotiPop(){
+      this.acceptReqNotiPop=false
+      $('.acceptRequestNotiPop').fadeOut();
+    },
+     confirmDeclineDisRequest1(){
+      this.declineRequest = !this.declineRequest
+      this.viewDetails = !this.viewDetails
+      setTimeout(() => {$('.declineRequestNotiPop').fadeIn(), this.declineReqNotiPop = true}, 500);
+
+      setTimeout(function(){
+      this.declineReqNotiPop=false
+      $('.declineRequestNotiPop').fadeOut();
+      }, 4000);
+    },
+    closeDeclineRequestNotiPop(){
+      this.declineReqNotiPop=false
+      $('.declineRequestNotiPop').fadeOut();
+    },
+    declineDisRequest1(){
+      this.declineRequest = !this.declineRequest
+      $('.hideMe1').fadeIn()
+    },
+    toggleViewDetails(){
+      this.viewDetails = !this.viewDetails
+    },
+    togglePostModal(){
+      this.postModalVisible = !this.postModalVisible
+    },
+    togglePostModal1(){
+      this.postModalVisible1 = !this.postModalVisible1
+    },
+    togglePostModal2(){
+      this.postModalVisible2 = !this.postModalVisible2
+    },
+    toggleSendModal(){
+      this.postSendModal = !this.postSendModal 
+    },
+    toggleChatModal(){
+      this.postChatModal = !this.postChatModal
+    },
+    listener(){
+      this.postModalVisible = false;
+      this.edit1 = false
+      this.share= false
+    },
+    listener1(){
+      this.postModalVisible1 = false;
+      this.edit1 = false  
+      this.share= false   
+    },
+    listener2(){
+      this.postModalVisible2 = false;
+      this.edit1 = false
+      this.share= false
+    },
+    listener3(){
+      this.postSendModal = false;
+      this.edit1 = false
+      this.share= false
+    },
+
+    closeOpen(){
+      this.share=!this.share
+      this.edit1 = false
+    },
+
+    EditModal(){
+      this.edit1 = !this.edit1
+      this.share= false
+    },
+    
+    showShareModal(){
+      ////without 3 dot menu when share post modal is open
+      var container = $('#shopOffer-UserPost');
+      var clonedContainer = container.clone().css({padding: '0', float: 'none'});
+      clonedContainer.find('#3dotmenu').remove();
+      clonedContainer.appendTo('.modal-body')
+      
+      ////with 3 dot menu when share post modal is open
+      //$('#shopOffer-UserPost').clone().css({padding: '0', float: 'none'}).appendTo('.modal-body');
+      
+      $('#modal-background').css({display: 'flex'});
+      $(".target").hide();
+      this.share = !this.share
+    },
+
+    hideShareModal(){
+      $('#modal-background').css({display: 'none'});
+      $('#modal-background').find('.modal-body').empty();
+    },
+    showMoreshowLess(){
+      this.limit_by = null;
+     if(this.showListStatus != this.showLessStatus){
+        this.showListStatus = this.showLessStatus;
+      }
+      else{
+        this.showListStatus = "See More";
+        this.limit_by = this.default_limit
+      }
+    },
+     viewMoreviewLess(){
+      this.limitRequestDisplay = null;
+     if(this.viewMoreStatus != this.viewLessStatus){
+        this.viewMoreStatus = this.viewLessStatus;
+        this.limitRequestDisplay2 = this.maxRequestReceived
+      }
+      else{
+        this.viewMoreStatus = "View More";
+        this.limitRequestDisplay = this.defaultLimitRequestDisplay
+        this.limitRequestDisplay2 = this.limitRequestDisplay
+      }
+    },
+  }
+}
+</script>
+
+<style scoped>
+#fkmouse{
+  pointer-events: none
+}
+
+#modal-background{
+  display:none;
+  position:fixed;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.3);
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    
+}
+.fadeSlide-enter-from{
+  transform: translateX(100%);
+  transform: translateX(150px);
+  opacity:0
+}
+.fadeSlide-enter-to{
+  transform: translateX(0);
+  opacity:1
+}
+.fadeSlide-enter-active{
+  transition: all .3s ease-in-out;
+}
+
+.fadeSlide-leave-from{
+  transform: translateX(0);
+  opacity:1
+}
+.fadeSlide-leave-to{
+  transform: translateX(100%);
+  transform: translateX(150px);
+  opacity:0
+}
+.fadeSlide-leave-active{
+  transition: all .3s ease-in-out
+}
+#scroll1::-webkit-scrollbar-track
+{
+	
+	border-radius: none;
+	
+}
+#scroll1::-webkit-scrollbar
+{
+	width: 6px;
+	
+}
+#scroll1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: grey;
+}
+</style>

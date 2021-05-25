@@ -47,6 +47,7 @@
 <script>
 import api from "../api"
 import VueSimpleAlert from 'vue-simple-alert'
+import store from '../store/index'
 export default {
 props:['email'],
 data(){
@@ -64,6 +65,7 @@ methods:{
         var params= {code:this.code,email:this.email,typeCode:this.typeCode}
         api.post('api/changeEmail',params).then((res)=>{
             VueSimpleAlert.alert(res.data.message,"Success","success")
+            store.dispatch('getUser')
             localStorage.removeItem('a')
             this.toggle=false
         }).catch((errors)=>{

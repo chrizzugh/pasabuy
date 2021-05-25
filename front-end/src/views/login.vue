@@ -1,11 +1,11 @@
 <template class="">
 <div>
- <loading
+ <!-- <loading
      :show="show"
      :label="label"
      event-show="show-my-full-loading"
      event-hide="hide-my-full-loading">
- </loading>
+ </loading> -->
   <div class="flex items-center">
     <router-link to="/">
       <img src="/img/pasaBUYLogoOnly.png" class="w-20 h-16 block" />
@@ -60,13 +60,20 @@
               </router-link>
             </a>
           </div>
-          <div class="flex justify-center py-5">
+          <div class="flex justify-center py-5" v-if="!logginIn">
             <button
               class="w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none"
             >
               Log in
             </button>
           </div>
+              <!-- --- Loging in loading -->
+                    <div class="flex justify-center py-5" v-if="logginIn">
+                      <button class="relative w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none" disabled>
+                        <img src="/img/loading.gif" class="w-35 h-20 ml-14 absolute" style="margin-top:-7%;" /> <span class="ml-10"> Logging In</span>
+                      </button>
+                    </div>
+                    <!-- --- -->
         </form>
         <div
           class="mt-4 font-normal text-left text-gray-500 text-md text-grey-dark"
@@ -114,11 +121,11 @@
 <script>
 import api from "../api";
 import store from "../store/index";
-import loading from 'vue-full-loading'
+// import loading from 'vue-full-loading'
 export default {
-  components: {
-    loading,
-  },
+  // components: {
+  //   loading,
+  // },
   data() {
     return {
       dataForm: {
@@ -127,12 +134,14 @@ export default {
       },
       errors: null,
       show: false,
-      label: 'Loading...'
+      label: 'Loading...',
+      logginIn:false
     };
   },
   methods: {
     loginUser() {
       this.show = !this.show
+      this.logginIn = true
       api.get("/sanctum/csrf-cookie").then(() => {
         // Login...
         api
@@ -141,6 +150,7 @@ export default {
             this.dispatches().then(() => {
               //wait for the dispatches to finish
               sessionStorage.setItem("isLoggedIn", true);
+              sessionStorage.setItem("sessionCookieNotify", true)
               this.show = !this.show
               this.$router.push({ name: "dashboard" });
             });
@@ -148,6 +158,7 @@ export default {
           .catch((errors) => {
             this.show = !this.show
             this.errors = errors.response.data.errors.invalid.join();
+            this.logginIn = false
           });
       });
       // setTimeout(() => {
@@ -162,7 +173,6 @@ export default {
       await store.dispatch("getPosts");
       await store.dispatch("getUnreadNotifications");
       await store.dispatch("getAllNotifications");
-      await store.dispatch("getUserLang");
       await store.dispatch("getChatRoom");
       await store.dispatch("getUserTransactions");
       await store.dispatch("getUserShippingAddress");
@@ -172,6 +182,9 @@ export default {
       await store.dispatch("getUserShoppingList");
       await store.dispatch("getAllReviews");
       await store.dispatch("getAuthUserFollow",this.dataForm.email);
+      await store.dispatch("getAllUserAbout");
+      await store.dispatch("getAuthEducation");
+
     },
   },
 

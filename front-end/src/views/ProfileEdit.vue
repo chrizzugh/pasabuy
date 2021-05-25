@@ -370,8 +370,8 @@ export default {
 </script>
 <style scoped>
 .active {
-  color: red;
-  border-bottom: solid red 5px;
+  color:red;  
+  border-bottom: solid red 3px;
 }
 .active button {
   color: red;
@@ -381,5 +381,11 @@ export default {
 }
 .followed {
   background-color: rgba(220, 20, 60, 1);
+}
+.followButton{
+  border-color: rgba(220, 20, 60, 1);
+}
+.followed {
+    background-color: rgba(220, 20, 60, 1);  
 }
 </style>
