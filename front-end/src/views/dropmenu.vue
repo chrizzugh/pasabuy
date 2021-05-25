@@ -43,6 +43,7 @@ export default {
         sessionStorage.removeItem("vuex");
         sessionStorage.removeItem("isLoggedIn");
         sessionStorage.removeItem("sessionCookieNotify");
+        sessionStorage.removeItem("Authorization");
         this.$router.push({ name: "Home" });
       });
     },
