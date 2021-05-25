@@ -121,8 +121,9 @@
 }
 </style>
 <script>
-import api from "../api";
+// import api from "../api";
 import store from "../store/index";
+import axios from "axios"
 // import loading from 'vue-full-loading'
 import loading from './loading';
 export default {
@@ -148,25 +149,26 @@ export default {
       this.show = !this.show
       this.logginIn1 = !this.logginIn1
       
-      api.get("/sanctum/csrf-cookie").then(() => {
+      axios.get("http://localhost:8000/sanctum/csrf-cookie",{withCredentials: true}).then(() => {
         // Login...
-        api
-          .post("/api/login", this.dataForm)
+        axios
+          .post("http://localhost:8000/api/login", this.dataForm,{withCredentials: true})
           .then((res) => {
+            sessionStorage.setItem("isLoggedIn", true);
+            sessionStorage.setItem("sessionCookieNotify", true)
+            sessionStorage.setItem("Authorization", res.data.token)
+            console.log('api token in login',sessionStorage.getItem("Authorization"))
             this.logginIn1 = !this.logginIn1
             this.logginIn = true
             this.dispatches().then(() => {
               //wait for the dispatches to finish
-              sessionStorage.setItem("isLoggedIn", true);
-              sessionStorage.setItem("sessionCookieNotify", true)
-              sessionStorage.setItem("Authorization", res.data.token)
               this.show = !this.show
               this.$router.push({ name: "dashboard" });
             });
           })
           .catch((errors) => {
             this.show = !this.show
-            this.errors = errors.response.data.errors.invalid.join();
+            this.errors = errors.response.data.invalid;
             // this.logginIn = false
             this.logginIn1 = !this.logginIn1
           });

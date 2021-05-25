@@ -21,11 +21,11 @@ class loginController extends Controller
             'password' => ['required']
         ]);
        
-        $user = Auth::attempt($request->only('email','password'));
-        $user = User::where('email',$request->email)->first();
+        // $user = Auth::attempt($request->only('email','password'));
+        $user = User::where('email',$request['email'])->first();
 
-        if(!$user || !Hash::check($request->password, $user->password)){
-            return  response()->json(['invalid'=>['The provided credentials are incorrect.']],401);
+        if(!$user || !Hash::check($request['password'], $user->password)){
+            return  response()->json(['invalid'=>'The provided credentials are incorrect.'],422);
         }else{
 
             $token = $user->createToken('myapptoken')->plainTextToken;
@@ -39,7 +39,7 @@ class loginController extends Controller
     public function logout(Request $request)
     {
         # code...
-        Auth::user()->tokens->delete();
+        auth()->tokens()->delete();
         // Auth::logout();
     
         // $request->session()->invalidate();

@@ -146,7 +146,7 @@
                 v-model="PersonalInfo.password_confirmation"
                 v-show="!showPass"
               />
-              <input
+              <input  
                 aria-label="Confirm Password"
                 name=""
                 type="text"
@@ -305,8 +305,16 @@ export default {
       this.next = true;
       var choice;
       //check if what verification choice the user choose
-      document.getElementById('verificationEmail').checked ? choice = "email" : choice="phone"      
-      this.PersonalInfo.verficationChoice = choice
+      if(document.getElementById('verificationEmail').checked){
+choice = "email";
+console.log('2',choice)
+      }  else{
+choice="phone"
+console.log('2',choice)
+
+      }       
+      this.PersonalInfo.verificationChoice = choice
+      console.log(this.PersonalInfo.verificationChoice)
       api.get("/sanctum/csrf-cookie").then(() => {
         api
           .post("/api/postPersonal", this.PersonalInfo)
@@ -317,7 +325,7 @@ export default {
                 JSON.stringify(res.data.personalInfo)
               );
               localStorage.setItem("account", JSON.stringify(res.data.account));
-              console.log(res.data.personalInfo);
+              console.log(res.data);
               localStorage.setItem("code", res.data.code);
               this.$router.push({ name: "verifyemail" });
             } // end if

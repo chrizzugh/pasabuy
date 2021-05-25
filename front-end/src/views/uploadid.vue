@@ -169,9 +169,10 @@
 }
 </style>
 <script>
-import api from "../api";
+// import api from "../api";
 import store from "../store/index";
 import loading from "vue-full-loading";
+import axios from "axios"
 export default {
   components: {
     loading,
@@ -264,8 +265,8 @@ export default {
         "cityMunicipality",
         dataform.address.cityMunicipality
       );
-      api
-        .post("/api/register", this.registrationData)
+      axios
+        .post("http://localhost:8000/api/register", this.registrationData,{withCredentials: true} )
         .then((res) => {
           console.log(res.data);
           if (res) {

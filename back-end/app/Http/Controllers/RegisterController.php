@@ -76,8 +76,10 @@ class RegisterController extends Controller
 
         $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code];
         if ($request != null) {
-            if($request->verificationChoice === "email"){
+            if($request->verificationChoice == "email"){
                 Mail::to($email)->send(new emailConfirmation($data));
+                $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code, 'email'=>'email'];
+            
             }else{
                 $basic  = new Basic("63d7c27e", "CQWTBBpgA6eChJT6");
                 $client = new Client($basic);
@@ -88,6 +90,8 @@ class RegisterController extends Controller
                 $message = $response->current();
                 
                 if ($message->getStatus() == 0) {
+                $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code, 'email'=>'phone'];
+
                     return response()->json($returnValue);
                 } else {
                     return "The message failed with status: " . $message->getStatus() . "\n";
@@ -152,10 +156,7 @@ class RegisterController extends Controller
             $userAuth->email = $request->email;
             $userAuth->password = $request->password;
 
-            $token = $userAuth->createToken('myapptoken')->plainTextToken;
-
-            $response = ["user"=>$userAuth, "token"=>$token];
-
+         
             if ($userAuth->save()) {
                 $userAddress = new userAddress();
                 $userAddress->email = $request->email;
@@ -190,6 +191,10 @@ class RegisterController extends Controller
                 }
 
                 Auth::login($userAuth);
+                $token = $userAuth->createToken('myapptoken')->plainTextToken;
+
+                $response = ["user"=>$userAuth, "token"=>$token];
+    
 
                 return response()->json($response,201);
             } else {
