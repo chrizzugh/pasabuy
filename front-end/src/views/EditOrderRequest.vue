@@ -318,7 +318,7 @@
     <div class="justify-center flex sm:px-2 ssm:px-2 vs:px-2">
     <div class="flex flex-col se:h-36 ssm:h-36 mt-3 w-31.75 items-start p-4 ssm:p-2 vs:p-2 bg-gray-100 rounded-xl h-auto ssm:w-full vs:w-full">
             <div class="flex w-full flex-row justify-between items-center ssm:space-x-0 vs:space-x-0">
-                <p class="flex text-base ssm:text-sm vs:text-sm lvs:text-base leading-none text-gray-900">Shopping List ({{shopping_info.items.length}} items)</p>
+                <p class="flex text-base ssm:text-sm vs:text-sm lvs:text-base leading-none text-gray-900">Shopping List ({{computedShopItemList(shopping_info.items).length}} items)</p>
             <div>
                <button @click="listEdit=!listEdit" class="flex focus:outline-none">
                  <span class="material-icons text-lg vs:text-sm ssm:text-sm">
@@ -333,7 +333,7 @@
                </span>
                 Edit
               </button>
-              <button @click="openSelectShoppingList" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+              <button @click="openSelectShoppingList=!openSelectShoppingList, mainModal=!mainModal" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
                <span class=" material-icons text-base  text-gray-900 ">
                 autorenew
                </span>
@@ -386,10 +386,10 @@
 
     <!--Select Shopping List Modal-->
     <transition name="fadeSlide">
-      <div v-if="showSelectShopListModal" class="hideIf2 font-nunito fixed z-50 inset-0 flex ssm:px-2 vs:px-2 sm:px-2 justify-center items-center">
+      <div v-if="openSelectShoppingList" class="hideIf2 font-nunito fixed z-50 inset-0 flex ssm:px-2 vs:px-2 sm:px-2 justify-center items-center">
        <div class="flex flex-col bg-white shadow rounded-xl h-auto w-550 ssm:w-full vs:w-full sm:w-full">
         <div class="flex justify-between items-center p-4 flex-row">
-          <button @click="showPreviousModal" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button>
+          <button @click="openSelectShoppingList=!openSelectShoppingList, mainModal=!mainModal" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button>
           <p class="text-2xl  ssm:text-sm se:text-base vs:text-lg font-bold leading-normal text-center text-gray-900">Select Shopping List</p>
           <button class="invisible text-sm font-bold leading-none text-right text-indigo-900">Close</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
         </div>
@@ -431,7 +431,7 @@
           </div>
         </div>
         <div class="flex flex-row w-full justify-around vs:space-x-2 sm:space-x-4 items-center p-4">
-          <button @click="createNewShopList" class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700">
+          <button @click="createNewShopList=!createNewShopList, mainModal=false, openSelectShoppingList=false" class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700">
             <p class="text-base font-bold leading-none text-gray-900">Create New</p>
           </button>
           <button @click="confirmShopList" class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full">
@@ -445,7 +445,7 @@
 
       <!--Create New Shopping List Modal-->
       <transition name="fadeSlide2">
-      <div v-if="showCreateNewShopListModal" class="z-50 ssm:px-2 fixed vs:px-2 sm:px-2 scrolledCenterMe">
+      <div v-if="createNewShopList" class="z-50 ssm:px-2 fixed vs:px-2 sm:px-2 scrolledCenterMe">
        <div class="flex flex-col bg-white shadow rounded-xl h-auto w-550 ssm:w-full vs:w-full sm:w-full">
         <div class="flex justify-between items-center p-4 flex-row">
           <button @click="showPreviousModal2" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button>
@@ -455,7 +455,7 @@
         <hr class="w-full">
         <div class="flex flex-col w-full space-y-2 p-4">
           <div class="flex flex-row items-center space-y-1 w-full">
-          <input id="createTitle" type="text" placeholder="New Shopping List" class=" w-42 focus:outline-none" oninput='this.style.width = 0; this.style.width = this.scrollWidth + "px";'>
+          <input id="new_title" type="text" placeholder="New Shopping List" class=" w-42 focus:outline-none" oninput='this.style.width = 0; this.style.width = this.scrollWidth + "px";'/>
             <button @click="toggleInputField('createTitle')" class="focus:outline-none pl-1 pb-1">
              <span class="material-icons mt-1 md-18 text-gray-600">   
               mode_edit
@@ -463,25 +463,25 @@
             </button>
           </div>
           <div class="flex space-y-3 flex-col w-full px-4" >
-            <button v-if="addnewButton1" @click="createList1" class="flex items-center flex-row space-x-2">
+            <button  @click="addnew()" class="flex items-center flex-row space-x-2">
              <span class="text-gray-900 material-icons">
               add_circle
              </span>
              <p class="text-base leading-none text-gray-900">Add new item</p>
             </button>
-            <div v-if="item1" class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white">
+            <div v-if="addnewButton1" class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white">
           <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
             <p class="text-sm leading-3 text-gray-500">Product</p>
-            <input v-model="filter_itemList[0].item" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
+            <input v-model="product" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
           </div>
           <div class="flex flex-row space-x-2">
             <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
              <p class="text-sm leading-3 text-gray-500">Brand</p>
-             <input v-model="filter_itemList[0].brand" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
+             <input v-model="brand" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
             </div>
             <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
              <p class="text-sm leading-3 text-gray-500">Size</p>
-             <input v-model="filter_itemList[0].amount" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
+             <input v-model="size" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
             </div>
           </div>
           <div class="flex flex-row items-center pt-2 space-x-4">
@@ -501,24 +501,25 @@
             </div>
           </div>
           <div class="flex flex-row justify-end items-center ssm:space-x-1 space-x-2">
-            <button @click="createList1" class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700">
+            <button @click="addnewButton1=!addnewButton1" class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700">
              <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-gray-900">Cancel</p>
             </button>
-            <button @click="savedItem1" class="focus:outline-none inline-flex px-4 py-2.5 bg-red-700 rounded-full">
+            <button @click="savedItem2" class="focus:outline-none inline-flex px-4 py-2.5 bg-red-700 rounded-full">
              <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-white">Save</p>
             </button>
           </div>
           </div>
 
-          <div v-if="saveItem1" class="flex flex-row  w-full justify-between items-start vs:space-x-2 ssm:space-x-1 space-x-4 px-0.5">
-            <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
+          <div v-show="addNewListFlag"  v-for="(item,index) in new_items" :key="index" class="flex flex-row  w-full justify-between items-start vs:space-x-2 ssm:space-x-1 space-x-4 px-0.5">
+             
+            <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4" >
             <div class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900">
-              <input type="checkbox" class="opacity-0 absolute">
-              <img src="img/check-mark.svg" class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none">
+              <input type="checkbox" :checked="item.status === 1" :id="'check'+item.id"/>
+              <!-- <img src="img/check-mark.svg" class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"> -->
             </div>
             <div class="flex flex-col space-y-2">
-              <p class="text-base ssm:text-sm se:text-sm leading-none text-gray-900">Powdered Sugar (1 kg)</p>
-              <p class="text-base ssm:text-sm se:text-sm leading-none text-gray-900">Any brand</p>
+              <p class="text-base ssm:text-sm se:text-sm leading-none text-gray-900">{{item.product}} ({{item.size}})</p>
+              <p class="text-base ssm:text-sm se:text-sm leading-none text-gray-900">{{item.brand}}</p>
             </div>
           </div>
            <div class="flex items-center flex-row space-x-2">
@@ -527,20 +528,20 @@
                 add
                 </span>
               </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
+              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">1</p>
               <button class="flex focus:outline-none">
                 <span class="material-icons bg-gray-100 text-red-700">
                 remove
                 </span>
               </button>
               <div>
-              <button @click="editCreatedItem1=!editCreatedItem1" class="focus:outline-none flex">
+              <button @click="editCreatedItem1=!editCreatedItem1; editCreatedItemFlagId = item.id" class="focus:outline-none flex">
                 <span class="material-icons">
                 more_vert
                 </span>
               </button>
                <div class="relative w-full">
-              <div v-if="editCreatedItem1" class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
+              <div v-if="editCreatedItem1 && editCreatedItemFlagId == item.id" class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
               <button @click="editDisItem1" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
                <span class=" material-icons text-base  text-gray-900 ">
                 mode
@@ -551,6 +552,7 @@
               </div>
               </div>
             </div>
+         
           </div>
               
             <div v-if="editItem1" class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white">
@@ -600,10 +602,10 @@
           </div>
         </div>
         <div class="flex flex-row w-full justify-around vs:space-x-2 sm:space-x-4 items-center p-4">
-          <button @click="showPreviousModal2" class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700">
+          <button @click="createNewShopList=!createNewShopList; openSelectShoppingList=!openSelectShoppingList" class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700">
             <p class="text-base font-bold leading-none text-gray-900">Cancel</p>
           </button>
-          <button class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full">
+          <button @click="saveNewList" class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full">
            <p class="text-base font-bold leading-none text-white">Save</p>
           </button>
         </div>
@@ -631,59 +633,89 @@
              </span>
             </button>
           </div>
-          <button @click="addnewButton1=!addnewButton1" class="flex items-center flex-row px-2 space-x-2">
+          <button @click="addnew()" class="flex items-center flex-row px-2 space-x-2">
              <span class="text-gray-900 material-icons">
               add_circle
              </span>
              <p class="text-base leading-none text-gray-900">Add new item</p>
           </button>
-          
-        </div>
-        <div class=" flex flex-col py-1 px-2 vs:px-2 ssm:px-1 ssm:space-y-1 vs:space-y-2 space-y-4 w-full">
-          <div v-if="myItem1OnList" class="flex flex-row w-full justify-between items-center space-x-3">
-          <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
-            <div class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900">
-              <input type="checkbox" class="opacity-0 absolute">
-              <img src="img/check-mark.svg" class="fill-current hidden w-3 h-3 text-black font-bold pointer-events-none">
+
+          <div v-if="addnewButton1" class="flex space-y-3 flex-col w-full px-4" >
+            <div class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white">
+          <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
+            <p class="text-sm leading-3 text-gray-500">Product</p>
+            <input v-model="product" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
+          </div>
+          <div class="flex flex-row space-x-2">
+            <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
+             <p class="text-sm leading-3 text-gray-500">Brand</p>
+             <input @keyup="brandsearch()"
+                          @click="brandsearch()" v-model="brand" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
+
+              <div class="relative">
+                              <div
+                                v-if="brandSearchTag"
+                                class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-full"
+                              >
+                                <div
+                                  class="flex flex-col w-full px-2 justify-start items-start"
+                                >
+                                  <div
+                                    id="scroll1"
+                                    class="flex px-2 flex-col overflow-y-scroll w-full h-24"
+                                  >
+                                    <ul id="myUL" class="space-y-1">
+                                      <li
+                                        v-for="(brand, index) in brands"
+                                        :key="index"
+                                        @click="
+                                          setBrand(index);
+                                          brandSearchTag = !brandSearchTag;
+                                        "
+                                      >
+                                        <a href="#" :id="'brand' + index">{{
+                                          brand
+                                        }}</a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
             </div>
-            <div class="flex flex-col space-y-2">
-              <p class="text-base ssm:text-sm se:text-sm leading-none text-gray-900">Powdered Sugar (1 kg)</p>
-              <p class="text-base ssm:text-sm se:text-sm leading-none text-gray-900">Any brand</p>
+            <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
+             <p class="text-sm leading-3 text-gray-500">Size</p>
+             <input v-model="size" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
             </div>
           </div>
-          <div class="flex flex-row space-x-2 items-center">
-              <button class="focus:outline-none flex">
+          <div class="flex flex-row items-center pt-2 space-x-4">
+            <p class="text-base ssm:text-sm se:text-sm leading-7 text-gray-900">Quantity</p>
+            <div class="flex flex-row space-x-2">
+              <button @click="Quantity++" class="focus:outline-none">
                 <span class="material-icons bg-gray-100  text-red-700">
                 add
                 </span>
               </button>
               <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none flex">
+              <button @click="Quantity = minusQty(Quantity)" class="focus:outline-none">
                 <span class="material-icons bg-gray-100 text-red-700">
                 remove
                 </span>
               </button>
-              <div>
-              <button @click="editMyItem1=!editMyItem1" class="focus:outline-none flex">
-                <span class="material-icons">
-                more_vert
-                </span>
-              </button>
-               <div class="relative w-full">
-              <div v-if="editMyItem1" class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
-              <button @click="editSelectedItemOnList" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
-               <span class=" material-icons text-base  text-gray-900 ">
-                mode
-               </span>
-                Edit
-              </button>
-              </div>
-              </div>
-              </div>
             </div>
           </div>
-          
-          <div v-if="editSelectedItemOnList1" class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white">
+          <div class="flex flex-row justify-end items-center ssm:space-x-1 space-x-2">
+            <button @click="createList1" class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700">
+             <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-gray-900">Cancel</p>
+            </button>
+            <button @click="savedItem1" class="focus:outline-none inline-flex px-4 py-2.5 bg-red-700 rounded-full">
+             <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-white">Save</p>
+            </button>
+          </div>
+          </div>
+
+            <!-- <div v-if="editItem1" class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white">
           <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
             <p class="text-sm leading-3 text-gray-500">Product</p>
             <input v-model="filter_itemList[0].item" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
@@ -701,13 +733,13 @@
           <div class="flex flex-row items-center pt-2 space-x-4">
             <p class="text-base ssm:text-sm se:text-sm leading-7 text-gray-900">Quantity</p>
             <div class="flex flex-row space-x-2">
-              <button class="focus:outline-none flex">
+              <button class="focus:outline-none">
                 <span class="material-icons bg-gray-100  text-red-700">
                 add
                 </span>
               </button>
               <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none flex">
+              <button class="focus:outline-none">
                 <span class="material-icons bg-gray-100 text-red-700">
                 remove
                 </span>
@@ -715,24 +747,34 @@
             </div>
           </div>
           <div class="flex flex-row justify-end items-center ssm:space-x-1 space-x-2">
-            <button @click="editSelectedItemOnList" class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700"> <!--@click="editDisSelectedItem1"-->
+            <button @click="editDisItemAndUnchecked" class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700">
              <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-gray-900">Cancel</p>
             </button>
             <button class="focus:outline-none inline-flex px-4 py-2.5 bg-red-700 rounded-full">
              <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-white">Save</p>
             </button>
           </div>
+          </div> -->
+
           </div>
- <div class="flex flex-row w-full justify-between items-center space-x-3" v-for="item in shopping_info.items" :key="item.id">
+          <div class="flex px-4 justify-end items-center">
+            <p class="text-xs leading-none text-gray-500">Updated {{timestamp(delivery_info.dateModified)}}</p>
+          </div>
+          
+
+          
+        </div>
+         <div
+          id="scroll1"
+          class="flex flex-col py-1 px-2 vs:px-2 ssm:px-1 overflow-y-auto h-40 vs:h-36 ssm:space-y-1 vs:space-y-2 space-y-4 w-full"
+        >
+         <div class="flex flex-row w-full justify-between items-center space-x-3" v-for="item in shopping_info.items" :key="item.id">
           <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
             <div
               class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
             >
-              <input type="checkbox" class="opacity-0" :checked="item.status ==1" :id="'check'+item.id"/>
-              <img
-                src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black mr-3 font-bold pointer-events-none"
-              />
+              <input type="checkbox" :checked="item.status === 1" :id="'check'+item.id"/>
+                
             </div>
             <div class="flex flex-col space-y-2">
               <p
@@ -767,18 +809,104 @@
             </div>
           </div>
 
+       
         </div>
         <div class="flex flex-row w-full justify-around vs:space-x-2 ssm:space-x-1 sm:space-x-4 items-center py-4">
           <button @click="showEditShopListModalMethod" class=" focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700">
             <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-gray-900">Cancel</p>
           </button>
-          <button class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full">
+          <button @click="saveList" class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full">
            <p class="text-base  ssm:text-sm se:text-sm font-bold leading-none text-white">Save Changes</p>
           </button>
         </div>
        </div>
        </div>
       </transition>
+       <!--Select Shopping List Modal-->
+  <transition name="fadeSlide">
+    <div
+      v-if="showSelectShopListModal"
+      class="hideIf2 font-nunito fixed z-50 inset-0 flex ssm:px-2 vs:px-2 sm:px-2 justify-center items-center"
+    >
+      <div
+        class="flex flex-col bg-white shadow rounded-xl h-auto w-550 ssm:w-full vs:w-full sm:w-full"
+      >
+        <div class="flex justify-between items-center p-4 flex-row">
+          <button
+            @click="openSelectShoppingList=!openSelectShoppingList, mainModal=!mainModal"
+            class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
+          >
+            Back
+          </button>
+          <p
+            class="text-2xl ssm:text-sm se:text-base vs:text-lg font-bold leading-normal text-center text-gray-900"
+          >
+            Select Shopping List
+          </p>
+          <button
+            class="invisible text-sm font-bold leading-none text-right text-indigo-900"
+          >
+            Close</button
+          ><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
+        </div>
+        <hr class="w-full" />
+        <div class="flex w-full px-4 pt-4">
+          <div class="flex flex-col overflow-y-auto h-72 w-full space-y-3">
+            <div class="flex flex-row w-full justify-between items-center" v-for="list in shoppingLists" :key="list.shoppingListNumber">
+              <div class="space-x-2">
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4"
+                    :id="'listNumber'+list.shoppingListNumber"
+                  />
+                  <span
+                    class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base"
+                    >{{list.shoppingListTitle}}</span
+                  >
+                </label>
+              </div>
+                <div>
+                <button  @click="edit2=list.shoppingListNumber; edit3=!edit3" class="focus:outline-none">
+                <span class="material-icons vs:text-xs">
+                  more_vert
+                </span>
+                </button>
+                <div class="relative w-full">
+              <div v-if="edit2==list.shoppingListNumber && edit3 " class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
+              <button @click="editShopListAtSelectShopList" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
+               <span class=" material-icons text-base  text-gray-900 ">
+                mode
+               </span>
+                Edit
+              </button>
+              </div>
+              </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-row w-full justify-around vs:space-x-2 sm:space-x-4 items-center p-4"
+        >
+          <button
+            @click="createNewShopList" v-if="false"
+            class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700"
+          >
+            <p class="text-base font-bold leading-none text-gray-900">
+              Create New
+            </p>
+          </button>
+          <button
+            @click="confirmShopList"
+            class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full"
+          >
+            <p class="text-base font-bold leading-none text-white">Confirm</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  </transition>
 
       
   </div>
@@ -790,12 +918,25 @@ import store from "../store/index";
 // import VueSimpleAlert from "vue-simple-alert";
 import api from "../api";
 import moment from "moment"
+import axios from "axios";
+import _ from "lodash";
+import $ from "jquery";
+
 export default {
   props: ["post"],
   data() {
     return {
+      editCreatedItem1:false,
+      editCreatedItemFlagId:null,
+      createNewShopList:false,
+      openSelectShoppingList:false,
+      Quantity:1,
+      product:null,
+      brand:null,
+      size:null,
       new_item:false,
       addnewButton1:false,
+      createList1:false,
       myItem1OnList:false,
       mainModal:true,
       isVisible: true,
@@ -811,6 +952,9 @@ export default {
         deliverySchedule: moment(
           this.post.request_post.deliverySchedule
         ).format("YYYY-MM-DDThh:mm"),
+        dateModified: moment(
+          this.post.request_post.dateModified
+        ).format("YYYY-MM-DDThh:mm"),
         transportMode: "none",
         capacity: "none",
         paymentMethod: this.post.request_post.paymentMethod,
@@ -819,8 +963,8 @@ export default {
         shoppingList: null,
       },
       shopping_info: {
-        items: this.post.request_post.shoppingListContent,
-        shoppingListName: this.post.request_post.shoppingListTitle,
+        items: JSON.parse(JSON.stringify(this.post.request_post.shoppingListContent)),
+        shoppingListName: JSON.parse(JSON.stringify(this.post.request_post.shoppingListTitle)),
       },
       addAddress: false,
       dropdown1: false,
@@ -833,27 +977,223 @@ export default {
       showLessStatus: "See Less",
       isActive: false,
       showEditShopListModal: false,
-      ctr:0,
       oldList:null,
-      selectedList:null
+      selectedList:null,
+      ctr:
+        this.post.request_post.shoppingListContent[
+          this.post.request_post.shoppingListContent.length - 1
+        ].id + 1,
+      brandSearchTag:false,
+      brands:null,
+      new_items:[],
+      ctr1:0,
+      addNewListFlag:false,
+      edit2:null,
+      edit3:false
     };
   },
   methods: {
+    saveNewList(){
+        for (var i = 0; i < this.new_items.length; i++) {
+        if (!document.getElementById("check" + this.new_items[i].id).checked) {
+          //if true check the status
+          this.new_items[i].status = 0;
+        }
+      }
+      let obj = {
+        listName: document.getElementById("new_title").value,
+        list: this.new_items,
+      };
+      console.log(this.new_items);
+      api
+        .post("api/createList", obj)
+        .then((res) => {
+          store.dispatch("getUserShoppingList").then(() => {
+            this.selectedList = res.data;
+            // this.showItemList = true;
+            // console.log("before", this.selectedList, this.showItemList);
+            // this.new_items = [];
+            // // this.addlist = false;
+            // if (this.listToggleFlag) this.togglePostModal();
+            // this.listToggleFlag = false;
+            this.createNewShopList=!this.createNewShopList; 
+            this.openSelectShoppingList=!this.openSelectShoppingList
+          });
+        })
+        .catch(() => {
+          //if encountered error means the user will not add a new shopping list
+          this.new_items = [];
+          this.createNewShopList=!this.createNewShopList; 
+            this.openSelectShoppingList=!this.openSelectShoppingList
+        });
+
+    },
+      saveList(){
+        for(var i=0;i<this.shopping_info.items.length;i++){
+          if(document.getElementById("check"+i).checked){
+            this.shopping_info.items[i].status = 1
+          }else{
+            this.shopping_info.items[i].status = 0
+          }
+        }
+        this.mainModal = !this.mainModal;
+        this.openSelectShoppingList = !this.openSelectShoppingList
+        this.showEditShopListModal = !this.showEditShopListModal;
+      },
+      confirmShopList() {
+      this.showShopListButton = false;
+      var tempList = this.shoppingLists;
+      for(var i=0; i< tempList.length;i++){
+        if(document.getElementById('listNumber'+tempList[i].shoppingListNumber).checked){
+         this.shopping_info.items = tempList[i].shoppingListContent
+         this.shopping_info.shoppingListName = tempList[i].shoppingListTitle
+
+        //  this.selectedList.shoppingListContent = filtered_list
+        }
+      }
+      console.log('selected List',this.selectedList)
+      // openSelectShoppingList=!openSelectShoppingList, mainModal=!mainModal
+      this.mainModal = !this.mainModal;
+      this.openSelectShoppingList = !this.openSelectShoppingList;
+      $(".hideIf").fadeIn();
+    },
+ 
+     setBrand(index){
+     this.brand = document.getElementById('brand'+index).innerHTML
+    },
+    brandsearch(){
+      let vm = this
+      console.log('brand',this.brand)
+      this.debounceSearchBrand(vm,this.brand)
+      console.log('brandssssssssssssss', this.brands)
+      if(this.brands!=null)
+         this.brandSearchTag = true 
+      else
+         this.brandSearchTag = false 
+
+    },
+    debounceSearchBrand: _.debounce((vm,brandParam) => {
+      var data = brandParam;
+      var brand = data.replace(" ", "%20");
+      var returnBrands = [];
+      console.log(brand);
+      var link =  "https://api.edamam.com/api/food-database/v2/parser?ingr=" +
+            brand +
+            "&app_id=df56563c&app_key=2ac03d7a37a55354a941d0e1289ac4b2"
+      //get the mathced brand names from product brands api
+      axios
+        .get(link)
+        .then((res) => {
+          //then set the result to array
+          console.log("search res: ", res.data);
+          for (var i = 0; i < res.data.hints.length; i++) {
+            console.log("brands: ", res.data.hints[i].food.brand);
+            returnBrands.push(res.data.hints[i].food.brand)
+          }
+          var temp = returnBrands;
+          returnBrands = []; 
+          $.each(temp, function(i, el){
+              if($.inArray(el, returnBrands) === -1) returnBrands.push(el);
+          });
+          console.log('returnint this',returnBrands)
+          vm.brands = returnBrands;
+        }).catch(()=>{vm.brands = null});
+        
+    }, 1000),
+    savedItem1(){
+      let productx = this.product;
+      let brandx = this.brand;
+      let sizex = this.size;
+      let quantx =this.Quantity;
+      if (productx == null || brandx == null || sizex == null || quantx <= 0) {
+        alert("Empty Field");
+        return false;
+      }
+      let obj = {
+        id: this.ctr,
+        product: productx,
+        brand: brandx,
+        size: sizex,
+        quantity: parseInt(quantx),
+        status: 1,
+        statusDeliver: 0,
+      };
+      this.ctr++;
+      this.shopping_info.items.push(obj);
+      // console.log(this.shoppingLists[0].shoppingListContent);
+     this.product = "";
+     this.brand= "";
+      this.size = "";
+      this.Quantity = 1;
+      this.new_item = false;
+    },
+       savedItem2(){
+      let productx = this.product;
+      let brandx = this.brand;
+      let sizex = this.size;
+      let quantx =this.Quantity;
+      if (productx == null || brandx == null || sizex == null || quantx <= 0) {
+        alert("Empty Field");
+        return false;
+      }
+      let obj = {
+        id: this.ctr1,
+        product: productx,
+        brand: brandx,
+        size: sizex,
+        quantity: parseInt(quantx),
+        status: 1,
+        statusDeliver: 0,
+      };
+      this.ctr1++;
+      this.new_items.push(obj);
+      // console.log(this.shoppingLists[0].shoppingListContent);
+     this.product = "";
+     this.brand= "";
+      this.size = "";
+      this.Quantity = 1;
+      this.addNewListFlag = true;
+    },
+    timestamp(datetime) {
+      var postedDate = new Date(datetime);
+      var dateToday = new Date();
+      var dateDiff = dateToday.getTime() - postedDate.getTime();
+      dateDiff = dateDiff / (1000 * 3600 * 24);
+      if (dateDiff < 1) return moment(datetime).format("[Today at] h:mm a");
+      else if (dateDiff >= 1 && dateDiff < 2)
+        return moment(datetime).format("[Yesterday at] h:mm a");
+      else return moment(datetime).format("MMM DD, YYYY [at] h:mm a");
+    },
+    minusQty(q){
+      q--
+      if(q<=0)
+        return 1
+      return q
+    },
+    addnew(){
+      this.addnewButton1=!this.addnewButton1
+     
+    },
     showEditShopListModalMethod(){
       this.showEditShopListModal = !this.showEditShopListModal
+      this.openSelectShoppingList = !this.openSelectShoppingList
       this.mainModal = !this.mainModal
-      console.log(this.showEditShopListModal)
+      this.shopping_info = this.oldList
+      console.log("old list", this.selectedList)
     },
     editShopListAtSelectShopList(){
+      this.oldList = JSON.parse(JSON.stringify(this.shopping_info))
       var tempList = this.shoppingLists;
       console.log('selected List',tempList, this.edit2)
       var temp = tempList.filter((x)=>{return x.shoppingListNumber === this.edit2})
       this.selectedList = temp[0]
       console.log('selected List',this.selectedList)
+      this.shopping_info.items = this.selectedList.shoppingListContent
+      this.shopping_info.shoppingListName = this.selectedList.shoppingListTitle
       this.showSelectShopListModal = !this.showSelectShopListModal;
       this.showEditShopListModal = !this.showEditShopListModal;
       this.ctr = this.selectedList.shoppingListContent.id+1
-      this.oldList = JSON.parse(JSON.stringify(this.selectedList))
+
       // $(".hideIf").fadeIn();
     },
       showMoreshowLess() {
@@ -867,7 +1207,8 @@ export default {
       }
     },
      computedShopItemList(list) {
-      return this.limit_by ? list.slice(0, this.limit_by) : list;
+       var temp = list.filter((x)=>{return x.status == 1})
+      return this.limit_by ? temp.slice(0, this.limit_by) : temp;
     },
     isFew(filter_itemList) {
       filter_itemList.length < 5;
@@ -892,6 +1233,13 @@ export default {
 
       // var stringList = newList.substr(2);
       this.delivery_info.shoppingList = this.shopping_info;
+      // for(var i=0;i<this.shopping_info.items.length;i++){
+      //   if(document.getElementById("check"+i).checked){
+      //     this.shopping_info.items[i].status = 1
+      //   }else{
+      //     this.shopping_info.items[i].status = 0
+      //   }
+      // }
 
       api
         .put("api/post/" + this.post.postNumber + "/edit", this.delivery_info)

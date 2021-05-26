@@ -28,7 +28,9 @@ const store = new Vuex.Store({
         allLanguages: [],
         allUserAbout: [],
         authUserFollow: [],
-        authEducation: []
+        authEducation: [],
+        onlineUsers: []
+
 
 
 

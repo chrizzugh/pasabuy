@@ -1124,7 +1124,7 @@
             <div
               class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
             >
-              <input type="checkbox" class="opacity-0" :checked="item.status ==1" :id="'check'+item.id"/>
+              <input type="checkbox" class="opacity-0" :checked="item.status === 1" :id="'check'+item.id"/>
               <img
                 src="img/check-mark.svg"
                 class="fill-current hidden w-3 h-3 text-black mr-3 font-bold pointer-events-none"
@@ -1782,9 +1782,10 @@ export default {
   },
   computed: {
     computedShopItemList() {
+      var temp = this.selectedList.shoppingListContent.filter((x)=>{return x.status ==1})
       return (this.limit_by 
-        ? this.selectedList.shoppingListContent.slice(0, this.limit_by)
-        : this.selectedList.shoppingListContent);
+        ? temp.slice(0, this.limit_by)
+        : temp);
     },
     user() {
       console.log("user personal", store.getters.getPersonal);

@@ -25,7 +25,7 @@
           >
             <div class="w-full">
               <input
-                name=""
+                
                 type="firstname"
                 required
                 class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm"
@@ -40,7 +40,6 @@
             <div class="w-full">
               <input
                 aria-label="Last Name"
-                name=""
                 type="name"
                 required
                 class="relative block w-full px-3 py-2 mt-4 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm"
@@ -66,7 +65,6 @@
           <div class="flex flex-row">
             <input
               aria-label="Email"
-              name=""
               type="email"
               required
               class="relative block w-full px-3 py-2 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm"
@@ -88,7 +86,6 @@
               ><img class="w-9 h-9" src="img/philippines.png"
             /></span>
             <input
-              name=""
               type="text"
               class="w-full px-3 py-2 pl-16 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm"
               placeholder="Phone Number"
@@ -116,7 +113,6 @@
             <div class="w-full">
               <input
                 aria-label="Password"
-                name=""
                 type="password"
                 required
                 class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300"
@@ -126,7 +122,6 @@
               />
               <input
                 aria-label="Password"
-                name=""
                 type="text"
                 required
                 class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300"
@@ -138,7 +133,6 @@
             <div class="w-full">
               <input
                 aria-label="Confirm Password"
-                name=""
                 type="password"
                 required
                 class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm"
@@ -148,7 +142,6 @@
               />
               <input  
                 aria-label="Confirm Password"
-                name=""
                 type="text"
                 required
                 class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm"

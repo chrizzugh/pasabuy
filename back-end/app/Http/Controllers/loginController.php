@@ -39,8 +39,8 @@ class loginController extends Controller
     public function logout(Request $request)
     {
         # code...
-        // $user = User::where('email',$request['email'])->first();
-        Auth::user()->tokens()->delete();
+        $user = User::where('email',Auth::user()->email)->first();
+        $user->tokens()->delete();
         // Auth::logout();
     
         // $request->session()->invalidate();
