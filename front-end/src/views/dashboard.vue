@@ -639,7 +639,9 @@
                           >Shopping List
                           <label class="font-normal text-gray-500"
                             >{{
-                              post_info.request_post.shoppingListContent.length
+                              computedShopItemList(
+                              post_info.request_post.shoppingListContent
+                            ).length
                             }}
                             items</label
                           >
@@ -670,7 +672,7 @@
                       <button
                         @click="showMoreshowLess"
                         v-if="
-                          !isFew(post_info.request_post.shoppingListContent)
+                          isFew(post_info.request_post.shoppingListContent)
                         "
                         class="focus:outline-none items-start justify-start text-sm text-gray-500"
                       >
@@ -1136,8 +1138,9 @@
                             >Shopping List
                             <label class="font-normal text-gray-500"
                               >{{
+                                computedShopItemList(
                                 post_info.post.request_post.shoppingListContent
-                                  .length
+                              ).length
                               }}
                               items</label
                             >
@@ -1168,7 +1171,7 @@
                         <button
                           @click="showMoreshowLess"
                           v-if="
-                            !isFew(
+                            isFew(
                               post_info.post.request_post.shoppingListContent
                             )
                           "
@@ -2392,7 +2395,7 @@
         </p>
         <div class="flex justify-end relative">
           <button
-            @click="popupTriggers.timedTrigger = false"
+            @click="setCookie"
             class="mx-2 mt-2 h-7 px-2 mb-2 bg-gray-100 text-black hover:text-white hover:bg-gray-400 focus:outline-none rounded-full border border-gray-700"
           >
             <span>Accept all cookies</span>
@@ -2430,6 +2433,8 @@ export default {
     });
     const TogglePopup = (trigger) => {
       popupTriggers.value[trigger] = !popupTriggers.value[trigger];
+      
+
     };
     setTimeout(() => {
       popupTriggers.value.popUp1 = true;
@@ -2438,7 +2443,13 @@ export default {
       popupTriggers.value.popUp2 = true;
     }, 5000);
     setTimeout(() => {
-      popupTriggers.value.timedTrigger = true;
+      if( sessionStorage.getItem("sessionCookieNotify") === "true"){
+        popupTriggers.value.timedTrigger = true;
+      }else{
+        popupTriggers.value.timedTrigger = false;
+
+      }
+      console.log("cookie",popupTriggers.value.timedTrigger)
     }, 3500);
     return {
       popupTriggers,
@@ -2666,6 +2677,10 @@ export default {
     },
   },
   methods: {
+    setCookie(){
+      this.popupTriggers.timedTrigger = false
+      sessionStorage.setItem("sessionCookieNotify", false)
+    },
     setBrand(index){
       document.getElementById("brand").value = document.getElementById('brand'+index).innerHTML
     },
@@ -2731,7 +2746,9 @@ export default {
       }
     },
     computedShopItemList(list) {
-      return this.limit_by ? list.slice(0, this.limit_by) : list;
+      var temp = list.filter((x)=>{return x.status ==1})
+      return this.limit_by ? temp.slice(0, this.limit_by) : temp;
+      
     },
     isFew(filter_itemList) {
       filter_itemList.length < 5;

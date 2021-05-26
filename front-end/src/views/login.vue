@@ -1,5 +1,6 @@
 <template class="">
-<div>
+ <loading v-if="logginIn"/>
+<div v-if="!logginIn">
  <!-- <loading
      :show="show"
      :label="label"
@@ -60,15 +61,16 @@
               </router-link>
             </a>
           </div>
-          <div class="flex justify-center py-5" v-if="!logginIn">
+          <div class="flex justify-center py-5" v-if="!logginIn1">
             <button
               class="w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none"
             >
               Log in
             </button>
           </div>
+         
               <!-- --- Loging in loading -->
-                    <div class="flex justify-center py-5" v-if="logginIn">
+                    <div class="flex justify-center py-5" v-if="logginIn1">
                       <button class="relative w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none" disabled>
                         <img src="/img/loading.gif" class="w-35 h-20 ml-14 absolute" style="margin-top:-7%;" /> <span class="ml-10"> Logging In</span>
                       </button>
@@ -119,13 +121,15 @@
 }
 </style>
 <script>
-import api from "../api";
+// import api from "../api";
 import store from "../store/index";
+import axios from "axios"
 // import loading from 'vue-full-loading'
+import loading from './loading';
 export default {
-  // components: {
-  //   loading,
-  // },
+  components: {
+    loading
+  },
   data() {
     return {
       dataForm: {
@@ -135,32 +139,40 @@ export default {
       errors: null,
       show: false,
       label: 'Loading...',
-      logginIn:false
+      logginIn:false,
+      logginIn1:false
+
     };
   },
   methods: {
     loginUser() {
       this.show = !this.show
-      this.logginIn = true
-      api.get("/sanctum/csrf-cookie").then(() => {
+      this.logginIn1 = !this.logginIn1
+      
+      // axios.get("http://localhost:8000/sanctum/csrf-cookie",{withCredentials: true}).then(() => {
         // Login...
-        api
-          .post("/api/login", this.dataForm)
-          .then(() => {
+        axios
+          .post("http://localhost:8000/api/login", this.dataForm,{withCredentials: true})
+          .then((res) => {
+            sessionStorage.setItem("isLoggedIn", true);
+            sessionStorage.setItem("sessionCookieNotify", true)
+            sessionStorage.setItem("Authorization", res.data.token)
+            console.log('api token in login',sessionStorage.getItem("Authorization"))
+            this.logginIn1 = !this.logginIn1
+            this.logginIn = true
             this.dispatches().then(() => {
               //wait for the dispatches to finish
-              sessionStorage.setItem("isLoggedIn", true);
-              sessionStorage.setItem("sessionCookieNotify", true)
               this.show = !this.show
               this.$router.push({ name: "dashboard" });
             });
           })
           .catch((errors) => {
             this.show = !this.show
-            this.errors = errors.response.data.errors.invalid.join();
-            this.logginIn = false
+            this.errors = errors.response.data.invalid;
+            // this.logginIn = false
+            this.logginIn1 = !this.logginIn1
           });
-      });
+      // });
       // setTimeout(() => {
       //   this.isLoading = false;
       // }, 5000);

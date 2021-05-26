@@ -1,4 +1,24 @@
 <template class=" bg-gray-bgcolor font-nunito">
+  <div class="flex items-center">
+    <router-link to="/">
+      <img src="/img/pasaBUYLogoOnly.png" class="block w-16 h-16" />
+    </router-link>
+    <h1
+      class="absolute block text-xl font-black tracking-widest left-16 font-raleway text-red-buttons"
+    >
+      pasaBUY
+    </h1>
+  </div>
+  <div id="signup" class="flex items-center justify-center px-4 pb-10">
+    <div
+      class="w-full my-12 overflow-hidden text-center bg-white shadow-md flex-grow-1 rounded-xl xl:w-2/5 lg:w-2/5 2xl:w-2/5 md:w-97 sm:w-97"
+    >
+      <div class="px-10 py-16">
+        <h1 class="pb-5 space-x-1 space-y-1 text-2xl font-bold">
+          Create an account
+        </h1>
+        <form @submit.prevent="nextPage" class="space-y-3">
+          <p class="text-center text-red-500">{{ errors }}</p>
 
     <div class="flex items-center ">
         <router-link to="/">
@@ -137,35 +157,34 @@
 </template>
 
 <style>
-    #journal-scroll::-webkit-scrollbar {
-        width: 5px;
-        cursor: pointer;
-      }
-  
-    #journal-scroll::-webkit-scrollbar-track {
-        background-color: rgba(229, 231, 235, var(--bg-opacity));
-        cursor: pointer;
-    }
-  
-    #journal-scroll::-webkit-scrollbar-thumb {
-        cursor: pointer;
-        background-color: rgba(185, 28, 28)
-    
-    }
-#iCheck{
-  font-size:16px;
-  color:rgb(22, 22, 141);
+#journal-scroll::-webkit-scrollbar {
+  width: 5px;
+  cursor: pointer;
 }
-#iMessage{
-  font-size:24px;
-  color:rgb(22, 22, 141);
+
+#journal-scroll::-webkit-scrollbar-track {
+  background-color: rgba(229, 231, 235, var(--bg-opacity));
+  cursor: pointer;
+}
+
+#journal-scroll::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: rgba(185, 28, 28);
+}
+#iCheck {
+  font-size: 16px;
+  color: rgb(22, 22, 141);
+}
+#iMessage {
+  font-size: 24px;
+  color: rgb(22, 22, 141);
 }
 
 .arrowLeft::before {
-  content: '';
+  content: "";
   position: absolute;
-  display: block;    
-  width: 0px;        
+  display: block;
+  width: 0px;
   left: 0;
   top: 50%;
   border: 10px solid transparent;
@@ -286,16 +305,20 @@ export default {
             })
         },
     },
-    created () {
+  },
+  created() {
     document.body.style.backgroundColor = "rgb(235,235,235)";
-     if(localStorage.getItem('personal')!=null && localStorage.getItem('account')!=null ){
-          console.log('has value')
-          var dataPersonal = JSON.parse(localStorage.getItem('personal'))
-          this.PersonalInfo.firstName = dataPersonal.firstName
-          this.PersonalInfo.lastName = dataPersonal.lastName
-          this.PersonalInfo.email = dataPersonal.email
-          this.PersonalInfo.phoneNumber = dataPersonal.phoneNumber
-      }
-    },
-}
+    if (
+      localStorage.getItem("personal") != null &&
+      localStorage.getItem("account") != null
+    ) {
+      console.log("has value");
+      var dataPersonal = JSON.parse(localStorage.getItem("personal"));
+      this.PersonalInfo.firstName = dataPersonal.firstName;
+      this.PersonalInfo.lastName = dataPersonal.lastName;
+      this.PersonalInfo.email = dataPersonal.email;
+      this.PersonalInfo.phoneNumber = dataPersonal.phoneNumber;
+    }
+  },
+};
 </script>
