@@ -30,7 +30,7 @@ to verify yourself.</p>
                 <span class="font-bold">By email</span>
                 <span class="text-gray-500   ">sarah_panadero@gmail.com</span>
               </div>
-             <router-link to="/verify-email"> <button class="flex justify-center items-center bg-red-buttons w-max px-4 py-2
+             <router-link to="/verify-email"> <button @click="nextPage" class="flex justify-center items-center bg-red-buttons w-max px-4 py-2
                h-8 text-white font-bold rounded-full focus:outline-none text-sm"><a> Verify Now</a></button></router-link>
            </div>
            <div class="ring-1 ring-gray-300 px-2 overflow-auto  py-3 space-y-2 rounded-lg  
@@ -80,10 +80,36 @@ to verify yourself.</p>
 </style>
 
 <script>
+
+import api from '../api'
 export default {
-  
+  data(){
+
+  },
+methods:{
+    nextPage(){
+        
+        
+        api.post('/api/sendCode').then((res)=>{
+        if(res.data){
+        localStorage.setItem("code",res.data.code);
+        this.$router.push({name:"verifyemail"});
+    }
+  }).catch((errors)=>{
+    this.errors = errors.response.data.error
+  })
+  }
+
+},
+
+
+
   created: function () {
     document.body.style.backgroundColor = "rgb(235,235,235)";
   },
+
+
+
+
 }
 </script>

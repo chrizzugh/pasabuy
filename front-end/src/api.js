@@ -23,18 +23,18 @@ api.interceptors.response.use(
         switch (error.response.status) {
             case 401: // Not logged in
                 VueSimpleAlert.alert("Session expired, Please Log in again", "Session Expired", "warning")
-                api.post('api/logout').then(() => {
-                    sessionStorage.clear();
-                    window.location.reload();
+                // api.post('api/logout').then(() => {
+                //     sessionStorage.clear();
+                //     window.location.reload();
 
-                })
+                // })
                 break;
             case 419: // Session expired
                 VueSimpleAlert.alert("Session expired, Please Log in again", "Session Expired", "warning")
-                api.post('api/logout').then(() => {
-                    sessionStorage.clear();
-                    window.location.reload();
-                })
+                // api.post('api/logout').then(() => {
+                //     sessionStorage.clear();
+                //     window.location.reload();
+                // })
                 break;
             case 429:
                 VueSimpleAlert.alert("Too many, requests", "Throttled", "error")

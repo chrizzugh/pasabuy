@@ -257,7 +257,7 @@ export default {
                     localStorage.setItem("account",JSON.stringify(res.data.account));
                     console.log(res.data.personalInfo);
                     localStorage.setItem("code", res.data.code);
-                    this.$router.push({name:"verify"});
+                    this.$router.push({name:"Verification"});
                 }// end if
                 else{
                     console.log(res.data.personalInfo);
@@ -265,6 +265,7 @@ export default {
                 }//end else
             }).catch((errors)=>{
                 this.next = false;
+                console.log(errors);
                 if(errors.response.data.firstName == undefined)
                     errors.response.data.firstName = "";
                 if(errors.response.data.lastName == undefined)

@@ -139,13 +139,7 @@ const routes = [
     component: verifyemail,
     meta: {guest:true}
   },
-  {
-    path: '/verify',
-    name: 'verify',
-    component: verify,
-    meta: {guest:true}
-  },
-
+  
 
   {
     path: '/shopping-list',

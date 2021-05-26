@@ -26,7 +26,7 @@
               <div class="">
                     <input name="" type="text" required class="relative block w-full px-3 py-2 mb-6 text-base tracking-wide text-gray-900  bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-red-600 focus:z-10" placeholder="Code" value="" />
               </div>
-              <span class="flex self-start ml-2">Didn’t receive the code? <a class="font-bold cursor-pointer">Resend</a></span>
+              <span class="flex self-start ml-2">Didn’t receive the code? <span class="font-bold cursor-pointer" @click="Resend" >Resend</span></span>
               <div class="flex mb-2 -mx-1 ">
                     <div class="w-1/2 px-1 mt-6 text-lg font-bold text-left text-grey-dark text-blue">
                         <router-link to="/Verification" >Back</router-link>
@@ -70,10 +70,35 @@
 </style>
 
 <script>
+import api from "../api"
+// import simpleAlert from "vue-simple-alert"
 export default {
+    data(){
+        return{
+           code: localStorage.getItem("code"),
+           textCode: null,
+           errors:null
+        }
+    }, 
+    methods:{
+        nextPage(){
+            var params = {code:this.code, textCode:this.textCode} 
+            api.post('api/confirmVerificationCode',params).then((res)=>{
+              if(res.data){
+                localStorage.removeItem("code")
+                this.$router.push({name:"address"});
+              }
+            }).catch((errors)=>{
+              this.errors = errors.response.data.error
+            })
+        }
+    },
   
-  created: function () {
+    created: function () {
     document.body.style.backgroundColor = "rgb(235,235,235)";
+    if(localStorage.getItem("code")==null){
+      this.$router.push({name:"signup"});
+    }
   },
 }
 </script>

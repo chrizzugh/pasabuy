@@ -66,7 +66,7 @@ class RegisterController extends Controller
        
         return response()->json($returnValue);
     }
-    function sendCode(){
+    function sendCode(Request $request){
         //if not, code will be sent to email or new email
         $code = mt_rand(100000, 999999);
         $data = [
