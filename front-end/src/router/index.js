@@ -23,7 +23,8 @@ import privacyPolicy from '../views/privacyPolicy.vue'
 import TermsAndCondition from '../views/termsAndCon.vue'
 import ReturnAndRefundPolicy from '../views/returnPolicy.vue'
 import AboutUs from '../views/aboutUs.vue'
-import verify from '../views/verify.vue'
+import Verification from '../views/verification.vue'
+import VerifyPhone from '../views/verifyPhone.vue'
 
 const routes = [
   {
@@ -195,6 +196,16 @@ const routes = [
     path: '/AboutUs',
     name: 'AboutUs',
     component: AboutUs
+  },
+   {
+    path: '/Verification',
+    name: 'Verification',
+    component: Verification
+  },
+  {
+    path: '/verifyPhone',
+    name: 'VerifyPhone',
+    component: VerifyPhone
   },
 
 ]

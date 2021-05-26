@@ -17,9 +17,9 @@
       ">
         <div class="px-4 ">
          <div class="text-center mb-10">
-          <h1 class="space-x-1 space-y-1 text-2xl font-bold pb-7">Verify your email</h1>
+          <h1 class="space-x-1 space-y-1 text-2xl font-bold pb-7">Verify your phone number</h1>
             <span class="pb-4   text-gray-500 ">
-               Please enter the code that we have sent to sarah.panadero@gmail.com
+              Please enter the code that we have sent to +63 912 345 6789.
              </span>
          </div>
             <form action="#" class="space-y-3">
@@ -32,15 +32,15 @@
                         <router-link to="/Verification" >Back</router-link>
                     </div>
                     <div class="flex justify-end w-1/2 px-1 mt-3">
-                        <button @click="nextPage" class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none">
-                            NEXT
+                        <button class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none">
+                            <router-link to="/address-book" >NEXT</router-link>
                         </button>
                     </div>
                 </div>
-              </div>
-            </div>
+            </form>
           </div>
-       
+        </div>
+    </div>
 </template>
 
 <style scoped>
@@ -70,34 +70,10 @@
 </style>
 
 <script>
-import api from "../api"
-// import simpleAlert from "vue-simple-alert"
 export default {
-    data(){
-        return{
-           code: localStorage.getItem("code"),
-           textCode: null,
-           errors:null
-        }
-    }, 
-    methods:{
-        nextPage(){
-            var params = {code:this.code, textCode:this.textCode} 
-            api.post('api/confirmVerificationCode',params).then((res)=>{
-              if(res.data){
-                localStorage.removeItem("code")
-                this.$router.push({name:"address"});
-              }
-            }).catch((errors)=>{
-              this.errors = errors.response.data.error
-            })
-        }
-    },
-    created: function () {
+  
+  created: function () {
     document.body.style.backgroundColor = "rgb(235,235,235)";
-    if(localStorage.getItem("code")==null){
-      this.$router.push({name:"signup"});
-    }
   },
 }
 </script>
