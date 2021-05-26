@@ -198,7 +198,8 @@
         </div>
       </div>
     </div>
-  </div>
+  
+  
 </template>
 
 
@@ -280,13 +281,13 @@ export default {
       this.delete2 = "Delete";
       this.edit2 = "Edit";
     },
-   delete_back(){
-        this.back_image=null;
-        this.filename2=null;
-        this.icon_back='img/id-back.svg';
-        this.browse2='Browse';
-        this.delete2=null;
-        this.edit2=null;
+    delete_back() {
+      this.back_image = null;
+      this.filename2 = null;
+      this.icon_back = "img/id-back.svg";
+      this.browse2 = "Browse";
+      this.delete2 = null;
+      this.edit2 = null;
     },
     saveUser() {
       this.logginIn = !this.logginIn

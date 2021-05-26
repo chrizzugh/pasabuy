@@ -60,6 +60,13 @@ class RegisterController extends Controller
             $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo];
             return response()->json($returnValue);
         }
+       
+
+        $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo];
+       
+        return response()->json($returnValue);
+    }
+    function sendCode(){
         //if not, code will be sent to email or new email
         $code = mt_rand(100000, 999999);
         $data = [
@@ -71,14 +78,12 @@ class RegisterController extends Controller
         $email = trim($request->email);
         $code = Hash::make($code);
 
-        $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code];
+        $returnValue = ['code' => $code];
         if ($request != null) {
             Mail::to($email)->send(new emailConfirmation($data));
             return response()->json($returnValue);
         }
-        return response()->json($returnValue);
     }
-
 
     //function to put personal info in $addressInfo
     function postAddress(Request $request)

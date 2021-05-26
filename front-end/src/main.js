@@ -6,6 +6,7 @@ import api from './api'
 import Echo from 'laravel-echo'
 import VueTheMask from 'vue-the-mask'
 import feather from 'vue-icon'
+
 // import VueProgressBar from "@aacassandra/vue3-progressbar";
 
 window.Pusher = require('pusher-js');

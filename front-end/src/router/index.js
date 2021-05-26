@@ -23,7 +23,7 @@ import privacyPolicy from '../views/privacyPolicy.vue'
 import TermsAndCondition from '../views/termsAndCon.vue'
 import ReturnAndRefundPolicy from '../views/returnPolicy.vue'
 import AboutUs from '../views/aboutUs.vue'
-
+import verify from '../views/verify.vue'
 
 const routes = [
   {
@@ -138,6 +138,13 @@ const routes = [
     component: verifyemail,
     meta: {guest:true}
   },
+  {
+    path: '/verify',
+    name: 'verify',
+    component: verify,
+    meta: {guest:true}
+  },
+
 
   {
     path: '/shopping-list',
