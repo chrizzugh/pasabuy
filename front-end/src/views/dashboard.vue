@@ -261,15 +261,16 @@
                               class="text-base font-bold leading-none text-gray-900 x-v:pl-10 vsv:text-xs ssm:text-sm vs:text-sm lvs:text-sm"
                             >
                               <button
+                              class="font-bold"
                                 @click="setDispatches(post_info.user.email)"
                               >
                                 {{ post_info.user.firstName }}
-                                {{ post_info.user.lastName }}
+                                {{ post_info.user.lastName }} 
                               </button>
                               <span
-                                class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                                class="pl-1 inline-block text-blue-900 align-middle material-icons-round md-18"
                               >
-                                verified
+                                 verified
                               </span>
                               <label
                                 v-if="post_info.offer_post != null"
@@ -901,17 +902,18 @@
                                 class="text-base font-bold leading-none text-gray-900 x-v:pl-10 vsv:text-xs ssm:text-sm vs:text-sm lvs:text-sm"
                               >
                                 <button
+                                class="font-bold"
                                   @click="
                                     setDispatches(post_info.post.user.email)
                                   "
                                 >
                                   {{ post_info.post.user.firstName }}
-                                  {{ post_info.post.user.lastName }}
+                                  {{ post_info.post.user.lastName }} 
                                 </button>
                                 <span
-                                  class="inline-block text-blue-900 align-middle material-icons-round md-18"
+                                  class="pl-1 inline-block text-blue-900 align-middle material-icons-round md-18"
                                 >
-                                  verified
+                                   verified
                                 </span>
                                 <label
                                   v-if="post_info.post.offer_post != null"

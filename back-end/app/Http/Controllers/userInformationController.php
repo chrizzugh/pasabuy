@@ -163,8 +163,8 @@ class userInformationController extends Controller
 
         $image = $request->file('photo');
         $file_name = $request->file('photo')->hashName();
-        $image_resize = Image::make($image->getRealPath());              
-        $image_resize->save(public_path('storage\images\\' .$file_name))->fit(500,500);
+        $image_resize = Image::make($image->getRealPath())->fit(500,500);              
+        $image_resize->save(public_path('storage\images\\' .$file_name));
         
         $user = userInformation::where('email',Auth::user()->email)->first();
         // //accessbile in public/storage/images

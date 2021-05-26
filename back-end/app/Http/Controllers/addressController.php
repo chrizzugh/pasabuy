@@ -135,7 +135,7 @@ class addressController extends Controller
 
     {
         # code...
-        $data = DB::select('SELECT * FROM tbl_usershippingAddress WHERE email = \''.Auth::user()->email.'\'');
+        $data = DB::select('SELECT * FROM tbl_userShippingAddress WHERE email = \''.Auth::user()->email.'\'');
         return $data;
     }
 
@@ -143,7 +143,7 @@ class addressController extends Controller
 
     {
         # code...
-        return DB::select('SELECT * FROM tbl_transportmode WHERE 1 ');
+        return DB::select('SELECT * FROM tbl_transportMode WHERE 1 ');
 
     }
     
@@ -151,7 +151,7 @@ class addressController extends Controller
 
     {
         # code...
-        return DB::select('SELECT * FROM tbl_shoppingplace WHERE 1 ');
+        return DB::select('SELECT * FROM tbl_shoppingPlace WHERE 1 ');
     }
     public function getNotAuthUserAddress(Request $request)
     {

@@ -108,8 +108,6 @@ class PostController extends Controller
 			'shoppingPlace' => 'required|string|max:500',
 			'deliverySchedule' => 'required|date|after_or_equal:today',
 			'paymentMethod' => 'required|string|max:200',
-			'shoppingListContent' => 'required',
-			'shoppingListTitle' => 'required',
 
 		]);
 

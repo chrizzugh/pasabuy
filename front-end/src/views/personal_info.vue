@@ -246,6 +246,8 @@ methods:{
     },
     async dispatchThis(){
       await store.dispatch('getPersonal')
+      await store.dispatch('getPosts')
+
     },
     setBday(){
     //get the user information from the laravel API

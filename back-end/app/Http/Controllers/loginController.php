@@ -21,7 +21,7 @@ class loginController extends Controller
             'password' => ['required']
         ]);
        
-        // $user = Auth::attempt($request->only('email','password'));
+        Auth::attempt($request->only('email','password'));
         $user = User::where('email',$request['email'])->first();
 
         if(!$user || !Hash::check($request['password'], $user->password)){
@@ -41,7 +41,7 @@ class loginController extends Controller
         # code...
         $user = User::where('email',Auth::user()->email)->first();
         $user->tokens()->delete();
-        // Auth::logout();
+        Auth::logout();
     
         // $request->session()->invalidate();
         // $request->session()->regenerateToken();

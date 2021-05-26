@@ -128,6 +128,14 @@
             </div>
           </div>
       </div>
+        <div class="flex pb-6">
+        <div  v-if="reviews.length==0" class="inline-flex space-x-4 ssm:space-x-2 items-center vs:w-full sm:w-full ssm:w-full ssm:p-2 justify-center vs:p-4 p-6 bg-white shadow rounded-xl">
+          <!-- <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/> -->
+          <p class="flex items-center focus:outline-none justify-center lvs:text-sm vs:text-xs ssm:text-xs  text-base outline-none leading-none  py-5 pl-6 vs:h-12 ssm:h-10 h-14 w-99 vs:w-full ssm:w-full">
+          NO REVIEWS</p>
+        </div>
+     <!-- </div> -->
+      </div>
       
 
     <!--Modal-->
