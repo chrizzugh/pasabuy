@@ -1,13 +1,15 @@
 <template class=" font-nunito">
 
     <div class="flex items-center ">
-      <router-link to="/">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16  block">
-      </router-link>
-        <h1 class="absolute text-xl font-black tracking-widest  left-16 font-raleway
-          text-red-buttons block
+     <router-link to="/">
+        <button class="flex focus:outline-none">
+        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 ">
+        <p class="mt-4 text-xl font-black tracking-widest font-raleway
+          text-red-buttons 
           
-           ">pasaBUY</h1>
+           ">pasaBUY</p>
+        </button>
+        </router-link>
       </div>
 
     <div id="verifyemail" class="flex items-center justify-center w-full  px-6  ">
