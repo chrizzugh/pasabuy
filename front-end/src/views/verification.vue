@@ -28,7 +28,7 @@ to verify yourself.</p>
         items-center justify-between">
               <div class="flex flex-col  items-start">
                 <span class="font-bold">By email</span>
-                <span class="text-gray-500   ">sarah_panadero@gmail.com</span>
+                <span class="text-gray-500   ">{{email}}</span>
               </div>
              <router-link to="/verify-email"> <button @click="nextPage" class="flex justify-center items-center bg-red-buttons w-max px-4 py-2
                h-8 text-white font-bold rounded-full focus:outline-none text-sm"><a> Verify Now</a></button></router-link>
@@ -40,7 +40,7 @@ to verify yourself.</p>
         items-center justify-between">
               <div class="flex flex-col  items-start">
                 <span class="font-bold">By phone number</span>
-                <span class="text-gray-500   ">+63 912 345 6789</span>
+                <span class="text-gray-500   ">{{phoneNumber}}</span>
               </div>
             <router-link to="/verifyPhone"> <button class="flex justify-center items-center bg-red-buttons w-max px-4 py-2
                h-8 text-white font-bold rounded-full focus:outline-none text-sm"><a> Verify Now</a></button></router-link>
@@ -84,7 +84,11 @@ to verify yourself.</p>
 import axios from 'axios'
 export default {
   data(){
-
+    return{
+      email: localStorage.getItem('personal').email,
+      phoneNumber: localStorage.getItem('personal').phoneNumber,
+    };
+    
   },
 methods:{
     nextPage(){
