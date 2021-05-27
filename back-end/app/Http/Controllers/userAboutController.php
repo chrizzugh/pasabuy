@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class userAboutController extends Controller
 {
     public function getUserAbout(){
-        $data = userAbout::orderBy('tbl_userabout.dateCreated','desc')->get();
+        $data = userAbout::orderBy('tbl_userAbout.dateCreated','desc')->get();
 
 		return response()->json($data);
     }
@@ -55,7 +55,7 @@ class userAboutController extends Controller
         date_default_timezone_set('Asia/Manila');
         $date = date('Y-m-d h:i:s');
 
-        DB::table('tbl_userabout')
+        DB::table('tbl_userAbout')
         ->where('indexUserAbout', $request->indexUserAbout)
         ->update(['skills' => $record,'dateModified' => $date]);
     }
@@ -99,7 +99,7 @@ class userAboutController extends Controller
             date_default_timezone_set('Asia/Manila');
             $date = date('Y-m-d h:i:s');
 
-            DB::table('tbl_userabout')
+            DB::table('tbl_userAbout')
             ->where('indexUserAbout', $request->indexUserAbout)
             ->update(['interests' => $record,'dateModified' => $date]);
     }
@@ -140,7 +140,7 @@ class userAboutController extends Controller
             date_default_timezone_set('Asia/Manila');
             $date = date('Y-m-d h:i:s');
             
-            DB::table('tbl_userabout')
+            DB::table('tbl_userAbout')
             ->where('indexUserAbout', $request->indexUserAbout)
             ->update(['visitedPlace' => $record,'dateModified' => $date]);
     }

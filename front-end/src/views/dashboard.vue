@@ -3253,6 +3253,7 @@ export default {
       var allPosts = this.posts.concat(this.allShares);
       this.sortedAllPosts = this.selectionSort(allPosts);
       this.filteringPosts = this.sortedAllPosts;
+      console.log("mark: ", this.posts)
     },
     deletePost(postNum) {
       api.delete("api/post/" + postNum + "/delete").then(() => {
@@ -3366,7 +3367,8 @@ export default {
     posts() {
       return store.getters.getPosts.filter((x) => {
         return (
-          x.postStatus == "Accepting Requests" ||
+          x.postStatus == "Accepting Request" ||
+          x.postStatus == "Cancelled" ||
           x.postStatus == "Accepting Offer"
         );
       });
@@ -3374,7 +3376,8 @@ export default {
     allShares() {
       return store.getters.getAllShares.filter((x) => {
         return (
-          x.post.postStatus == "Accepting Requests" ||
+          x.post.postStatus == "Accepting Request" ||
+          x.post.postStatus == "Cancelled" ||
           x.post.postStatus == "Accepting Offer"
         );
       });

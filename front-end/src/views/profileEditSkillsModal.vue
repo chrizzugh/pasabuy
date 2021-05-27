@@ -29,7 +29,7 @@
                   </option>
                 </select>
                 <!-- <input @keyup="add" class="flex items-center focus:outline-none justify-start lvs:text-sm vs:text-xs ssm:text-xs text-base outline-none leading-none text-gray-500  py-5 pl-4 bg-gray-100 rounded-xl vs:h-10 ssm:h-8 h-12 w-full vs:w-full ssm:w-full" placeholder="What do you activities like?"> -->
-                <button v-if="tempSkill == ''" :style="{opacity: 0.5}" @click="addSkill" class="focus:outline-none" disabled>
+                <button v-if="tempSkill == ''" :style="{opacity: 0.5}" class="focus:outline-none" disabled>
                   <span class="text-gray-700 material-icons text-3xl">
                   add_circle
                   </span>
