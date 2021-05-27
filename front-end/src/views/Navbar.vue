@@ -14,10 +14,14 @@
        <button class="material-icons 2xl:hidden xl:hidden lg:hidden ml-4 text-white block" @click="toggle_event()"> menu</button>
       <p class="uppercase font-bold 2xl:hidden xl:hidden lg:hidden block text-white h-full">{{currentRoute}}</p>
       <div class="flex items-center">
+        <router-link to="/">
+        <button class="focus-outline-none flex">
         <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 hidden 2xl:block xl:block lg:block">
         <h1 class="absolute text-xl font-black tracking-widest top-6 left-16 font-raleway
           2xl:text-red-700 xl:text-red-700 lg:text-red-700
          hidden 2xl:block xl:block lg:block ">pasaBUY</h1>
+         </button>
+        </router-link>
       </div>
        </div>
        <img v-if="currentRoute=='' " src="/img/pasaBUYwhiteLogo.png" class=" 2xl:hidden xl:hidden lg:hidden block"/>
@@ -87,10 +91,12 @@
   <div class="z-40 sidebar overscroll-y-contain overflow-auto lg:hidden 2xl:hidden border-r-2 h-max ssm:h-auto xl:hidden mt-20 bg-white font-bold text-gray-600 w-64 space-y-4 py-7 px-2 fixed inset-y-0 left-0 transform -translate-x-full  transition duration-200 ease-in-out">
 
     <!-- logo -->
-    <div class="flex mt-0">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-12  h-10">
+    <router-link to="/">
+    <button class="flex  items-center focus:outline-none mt-0">
+        <img src="/img/pasaBUYLogoOnly.png" class="w-12 h-10">
         <p class="text-2xl text-red-700 font-extrabold">pasaBUY</p>
-    </div>
+    </button>
+    </router-link>
     <!-- nav -->
     <nav class=" space-y-8">
        <router-link to="/dashboard" class="rounded-2xl   ">  
