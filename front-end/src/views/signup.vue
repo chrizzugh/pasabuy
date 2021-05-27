@@ -28,12 +28,11 @@
               >
                 <input
                   @input="capitalizeFName"
-                  
                   name=""
                   type="firstname"
                   required
                   class="capitalize relative block w-full px-3 py-2 mt-4 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300"
-                  placeholder="First Name (Eg. Angela)"
+                  placeholder="First Name"
                   v-model="PersonalInfo.firstName"
                   v-on:keypress="isLetter($event)"
                 />
@@ -47,31 +46,15 @@
               >
                 <input
                   @input="capitalizeLName"
-                 
                   aria-label="Last Name"
                   name=""
                   type="name"
                   required
                   class="capitalize relative block w-full px-3 py-2 mt-4 sm:mt-2 vs:mt-2 ssm:mt-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm"
-                  placeholder="Last Name (Eg. Hanabi)"
+                  placeholder="Last Name"
                   v-model="PersonalInfo.lastName"
                   v-on:keypress="isLetter($event)"
                 />
-              </div>
-              <div
-                v-if="displayReqLname"
-                class="frmValidation mb-3 ml-6 sm:ml-5 vs:ml-5 ssm:ml-5 w-full relative"
-              >
-                <p
-                  class="frmValidation flex relative relative"
-                  :class="{ 'frmValidation--passed': has_letter_Lname }"
-                >
-                  <i
-                    class="frmIcon fas"
-                    :class="has_letter_Lname ? 'fa-check' : 'fa-times'"
-                  ></i>
-                  Eg. Angela
-                </p>
               </div>
             </div>
 
@@ -91,7 +74,7 @@
 
           <div class="flex flex-row mb-4">
             <input
-              @input="email_check"
+              @input="ValidateEmail"
               @click="showReqEmail"
               @blur="hideReqEmail"
               aria-label="Email"
@@ -109,13 +92,13 @@
           >
             <p
               class="frmValidation flex relative relative"
-              :class="{ 'frmValidation--passed': has_special }"
+              :class="{ 'frmValidation--passed': emailvalidation }"
             >
               <i
                 class="frmIcon fas"
-                :class="has_special ? 'fa-check' : 'fa-times'"
+                :class="emailvalidation ? 'fa-check' : 'fa-times'"
               ></i>
-              Has @
+              Valid email
             </p>
           </div>
           <p class="text-center text-red-500">{{ error_email }}</p>
@@ -135,6 +118,7 @@
               ><img class="w-9 h-9" src="img/philippines.png"
             /></span>
             <input
+             @input="ValidateNumber"
               @click="showReqPNumber"
               @blur="hideReqPNumber"
               name=""
@@ -153,13 +137,13 @@
           >
             <p
               class="frmValidation flex relative relative"
-              :class="{ 'frmValidation--passed': has_number }"
+              :class="{ 'frmValidation--passed': numbervalidation }"
             >
               <i
                 class="frmIcon fas"
-                :class="has_number ? 'fa-check' : 'fa-times'"
+                :class="numbervalidation ? 'fa-check' : 'fa-times'"
               ></i>
-              Has a number
+              Valid Phone Number
             </p>
           </div>
 
@@ -534,6 +518,7 @@ export default {
         password_confirmation: "",
         valid: false,
       },
+
       errors: null,
       error_firstname: null,
       error_lastname: null,
@@ -547,15 +532,19 @@ export default {
       displayReqLname: false,
       displayReqPNumber: false,
       displayReqEmail: false,
+      emailvalidation:false,
+      numbervalidation:false,
       // displayReqPNumber:false,
     };
   },
 
   methods: {
-      capitalizeTheFirstLetterOfEachWord(words) {
+    capitalizeTheFirstLetterOfEachWord(words) {
       var separateWord = words.toLowerCase().split(" ");
       for (var i = 0; i < separateWord.length; i++) {
-        separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
+        separateWord[i] =
+          separateWord[i].charAt(0).toUpperCase() +
+          separateWord[i].substring(1);
       }
       return separateWord.join(" ");
     },
@@ -613,16 +602,27 @@ export default {
       this.has_special = /[/@ /.]/.test(this.PersonalInfo.email);
     },
 
-    
+    ValidateEmail() {
+      var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      this.emailvalidation = mailformat.test(this.PersonalInfo.email);
+    },
+    ValidateNumber() {
+      var numberformat = /^(\+?[6][3]?[ ]?[9]\d{2}[ ]?\d{3}[ ]?\d{4})$/;
+      this.numbervalidation = numberformat.test(this.PersonalInfo.phoneNumber);
+    },
     capitalizeFName: function () {
       // if (!this.PersonalInfo.firstName) return ''
       // this.PersonalInfo.firstName.toLowerCase().split(' ');
       // var hi= this.PersonalInfo.firstName.charAt(0).toUpperCase() + this.PersonalInfo.firstName.slice(1);
-       console.log(this.capitalizeTheFirstLetterOfEachWord(this.PersonalInfo.firstName));
+      console.log(
+        this.capitalizeTheFirstLetterOfEachWord(this.PersonalInfo.firstName)
+      );
     },
 
     capitalizeLName: function () {
-      console.log(this.capitalizeTheFirstLetterOfEachWord(this.PersonalInfo.lastName));
+      console.log(
+        this.capitalizeTheFirstLetterOfEachWord(this.PersonalInfo.lastName)
+      );
     },
 
     isLetter(e) {
@@ -639,7 +639,7 @@ export default {
     },
     nextPage() {
       // console.log("SSS: ",this.letter_check);
-       
+
       this.next = true;
 
       axios
