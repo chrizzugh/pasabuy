@@ -36,7 +36,7 @@
 
         <!--Delivery information list-->
          <div class="flex flex-col mt-1 vs:mt-1 ssm:px-2 vs:px-2 sm:px-2 justify-center items-center">
-             <div class="flex flex-row ssm:flex-col ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
+             <div class="flex flex-row ssm:flex-col vs:flex-col sm:flex-col vs:space-x-0 vs:space-y-2 sm:space-x-0 sm:space-y-2 ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
                 <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               delivery_dining  
@@ -135,7 +135,7 @@
              </div>
              </div>
 
-             <div class="flex flex-row ssm:flex-col ssm:space-x-0 ssm:space-y-2 ssm:pt-2 pt-3 space-x-4 w-full justify-center">
+             <div class="flex flex-row ssm:flex-col vs:flex-col sm:flex-col vs:space-x-0 vs:space-y-2 sm:space-x-0 sm:space-y-2 ssm:space-x-0 ssm:space-y-2 ssm:pt-2 pt-3 space-x-4 w-full justify-center">
                 <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               alarm  
@@ -171,7 +171,7 @@
                  </div>
              </div>
 
-             <div class="flex flex-row ssm:flex-col ssm:space-x-0 ssm:space-y-2 ssm:pt-2 pt-3 space-x-4 w-full justify-center">
+             <div class="flex flex-row ssm:flex-col vs:flex-col sm:flex-col vs:space-x-0 vs:space-y-2 sm:space-x-0 sm:space-y-2 ssm:space-x-0 ssm:space-y-2 ssm:pt-2 pt-3 space-x-4 w-full justify-center">
                 <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               shopping_bag  
@@ -240,7 +240,7 @@
 
         <!--Delivery Information List-->
          <div class="flex flex-col mt-1 ssm:px-2 sm:px-2 justify-center items-center vs:px-2">
-             <div class="flex flex-row ssm:flex-col ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
+             <div class="flex flex-row ssm:flex-col vs:flex-col sm:flex-col vs:space-x-0 vs:space-y-2 sm:space-x-0 sm:space-y-2 ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
                 <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               delivery_dining 
@@ -339,12 +339,12 @@
                 </div>
              </div>
 
-             <div class="flex flex-row pt-3 ssm:pt-2 ssm:flex-col ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
+             <div class="flex flex-row pt-3 ssm:pt-2 ssm:flex-col vs:flex-col sm:flex-col vs:space-x-0 vs:space-y-2 sm:space-x-0 sm:space-y-2 ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center">
                 <div class="flex space-x-2 vs:w-full sm:w-full">
                     <span class=" mt-1.5 rounded-full material-icons text-red-600">
               alarm
               </span>
-                    <input class="focus:outline-none sm:w-full ssm:w-full ssm:h-auto ssm:text-xs flex vs:w-full w-52 h-11 py-2.5 px-4 items-center vs:pr-0 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500" placeholder="Schedule">
+                    <input type="datetime-local" class="focus:outline-none sm:w-full ssm:w-full ssm:h-auto ssm:text-xs flex vs:w-full w-52 h-11 py-2.5 px-4 items-center vs:pr-0 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500" placeholder="Schedule">
                 </div>
                  
                <div class="flex space-x-2 vs:w-full sm:w-full">
