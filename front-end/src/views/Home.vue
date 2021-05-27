@@ -2,10 +2,14 @@
 <!-----nav bar----->
         <nav class="fixed z-10 flex items-center justify-between w-full py-4 xl:px-4 font-nunito" :class="{change_color: scrollPosition > 100}">
         <div class="absolute items-center ">
-        <img src="/img/pasaBUYwhiteLogo.png" class="w-12 h-12 mt-1 ml-3"/>
-          <label for="" class="absolute text-xl font-black tracking-widest text-white top-4 left-16 font-raleway vs:hidden ssm:hidden 2xl:text-2xl">
+        <router-link to="/" class="rounded-2xl">  
+        <button class="focus:outline-none flex">
+        <img src="/img/pasaBUYwhiteLogo.png" class="w-12 h-12 mt-1 ml-3"/>        
+          <p class="absolute text-xl font-black tracking-widest text-white top-4 left-16 font-raleway vs:hidden ssm:hidden 2xl:text-2xl">
             pasaBUY
-          </label>
+          </p>
+        </button>
+        </router-link>
       </div>
             <div class="flex items-center w-full mt-2 text-right ssm:flex ssm:justify-between sm:block xl:block 2xl:block vs:block lg:block md:block">
                 <button class="h-10 px-4 m-1 text-white transition-colors duration-150 border-2 border-white rounded-3xl focus:outline-none hover:bg-white-80 2xl:text-2xl"> <!--change hover color-->
