@@ -864,7 +864,7 @@
           class="flex flex-row w-full justify-around vs:space-x-2 sm:space-x-4 items-center p-4"
         >
           <button
-            @click="createNewShopList" v-if="false"
+            @click="createNewShopList"
             class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700"
           >
             <p class="text-base font-bold leading-none text-gray-900">
