@@ -27,6 +27,8 @@ import VerifyPhone from '../views/verifyPhone.vue'
 import SharedPostsSinglePage from '../views/SharedPostsSinglePage'
 import ShoppingOfferSinglePage from '../views/ShoppingOfferSinglePage'
 import OrderRequestSinglePage from '../views/OrderRequestSinglePage'
+import SinglePostOrder from '../views/singlePostorder.vue'
+import SinglePostDelivery from '../views/singlePostdelivery.vue'
 
 const routes = [
   {
@@ -191,6 +193,16 @@ const routes = [
     path: '/OrderRequestPosts',
     name: 'OrderRequestSinglePage',
     component: OrderRequestSinglePage
+  },
+   {
+    path: '/SinglePostOrder',
+    name: '',
+    component: SinglePostOrder
+  },
+  {
+    path: '/SinglePostDelivery',
+    name: '',
+    component: SinglePostDelivery
   },
 
 ]
