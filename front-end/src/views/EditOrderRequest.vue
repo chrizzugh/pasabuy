@@ -389,7 +389,7 @@
       <div v-if="openSelectShoppingList" class="hideIf2 font-nunito fixed z-50 inset-0 flex ssm:px-2 vs:px-2 sm:px-2 justify-center items-center">
        <div class="flex flex-col bg-white shadow rounded-xl h-auto w-550 ssm:w-full vs:w-full sm:w-full">
         <div class="flex justify-between items-center p-4 flex-row">
-          <button @click="openSelectShoppingList=!openSelectShoppingList, mainModal=!mainModal" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button>
+          <button @click="openSelectShoppingList=!openSelectShoppingList, mainModal=true" class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900">Back</button>
           <p class="text-2xl  ssm:text-sm se:text-base vs:text-lg font-bold leading-normal text-center text-gray-900">Select Shopping List</p>
           <button class="invisible text-sm font-bold leading-none text-right text-indigo-900">Close</button><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
         </div>
@@ -487,13 +487,13 @@
           <div class="flex flex-row items-center pt-2 space-x-4">
             <p class="text-base ssm:text-sm se:text-sm leading-7 text-gray-900">Quantity</p>
             <div class="flex flex-row space-x-2">
-              <button class="focus:outline-none">
+              <button @click="Quantity++" class="focus:outline-none">
                 <span class="material-icons bg-gray-100  text-red-700">
                 add
                 </span>
               </button>
               <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none">
+              <button @click="Quantity = minusQty(Quantity)" class="focus:outline-none">
                 <span class="material-icons bg-gray-100 text-red-700">
                 remove
                 </span>
@@ -523,13 +523,13 @@
             </div>
           </div>
            <div class="flex items-center flex-row space-x-2">
-              <button class="flex focus:outline-none">
+              <button @click="item.quantity++" class="flex focus:outline-none">
                 <span class="material-icons bg-gray-100  text-red-700">
                 add
                 </span>
               </button>
               <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">1</p>
-              <button class="flex focus:outline-none">
+              <button @clik="item.quantity = minusQty(item.quantity)" class="flex focus:outline-none">
                 <span class="material-icons bg-gray-100 text-red-700">
                 remove
                 </span>
@@ -573,13 +573,13 @@
           <div class="flex flex-row items-center pt-2 space-x-4">
             <p class="text-base ssm:text-sm se:text-sm leading-7 text-gray-900">Quantity</p>
             <div class="flex flex-row space-x-2">
-              <button class="focus:outline-none">
+              <button @click="Quantity++" class="focus:outline-none">
                 <span class="material-icons bg-gray-100  text-red-700">
                 add
                 </span>
               </button>
               <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none">
+              <button @click="Quantity = minusQty(Quantity)" class="focus:outline-none">
                 <span class="material-icons bg-gray-100 text-red-700">
                 remove
                 </span>
@@ -833,7 +833,7 @@
       >
         <div class="flex justify-between items-center p-4 flex-row">
           <button
-            @click="openSelectShoppingList=!openSelectShoppingList, mainModal=!mainModal"
+            @click="showSelectShopListModal=!showSelectShopListModal, mainModal=true"
             class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
           >
             Back
@@ -1178,7 +1178,9 @@ export default {
       this.showEditShopListModal = !this.showEditShopListModal
       this.openSelectShoppingList = !this.openSelectShoppingList
       this.mainModal = !this.mainModal
-      this.shopping_info = this.oldList
+      if(this.oldList!=null){
+        this.shopping_info = this.oldList
+      }
       console.log("old list", this.selectedList)
     },
     editShopListAtSelectShopList(){

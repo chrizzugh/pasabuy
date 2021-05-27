@@ -3,6 +3,7 @@
   <div
     v-on:click.self="close"
     class="z-50 bg-black font-nunito bg-opacity-25 fixed inset-0 flex ssm:px-2 vs:px-2 sm:px-2 justify-center items-center"
+    v-if="mainModal"
   >
     <div
       class="hideIf inline-flex flex-col space-y-2 bg-white shadow rounded-xl h-auto w-550 ssm:w-full vs:w-full sm:w-full"
@@ -583,96 +584,125 @@
                   </div>
                 </div>
               </div>
-<div class="flex space-x-2 sm:w-full">
-        <span class="mt-1.5 rounded-full material-icons text-red-600">
-          shopping_cart
-        </span>
-          <div class="sm:w-full">
-          <input
-            @click="dropdown4 = !dropdown4, dropdown2=false, dropdown3=false,dropdown1=false"
-            type="text"
-            id="myInput"
-            v-on:keyup="myFunction()"
-            placeholder="Shopping Place"
-            title="Shopping Place"
-            class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 px-4 items-center py-2.5 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
-            v-model="shoppingPlaceRequest"
-          />
-            <!-- {{shoppingPlace}} -->
-          <!-- </button> -->
-          <div class="relative">
+              <div class="flex space-x-2 sm:w-full">
+                <span class="mt-1.5 rounded-full material-icons text-red-600">
+                  shopping_cart
+                </span>
+                <div class="sm:w-full">
+                  <input
+                    @click="
+                      (dropdown4 = !dropdown4),
+                        (dropdown2 = false),
+                        (dropdown3 = false),
+                        (dropdown1 = false)
+                    "
+                    type="text"
+                    id="myInput"
+                    v-on:keyup="myFunction()"
+                    placeholder="Shopping Place"
+                    title="Shopping Place"
+                    class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 px-4 items-center py-2.5 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
+                    v-model="shoppingPlaceRequest"
+                  />
+                  <!-- {{shoppingPlace}} -->
+                  <!-- </button> -->
+                  <div class="relative">
+                    <div
+                      v-if="dropdown4"
+                      class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52"
+                    >
+                      <div
+                        class="flex flex-col w-full px-2 justify-start items-start"
+                      >
+                        <div
+                          id="scroll1"
+                          class="flex px-2 flex-col overflow-y-scroll w-full h-24"
+                        >
+                          <ul id="myUL" class="space-y-1">
+                            <li
+                              v-for="(sp, index) in shoppingPlaces"
+                              :key="index"
+                              @click="
+                                setShoppingPlaceRequest(index);
+                                dropdown4 = !dropdown4;
+                              "
+                            >
+                              <a href="#" :id="'spR' + index">{{
+                                sp.shoppingPlace
+                              }}</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div
-              v-if="dropdown4"
-              class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52"
+              class="flex flex-row pt-3 ssm:pt-2 ssm:flex-col ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center"
             >
-              <div class="flex flex-col w-full px-2 justify-start items-start">
-           
-                <div
-                  id="scroll1"
-                  class="flex px-2 flex-col overflow-y-scroll w-full h-24"
-                >
-                  <ul id="myUL" class="space-y-1" >
-                    <li v-for="(sp, index) in shoppingPlaces" :key="index" @click="setShoppingPlaceRequest(index);dropdown4=!dropdown4"><a href="#" :id="'spR'+index">{{sp.shoppingPlace}}</a></li>
-                  </ul>
+              <div class="flex space-x-2 sm:w-full">
+                <span class="mt-1.5 rounded-full material-icons text-red-600">
+                  alarm
+                </span>
+                <input
+                  type="datetime-local"
+                  class="focus:outline-none sm:w-full ssm:w-full ssm:h-auto ssm:text-xs flex vs:w-full w-52 h-11 py-2.5 px-4 items-center vs:pr-0 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
+                  placeholder="Schedule"
+                  v-model="schedRequest"
+                />
+              </div>
+
+              <div class="flex space-x-2 sm:w-full">
+                <span class="mt-1.5 rounded-full material-icons text-red-600">
+                  payments
+                </span>
+                <div class="sm:w-full">
+                  <button
+                    @click="
+                      (dropdown8 = !dropdown8),
+                        (dropdown6 = false),
+                        (dropdown3 = false),
+                        (dropdown4 = false)
+                    "
+                    class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
+                  >
+                    {{ paymentRequest }}
+                  </button>
+                  <div class="relative">
+                    <div
+                      v-if="dropdown8"
+                      class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52"
+                    >
+                      <div
+                        v-for="(pm, index) in Payments"
+                        :key="index"
+                        class="flex flex-col w-full space-y-3 px-2 justify-start items-start"
+                      >
+                        <button
+                          @click="
+                            setPaymentRequest(index);
+                            dropdown8 = !dropdown8;
+                          "
+                          class="flex w-full focus:outline-none justify-start items-start px-2"
+                        >
+                          <p
+                            :id="'pmR' + index"
+                            class="text-sm tracking-wide leading-none text-gray-900"
+                          >
+                            {{ pm }}
+                          </p>
+                        </button>
+                        <hr class="flex w-full" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="flex flex-row pt-3 ssm:pt-2 ssm:flex-col ssm:space-x-0 ssm:space-y-2 space-x-4 w-full justify-center"
-    >
-      <div class="flex space-x-2 sm:w-full">
-        <span class="mt-1.5 rounded-full material-icons text-red-600">
-          alarm
-        </span>
-        <input
-        type="datetime-local"
-          class="focus:outline-none sm:w-full ssm:w-full ssm:h-auto ssm:text-xs flex vs:w-full w-52 h-11 py-2.5 px-4 items-center vs:pr-0 bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
-          placeholder="Schedule"
-          v-model="schedRequest"
-        />
-      </div>
-
-      <div class="flex space-x-2 sm:w-full">
-        <span class="mt-1.5 rounded-full material-icons text-red-600">
-          payments
-        </span>
-          <div class="sm:w-full">
-          <button
-            @click="dropdown8 = !dropdown8, dropdown6=false, dropdown3=false,dropdown4=false"
-            class="focus:outline-none flex sm:w-full ssm:w-full ssm:h-auto ssm:text-xs vs:w-full w-52 h-11 py-2.5 px-4 items-center bg-gray-100 rounded-xl text-sm vs:text-xs lvs:text-sm leading-none text-gray-500"
-          >
-            {{paymentRequest}}
-          </button>
-          <div class="relative">
-            <div
-              v-if="dropdown8"
-              class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-52"
-            >
-              <div
-                v-for="(pm,index) in Payments" :key="index"
-                class="flex flex-col w-full space-y-3 px-2 justify-start items-start"
-              >
-                <button
-                  @click="setPaymentRequest(index); dropdown8=!dropdown8"
-                  class="flex w-full focus:outline-none justify-start items-start px-2"
-                >
-                  <p :id="'pmR'+index" class="text-sm tracking-wide leading-none text-gray-900">
-                    {{pm}}
-                  </p>
-                </button>
-                <hr class="flex w-full" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
           <!--end-->
 
           <!--Select Shopping List button-->
@@ -704,52 +734,64 @@
                   <p
                     class="text-base ssm:text-sm font-bold leading-none text-gray-900"
                   >
-                    {{selectedList.shoppingListTitle}}
+                    {{ selectedList.shoppingListTitle }}
                   </p>
-                  <p class="text-base ssm:text-sm leading-none text-gray-500" >
-                    ({{isFew()}} items)
+                  <p class="text-base ssm:text-sm leading-none text-gray-500">
+                    ({{ isFew() }} items)
                   </p>
                 </div>
-                   <div>
-               <button @click="listEdit = !listEdit" class="focus:outline-none">
-                 <span class="material-icons text-lg vs:text-sm ssm:text-sm">
-                  more_vert
-                </span>
-               </button>
-               <div class="relative w-full">
-              <div v-if="listEdit" class="absolute flex flex-col space-y-2 p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
-              <button @click="editShopList" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
-               <span class=" material-icons text-base  text-gray-900 ">
-                mode
-               </span>
-                Edit
-              </button>
-              <button @click="hidePrevious" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
-               <span class=" material-icons text-base  text-gray-900 ">
-                autorenew
-               </span>
-                Change
-              </button>
-              </div>
-              </div>
-               </div>
+                <div>
+                  <button
+                    @click="listEdit = !listEdit"
+                    class="focus:outline-none"
+                  >
+                    <span class="material-icons text-lg vs:text-sm ssm:text-sm">
+                      more_vert
+                    </span>
+                  </button>
+                  <div class="relative w-full">
+                    <div
+                      v-if="listEdit"
+                      class="absolute flex flex-col space-y-2 p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30"
+                    >
+                      <button
+                        @click="editShopList"
+                        class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2"
+                      >
+                        <span class="material-icons text-base text-gray-900">
+                          mode
+                        </span>
+                        Edit
+                      </button>
+                      <button
+                        @click="hidePrevious"
+                        class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2"
+                      >
+                        <span class="material-icons text-base text-gray-900">
+                          autorenew
+                        </span>
+                        Change
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 id="scroll1"
                 class="flex flex-col justify-start items-start px-4 text-sm w-full overflow-y-auto space-y-4 mt-4 h-22"
               >
-              <span   v-for="shoppingItems in computedShopItemList"
-                  :key="shoppingItems">
-                <li
-                  class="text-base w-full vs:text-sm ssm:text-sm leading-none text-gray-900"
-                  v-if="shoppingItems.status == 1 "
+                <span
+                  v-for="shoppingItems in computedShopItemList"
+                  :key="shoppingItems"
                 >
-                
-                 {{ shoppingItems.product }} ({{ shoppingItems.size }}) ·
-                  {{ shoppingItems.brand }} [{{ shoppingItems.quantity }}]
-     
-                </li>
-              </span>
+                  <li
+                    class="text-base w-full vs:text-sm ssm:text-sm leading-none text-gray-900"
+                    v-if="shoppingItems.status == 1"
+                  >
+                    {{ shoppingItems.product }} ({{ shoppingItems.size }}) ·
+                    {{ shoppingItems.brand }} [{{ shoppingItems.quantity }}]
+                  </li>
+                </span>
               </div>
               <button
                 @click="showMoreshowLess"
@@ -826,37 +868,51 @@
         <hr class="w-full" />
         <div class="flex w-full px-4 pt-4">
           <div class="flex flex-col overflow-y-auto h-72 w-full space-y-3">
-            <div class="flex flex-row w-full justify-between items-center" v-for="list in shoppingLists" :key="list.shoppingListNumber">
+            <div
+              class="flex flex-row w-full justify-between items-center"
+              v-for="list in shoppingLists"
+              :key="list.shoppingListNumber"
+            >
               <div class="space-x-2">
                 <label class="inline-flex items-center">
                   <input
                     type="radio"
                     class="form-radio w-4 h-4 vs:w-3 vs:h-3 lvs:w-4 lvs:h-4"
-                    :id="'listNumber'+list.shoppingListNumber"
+                    :id="'listNumber' + list.shoppingListNumber"
                   />
                   <span
                     class="ml-5 text-base ssm:text-xs vs:text-sm lvs:text-base"
-                    >{{list.shoppingListTitle}}</span
+                    >{{ list.shoppingListTitle }}</span
                   >
                 </label>
               </div>
-                <div>
-                <button  @click="edit2=list.shoppingListNumber; edit3=!edit3" class="focus:outline-none">
-                <span class="material-icons vs:text-xs">
-                  more_vert
-                </span>
+              <div>
+                <button
+                  @click="
+                    edit2 = list.shoppingListNumber;
+                    edit3 = !edit3;
+                  "
+                  class="focus:outline-none"
+                >
+                  <span class="material-icons vs:text-xs"> more_vert </span>
                 </button>
                 <div class="relative w-full">
-              <div v-if="edit2==list.shoppingListNumber && edit3 " class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30">
-              <button @click="editShopListAtSelectShopList" class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2">
-               <span class=" material-icons text-base  text-gray-900 ">
-                mode
-               </span>
-                Edit
-              </button>
-              </div>
-              </div>
+                  <div
+                    v-if="edit2 == list.shoppingListNumber && edit3"
+                    class="absolute p-2 leading-loose rounded-lg border-2 border-gray-100 bg-white right-0 w-30"
+                  >
+                    <button
+                      @click="editShopListAtSelectShopList"
+                      class="flex flex-row items-center font-normal text-base leading-none text-gray-900 focus:outline-none gap-x-2"
+                    >
+                      <span class="material-icons text-base text-gray-900">
+                        mode
+                      </span>
+                      Edit
+                    </button>
+                  </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -894,7 +950,7 @@
       >
         <div class="flex justify-between items-center p-4 flex-row">
           <button
-            @click="showPreviousModal2;"
+            @click="showPreviousModal2"
             class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
           >
             Back
@@ -932,87 +988,183 @@
           </div>
           <div class="flex space-y-2 flex-col w-full overflow-y-auto h-64 px-4">
             <div class="flex flex-row items-center space-x-3 select-none pl-3">
-              <span @click="new_item=!new_item" class="cursor-pointer material-icons">
-              add_circle
+              <span
+                @click="new_item = !new_item"
+                class="cursor-pointer material-icons"
+              >
+                add_circle
               </span>
               <p class="">Add new item</p>
-             
             </div>
-            <div v-if="new_item" class="ring-1 ring-gray-400 p-5 space-y-3 rounded-xl">
-              <input id="product" type="text" placeholder="Product" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
-            <div class="flex flex-row space-x-2">
-                <input id="brand" type="text" placeholder="Brand" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
-                <input id="size" type="text" placeholder="Size" class="w-40 rounded-xl pl-5 focus:outline-none h-10  bg-gray-100"/>
-            </div>
-            <div class="flex flex-row space-x-2">
-              <p class="font-bold">Quantity</p>
-             <span @click="quantity++" class="material-icons select-none cursor-pointer text-red-700">
-              add
-            </span>
-              <p id="quants">asd{{quantity}}</p>
-            <span @click="quantity--" class="material-icons select-none cursor-pointer text-red-700">
-            remove
-            </span>
-            </div>
-             <div class="flex justify-end">
-               <div class="space-x-3">   
-              <button @click="new_item=false;" class="ring-2 rounded-2xl h-6 w-20 font-bold  ring-red-buttons focus:outline-none">Cancel</button>
-              <button  @click="add_newItem()" class="ring-2 rounded-2xl h-6 w-20 font-bold text-white  ring-red-buttons focus:outline-none bg-red-buttons">Add</button>
-               </div>
-            </div>
+            <div
+              v-if="new_item"
+              class="ring-1 ring-gray-400 p-5 space-y-3 rounded-xl"
+            >
+              <input
+                id="product"
+                type="text"
+                placeholder="Product"
+                class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
+              />
+              <div class="flex flex-row space-x-2">
+                <input
+                  id="brand"
+                  type="text"
+                  placeholder="Brand"
+                  class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
+                />
+                <input
+                  id="size"
+                  type="text"
+                  placeholder="Size"
+                  class="w-40 rounded-xl pl-5 focus:outline-none h-10 bg-gray-100"
+                />
+              </div>
+              <div class="flex flex-row space-x-2">
+                <p class="font-bold">Quantity</p>
+                <span
+                  @click="quantity++"
+                  class="material-icons select-none cursor-pointer text-red-700"
+                >
+                  add
+                </span>
+                <p id="quants">{{ quantity }}</p>
+                <span
+                  @click="quantity = minusQty(quantity)"
+                  class="material-icons select-none cursor-pointer text-red-700"
+                >
+                  remove
+                </span>
+              </div>
+              <div class="flex justify-end">
+                <div class="space-x-3">
+                  <button
+                    @click="new_item = false"
+                    class="ring-2 rounded-2xl h-6 w-20 font-bold ring-red-buttons focus:outline-none"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    @click="add_newItem1()"
+                    class="ring-2 rounded-2xl h-6 w-20 font-bold text-white ring-red-buttons focus:outline-none bg-red-buttons"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
             </div>
 
-          <div v-if="saveItem1" class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4 px-0.5">
-            <div class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900">
-              <input @click="editDisItem1" type="checkbox" class="editItemButton opacity-0 absolute">
-              <img src="img/check-mark.svg" class="thisCheck fill-current hidden w-3 h-3 text-black font-bold pointer-events-none">
+            <div
+              v-if="saveItem1"
+              class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4 px-0.5"
+            >
+              <div
+                class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
+              >
+                <input
+                  @click="editDisItem1"
+                  type="checkbox"
+                  class="editItemButton opacity-0 absolute"
+                />
+                <img
+                  src="img/check-mark.svg"
+                  class="thisCheck fill-current hidden w-3 h-3 text-black font-bold pointer-events-none"
+                />
+              </div>
+              <div class="flex flex-col space-y-2">
+                <p
+                  class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
+                >
+                  Powdered Sugar (1 kg)
+                </p>
+                <p
+                  class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
+                >
+                  Any brand
+                </p>
+              </div>
             </div>
-            <div class="flex flex-col space-y-2">
-              <p class="text-base ssm:text-sm se:text-sm leading-none text-gray-900">Powdered Sugar (1 kg)</p>
-              <p class="text-base ssm:text-sm se:text-sm leading-none text-gray-900">Any brand</p>
+            <div
+              v-if="editItem1"
+              class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white"
+            >
+              <div
+                class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2"
+              >
+                <p class="text-sm leading-3 text-gray-500">Product</p>
+                <input
+                  v-model="filter_itemList[0].item"
+                  class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900"
+                />
+              </div>
+              <div class="flex flex-row space-x-2">
+                <div
+                  class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2"
+                >
+                  <p class="text-sm leading-3 text-gray-500">Brand</p>
+                  <input
+                    v-model="filter_itemList[0].brand"
+                    class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900"
+                  />
+                </div>
+                <div
+                  class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2"
+                >
+                  <p class="text-sm leading-3 text-gray-500">Size</p>
+                  <input
+                    v-model="filter_itemList[0].amount"
+                    class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-row items-center pt-2 space-x-4">
+                <p
+                  class="text-base ssm:text-sm se:text-sm leading-7 text-gray-900"
+                >
+                  Quantity
+                </p>
+                <div class="flex flex-row space-x-2">
+                  <button class="focus:outline-none">
+                    <span class="material-icons bg-gray-100 text-red-700">
+                      add
+                    </span>
+                  </button>
+                  <p
+                    class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900"
+                  >
+                    {{ Quantity }}
+                  </p>
+                  <button class="focus:outline-none">
+                    <span class="material-icons bg-gray-100 text-red-700">
+                      remove
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="flex flex-row justify-end items-center ssm:space-x-1 space-x-2"
+              >
+                <button
+                  @click="editDisItemAndUnchecked"
+                  class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700"
+                >
+                  <p
+                    class="text-base ssm:text-sm se:text-sm font-bold leading-none text-gray-900"
+                  >
+                    Cancel
+                  </p>
+                </button>
+                <button
+                  class="focus:outline-none inline-flex px-4 py-2.5 bg-red-700 rounded-full"
+                >
+                  <p
+                    class="text-base ssm:text-sm se:text-sm font-bold leading-none text-white"
+                  >
+                    Save
+                  </p>
+                </button>
+              </div>
             </div>
-          </div>
-            <div v-if="editItem1" class="flex flex-col space-y-2 h-auto w-full rounded-xl border-2 p-4 border-gray-200 bg-white">
-          <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
-            <p class="text-sm leading-3 text-gray-500">Product</p>
-            <input v-model="filter_itemList[0].item" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
-          </div>
-          <div class="flex flex-row space-x-2">
-            <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
-             <p class="text-sm leading-3 text-gray-500">Brand</p>
-             <input v-model="filter_itemList[0].brand" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
-            </div>
-            <div class="flex bg-gray-100 rounded-xl w-full flex-col space-y-1 h-auto p-2">
-             <p class="text-sm leading-3 text-gray-500">Size</p>
-             <input v-model="filter_itemList[0].amount" class="bg-gray-100 w-full h-4 focus:outline-none text-base leading-none text-gray-900 "/>
-            </div>
-          </div>
-          <div class="flex flex-row items-center pt-2 space-x-4">
-            <p class="text-base ssm:text-sm se:text-sm leading-7 text-gray-900">Quantity</p>
-            <div class="flex flex-row space-x-2">
-              <button class="focus:outline-none">
-                <span class="material-icons bg-gray-100  text-red-700">
-                add
-                </span>
-              </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{Quantity}}</p>
-              <button class="focus:outline-none">
-                <span class="material-icons bg-gray-100 text-red-700">
-                remove
-                </span>
-              </button>
-            </div>
-          </div>
-          <div class="flex flex-row justify-end items-center ssm:space-x-1 space-x-2">
-            <button @click="editDisItemAndUnchecked" class="focus:outline-none inline-flex px-4 py-2 border-2 rounded-full border-red-700">
-             <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-gray-900">Cancel</p>
-            </button>
-            <button class="focus:outline-none inline-flex px-4 py-2.5 bg-red-700 rounded-full">
-             <p class="text-base ssm:text-sm se:text-sm font-bold leading-none text-white">Save</p>
-            </button>
-          </div>
-          </div>
-
           </div>
           <div class="flex px-4 justify-end items-center">
             <p class="text-xs leading-none text-gray-500">Updated 7:13 PM</p>
@@ -1022,7 +1174,7 @@
           class="flex flex-row w-full justify-around vs:space-x-2 sm:space-x-4 items-center p-4"
         >
           <button
-            @click="showPreviousModal2;"
+            @click="showPreviousModal2"
             class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2 border-2 rounded-full border-red-700"
           >
             <p class="text-base font-bold leading-none text-gray-900">Cancel</p>
@@ -1085,85 +1237,133 @@
             </button>
           </div>
           <div class="flex flex-row items-center space-x-3 select-none pl-3">
-              <span @click="new_item=!new_item" class="cursor-pointer material-icons">
+            <span
+              @click="new_item = !new_item"
+              class="cursor-pointer material-icons"
+            >
               add_circle
-              </span>
-              <p class="">Add new item</p>
-             
-            </div>
-            <div v-if="new_item" class="ring-1 ring-gray-400 p-5 space-y-3 rounded-xl">
-              <input id="product1" type="text" placeholder="Product" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
+            </span>
+            <p class="">Add new item</p>
+          </div>
+          <div
+            v-if="new_item"
+            class="ring-1 ring-gray-400 p-5 space-y-3 rounded-xl"
+          >
+            <input
+              id="product1"
+              type="text"
+              placeholder="Product"
+              class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
+            />
             <div class="flex flex-row space-x-2">
-                <input id="brand1" type="text" placeholder="Brand" class="rounded-xl pl-5 w-full focus:outline-none h-10  bg-gray-100"/>
-                <input id="size1" type="text" placeholder="Size" class="w-40 rounded-xl pl-5 focus:outline-none h-10  bg-gray-100"/>
+              <input
+                id="brand1"
+                type="text"
+                placeholder="Brand"
+                class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
+              />
+              <input
+                id="size1"
+                type="text"
+                placeholder="Size"
+                class="w-40 rounded-xl pl-5 focus:outline-none h-10 bg-gray-100"
+              />
             </div>
             <div class="flex flex-row space-x-2">
               <p class="font-bold">Quantity</p>
-             <span @click="quantity++" class="material-icons select-none cursor-pointer text-red-700">
-              add
-            </span>
-              <p id="quants">{{quantity}}</p>
-            <span @click="quantity = minusQty(quantity)" class="material-icons select-none cursor-pointer text-red-700">
-            remove
-            </span>
+              <span
+                @click="quantity++"
+                class="material-icons select-none cursor-pointer text-red-700"
+              >
+                add
+              </span>
+              <p id="quants">{{ quantity }}</p>
+              <span
+                @click="quantity = minusQty(quantity)"
+                class="material-icons select-none cursor-pointer text-red-700"
+              >
+                remove
+              </span>
             </div>
-             <div class="flex justify-end">
-               <div class="space-x-3">   
-              <button @click="new_item=false;" class="ring-2 rounded-2xl h-6 w-20 font-bold  ring-red-buttons focus:outline-none">Cancel</button>
-              <button  @click="add_newItem()" class="ring-2 rounded-2xl h-6 w-20 font-bold text-white  ring-red-buttons focus:outline-none bg-red-buttons">Add</button>
-               </div>
+            <div class="flex justify-end">
+              <div class="space-x-3">
+                <button
+                  @click="new_item = false"
+                  class="ring-2 rounded-2xl h-6 w-20 font-bold ring-red-buttons focus:outline-none"
+                >
+                  Cancel
+                </button>
+                <button
+                  @click="add_newItem()"
+                  class="ring-2 rounded-2xl h-6 w-20 font-bold text-white ring-red-buttons focus:outline-none bg-red-buttons"
+                >
+                  Add
+                </button>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
         <div
           id="scroll1"
           class="flex flex-col py-1 px-2 vs:px-2 ssm:px-1 overflow-y-auto h-40 vs:h-36 ssm:space-y-1 vs:space-y-2 space-y-4 w-full"
         >
-         <div class="flex flex-row w-full justify-between items-center space-x-3" v-for="item in selectedList.shoppingListContent" :key="item.id">
-          <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
-            <div
-              class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
-            >
-              <input type="checkbox" class="opacity-0" :checked="item.status === 1" :id="'check'+item.id"/>
-              <img
-                src="img/check-mark.svg"
-                class="fill-current hidden w-3 h-3 text-black mr-3 font-bold pointer-events-none"
-              />
-            </div>
-            <div class="flex flex-col space-y-2">
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
+          <div
+            class="flex flex-row w-full justify-between items-center space-x-3"
+            v-for="item in selectedList.shoppingListContent"
+            :key="item.id"
+          >
+            <div class="flex flex-row vs:space-x-2 ssm:space-x-1 space-x-4">
+              <div
+                class="itemButtons bg-white border-2 rounded-none w-4 h-4 flex flex-shrink-0 justify-center items-center mr-2 border-gray-900"
               >
-                {{item.product}} ({{item.size}})
-              </p>
-              <p
-                class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
-              >
-                {{item.brand}}
-              </p>
+                <input
+                  type="checkbox"
+                  class="opacity-0"
+                  :checked="item.status === 1"
+                  :id="'check' + item.id"
+                />
+                <img
+                  src="img/check-mark.svg"
+                  class="fill-current hidden w-3 h-3 text-black mr-3 font-bold pointer-events-none"
+                />
+              </div>
+              <div class="flex flex-col space-y-2">
+                <p
+                  class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
+                >
+                  {{ item.product }} ({{ item.size }})
+                </p>
+                <p
+                  class="text-base ssm:text-sm se:text-sm leading-none text-gray-900"
+                >
+                  {{ item.brand }}
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="flex flex-row space-x-2 items-center">
+            <div class="flex flex-row space-x-2 items-center">
               <button class="focus:outline-none flex" @click="item.quantity++">
-                <span class="material-icons bg-gray-100  text-red-700">
-                add
+                <span class="material-icons bg-gray-100 text-red-700">
+                  add
                 </span>
               </button>
-              <p class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900">{{item.quantity}}</p>
-              <button class="focus:outline-none flex" @click="item.quantity = minusQty(item.quantity)">
+              <p
+                class="text-base ssm:text-sm se:text-sm items-center flex leading-none text-gray-900"
+              >
+                {{ item.quantity }}
+              </p>
+              <button
+                class="focus:outline-none flex"
+                @click="item.quantity = minusQty(item.quantity)"
+              >
                 <span class="material-icons bg-gray-100 text-red-700">
-                remove
+                  remove
                 </span>
               </button>
               <button class="focus:outline-none flex">
-                <span class="material-icons">
-                more_vert
-                </span>
+                <span class="material-icons"> more_vert </span>
               </button>
             </div>
           </div>
-
-       
         </div>
         <div
           class="flex flex-row w-full justify-around vs:space-x-2 ssm:space-x-1 sm:space-x-4 items-center py-4"
@@ -1179,7 +1379,7 @@
             </p>
           </button>
           <button
-          @click="editShoppingList"
+            @click="editShoppingList"
             class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full"
           >
             <p
@@ -1201,10 +1401,10 @@ import store from "../store/index";
 import $ from "jquery";
 import api from "../api";
 export default {
-  props:['activeList','showList'],
+  props: ["activeList", "showList"],
   data() {
     return {
-      listEdit:false,
+      listEdit: false,
       component: "shopOfferPost",
       component2: "orderRequestPost",
       isVisible: true,
@@ -1218,8 +1418,8 @@ export default {
       showCreateOrderRequest: true,
       showShopListButton: !this.showList,
       showItemList: this.showList,
-      selectedList:this.activeList,
-      countItems: 8, 
+      selectedList: this.activeList,
+      countItems: 8,
       ShoppingListTitle: "Weekly Grocery List",
       showEditShopListModal: false,
       Quantity: 1,
@@ -1257,17 +1457,16 @@ export default {
       dropdown6: false,
       dropdown7: false,
       dropdown8: false,
-      shoppingPlaceRequest: 'Shopping Place',
-      captionRequest:null,
-      schedRequest:null,
-      paymentRequest:'Payment Method',
+      shoppingPlaceRequest: "Shopping Place",
+      captionRequest: null,
+      schedRequest: null,
+      paymentRequest: "Payment Method",
       deliveryAddress: "Delivery Address",
       address1: "Banquerohan,Legazpi City",
       address2: "Buraguis Legazpi City",
       address3: "United State of Bicol",
       address4: "Maski Sain City",
       //end
-
 
       //ShopList Items temporary data
       filter_itemList: [
@@ -1324,21 +1523,21 @@ export default {
       default_limit: 3,
       showListStatus: "See More",
       showLessStatus: "See Less",
-      new_item:false,
-      new_items:[],
-      quantity:1,
-      ctr:0,
-      oldList:[],
-      edit2:null,
-      edit3:false,
-      editListFlag:false
+      new_item: false,
+      new_items: [],
+      quantity: 1,
+      ctr: 0,
+      oldList: [],
+      edit2: null,
+      edit3: false,
+      editListFlag: false,
+      mainModal: true,
 
       //end
     };
   },
-  created(){
-    console.log('fter',this.selectedList,this.showList)
-    
+  created() {
+    console.log("fter", this.selectedList, this.showList);
   },
   methods: {
     postOffer() {
@@ -1381,7 +1580,7 @@ export default {
         shoppingListContent: this.selectedList.shoppingListContent,
       };
       this.$emit("closeModal");
-      console.log('request form',form)
+      console.log("request form", form);
       store.dispatch("createPostRequest", form).then(() => {
         store.dispatch("getPosts").then(() => {
           store.dispatch("getShoppingPlaces");
@@ -1390,29 +1589,44 @@ export default {
         });
       });
     },
-    editShoppingList(){
+    editShoppingList() {
       for (var i = 0; i < this.selectedList.shoppingListContent.length; i++) {
-        console.log(this.selectedList.shoppingListContent[i].id)
-        console.log(!document.getElementById("check" + this.selectedList.shoppingListContent[i].id).checked)
+        console.log(this.selectedList.shoppingListContent[i].id);
+        console.log(
+          !document.getElementById(
+            "check" + this.selectedList.shoppingListContent[i].id
+          ).checked
+        );
 
-        if (!document.getElementById("check" + this.selectedList.shoppingListContent[i].id).checked) {
+        if (
+          !document.getElementById(
+            "check" + this.selectedList.shoppingListContent[i].id
+          ).checked
+        ) {
           //if true uncheck the status
           this.selectedList.shoppingListContent[i].status = 0;
         } else {
           this.selectedList.shoppingListContent[i].status = 1;
         }
       }
-      console.log('asdadadadsw',this.selectedList)
-      api.post('api/editList/'+this.selectedList.shoppingListNumber, {listName:this.selectedList.shoppingListTitle, list:this.selectedList.shoppingListContent}).then(()=>{
-         store.dispatch("getUserShoppingList").then(() => {
+      console.log("asdadadadsw", this.selectedList);
+      api
+        .post("api/editList/" + this.selectedList.shoppingListNumber, {
+          listName: this.selectedList.shoppingListTitle,
+          list: this.selectedList.shoppingListContent,
+        })
+        .then(() => {
+          store.dispatch("getUserShoppingList").then(() => {
             this.showEditShopListModal = !this.showEditShopListModal;
+            this.mainModal = true;
             $(".hideIf").fadeIn();
-         })
-      }).catch(()=>{
-        console.log("error editing lsit")
-      })
+          });
+        })
+        .catch(() => {
+          console.log("error editing lsit");
+        });
     },
-  add_newItem() {
+    add_newItem() {
       let x = document.getElementById("product1").value;
       let y = document.getElementById("brand1").value;
       let z = document.getElementById("size1").value;
@@ -1434,20 +1648,46 @@ export default {
         this.selectedList.shoppingListContent.push(datax);
         // this.new_items.push(datax);
         this.new_item = false;
-        console.log('new list',this.selectedList.shoppingListContent);
+        console.log("new list", this.selectedList.shoppingListContent);
       }
     },
-    minusQty(q){
-      q--
-      if(q<=0)
-        return 1
-      return q
+      add_newItem1() {
+      let x = document.getElementById("product").value;
+      let y = document.getElementById("brand").value;
+      let z = document.getElementById("size").value;
+      let n = this.quantity;
+      if (x == "" || y == "" || z == "" || n <= 0) {
+        alert("Empty Field");
+        return false;
+      } else {
+        let datax = {
+          id: this.ctr,
+          product: x,
+          brand: y,
+          size: z,
+          quantity: n,
+          status: 1,
+          statusDeliver: 0,
+        };
+        this.ctr++;
+        this.selectedList.shoppingListContent.push(datax);
+        // this.new_items.push(datax);
+        this.new_item = false;
+        console.log("new list", this.selectedList.shoppingListContent);
+      }
     },
-    setShoppingPlaceRequest(index){
-        this.shoppingPlaceRequest = document.getElementById('spR'+index).innerHTML
+    minusQty(q) {
+      q--;
+      if (q <= 0) return 1;
+      return q;
     },
-    setPaymentRequest(index){
-        this.paymentRequest = document.getElementById('pmR'+index).innerHTML
+    setShoppingPlaceRequest(index) {
+      this.shoppingPlaceRequest = document.getElementById(
+        "spR" + index
+      ).innerHTML;
+    },
+    setPaymentRequest(index) {
+      this.paymentRequest = document.getElementById("pmR" + index).innerHTML;
     },
     toggleShopOfferbtn() {
       this.showCreateShoppingOffer = true;
@@ -1467,11 +1707,11 @@ export default {
         this.activeBtn = el;
       }
     },
-     hidePrevious(){
-        this.showSelectShopListModal= !this.showSelectShopListModal;
-        $('.hideIf').fadeOut()
-        this.listEdit = false
-        },
+    hidePrevious() {
+      this.showSelectShopListModal = !this.showSelectShopListModal;
+      $(".hideIf").fadeOut();
+      this.listEdit = false;
+    },
     showPreviousModal1() {
       this.showSelectShopListModal = false;
       $(".hideIf").fadeIn();
@@ -1484,50 +1724,76 @@ export default {
       this.showCreateNewShopListModal = !this.showCreateNewShopListModal;
       // this.showCreateNewShopListModal = !this.showCreateNewShopListModal;
       $(".hideIf2").fadeIn();
-      console.log('exiting',this.selectedList)
+      console.log("exiting", this.selectedList);
     },
     confirmShopList() {
       this.showShopListButton = false;
       var tempList = this.shoppingLists;
-      for(var i=0; i< tempList.length;i++){
-        if(document.getElementById('listNumber'+tempList[i].shoppingListNumber).checked){
-         this.selectedList = tempList[i]
-        //  this.selectedList.shoppingListContent = filtered_list
+      for (var i = 0; i < tempList.length; i++) {
+        if (
+          document.getElementById("listNumber" + tempList[i].shoppingListNumber)
+            .checked
+        ) {
+          this.selectedList = tempList[i];
+          //  this.selectedList.shoppingListContent = filtered_list
         }
       }
-      console.log('selected List',this.selectedList)
+      console.log("selected List", this.selectedList);
       this.showItemList = true;
       this.showSelectShopListModal = !this.showSelectShopListModal;
       $(".hideIf").fadeIn();
     },
-    editShopListAtSelectShopList(){
-       this.showShopListButton = false;
+    editShopListAtSelectShopList() {
+      this.showShopListButton = false;
       this.showItemList = true;
       var tempList = this.shoppingLists;
-      console.log('selected List',tempList, this.edit2)
-      var temp = tempList.filter((x)=>{return x.shoppingListNumber === this.edit2})
-      this.selectedList = temp[0]
-      console.log('selected List',this.selectedList)
-      this.showSelectShopListModal = !this.showSelectShopListModal;
-      this.showEditShopListModal = !this.showEditShopListModal;
-      this.ctr = this.selectedList.shoppingListContent.id+1
-      this.oldList = JSON.parse(JSON.stringify(this.selectedList))
-      $(".hideIf").fadeIn();
+      var temp;
+      console.log("selected List before 0 or 1", this.selectedList);
+console.log(this.selectedList == null, 'asldfalsdfl')
+      if (this.selectedList == null) {
+       temp = tempList.filter((x) => {
+          return x.shoppingListNumber === this.edit2;
+        });
+        this.selectedList = temp[0];
+        console.log("selected List on 0", this.selectedList);
+        this.showSelectShopListModal = !this.showSelectShopListModal;
+        this.showEditShopListModal = !this.showEditShopListModal;
+        this.mainModal = !this.mainModal;
+        this.ctr = this.selectedList.shoppingListContent.id + 1;
+        this.oldList = [];
+        $(".hideIf").fadeIn();
+      } else {
+        temp = tempList.filter((x) => {
+          return x.shoppingListNumber === this.edit2;
+        });
+        this.selectedList = temp[0];
+        console.log("selected List on > 0", this.selectedList);
+        this.showSelectShopListModal = !this.showSelectShopListModal;
+        this.showEditShopListModal = !this.showEditShopListModal;
+        this.mainModal = !this.mainModal;
+        this.ctr = this.selectedList.shoppingListContent.id + 1;
+        this.oldList = JSON.parse(JSON.stringify(this.selectedList));
+        $(".hideIf").fadeIn();
+      }
     },
     showPreviousModal3() {
       this.showEditShopListModal = !this.showEditShopListModal;
+      if(this.selectedList.length <= 0){
+        this.showShopListButton = true;
+        this.showItemList = false;
+      }
       $(".hideIf").fadeIn();
-      console.log('exiting selected',this.selectedList)
-      this.selectedList = this.oldList
-      console.log('exiting active',this.selectedList)
-      this.edit2=false
-
+      console.log("exiting selected", this.selectedList);
+      this.selectedList = this.oldList;
+      console.log("exiting active", this.selectedList);
+      this.mainModal = true;
+      this.edit2 = false;
     },
     editShopList() {
       $(".hideIf").fadeOut();
       this.showEditShopListModal = !this.showEditShopListModal;
-      this.ctr = this.selectedList.shoppingListContent.id+1
-      this.oldList = JSON.parse(JSON.stringify(this.selectedList))
+      this.ctr = this.selectedList.shoppingListContent.id + 1;
+      this.oldList = JSON.parse(JSON.stringify(this.selectedList));
     },
     showMoreshowLess() {
       this.isActive = !this.isActive;
@@ -1763,10 +2029,12 @@ export default {
           console.log(errors);
         });
     },
-     isFew(){
-      var temp = this.selectedList.shoppingListContent
-      var temp1 = temp.filter((x)=>{return x.status ==1})
-      return temp1.length
+    isFew() {
+      var temp = this.selectedList.shoppingListContent;
+      var temp1 = temp.filter((x) => {
+        return x.status == 1;
+      });
+      return temp1.length;
     },
     //end
   },
@@ -1782,10 +2050,10 @@ export default {
   },
   computed: {
     computedShopItemList() {
-      var temp = this.selectedList.shoppingListContent.filter((x)=>{return x.status ==1})
-      return (this.limit_by 
-        ? temp.slice(0, this.limit_by)
-        : temp);
+      var temp = this.selectedList.shoppingListContent.filter((x) => {
+        return x.status == 1;
+      });
+      return this.limit_by ? temp.slice(0, this.limit_by) : temp;
     },
     user() {
       console.log("user personal", store.getters.getPersonal);
@@ -1840,35 +2108,35 @@ export default {
 .fadeSlide-leave-active {
   transition: all 0.3s ease-in-out;
 }
-.fadeSlide2-enter-from{
+.fadeSlide2-enter-from {
   transform: translate(-30%, -50%) !important;
   -webkit-transform: translate(-30%, -50%) !important;
-  opacity:0
+  opacity: 0;
 }
-.fadeSlide2-enter-to{
+.fadeSlide2-enter-to {
   transform: translate(-50%, -50%) !important;
   -webkit-transform: translate(-50%, -50%) !important;
-  opacity:1
+  opacity: 1;
 }
-.fadeSlide2-enter-active{
-  transition: all .3s ease-in-out;
+.fadeSlide2-enter-active {
+  transition: all 0.3s ease-in-out;
 }
 
-.fadeSlide2-leave-from{
+.fadeSlide2-leave-from {
   transform: translate(-50%, -50%) !important;
   -webkit-transform: translate(-50%, -50%) !important;
-  opacity:1
+  opacity: 1;
 }
-.fadeSlide2-leave-to{
+.fadeSlide2-leave-to {
   transform: translate(-30%, -50%) !important;
   -webkit-transform: translate(-30%, -50%) !important;
-  opacity:0
+  opacity: 0;
 }
-.fadeSlide2-leave-active{
-  transition: all .3s ease-in-out
+.fadeSlide2-leave-active {
+  transition: all 0.3s ease-in-out;
 }
-.uncheckedMe{
-  display: none
+.uncheckedMe {
+  display: none;
 }
 
 #txt {
@@ -1967,7 +2235,6 @@ textarea {
 }
 
 #myInput1 {
- 
   background-position: 8px 4px;
   background-repeat: no-repeat;
   background-size: 24px;
