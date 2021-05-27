@@ -2,9 +2,14 @@
 
     <div class="flex items-center ">
         <router-link to="/">
-        <img src="/img/pasaBUYLogoOnly.png" class="block w-16 h-16 ">
+        <button class="flex focus:outline-none">
+        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16  block">
+        <p class="mt-4 text-xl font-black tracking-widest font-raleway
+          text-red-buttons block
+          
+           ">pasaBUY</p>
+        </button>
         </router-link>
-        <h1 class="absolute block text-xl font-black tracking-widest left-16 font-raleway text-red-buttons">pasaBUY</h1>
       </div>
     <div id="signup" class="flex items-center justify-center px-4 pb-10">
       <div class="w-full my-12 overflow-hidden text-center bg-white shadow-md flex-grow-1 rounded-xl xl:w-2/5 lg:w-2/5 2xl:w-2/5 md:w-97 sm:w-97 ">
