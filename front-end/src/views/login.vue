@@ -149,10 +149,12 @@ export default {
       this.show = !this.show
       this.logginIn1 = !this.logginIn1
       
-      // axios.get("http://localhost:8000/sanctum/csrf-cookie",{withCredentials: true}).then(() => {
+      axios.get("http://localhost:8000/sanctum/csrf-cookie",{withCredentials: true,xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN'}).then(() => {
         // Login...
         axios
-          .post("http://localhost:8000/api/login", this.dataForm,{withCredentials: true})
+          .post("http://localhost:8000/api/login", this.dataForm,{withCredentials: true,xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN'})
           .then((res) => {
             sessionStorage.setItem("isLoggedIn", true);
             sessionStorage.setItem("sessionCookieNotify", true)
@@ -172,7 +174,7 @@ export default {
             // this.logginIn = false
             this.logginIn1 = !this.logginIn1
           });
-      // });
+      });
       // setTimeout(() => {
       //   this.isLoading = false;
       // }, 5000);

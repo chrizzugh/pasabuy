@@ -10,6 +10,8 @@ const api = axios.create({
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
     },
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
     withCredentials: true
 });
 
