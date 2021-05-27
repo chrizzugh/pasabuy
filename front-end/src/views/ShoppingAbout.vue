@@ -52,30 +52,13 @@
 
   <!--section 2.2-->
   <div class="flex">
-    <div class="flex space-x-4 items-start justify-start p-6 bg-white shadow rounded-xl h-auto w-74 ssm:w-full">     
-      <div class="flex-col w-full">
+    <div class="flex flex-col space-x-4 items-center justify-center p-6 bg-white shadow rounded-xl h-auto w-74 ssm:w-full">     
+      <div class="flex-col">
         <div class="flex flex-col">
           <div class="inline-flex justify-between">
             <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Education</p>
             <button v-if="userPersonal.email == account_infos.email" @click="$router.push('/account-settings')" class="text-sm ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
           </div>
-                <!-- <div
-            class="text-sm w-full gap-x-10 pt-8 space-y-8 xl:w-97 2xl:w-97 lg:w-97"
-            v-for="userEduc in userEducs"
-            :key="userEduc"
-          >
-            <span class="font-raleways font-bold grid grid-cols-1">
-              <p v-if="userEduc.schoolStatus === 'Current'" class="text-gray-500">
-                Studied at
-                <strong class="text-black">{{ userEduc.schoolName }}</strong>
-              </p>
-              <p v-if="userEduc.schoolStatus === 'Previous'" class="text-gray-500">
-                Went to <strong class="text-black">{{ userEduc.schoolName }}</strong>
-              </p>
-
-              <p></p>
-            </span>
-          </div> -->
           <div class="flex flex-col py-4">
           <div v-for="userEduc in userEducs"
             :key="userEduc" class="inline-flex space-x-2">
