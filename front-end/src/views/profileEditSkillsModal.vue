@@ -60,7 +60,7 @@
         </div>
         
         <div class="flex space-x-4 pb-4 flex-row w-full justify-center items-center">
-            <button class="focus:outline-none inline-flex items-center justify-center w-full px-4 py-0.5 border-2 rounded-full border-gray-900">
+            <button @click.prevent="close" class="focus:outline-none inline-flex items-center justify-center w-full px-4 py-0.5 border-2 rounded-full border-gray-900">
               <p class="text-base font-bold leading-normal text-center text-gray-900">Cancel</p>
             </button>
             <button v-if="useremail" @click="update" class="focus:outline-none inline-flex items-center justify-center w-full px-4 py-1.5 bg-red-700 rounded-full">
@@ -119,7 +119,9 @@ export default {
           this.tempSkill = ''
           }
           else{
-            alert("You already have this Skill");
+            // alert("You already have this Skill");
+            VueSimpleAlert.alert("You already have this in your Skills List", "Alert", "error")
+
           }
           
         },

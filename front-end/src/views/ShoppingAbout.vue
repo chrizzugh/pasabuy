@@ -83,12 +83,12 @@
               </span>
             <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">From <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{accountaddress.barangay}}, {{accountaddress.cityMunicipality}}</span></p>
           </div>
-          <div class="inline-flex space-x-2">
+          <!-- <div class="inline-flex space-x-2">
             <span class="rounded-full material-icons text-gray-500">
               location_on
               </span>
             <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">Lives in <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{accountaddress.barangay}}, {{accountaddress.cityMunicipality}}</span></p>
-          </div>
+          </div> -->
         </div>
       </div> 
     </div>
@@ -133,7 +133,7 @@
           </div>
           <div class="flex flex-col space-y-2.5 ssm:space-y-1 ">
             <div class="inline-flex">
-              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{basic_info.work}}</p>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{account_infos.work}}</p>
             </div>
             <div class="inline-flex">
               <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{account_infos.gender}}</p>
@@ -142,7 +142,7 @@
               <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{timestamp(account_infos.birthDate)}}</p>
             </div>
             <div class="inline-flex">
-              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{userLang}}</p>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{account_infos.language}}</p>
             </div>
           </div>
         </div>
@@ -341,6 +341,14 @@ export default {
     timestamp(datetime){
       return moment(datetime).format('LL');
     },
+    // getWorks() {
+    //   console.log('works lumabas ka');
+    //   api.get("/api/getWorks").then((res) => {
+    //     this.works = res.data;
+    //     console.log('Works: ', this.works);
+    //   });
+      
+    
   },
   computed:{
     account_infos(){

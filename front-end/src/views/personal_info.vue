@@ -25,7 +25,7 @@
              <span class="  font-raleways font-bold grid grid-cols-2 "> 
         <p class="text-gray-500">NAME</p>
         <span>
-        <p >{{userPersonal.firstName}} {{userPersonal.lastName}}</p>
+        <p >{{userPersonal.firstName}} {{userPersonal.middleName}} {{userPersonal.lastName}}</p>
        </span>
         </span>
         <span class=" font-raleways font-bold  grid grid-cols-2 ">
@@ -88,18 +88,14 @@
             ">
                 <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Firstname</span> <input id="f_name"   type="text" v-model="userPersonal.firstName" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                  </div>
-                <!-- <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Middlename</span> <input id="m_name" type="text" v-model="personal.midname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
-                </div> -->
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Middlename</span> <input id="m_name" type="text" v-model="userPersonal.middleName" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                </div>
                 <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Lastname</span> <input id="l_name" type="text" v-model="userPersonal.lastName" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
                 <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Phone number </span> <input id="p_number" type="text" v-model="userPersonal.phoneNumber" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200" v-on:keypress=isNumber($event) :maxlength="16" v-mask="'+63 ### ### ####'"/>
                 </div>
                 <div class="flex flex-col">
                   <span class="ml-2 text-gray-500 font-bold  text-sm">Work </span> 
-                  <!-- <input id="work" type="text" v-model="search" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/> -->
-                  <!-- <div v-for="workLists in workList" :key="workLists"> -->
-                    <!-- {{ workLists }} -->
-                  <!-- </div> -->
                   
                   
                   <div >
@@ -113,9 +109,6 @@
                   {{wrk.work}}
                   </option>
                 </select>
-                <!-- <div v-for="work in workList" :key="work">
-                    {{ work }}
-                  </div> -->
 
                   <div class="flex w-full h-auto overflow-y-auto">
                   <div class="flex-1 py-1 space-y-4 items-start justify-start w-full h-auto item-start">
@@ -154,9 +147,6 @@
                   {{language.languages}}
                   </option>
                 </select>
-                <!-- <div v-for="work in workList" :key="work">
-                    {{ work }}
-                  </div> -->
 
                   <div class="flex w-full h-auto overflow-y-auto">
                   <div class="flex-1 py-1 space-y-4 items-start justify-start w-full h-auto item-start">
@@ -213,6 +203,7 @@ export default {
       search: "",
       personal: {
         firstname: "",
+        middlename: "",
         lastname: "",
         phone_number: "",
         work: "",
@@ -224,6 +215,7 @@ export default {
       },
       old: {
         firstname: "",
+        middlename: "",
         lastname: "",
         phone_number: "",
         work: "",
@@ -243,8 +235,6 @@ export default {
       else e.preventDefault(); // If not match, don't add to input text
     },
     addWork() {
-      // var d = document.getElementById("work");
-      // console.log("workList",d)
 
       // var work=d.options[d.selectedIndex].text;
       console.log("work", this.userPersonal.work);
@@ -258,10 +248,6 @@ export default {
       console.log("workList", this.workList);
     },
     addLanguage() {
-      // var d = document.getElementById("work");
-      // console.log("workList",d)
-
-      // var work=d.options[d.selectedIndex].text;
 
       if (!this.languagesList.includes(this.userPersonal.language)) {
         this.languagesList.push(this.userPersonal.language);
@@ -270,11 +256,12 @@ export default {
         alert("You already have this Work");
       }
 
-      console.log("Language", this.languagesList);
+      console.log("languagesList", this.languagesList);
     },
     save_data() {
       var personal = {
         firstname: this.userPersonal.firstName,
+        middlename: this.userPersonal.middleName,
         lastname: this.userPersonal.lastName,
         phone_number: this.userPersonal.phoneNumber,
         gender: this.userPersonal.gender,
@@ -348,20 +335,24 @@ export default {
     setOldData() {
       this.errors = "";
       this.old.firstname = this.userPersonal.firstName;
+      this.old.middlename = this.userPersonal.middleName;
       this.old.lastname = this.userPersonal.lastName;
       this.old.phone_number = this.userPersonal.phoneNumber;
       this.old.work = this.userPersonal.work;
       this.old.gender = this.userPersonal.gender;
-      this.old.language = this.userPersonal.languages;
+      this.old.language = this.userPersonal.language;
       this.old.birdate = this.userPersonal.birthDate;
     },
     getOldData() {
       this.userPersonal.firstName = this.old.firstname;
+      this.userPersonal.middleName = this.old.middlename;
       this.userPersonal.lastName = this.old.lastname;
       this.userPersonal.phoneNumber = this.old.phone_number;
-      this.personal.work = this.old.work;
+      this.userPersonal.work = this.old.work;
+      this.workList = (this.old.work).split(',');
       this.userPersonal.gender = this.old.gender;
-      this.userPersonal.languages = this.old.language;
+      this.userPersonal.language = this.old.language;
+      this.languagesList = (this.old.language).split(',');
       this.userPersonal.birthDate = this.old.birdate;
     },
     change_profile(e) {
@@ -414,5 +405,11 @@ export default {
     //   });
     // }
   },
+  created() {
+        // console.log("Skilled",this.userPersonal);
+    
+          this.workList = (this.userPersonal.work).split(',');
+          this.languagesList = (this.userPersonal.language).split(',');
+  }
 };
 </script>

@@ -107,7 +107,9 @@ export default {
           this.tempVisitedPlaces = ''
           }
           else{
-            alert("You already visited this Place");
+            // alert("You already visited this Place");
+            VueSimpleAlert.alert("You already have this in your Visited Places List", "Alert", "error")
+
           }
         },
         submit(){

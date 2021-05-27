@@ -16,9 +16,10 @@
       class="w-full px-3 flex flex-col justify-center self-center gap-y-5 space-y-4 2xl:w-608 2xl:mr-16 lg:w-608 lg:mr-16 xl:w-608 xl:mr-16 md:w-8/12 sm:w-10/12"
     >
       <Personal />
+      <Education />
       <Address />
       <InfoAccount />
-      <Education />
+      
       <div class="ring-1 ring-gray-300 bg-white p-5 rounded-2xl shadow-sm">
         <div class="flex justify-between">
           <div class="flex gap-4">
