@@ -152,7 +152,7 @@ export default {
       // axios.get("http://localhost:8000/sanctum/csrf-cookie",{withCredentials: true}).then(() => {
         // Login...
         axios
-          .post("https://localhost:8000/api/login", this.dataForm,{withCredentials: true})
+          .post("http://localhost:8000/api/login", this.dataForm,{withCredentials: true})
           .then((res) => {
             sessionStorage.setItem("isLoggedIn", true);
             sessionStorage.setItem("sessionCookieNotify", true)
