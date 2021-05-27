@@ -108,7 +108,9 @@ export default {
           this.tempInterest = ''
           }
           else{
-            alert("You already have this Interest");
+            // alert("You already have this Interest");
+            VueSimpleAlert.alert("You already have this in your Interest List", "Alert", "error")
+
           }
         },
         submit(){

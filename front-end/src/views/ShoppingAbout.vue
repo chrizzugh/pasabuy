@@ -52,20 +52,20 @@
 
   <!--section 2.2-->
   <div class="flex">
-    <div class="flex space-x-4 items-start justify-start p-6 bg-white shadow rounded-xl h-auto w-74 ssm:w-full">     
-      <div class="flex-col w-full">
+    <div class="flex flex-col space-x-4 items-center justify-center p-6 bg-white shadow rounded-xl h-auto w-74 ssm:w-full">     
+      <div class="flex-col">
         <div class="flex flex-col">
           <div class="inline-flex justify-between">
             <p class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold tracking-wide leading-none text-center text-gray-900 capitalize">Education</p>
             <button v-if="userPersonal.email == account_infos.email" @click="$router.push('/account-settings')" class="text-sm ssm:text-xs vs:text-xs lvs:text-sm font-bold leading-none text-center text-indigo-900">Edit</button>
           </div>
-          <div class="inline-flex space-x-2 py-4">
-            <img class="w-6 h-6 rounded-full" src="img/graduation_cap.svg"/>
-            <p class="text-sm  ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">Studied at <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{education_info.school1}}</span> </p>
+          <div class="flex flex-col py-4">
+          <div v-for="userEduc in userEducs"
+            :key="userEduc" class="inline-flex space-x-2">
+            <img  class="w-6 h-6 rounded-full" src="img/graduation_cap.svg"/>
+            <p v-if="userEduc.schoolStatus === 'Current'" class="text-sm  ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">Studied at <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{ userEduc.schoolName }}</span> </p>
+            <p v-if="userEduc.schoolStatus === 'Previous'" class="text-sm  ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">Went to <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{ userEduc.schoolName }}</span> </p>
           </div>
-          <div class="inline-flex space-x-2">
-            <img class="w-6 h-6 rounded-full" src="img/graduation_cap.svg"/>
-            <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">Went to <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{education_info.school2}}</span> </p>
           </div>
           <div class="py-3">
             <hr class="border-gray-200 w-full" style=" height: 1px;">
@@ -83,12 +83,12 @@
               </span>
             <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">From <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{accountaddress.barangay}}, {{accountaddress.cityMunicipality}}</span></p>
           </div>
-          <div class="inline-flex space-x-2">
+          <!-- <div class="inline-flex space-x-2">
             <span class="rounded-full material-icons text-gray-500">
               location_on
               </span>
             <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-normal text-gray-900 py-1">Lives in <span class="ssm:text-xs vs:text-xs lvs:text-sm font-bold">{{accountaddress.barangay}}, {{accountaddress.cityMunicipality}}</span></p>
-          </div>
+          </div> -->
         </div>
       </div> 
     </div>
@@ -133,7 +133,7 @@
           </div>
           <div class="flex flex-col space-y-2.5 ssm:space-y-1 ">
             <div class="inline-flex">
-              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{basic_info.work}}</p>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{account_infos.work}}</p>
             </div>
             <div class="inline-flex">
               <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{account_infos.gender}}</p>
@@ -142,7 +142,7 @@
               <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{timestamp(account_infos.birthDate)}}</p>
             </div>
             <div class="inline-flex">
-              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{userLang}}</p>
+              <p class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900">{{account_infos.language}}</p>
             </div>
           </div>
         </div>
@@ -175,9 +175,11 @@
 <!--section 2 end-->
 
 <!--Section 1-->
+   <!-- <div class="flex flex-col space-x-4 items-center justify-center p-6 bg-white shadow rounded-xl h-auto w-74 ssm:w-full">      -->
+
 <div class="flex flex-col ssm:px-2 h-auto ssm:h-auto sm:h-auto vs:h-auto ssm:w-full vs:w-full sm:w-full">
 <div class="flex py-6 sm:py-0 ssm:py-0 ssm:pb-6 sm:pb-6 vs:py-0 vs:pb-6">
-  <div class="inline-flex space-x-4 items-start justify-start p-6 bg-white shadow rounded-xl h-auto w-608 ssm:w-full vs:w-full sm:w-full">     
+  <div class="inline-flex space-x-4 items-start justify-start p-6 bg-white shadow rounded-xl h-auto w-608 ssm:w-full vs:w-74 sm:w-74 ssm:ml-6 vs:ml-6 sm:ml-6">     
     <div class="flex flex-col w-full">
 
       <!--Skills section-->
@@ -341,6 +343,14 @@ export default {
     timestamp(datetime){
       return moment(datetime).format('LL');
     },
+    // getWorks() {
+    //   console.log('works lumabas ka');
+    //   api.get("/api/getWorks").then((res) => {
+    //     this.works = res.data;
+    //     console.log('Works: ', this.works);
+    //   });
+      
+    
   },
   computed:{
     account_infos(){
@@ -371,6 +381,12 @@ export default {
         })
         return (this.rating/this.counter).toFixed(1)
       },
+      
+    userEducs(){
+      console.log("ssssss", store.getters.getAuthEducation);
+      return store.getters.getAuthEducation;
+      
+    },
     
     
   },

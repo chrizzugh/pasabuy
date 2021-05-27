@@ -212,6 +212,7 @@ class userInformationController extends Controller
         $userEmail = Auth::User()->email;
         $user = userInformation::where('email',$userEmail)->first();
         $user->firstName = $request->firstname;
+        $user->middleName = $request->middlename;
         $user->lastName = $request->lastname;
         $user->phoneNumber = $request->phone_number;
         $user->gender = $request->gender;

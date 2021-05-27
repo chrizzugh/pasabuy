@@ -12,7 +12,9 @@ class educationController extends Controller
     public function getEduc()
     {
         # code...
-        return DB::select('SELECT * from tbl_usereducation WHERE email = \'' . Auth::user()->email . '\'');
+        // return DB::select('SELECT * from tbl_usereducation WHERE email = \'' . Auth::user()->email . '\'');
+        $data = DB::select('SELECT * FROM tbl_usereducation ORDER BY  schoolName');
+
         // $data = userAbout::all();
 
 		return response()->json($data);
