@@ -1,15 +1,20 @@
+
 <template class=" bg-gray-bgcolor font-nunito">
 
 <!----nav bar (!logged In)--->
-<nav class="sticky top-0 flex items-center w-full h-12 py-5 shadow-md bg-red-buttons">
+ <nav class="sticky top-0 flex items-center w-full py-5 shadow-md h-14 bg-red-buttons">
       <div class="flex items-center justify-center pl-4">
-      <img src="/img/pasaBUYwhiteLogo.png" class="block w-8 h-8 pl-1">
+        <router-link to="/" >
+       <div class="flex items-center justify-center pl-4">
+      <img  src="/img/pasaBUYwhiteLogo.png" class="block w-8 h-8 pl-1">
         <h1 class="block pl-1 text-lg font-black tracking-widest text-white font-raleway">pasaBUY</h1>
         </div>
+        </router-link>
         <div class="absolute border-black items-align-right justify justify-right right-7">
-          <button class="px-3 text-xs font-semibold text-white uppercase bg-transparent border border-white rounded-full focus:outline-none h-7">
+          <button class="px-3 text-xs font-semibold text-white uppercase bg-transparent border border-white rounded-full h-7 focus:outline-none">
         <router-link to="/log-in"> Log in</router-link>
       </button>
+        </div>
         </div>
         
         <div class="w-full">
@@ -18,8 +23,7 @@
             <router-link to="/"  class="flex flex-row text-black gap-x-2">Log out</router-link>
           </div>
         </div>
-  </nav> <!----end of nav bar--->
-
+  </nav>  <!----end of nav bar--->
   <!------->
   <div class="flex justify-center xl:mt-10 xl:mb-20 2xl:mt-10 2xl:mb-20 lg:mt-10 lg:mb-20 ">
     <div class="flex self-center justify-center w-full 2xl:w-3/5 xl:w-3/5 lg:w-3/5 h-98" >
@@ -34,16 +38,20 @@
                   </div>
                   <div class="flex flex-col justify-center w-full px-3 md:px-7 2xl:pl-3 xl:pl-3 lg:pl-3">
                         <div @click=" isActive_function('btn1')" :class="{active: activeBtn === 0 }" >
-                            <button @click="toggle" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Creating an Account</a></button>
+                            <button @click="toggle" class="w-full px-3 pl-5 text-base leading-none text-left bg-transparent rounded-full pt-2 vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">
+                            <span class="inline-flex py-1 pl-2 align-middle material-icons w-9 h-9">person</span>Creating an Account</a></button>
                         </div>
                         <div @click=" isActive_function('btn2')" :class="{active: activeBtn === 'btn2' }">
-                            <button @click ="toggle2" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Navigating Pasabuy</a></button>
+                            <button @click ="toggle2" class="w-full px-3 pt-2 pl-5 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">
+                              <span class="inline-flex py-1 pl-2 align-middle material-icons w-9 h-9">apps</span>Navigating Pasabuy</a></button>
                         </div>
                         <div @click=" isActive_function('btn3')" :class="{active: activeBtn === 'btn3' }">
-                            <button @click="toggle3" class="w-full px-3 py-2 pl-5 mb-2 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">Managing Your Profile </a></button>
+                            <button @click="toggle3" class="w-full px-3 pt-2 pl-5 text-base leading-none text-left bg-transparent rounded-full vs:text-sm vs:pl-7 focus:bg-crimsonRed text-red-buttons focus:outline-none font-nunito vs:py-1.5"><a class="text-black">
+                              <span class="inline-flex py-1 pl-2 align-middle material-icons w-9 h-9">manage_accounts</span>Managing Your Profile </a></button>
                         </div>
                         <div @click=" isActive_function('btn4')" :class="{active: activeBtn === 'btn4' }" >
-                            <button @click="toggle4" class="w-full py-2 pl-5 mb-2 leading-none text-left bg-transparent rounded-full text-md vs:pl-7 focus:bg-crimsonRed vs:text-sm text-red-buttons focus:outline-none font-nunito"><a class="text-black">Expanding Your Connections </a></button>
+                            <button @click="toggle4" class="w-full pt-2 pl-5 leading-none text-left bg-transparent rounded-full text-md vs:pl-7 focus:bg-crimsonRed vs:text-sm text-red-buttons focus:outline-none font-nunito"><a class="text-black ">
+                              <span class="inline-flex py-1 pl-2 align-middle material-icons w-9 h-9">supervisor_account</span>Expanding Your Connections </a></button>
                         </div>
 
                   </div>
@@ -96,7 +104,7 @@
                     </div>
                 </div>
             </div>    
-    </footer>     <!---end of footer---->
+    </footer>      <!---end of footer---->
       
 
 </template>
@@ -134,7 +142,6 @@ import NavigatingPasabuy from './helpNavAcc'
 import ManagingYourProfile from './helpManageProfile'
 import ExpandingYourConnection from './helpExpandCon'
 import $ from 'jquery'
-
 export default {
   data(){
         return{
@@ -142,7 +149,6 @@ export default {
             component2: "NavigatingPasabuy",
             component3: "ManagingYourProfile",
             component4: "ExpandingYourConnection",
-
             isOpen: false,
             isClick: false,
             activeBtn: 0,
@@ -153,14 +159,12 @@ export default {
   created: function () {
     document.body.style.backgroundColor = "rgb(235,235,235)";
   },
-
   components:{
     CreateAccount,
     NavigatingPasabuy,
     ManagingYourProfile,
     ExpandingYourConnection,
   },
-
   methods:{
     toggle(){
       if(this.component != CreateAccount)
@@ -192,7 +196,6 @@ export default {
 }
 </script>
 <style scoped>
-
 .active {
   color:rgba(220, 20, 60, 1);  
   background-color: #CD0F0F, 100%;
