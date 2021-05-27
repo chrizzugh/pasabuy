@@ -24,6 +24,9 @@ import ReturnAndRefundPolicy from '../views/returnPolicy.vue'
 import AboutUs from '../views/aboutUs.vue'
 import Verification from '../views/verification.vue'
 import VerifyPhone from '../views/verifyPhone.vue'
+import SharedPostsSinglePage from '../views/SharedPostsSinglePage'
+import ShoppingOfferSinglePage from '../views/ShoppingOfferSinglePage'
+import OrderRequestSinglePage from '../views/OrderRequestSinglePage'
 
 const routes = [
   {
@@ -173,6 +176,21 @@ const routes = [
     path: '/verifyPhone',
     name: 'VerifyPhone',
     component: VerifyPhone
+  },
+  {
+    path: '/SharedPosts',
+    name: 'SharedPostsSinglePage',
+    component: SharedPostsSinglePage
+  },
+  {
+    path: '/ShopOfferPosts',
+    name: 'ShoppingOfferSinglePage',
+    component: ShoppingOfferSinglePage
+  },
+  {
+    path: '/OrderRequestPosts',
+    name: 'OrderRequestSinglePage',
+    component: OrderRequestSinglePage
   },
 
 ]
