@@ -105,6 +105,7 @@ Route::middleware('auth:sanctum')->get('/authenticated', function () {
 
 
 Route::post('login',[loginController::class, 'login'] )->name('login');
+Route::post('sendCode',[RegisterController::class, 'sendCode'] );
 Route::post('postPersonal',[RegisterController::class, 'postPersonal'] );
 Route::post('postID',[RegisterController::class, 'postID'] );
 Route::post('postAddress',[RegisterController::class, 'postAddress'] );

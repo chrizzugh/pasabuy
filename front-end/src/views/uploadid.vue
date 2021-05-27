@@ -1,19 +1,21 @@
 <template class="bg-gray-00 font-nunito">
- <loading
-     :show="show"
-     :label="label"
-     event-show="show-my-full-loading"
-     event-hide="hide-my-full-loading">
- </loading>
-  <div class="flex items-center ">
-      <router-link to="/">
-        <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16  block">
-      </router-link>
-        <h1 class="absolute text-xl font-black tracking-widest  left-16 font-raleway
-          text-red-buttons block
-          
-           ">pasaBUY</h1>
-      </div>
+  <loading
+    :show="show"
+    :label="label"
+    event-show="show-my-full-loading"
+    event-hide="hide-my-full-loading"
+  >
+  </loading>
+  <div class="flex items-center">
+    <router-link to="/">
+      <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 block" />
+    </router-link>
+    <h1
+      class="absolute text-xl font-black tracking-widest left-16 font-raleway text-red-buttons block"
+    >
+      pasaBUY
+    </h1>
+  </div>
 
   <div
     id="uploadedid"
@@ -27,15 +29,12 @@
           Upload a valid ID
         </h1>
         <p class="mb-4 text-left sm:text-center lg:text-justify xl:text-center">
-          A government ID helps us check you're really you. It also helps us
-          keep Pasabuy secure, fight fraud, and more.
+          Verifying your identity by presenting any of your valid IDs will help
+          keep Pasabuy secure and fraud-free.
         </p>
-        <p class="text-center text-red-500">{{errors}}</p>
         <div
           class="flex flex-col justify-between space-y-4 sm:flex-row sm:space-y-0 sm:space-x-8 md:flex-row md:space-y-0 md:space-x-8 lg:flex-row lg:space-y-0 lg:space-x-8 xl:flex-row xl:space-y-0 xl:space-x-8 2xl:flex-row 2xl:space-y-0 2xl:space-x-8"
         >
-
-       
           <!--front id--->
           <div
             class="text-left text-gray-500 md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 sm:w-1/2"
@@ -126,25 +125,27 @@
           </div>
         </div>
 
-        <!--Buttons-->
-        <div class="flex justify-between mt-4 items-center">
-          <router-link to="/address-book">
-            <span class="font-bold">Back</span></router-link
-          >
-          <!-- <div class="flex justify-center py-5" v-if="logginIn">
+
+      </div>
+
+      <!--Buttons-->
+      <div class="flex justify-between mt-4 items-center">
+        <router-link to="/address-book">
+          <span class="font-bold">Back</span></router-link
+        >
+        <!-- <div class="flex justify-center py-5" v-if="logginIn">
                       <button class="relative w-full h-12 py-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none" disabled>
                         <img src="/img/loading.gif" class="w-35 h-20 ml-14 absolute" style="margin-top:-7%;" /> <span class="ml-10"> Logging In</span>
                       </button>
                     </div> -->
-          <div class="space-x-4">
-            <button class="font-bold" @click="saveUser">Skip for now</button>
-            <button
-              class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none"
-              @click="saveUser"
-            >
-              Next
-            </button>
-          </div>
+        <div class="space-x-4">
+          <button class="font-bold" @click="saveUser">Skip for now</button>
+          <button
+            class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none"
+            @click="saveUser"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
@@ -172,7 +173,7 @@
 // import api from "../api";
 import store from "../store/index";
 import loading from "vue-full-loading";
-import axios from "axios"
+import axios from "axios";
 export default {
   components: {
     loading,
@@ -198,7 +199,7 @@ export default {
       file_front: "",
       file_back: "",
       logginIn: false,
-      errors:null
+      errors: null,
     };
   },
   methods: {
@@ -240,7 +241,7 @@ export default {
       this.edit2 = null;
     },
     saveUser() {
-      this.logginIn = !this.logginIn
+      this.logginIn = !this.logginIn;
       this.show = !this.show;
       var dataform = {
         personal: JSON.parse(localStorage.getItem("personal")),
@@ -266,7 +267,9 @@ export default {
         dataform.address.cityMunicipality
       );
       axios
-        .post("http://localhost:8000/api/register", this.registrationData,{withCredentials: true} )
+        .post("http://localhost:8000/api/register", this.registrationData, {
+          withCredentials: true,
+        })
         .then((res) => {
           console.log(res.data);
           if (res) {
@@ -277,21 +280,24 @@ export default {
               localStorage.removeItem("address");
               this.show = !this.show;
               sessionStorage.setItem("isLoggedIn", true);
-              sessionStorage.setItem("Authorization", res.data.token)
+              sessionStorage.setItem("Authorization", res.data.token);
               this.$router.push({ name: "accountsettings" });
             });
           } else {
-            this.logginIn = !this.logginIn
+            this.logginIn = !this.logginIn;
             console.log("informmation not saved");
           }
         })
         .catch((errors) => {
           this.show = !this.show;
-          if(errors.response.data.front_image == null)
-            errors.response.data.front_image = ''
-          if(errors.response.data.back_image == null)
-            errors.response.data.back_image = ''
-          this.errors = errors.response.data.front_image + ' '+errors.response.data.back_image
+          if (errors.response.data.front_image == null)
+            errors.response.data.front_image = "";
+          if (errors.response.data.back_image == null)
+            errors.response.data.back_image = "";
+          this.errors =
+            errors.response.data.front_image +
+            " " +
+            errors.response.data.back_image;
         });
     },
     async dispatches() {

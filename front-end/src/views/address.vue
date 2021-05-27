@@ -84,7 +84,7 @@ img {
 </style>
 
 <script>
-import api from "../api";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -99,7 +99,7 @@ export default {
       selectedBrgy:'Brgy',
 
       addressInfo: {
-        houseNumber: null,
+        houseNumber: "",
         barangay: null,
         cityMunicipality: null,
         province: null,
@@ -117,7 +117,8 @@ export default {
       this.addressInfo.barangay = this.selectedBrgy;
       console.log(this.addressInfo);
 
-      api.post("/api/postAddress", this.addressInfo).then((res) => {
+       axios
+          .post('http://localhost:8000/api/postAddress', this.addressInfo,{withCredentials: true}).then((res) => {
         console.log(res.data);
         localStorage.setItem("address", JSON.stringify(res.data));
         this.$router.push({ name: "uploadid" });
@@ -137,7 +138,8 @@ export default {
     getProvCode() {
       var getProvCode = document.getElementById("Province").value;
       console.log(getProvCode)
-      api.get('api/refcityMunicipality', {params:{provCode: getProvCode}}).then((res)=>{
+       axios
+          .get('http://localhost:8000/api/refcityMunicipality', {params:{provCode: getProvCode}},{withCredentials: true}).then((res)=>{
         this.cityMunicipality = res.data
       }).catch((errors)=>{
         console.log(errors)
@@ -148,7 +150,8 @@ export default {
     getCityCode() {
      var getCityCode = document.getElementById("City").value;
       console.log(getCityCode)
-      api.get('api/refBrgy', {params:{cityCode: getCityCode}}).then((res)=>{
+       axios
+          .get('http://localhost:8000/api/refBrgy', {params:{cityCode: getCityCode}},{withCredentials: true}).then((res)=>{
         console.log('brgy', res.data)
         this.barangays = res.data
       }).catch((errors)=>{
@@ -158,7 +161,8 @@ export default {
        console.log(getCityCode);
     },
     refProvince() {
-      api.get("/api/refProvince").then((res) => {
+       axios
+          .get("http://localhost:8000/api/refProvince",{withCredentials: true}).then((res) => {
         this.provinces = res.data;
         // for (var i=0;i < this.provinces.length;i++){
         //  // this.provinces[i] = JSON.stringify(this.provinces[i].provDesc); 

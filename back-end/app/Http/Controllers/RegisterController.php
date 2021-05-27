@@ -63,6 +63,13 @@ class RegisterController extends Controller
             $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo];
             return response()->json($returnValue);
         }
+       
+
+        $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo];
+       
+        return response()->json($returnValue);
+    }
+    function sendCode(Request $request){
         //if not, code will be sent to email or new email
         $code = mt_rand(100000, 999999);
         $data = [
@@ -74,11 +81,11 @@ class RegisterController extends Controller
         $email = trim($request->email);
         $code = Hash::make($code);
 
-        $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code];
+        $returnValue = ['code' => $code];
         if ($request != null) {
             if($request->verificationChoice == "email"){
                 Mail::to($email)->send(new emailConfirmation($data));
-                $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code, 'email'=>'email'];
+                $returnValue = ['code' => $code, 'email'=>'email'];
             
             }else{
                 $basic  = new Basic("63d7c27e", "CQWTBBpgA6eChJT6");
@@ -90,7 +97,7 @@ class RegisterController extends Controller
                 $message = $response->current();
                 
                 if ($message->getStatus() == 0) {
-                $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code, 'email'=>'phone'];
+                $returnValue = ['code' => $code, 'email'=>'phone'];
 
                     return response()->json($returnValue);
                 } else {
@@ -100,9 +107,7 @@ class RegisterController extends Controller
             
             return response()->json($returnValue);
         }
-        return response()->json($returnValue);
     }
-
 
     //function to put personal info in $addressInfo
     function postAddress(Request $request)
