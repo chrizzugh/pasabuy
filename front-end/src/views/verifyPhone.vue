@@ -70,7 +70,7 @@
 </style>
 
 <script>
-import api from "../api"
+import axios from "axios"
 // import simpleAlert from "vue-simple-alert"
 export default {
     data(){
@@ -83,7 +83,8 @@ export default {
     methods:{
         nextPage(){
             var params = {code:this.code, textCode:this.textCode} 
-            api.post('api/confirmVerificationCode',params).then((res)=>{
+             axios
+          .post('http://localhost:8000/api/confirmVerificationCode',params,{withCredentials: true}).then((res)=>{
               if(res.data){
                 localStorage.removeItem("code")
                 this.$router.push({name:"address"});

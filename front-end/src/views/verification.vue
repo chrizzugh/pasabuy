@@ -81,16 +81,15 @@ to verify yourself.</p>
 
 <script>
 
-import api from '../api'
+import axios from 'axios'
 export default {
   data(){
 
   },
 methods:{
     nextPage(){
-        
-        
-        api.post('/api/sendCode').then((res)=>{
+         axios
+          .post('http://localhost:8000/api/sendCode', JSON.parse(localStorage.getItem('personal')),{withCredentials: true}).then((res)=>{
         if(res.data){
         localStorage.setItem("code",res.data.code);
         this.$router.push({name:"verifyemail"});

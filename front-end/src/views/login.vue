@@ -7,16 +7,12 @@
      event-show="show-my-full-loading"
      event-hide="hide-my-full-loading">
  </loading> -->
-  <div class="flex items-center">
-    <router-link to="/">
-      <img src="/img/pasaBUYLogoOnly.png" class="w-20 h-16 block" />
-    </router-link>
-    <h1
-      class="absolute text-xl font-black tracking-widest left-16 font-raleway text-red-buttons block"
-    >
-      pasaBUY
-    </h1>
-  </div>
+  <div class="flex items-center ">
+        <router-link to="/">
+        <img src="/img/pasaBUYLogoOnly.png" class="block w-16 h-16 ">
+        </router-link>
+        <h1 class="absolute block text-xl font-black tracking-widest left-16 font-raleway text-red-buttons">pasaBUY</h1>
+      </div>
 
   <div
     id="login"

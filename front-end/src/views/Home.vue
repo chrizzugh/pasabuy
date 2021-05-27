@@ -144,7 +144,6 @@
                        </p>
     </div>
   </div>
-
   <!---3RD SECTION---->
 
    <div class="flex flex-wrap justify-around w-full py-16 pl-48 pr-56 bg-white md:pr-0 md:px-20 md:ml-0 md:mr-0 lg:px-20 lg:pr-0 lg:pl-36 md:justify-center sm:pl-0 sm:pr-0 sm:px-20 md:items-center vs:pl-10 vs:pr-10">
@@ -241,26 +240,20 @@ You’ll never know how much it means to our shoppers when you pasaBuy with them
 
 <script>
 export default {
-
   name: "Header",
       data(){
           return{
                 scrollPosition: null
           }
       },
-
     methods: {
-
         updateScroll() {
         this.scrollPosition = window.scrollY
         }
-
   },
-
         mounted() {
             window.addEventListener('scroll', this.updateScroll);
   },
-
         destroy() {
             window.removeEventListener('scroll', this.updateScroll)
     }

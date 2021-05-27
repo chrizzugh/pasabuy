@@ -1,24 +1,4 @@
 <template class=" bg-gray-bgcolor font-nunito">
-  <div class="flex items-center">
-    <router-link to="/">
-      <img src="/img/pasaBUYLogoOnly.png" class="block w-16 h-16" />
-    </router-link>
-    <h1
-      class="absolute block text-xl font-black tracking-widest left-16 font-raleway text-red-buttons"
-    >
-      pasaBUY
-    </h1>
-  </div>
-  <div id="signup" class="flex items-center justify-center px-4 pb-10">
-    <div
-      class="w-full my-12 overflow-hidden text-center bg-white shadow-md flex-grow-1 rounded-xl xl:w-2/5 lg:w-2/5 2xl:w-2/5 md:w-97 sm:w-97"
-    >
-      <div class="px-10 py-16">
-        <h1 class="pb-5 space-x-1 space-y-1 text-2xl font-bold">
-          Create an account
-        </h1>
-        <form @submit.prevent="nextPage" class="space-y-3">
-          <p class="text-center text-red-500">{{ errors }}</p>
 
     <div class="flex items-center ">
         <router-link to="/">
@@ -31,17 +11,28 @@
         <div class="px-10 py-16 ">
             <h1 class="pb-5 space-x-1 space-y-1 text-2xl font-bold">Create an account</h1>
               <form action="#">
-               <div class="relative flex md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between 2xl:space-x-6 lg:flex-row lg:justify-between lg:space-x-6 ">
+               <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between lg:flex-row lg:justify-between lg:space-x-6 ">
                     <div class="w-full">
-                        <input name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="First Name (Eg. Angela)"  v-model="PersonalInfo.firstName" v-on:keypress=isLetter($event) />
-                   
+                        <div class="relative flex justify-between mr-5 sm:mr-0 vs:mr-0 ssm:mr-0">
+                            <input @input="letter_check" @click="showReqFname" @blur="hideReqFname" name="" type="firstname"  required class="relative block w-full px-3 py-2 mt-4 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300" placeholder="First Name (Eg. Angela)"  v-model="PersonalInfo.firstName" v-on:keypress=isLetter($event) />
+                        </div>
+                        <div v-if="displayReqFname" class="frmValidation mt-2 ml-5 w-full relative">
+                          <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' :has_letter_name  }"><i class="frmIcon fas" :class="has_letter_name  ? 'fa-check' : 'fa-times'"></i> Eg. Angela</p>
+                        </div>
                     </div>
                     <p class="text-center text-red-500">{{error_firstname}}</p>
                    
-                    <div  class="flex-row w-full">
-                        <input aria-label="Last Name" name="" type="name" required class="relative block w-full px-3 py-2 mt-4 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Last Name (Eg. Hanabi)"  v-model="PersonalInfo.lastName" v-on:keypress=isLetter($event) />
+                    <div  class="w-full ">
+                        <div class="relative flex justify-between ml-5 sm:ml-0 vs:ml-0 ssm:ml-0">
+                            <input @input="letter_checkL" @click="showReqLname" @blur="hideReqLname" aria-label="Last Name" name="" type="name" required class="relative block w-full px-3 py-2 mt-4 sm:mt-2 vs:mt-2 ssm:mt-2  font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Last Name (Eg. Hanabi)"  v-model="PersonalInfo.lastName" v-on:keypress=isLetter($event) />
+                        </div>
+                        <div v-if="displayReqLname" class="frmValidation mt-2 ml-10 sm:ml-5 vs:ml-5 ssm:ml-5 w-full relative">
+                            <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' :has_letter_Lname  }"><i class="frmIcon fas" :class="has_letter_Lname  ? 'fa-check' : 'fa-times'"></i> Eg. Angela</p>
+                        </div>
                     </div>
+                    
                   <p class="text-center text-red-500">{{error_lastname}}</p>
+
                 </div>
                 <div v-show="false" class="mt-1 bottom-0 flex flex-row items-center">
                     <span class="material-icons text-xs text-crimsonRed">
@@ -49,9 +40,11 @@
                     <span><p class=" ml-1 text-xs leading-none text-crimsonRed font-semibold">Are you sure you typed your name correctly?</p></span>
                 </div>
 
-
                 <div class="flex flex-row mt-2">
-                    <input aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email (Eg. name@email.com)"  v-model="PersonalInfo.email"/>
+                    <input @input="email_check" @click="showReqEmail" @blur="hideReqEmail" aria-label="Email" name="" type="email" required class="relative block w-full px-3 py-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Email (Eg. name@email.com)"  v-model="PersonalInfo.email"/>
+                </div>
+                <div v-if="displayReqEmail" class="frmValidation mt-2 ml-5 sm:ml-5 vs:ml-5 ssm:ml-5 w-full relative">
+                            <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' :has_special  }"><i class="frmIcon fas" :class="has_special ? 'fa-check' : 'fa-times'"></i> Has @</p>
                 </div>
                   <p class="text-center text-red-500">{{error_email}}</p>
                 <div v-show="false" class="mt-1 bottom-0 flex flex-row items-center">
@@ -60,54 +53,50 @@
                     <span><p class=" ml-1 text-xs leading-none text-crimsonRed font-semibold">Please enter a valid email</p></span>
                 </div>
 
-                <div class="relative flex mb-10 mt-2">
-                        <span class="absolute z-20 bg-gray-200 top-2.5 left-4"><img class="w-9 h-9" src="img/philippines.png"></span>
-                        <input name="" type="text" class="w-full px-3 py-2 pl-16 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number (+63 999 999 9999)"  v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max" v-mask="'+63 ### ### ####'"/>
-                    
+                <div class="relative flex mb-2 mt-2">
+                        <span class="absolute z-20 bg-gray-200 top-2.5 left-4 flex"><img class="w-9 h-9" src="img/philippines.png"></span>
+                        <input @click="showReqPNumber" @blur="hideReqPNumber" name="" type="text" class="w-full px-3 py-2 pl-16 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Phone Number (+63 999 999 9999)"  v-model="PersonalInfo.phoneNumber" v-on:keypress=isNumber($event) :maxlength="max" v-mask="'+63 ### ### ####'"/>
                 </div>
-                 <div v-show="false" class="mt-1 bottom-0 flex flex-row items-center">
-                    <span class="material-icons text-xs text-crimsonRed">
-                        warning</span> 
-                    <span><p class=" ml-1 text-xs leading-none text-crimsonRed font-semibold">Please enter valid Phone </p></span>
+                <div v-if="displayReqPNumber" class="frmValidation mb-2 ml-5 w-full relative">
+                    <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' : has_number }"><i class="frmIcon fas" :class="has_number ? 'fa-check' : 'fa-times'"></i> Has a number</p>
                 </div>
-                  <p class="text-center text-red-500">{{error_phonenumber}}</p>
-                <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between 2xl:space-x-6 lg:flex-row lg:justify-between lg:space-x-6 ">
+                
+
+                <div class="flex flex-col md:flex-row md:justify-between md:space-x-6 sm:flex-row sm:justify-between sm:space-x-6 xl:flex-row xl:justify-between xl:space-x-6 2xl:flex-row 2xl:justify-between lg:flex-row lg:justify-between lg:space-x-6 ">
                   
-                 <div class="w-full" >       
-                  <input placeholder="Enter your password" id="input_showpass" name="password" class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300" type="password" @input="password_check" v-model="PersonalInfo.password" v-show="!showPass"/> 
-                   <input placeholder="Enter your password" name="password" class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300" type="text" @input="password_check" v-model="PersonalInfo.password" v-show="showPass"/>
-                        
-                        <span @click="showPass = !showPass" id="showpass">
-                        <span v-show="!showPass" class="fa fa-eye"></span>
-                        <span v-show="showPass" class="fa fa-eye-slash"></span>
-                        </span>
-                        
-        
-                          <p class="frmValidation" :class="{'frmValidation--passed' : PersonalInfo.password.length > 8}"><i class="frmIcon fas" :class="PersonalInfo.password.length > 8 ? 'fa-check' : 'fa-times'"></i> Longer than 8 characters</p>
-                          <p class="frmValidation" :class="{'frmValidation--passed' :has_uppercase }"><i class="frmIcon fas" :class="has_uppercase ? 'fa-check' : 'fa-times'"></i> Has a capital letter</p>
-                          <p class="frmValidation" :class="{'frmValidation--passed' :has_lowercase }"><i class="frmIcon fas" :class="has_lowercase ? 'fa-check' : 'fa-times'"></i> Has a lowercase letter</p>
-                          <p class="frmValidation" :class="{'frmValidation--passed' : has_number }"><i class="frmIcon fas" :class="has_number ? 'fa-check' : 'fa-times'"></i> Has a number</p>
-                                  
-                  </div>
-                    <div class="w-full" >
-                         <input aria-label="Confirm Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="!showPass1"/>
-                        <input aria-label="Confirm Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-6 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="showPass1"/>
-                  
-                   <div class="w-full">
-                        <span @click="showPass1 = !showPass1" id="showpass_confirm">
-                        <span v-show="!showPass1" class="fa fa-eye"></span>
-                        <span v-show="showPass1" class="fa fa-eye-slash"></span>
-                        </span>
+                <div class="w-full" > 
+                    <div class="relative flex justify-between mr-5 sm:mr-0 vs:mr-0 ssm:mr-0">                          
+                        <input @click="passShowValidation" @blur="passHideValidation" placeholder="Enter your password" show="!showPass" id="input_showpass" name="password" class="relative block w-full px-3 py-2 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300" type="password" @input="password_check" v-model="PersonalInfo.password" v-show="!showPass"/> 
+                        <input @click="passShowValidation" @blur="passHideValidation" placeholder="Enter your password" show="showPass" name="password" class="relative block w-full px-3 py-2 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:z-10 focus:border-blue-300" type="text" @input="password_check" v-model="PersonalInfo.password" v-show="showPass"/>
+                        <span  @click="showPass = !showPass, displayPass = true" @blur="passHideValidation" id="showpass">
+                        <span v-show="!showPass" class="fa fa-eye absolute z-20 bg-gray-200 top-5 right-4"></span>
+                        <span v-show="showPass" class="fa fa-eye-slash absolute z-20 bg-gray-200 top-5 right-4"></span></span>
                     </div>
-                    </div>  
-                      <p class="text-center text-red-500">{{error_password}}</p>            
-                 
-                    
-                    <div class="absolute invisible inline-flex right-0"> <!--cant fit sa screen so tig set ko lng na invi for the mean time-->
-                        <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
-                            <p class="text-base leading-none text-white">Use 8 or more characters.</p>
-                        </div>
+                    <div v-if="displayPass" class="frmValidation ml-5 mb-2 mr-5 sm:mr-0 vs:mr-0 ssm:mr-0 w-full relative">
+                        <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' : PersonalInfo.password.length > 8}"><i class="frmIcon fas" :class="PersonalInfo.password.length > 8 ? 'fa-check' : 'fa-times'"></i> Longer than 8 characters</p>
+                        <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' :has_uppercase }"><i class="frmIcon fas" :class="has_uppercase ? 'fa-check' : 'fa-times'"></i> Has a capital letter</p>
+                        <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' :has_lowercase }"><i class="frmIcon fas" :class="has_lowercase ? 'fa-check' : 'fa-times'"></i> Has a lowercase letter</p>
+                        <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' : has_number }"><i class="frmIcon fas" :class="has_number ? 'fa-check' : 'fa-times'"></i> Has a number</p>
                     </div>
+                </div>
+                <div class="w-full" > 
+                    <div class="relative flex justify-between ml-5 sm:ml-0 vs:ml-0 ssm:ml-0">
+                        <input @click="passConfirmShowValidation" @blur="passConfirmHideValidation" aria-label="Confirm Password" name="" type="password" required class="relative block w-full px-3 py-2 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="!showPass1"/>
+                        <input @click="passConfirmShowValidation" @blur="passConfirmHideValidation" aria-label="Confirm Password" name="" type="text" required class="relative block w-full px-3 py-2 mb-2 font-semibold tracking-wide text-gray-900 placeholder-gray-500 bg-gray-200 border rounded-lg appearance-none h-14 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm" placeholder="Confirm Password" v-model="PersonalInfo.password_confirmation" v-show="showPass1"/>
+                        <span  @click="showPass1 = !showPass1, displayPassConfirm = true" id="showpass">
+                        <span v-show="!showPass1" class="fa fa-eye absolute z-20 bg-gray-200 top-5 right-4"></span>
+                        <span v-show="showPass1" class="fa fa-eye-slash absolute z-20 bg-gray-200 top-5 right-4"></span></span>
+                    </div>
+                    <div v-if="displayPassConfirm" class="frmValidation ml-10 sm:ml-5 vs:ml-5 ssm:ml-5 w-full relative">
+                          <p class="frmValidation flex relative relative" :class="{'frmValidation--passed' : PersonalInfo.password == PersonalInfo.password_confirmation && PersonalInfo.password}"><i class="frmIcon fas" :class="PersonalInfo.password == PersonalInfo.password_confirmation && PersonalInfo.password ? 'fa-check' : 'fa-times'"></i> Match Password</p>
+                    </div>
+                </div>
+                    <p class="text-center text-red-500">{{error_password}}</p>
+                <div class="absolute invisible inline-flex right-0"> <!--cant fit sa screen so tig set ko lng na invi for the mean time-->
+                    <div class=" arrowLeft inline-flex items-center justify-start p-4 bg-red-600 rounded-lg">
+                        <p class="text-base leading-none text-white">Use 8 or more characters.</p>
+                    </div>
+                </div>
                 </div>
                 
                     
@@ -157,34 +146,35 @@
 </template>
 
 <style>
-#journal-scroll::-webkit-scrollbar {
-  width: 5px;
-  cursor: pointer;
+    #journal-scroll::-webkit-scrollbar {
+        width: 5px;
+        cursor: pointer;
+      }
+  
+    #journal-scroll::-webkit-scrollbar-track {
+        background-color: rgba(229, 231, 235, var(--bg-opacity));
+        cursor: pointer;
+    }
+  
+    #journal-scroll::-webkit-scrollbar-thumb {
+        cursor: pointer;
+        background-color: rgba(185, 28, 28)
+    
+    }
+#iCheck{
+  font-size:16px;
+  color:rgb(22, 22, 141);
 }
-
-#journal-scroll::-webkit-scrollbar-track {
-  background-color: rgba(229, 231, 235, var(--bg-opacity));
-  cursor: pointer;
-}
-
-#journal-scroll::-webkit-scrollbar-thumb {
-  cursor: pointer;
-  background-color: rgba(185, 28, 28);
-}
-#iCheck {
-  font-size: 16px;
-  color: rgb(22, 22, 141);
-}
-#iMessage {
-  font-size: 24px;
-  color: rgb(22, 22, 141);
+#iMessage{
+  font-size:24px;
+  color:rgb(22, 22, 141);
 }
 
 .arrowLeft::before {
-  content: "";
+  content: '';
   position: absolute;
-  display: block;
-  width: 0px;
+  display: block;    
+  width: 0px;        
   left: 0;
   top: 50%;
   border: 10px solid transparent;
@@ -217,7 +207,7 @@
 </style>
 
 <script>
-import api from '../api'
+import axios from 'axios'
 
 export default {
     
@@ -230,7 +220,8 @@ export default {
             has_number:    false,
                 has_lowercase: false,
                 has_uppercase: false,
-                has_special:   false,
+                has_letter_name: false,
+                has_letter_Lname: false,
             PersonalInfo:{
                firstName : null,
                lastName : null,
@@ -247,16 +238,89 @@ export default {
             error_phonenumber: null,
             error_password: null,
             error_password_confirmation: null,
+            displayPass:false,
+            displayPassConfirm:false,
+            displayReqFname:false,
+            displayReqLname:false,
+            displayReqPNumber:false,
+            displayReqEmail:false,
+            // displayReqPNumber:false,
         }
     }, 
 
     methods:{
+        showReqFname(){
+            this.displayReqFname=true;
+          // this.displayReqLname=true;
+        },
+        hideReqFname(){            
+            this.displayReqFname=false;
+           //this.displayReqLname=true;
+        },
+        showReqLname(){
+            this.displayReqLname=true;
+        },
+        hideReqLname(){            
+           
+            this.displayReqLname=false;
+        },
+        showReqPNumber(){
+            this.displayReqPNumber=true;
+        },
+        hideReqPNumber(){            
+           
+            this.displayReqPNumber=false;
+        },
+        showReqEmail(){
+            this.displayReqEmail=true;
+        },
+        hideReqEmail(){            
+            this.displayReqEmail=false;
+        },
+        passShowValidation(){
+            this.displayPass = true;
+            
+        },
+        passHideValidation(){
+            this.displayPass = false;
+        },
+        passConfirmShowValidation(){
+            this.displayPassConfirm = true;
+        },
+        passConfirmHideValidation(){
+            this.displayPassConfirm = false;
+        },
+
+
         password_check: function () {
                     this.has_number    = /\d/.test(this.PersonalInfo.password);
                     this.has_lowercase = /[a-z]/.test(this.PersonalInfo.password);
                     this.has_uppercase = /[A-Z]/.test(this.PersonalInfo.password);
                    
                 },
+        letter_check: function () {
+                    this.has_letter_name = /[a-zA-Z]/.test(this.PersonalInfo.firstName); 
+                      
+                            
+                     
+                },
+        letter_checkL: function () {
+                    
+                    this.has_letter_Lname = /[a-zA-Z]/.test(this.PersonalInfo.lastName);     
+                            
+                     
+                },
+        email_check: function () {
+                    this.has_special = /[/@ /.]/.test(this.PersonalInfo.email);
+                     
+                },
+
+        filters:{
+                 upper(value){
+                 value.toLowerCase().split(' ');
+                 return value.charAt(0).toUpperCase()+value.slice(1);
+                  }
+            },
         isLetter(e) {
              let char = String.fromCharCode(e.keyCode); // Get the character
              if(/^[A-Za-z ]+$/.test(char)) return true; // Match with regex 
@@ -269,8 +333,9 @@ export default {
         },
         nextPage(){
             this.next = true;
-            api.get('/sanctum/csrf-cookie').then(() => {
-            api.post('/api/postPersonal',this.PersonalInfo).then((res)=>{
+            
+             axios
+          .post('http://localhost:8000/api/postPersonal',this.PersonalInfo,{withCredentials: true}).then((res)=>{
                 if(res!=null){
                     localStorage.setItem("personal", JSON.stringify(res.data.personalInfo));
                     localStorage.setItem("account",JSON.stringify(res.data.account));
@@ -302,23 +367,19 @@ export default {
                 this.error_password=errors.response.data.password;
                 this.error_phonenumber=errors.response.data.phoneNumber;
             })//end catch
-            })
+            
         },
     },
-  },
-  created() {
+    created () {
     document.body.style.backgroundColor = "rgb(235,235,235)";
-    if (
-      localStorage.getItem("personal") != null &&
-      localStorage.getItem("account") != null
-    ) {
-      console.log("has value");
-      var dataPersonal = JSON.parse(localStorage.getItem("personal"));
-      this.PersonalInfo.firstName = dataPersonal.firstName;
-      this.PersonalInfo.lastName = dataPersonal.lastName;
-      this.PersonalInfo.email = dataPersonal.email;
-      this.PersonalInfo.phoneNumber = dataPersonal.phoneNumber;
-    }
-  },
-};
+     if(localStorage.getItem('personal')!=null && localStorage.getItem('account')!=null ){
+          console.log('has value')
+          var dataPersonal = JSON.parse(localStorage.getItem('personal'))
+          this.PersonalInfo.firstName = dataPersonal.firstName
+          this.PersonalInfo.lastName = dataPersonal.lastName
+          this.PersonalInfo.email = dataPersonal.email
+          this.PersonalInfo.phoneNumber = dataPersonal.phoneNumber
+      }
+    },
+}
 </script>

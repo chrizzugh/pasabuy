@@ -85,7 +85,7 @@ class RegisterController extends Controller
         if ($request != null) {
             if($request->verificationChoice == "email"){
                 Mail::to($email)->send(new emailConfirmation($data));
-                $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code, 'email'=>'email'];
+                $returnValue = ['code' => $code, 'email'=>'email'];
             
             }else{
                 $basic  = new Basic("63d7c27e", "CQWTBBpgA6eChJT6");
@@ -97,7 +97,7 @@ class RegisterController extends Controller
                 $message = $response->current();
                 
                 if ($message->getStatus() == 0) {
-                $returnValue = ['personalInfo' =>  $this->personalInfo, 'account' =>  $this->accountInfo, 'code' => $code, 'email'=>'phone'];
+                $returnValue = ['code' => $code, 'email'=>'phone'];
 
                     return response()->json($returnValue);
                 } else {
