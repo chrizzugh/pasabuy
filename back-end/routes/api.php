@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getPersonal', [userInformationController::class, 'getPersonal']);
     Route::get('/getAddress', [userInformationController::class, 'getAddress']);
     Route::get('/getLanguages', [userInformationController::class, 'getLanguages']);
+    Route::get('/getWorks', [userInformationController::class, 'getWorks']);
     Route::post('/editPersonal', [userInformationController::class, 'editPersonal']);
     Route::post('/editAddress', [addressController::class, 'editAddress']);
     Route::post('/editAccount', [userInformationController::class, 'editAccount']);

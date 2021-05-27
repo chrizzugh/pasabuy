@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\userEducation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,14 +13,34 @@ class educationController extends Controller
     {
         # code...
         return DB::select('SELECT * from tbl_usereducation WHERE email = \'' . Auth::user()->email . '\'');
-        
+        // $data = userAbout::all();
 
+		return response()->json($data);
     }
     public function updateEduc(Request $request)
     {
-        # code...
-        // DB::table('tbl_usereducation')
-        // ->where('email', Auth::user()->email)
-        // ->update(['active' => true]);
+        $request->validate([
+            'email' => [],
+            'schoolList' => []
+        ]);
+
+        print_r($request->schoolList);
+        
+        for($i=0;$i<count($request->schoolList);$i++){
+            echo $request->schoolList[$i]["id"] . "-";
+            if($request->schoolList[$i]["version"] == null){
+                $record = new userEducation;
+                $record->email = $request->email;
+                $record->schoolName = $request->schoolList[$i]["school"];
+                $record->schoolStatus = $request->schoolList[$i]["status"];
+                $record->save();
+            }
+            else{
+                DB::table('tbl_userEducation')
+                ->where('indexUserEducation', $request->schoolList[$i]["version"])
+                ->update(['schoolName' => $request->schoolList[$i]["school"],'schoolStatus' => $request->schoolList[$i]["status"]]);
+            }
+
+        }
     }
 }
