@@ -36,13 +36,22 @@
                   v-model="PersonalInfo.firstName"
                   v-on:keypress="isLetter($event)"
                 />
+               
               </div>
+               <p
+                  v-show="error_firstname.length > 0"
+                  v-for="(err, index) in error_firstname"
+                  :key="index"
+                  class="frmValidation flex relative relative"
+                >
+                  <i class="frmIcon fas"></i>
+                  {{ err }}
+                </p>
             </div>
-            <p class="text-center text-red-500">{{ error_firstname }}</p>
 
             <div class="w-full">
               <div
-                class="relative flex justify-between mb-4 ml-2 md:ml-0 sm:ml-0 vs:ml-0 ssm:ml-0"
+                class="relative flex justify-between mb-2 ml-2 md:ml-0 sm:ml-0 vs:ml-0 ssm:ml-0"
               >
                 <input
                   @input="capitalizeLName"
@@ -56,9 +65,16 @@
                   v-on:keypress="isLetter($event)"
                 />
               </div>
+                <p
+                  v-show="error_lastname.length > 0"
+                  v-for="(err, index) in error_lastname"
+                  :key="index"
+                  class="frmValidation flex relative relative"
+                >
+                  <i class="frmIcon fas"></i>
+                  {{ err }}
+                </p>
             </div>
-
-            <p class="text-center text-red-500">{{ error_lastname }}</p>
           </div>
 
           <div v-show="false" class="mt-1 bottom-0 flex flex-row items-center">
@@ -100,8 +116,16 @@
               ></i>
               Valid email
             </p>
+            <p
+              v-show="error_email.length > 0"
+              v-for="(err, index) in error_email"
+              :key="index"
+              class="frmValidation flex relative relative"
+            >
+              <i class="frmIcon fas"></i>
+              {{ err }}
+            </p>
           </div>
-          <p class="text-center text-red-500">{{ error_email }}</p>
           <div v-show="false" class="mt-1 bottom-0 flex flex-row items-center">
             <span class="material-icons text-xs text-crimsonRed"> warning</span>
             <span
@@ -145,6 +169,15 @@
               ></i>
               Valid Phone Number
             </p>
+            <!-- <p
+              v-show="error_phonenumber.length > 0"
+              v-for="(err, index) in error_phonenumber"
+              :key="index"
+              class="frmValidation flex relative relative"
+            >
+              <i class="frmIcon fas"></i>
+              {{ err }}
+            </p> -->
           </div>
 
           <div
@@ -242,6 +275,16 @@
                   ></i>
                   Has a number
                 </p>
+
+                <!-- <p
+                  v-show="error_password.length > 0"
+                  v-for="(err, index) in error_password"
+                  :key="index"
+                  class="frmValidation flex relative relative"
+                >
+                  <i class="frmIcon fas"></i>
+                  {{ err }}
+                </p> -->
               </div>
             </div>
             <div class="w-full">
@@ -311,9 +354,18 @@
                   ></i>
                   Match Password
                 </p>
+                <p
+                  v-show="error_password_confirmation.length > 0"
+                  v-for="(err, index) in error_password_confirmation"
+                  :key="index"
+                  class="frmValidation flex relative relative"
+                >
+                  <i class="frmIcon fas"></i>
+                  {{ err }}
+                </p>
               </div>
             </div>
-            <p class="text-center text-red-500">{{ error_password }}</p>
+
             <div class="absolute invisible inline-flex right-0">
               <!--cant fit sa screen so tig set ko lng na invi for the mean time-->
               <div
@@ -347,7 +399,7 @@
             <div
               class="w-1/2 px-1 mt-6 text-lg font-bold text-left text-grey-dark text-blue"
             >
-              <router-link to="/log-in">Log instead</router-link>
+              <router-link to="/log-in">Log In instead</router-link>
             </div>
             <div class="flex justify-end w-1/2 px-1 mt-3">
               <button
@@ -520,12 +572,12 @@ export default {
       },
 
       errors: null,
-      error_firstname: null,
-      error_lastname: null,
-      error_email: null,
-      error_phonenumber: null,
-      error_password: null,
-      error_password_confirmation: null,
+      error_firstname: [],
+      error_lastname: [],
+      error_email: [],
+      error_phonenumber: [],
+      error_password: [],
+      error_password_confirmation: [],
       displayPass: false,
       displayPassConfirm: false,
       displayReqFname: false,
