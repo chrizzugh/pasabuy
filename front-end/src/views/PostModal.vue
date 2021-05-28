@@ -72,7 +72,7 @@
             </p>
           </div>
           <!--end-->
-          <p class="text-red-500 text-center" >{{errorOffer}}</p>
+          <p class="text-red-500 text-center">{{ errorOffer }}</p>
           <!--Delivery information list-->
           <div
             class="flex flex-col mt-1 vs:mt-1 ssm:px-2 vs:px-2 sm:px-2 justify-center items-center"
@@ -423,7 +423,7 @@
             </p>
           </div>
           <!--end-->
-          <p class="text-red-500 text-center" >{{errorOrder}}</p>
+          <p class="text-red-500 text-center">{{ errorOrder }}</p>
 
           <!--Delivery Information List-->
           <div
@@ -1181,6 +1181,7 @@
             <p class="text-base font-bold leading-none text-gray-900">Cancel</p>
           </button>
           <button
+            @click="saveList"
             class="focus:outline-none flex items-center justify-center w-56 h-full px-4 py-2.5 bg-red-700 rounded-full"
           >
             <p class="text-base font-bold leading-none text-white">Save</p>
@@ -1533,8 +1534,8 @@ export default {
       edit3: false,
       editListFlag: false,
       mainModal: true,
-      errorOffer:null,
-      errorOrder:null,
+      errorOffer: null,
+      errorOrder: null,
 
       //end
     };
@@ -1543,6 +1544,40 @@ export default {
     console.log("fter", this.selectedList, this.showList);
   },
   methods: {
+    saveList() {
+      for (var i = 0; i < this.new_items.length; i++) {
+        if (!document.getElementById("check" + this.new_items[i].id).checked) {
+          //if true check the status
+          this.new_items[i].status = 0;
+        }
+      }
+      let obj = {
+        listName: document.getElementById("new_title").value,
+        list: this.new_items,
+      };
+      console.log(this.new_items);
+      this.shopping_list.push(obj);
+      api
+        .post("api/createList", obj)
+        .then((res) => {
+          store.dispatch("getUserShoppingList").then(() => {
+            this.selectedList = res.data;
+            this.showItemList = true;
+            console.log("before", this.selectedList, this.showItemList);
+            this.new_items = [];
+            this.addlist = false;
+            if (this.listToggleFlag) this.togglePostModal();
+            this.listToggleFlag = false;
+            this.showCreateNewShopListModal = !this.showCreateNewShopListModal;
+
+          });
+        })
+        .catch(() => {
+          //if encountered error means the user will not add a new shopping list
+          this.new_items = [];
+          this.addlist = false;
+        });
+    },
     postOffer() {
       if (this.deliveryArea == "Delivery Area") {
         this.postError = "Please Choose a Delivery Area";
@@ -1559,19 +1594,22 @@ export default {
           caption: this.caption,
         };
         console.log(form);
-       
-        store.dispatch("createPostOffer", form).then(() => {
-          store.dispatch("getPosts").then(() => {
-            store.dispatch("getShoppingPlaces");
-            store.dispatch("getTransportModes");
-            this.$emit("popUpPost");
-            this.$emit("sortPosts");
-            this.$emit("closeModal");
-             this.errorOffer=''
+
+        store
+          .dispatch("createPostOffer", form)
+          .then(() => {
+            store.dispatch("getPosts").then(() => {
+              store.dispatch("getShoppingPlaces");
+              store.dispatch("getTransportModes");
+              this.$emit("popUpPost");
+              this.$emit("sortPosts");
+              this.$emit("closeModal");
+              this.errorOffer = "";
+            });
+          })
+          .catch((errors) => {
+            this.errorOffer = errors.response.data.message.deliverySchedule;
           });
-        }).catch(errors=>{ 
-          this.errorOffer=errors.response.data.message.deliverySchedule
-        });
       }
     },
     postRequest() {
@@ -1586,19 +1624,21 @@ export default {
         shoppingListTitle: this.selectedList.shoppingListTitle,
         shoppingListContent: this.selectedList.shoppingListContent,
       };
-      
-      console.log("request form", form);
-      store.dispatch("createPostRequest", form).then(() => {
-        store.dispatch("getPosts").then(() => {
-          store.dispatch("getShoppingPlaces");
-          this.$emit("popUpPost");
-          this.$emit("sortPosts");
-          this.$emit("closeModal");
-             this.errorOrder=''
 
-        });
-      }).catch(errors=>{ 
-          this.errorOrder=errors.response.data.message.deliverySchedule
+      console.log("request form", form);
+      store
+        .dispatch("createPostRequest", form)
+        .then(() => {
+          store.dispatch("getPosts").then(() => {
+            store.dispatch("getShoppingPlaces");
+            this.$emit("popUpPost");
+            this.$emit("sortPosts");
+            this.$emit("closeModal");
+            this.errorOrder = "";
+          });
+        })
+        .catch((errors) => {
+          this.errorOrder = errors.response.data.message.deliverySchedule;
         });
     },
     editShoppingList() {
@@ -1663,7 +1703,7 @@ export default {
         console.log("new list", this.selectedList.shoppingListContent);
       }
     },
-      add_newItem1() {
+    add_newItem1() {
       let x = document.getElementById("product").value;
       let y = document.getElementById("brand").value;
       let z = document.getElementById("size").value;
@@ -1682,7 +1722,7 @@ export default {
           statusDeliver: 0,
         };
         this.ctr++;
-        this.selectedList.shoppingListContent.push(datax);
+        this.new_items.push(datax);
         // this.new_items.push(datax);
         this.new_item = false;
         console.log("new list", this.selectedList.shoppingListContent);
@@ -1761,9 +1801,9 @@ export default {
       var tempList = this.shoppingLists;
       var temp;
       console.log("selected List before 0 or 1", this.selectedList);
-console.log(this.selectedList == null, 'asldfalsdfl')
+      console.log(this.selectedList == null, "asldfalsdfl");
       if (this.selectedList == null) {
-       temp = tempList.filter((x) => {
+        temp = tempList.filter((x) => {
           return x.shoppingListNumber === this.edit2;
         });
         this.selectedList = temp[0];
@@ -1790,7 +1830,7 @@ console.log(this.selectedList == null, 'asldfalsdfl')
     },
     showPreviousModal3() {
       this.showEditShopListModal = !this.showEditShopListModal;
-      if(this.selectedList.length <= 0){
+      if (this.selectedList.length <= 0) {
         this.showShopListButton = true;
         this.showItemList = false;
       }

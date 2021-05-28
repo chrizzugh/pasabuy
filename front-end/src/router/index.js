@@ -25,7 +25,7 @@ import ReturnAndRefundPolicy from '../views/returnPolicy.vue'
 import AboutUs from '../views/aboutUs.vue'
 import Verification from '../views/verification.vue'
 import VerifyPhone from '../views/verifyPhone.vue'
-
+import cookies from '../views/cookiesPolicy.vue'
 const routes = [
   {
     path: '/',
@@ -172,6 +172,12 @@ const routes = [
     path: '/privacy-policy',
     name: 'privacyPolicy',
     component: privacyPolicy
+  },
+  
+  {
+    path: '/cookies-policy',
+    name: 'cookies',
+    component:cookies 
   },
 
 

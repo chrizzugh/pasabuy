@@ -1,11 +1,5 @@
 <template class="bg-gray-00 font-nunito">
-  <loading
-    :show="show"
-    :label="label"
-    event-show="show-my-full-loading"
-    event-hide="hide-my-full-loading"
-  >
-  </loading>
+ <loading v-if="logginIn"/>
   <div class="flex items-center">
     <router-link to="/">
       <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 block" />
@@ -19,6 +13,7 @@
 
   <div
     id="uploadedid"
+    v-if="!logginIn"
     class="flex items-center w-full justify-center px-4 pb-10"
   >
     <div
@@ -172,7 +167,7 @@
 <script>
 // import api from "../api";
 import store from "../store/index";
-import loading from "vue-full-loading";
+import loading from "./loading";
 import axios from "axios";
 export default {
   components: {
@@ -241,7 +236,7 @@ export default {
       this.edit2 = null;
     },
     saveUser(skip) {
-      this.logginIn = !this.logginIn;
+      
       this.show = !this.show;
       var dataform = {
         personal: JSON.parse(localStorage.getItem("personal")),
@@ -266,6 +261,7 @@ export default {
         "cityMunicipality",
         dataform.address.cityMunicipality
       );
+      this.logginIn = !this.logginIn;
       axios
         .post("http://localhost:8000/api/register", this.registrationData, {
           withCredentials: true,

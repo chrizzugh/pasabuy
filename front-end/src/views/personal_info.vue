@@ -242,7 +242,9 @@ export default {
         this.workList.push(this.userPersonal.work);
         this.userPersonal.work = "";
       } else {
-        alert("You already have this Work");
+        // alert("You already have this Work");
+            VueSimpleAlert.alert("You already have this in your Work List", "Alert", "error")
+
       }
 
       console.log("workList", this.workList);
@@ -253,7 +255,9 @@ export default {
         this.languagesList.push(this.userPersonal.language);
         this.userPersonal.language = "";
       } else {
-        alert("You already have this Work");
+        // alert("You already have this Work");
+            VueSimpleAlert.alert("You already have this in your Language List", "Alert", "error")
+
       }
 
       console.log("languagesList", this.languagesList);
@@ -349,10 +353,18 @@ export default {
       this.userPersonal.lastName = this.old.lastname;
       this.userPersonal.phoneNumber = this.old.phone_number;
       this.userPersonal.work = this.old.work;
-      this.workList = (this.old.work).split(',');
+      if(this.userPersonal.work!=null)
+      this.workList = (this.userPersonal.work).split(',');
+      else
+      this.workList = [];
+      console.log("oldworkList", this.workList);
       this.userPersonal.gender = this.old.gender;
       this.userPersonal.language = this.old.language;
-      this.languagesList = (this.old.language).split(',');
+      if(this.userPersonal.language!=null)
+      this.languagesList = (this.userPersonal.language).split(',');
+      else
+      this.languagesList = [];
+      console.log("oldworkList", this.workList);
       this.userPersonal.birthDate = this.old.birdate;
     },
     change_profile(e) {
@@ -407,10 +419,11 @@ export default {
     // }
   },
   created() {
-        // console.log("Skilled",this.userPersonal);
-    
-          this.workList = (this.userPersonal.work).split(',');
-          this.languagesList = (this.userPersonal.language).split(',');
+        // console.log("Skilled",this.userPersonal.work);
+        if(this.userPersonal.work!=null){
+          this.workList = (this.userPersonal.work).split(',');}
+        if(this.userPersonal.language!=null) { 
+          this.languagesList = (this.userPersonal.language).split(',');}
   }
 };
 </script>

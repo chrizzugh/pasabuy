@@ -185,26 +185,26 @@ You’ll never know how much it means to our shoppers when you pasaBuy with them
         
 <!--FOOTER-->
         <footer class="px-4 text-sm text-white lg:pb-5 lg:pt-8 pb-7 xl:pt-5 md:pt-12 bg-bastille">
-            <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4">
-                <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0">
+            <div class="container flex flex-col items-center justify-center mx-auto overflow-hidden leading-none sm:justify-around md:justify-around vs:flex-auto xl:px-4 bg-bastille" >
+                <div class="block w-3/4 mt-6 text-base md:w-11/12 sm:w-11/12 lg:flex xl:flex 2xl:flex md:flex sm:flex lg:mt-0 bg-bas tille">
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-1 text-sm font-medium tracking-wide ">Pasabuy</li>
+                        <li class="inline-block px-3 py-1 text-sm font-medium tracking-wide "><strong>Pasabuy</strong></li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide sm:px-0">Company</li>
-                        <li><router-link to="/about-us"  class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline">About Us</router-link>
+                        <li class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide sm:px-0"><strong>Company</strong></li>
+                        <li hidden><router-link to="/about-us"  class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline">About Us</router-link>
                         </li>
                         <li><router-link to="/help-center" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Help</router-link></li>
                     </ul>
                     <ul class="flex flex-col w-full p-0 font-thin text-left list-none">
-                        <li class="inline-block px-3 py-0.5 font-medium tracking-wide text-sm ">Policies</li>
+                        <li class="inline-block px-3 py-0.5 font-medium tracking-wide text-sm "><strong>Policies</strong></li>
                         <li><router-link to="/privacy-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Privacy Policy</router-link></li>
                         <li><router-link to="/terms-and-condition" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Terms and Condition</router-link></li>
                         <li><router-link to="/return-and-refund-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Return Refund</router-link></li>
                         <li><router-link to="/cookies-policy" class="inline-block py-0.5 pl-3 pr-5 text-white no-underline text-sm ">Cookies Policy</router-link></li>
                     </ul>
                     <div class="flex flex-col w-full sm:w-11/12">
-                        <div class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide ">©Pasabuy 2021</div>
+                        <div class="inline-block px-3 py-0.5 font-medium text-sm  tracking-wide "><strong>©Pasabuy 2021</strong></div>
                         <ul class="flex flex-col w-full p-0 font-thin text-left">
                             <li><a href="#" class="inline-block py-0.5 text-sm  pl-3 pr-5 no-underline ">Stay connected with us</a></li>
                         </ul>

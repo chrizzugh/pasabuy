@@ -223,8 +223,13 @@ class userInformationController extends Controller
         //  $user->work = implode("," , $request->workList);
         // else
         //  $user->work = null;
-
+        if($request->workList=="")
+        $user->work = null;
+        else
         $user->work = $request->workList;
+        if($request->languagesList=="")
+        $user->language = null;
+        else
         $user->language = $request->languagesList;
 
        

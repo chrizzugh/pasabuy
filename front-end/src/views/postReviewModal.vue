@@ -16,7 +16,7 @@
      <div class="flex flex-col p-6">
        <div class="flex flex-grow  w-full">
          <div class="flex flex-col justify-center items-center w-full">
-           <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" src="img/asta.jpeg"/>
+           <img class="w-14 h-14 ssm:w-10 ssm:h-10 rounded-full" :src="account_infos.profilePicture"/>
            <div class="flex flex-col justify-center items-center py-3">
              <div class="">
                <span class="text-base ssm:text-sm vs:text-sm lvs:text-base font-bold leading-none text-gray-900">{{account_infos.firstName}} {{account_infos.lastName}}</span>

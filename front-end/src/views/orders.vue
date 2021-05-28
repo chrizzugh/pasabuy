@@ -163,7 +163,7 @@
               ><p class="text-gray-400">
                 Would you like to review the shopper?
               </p>
-              <b class="cursor-pointer">Write a review.</b></span
+              <button @click="setDispatches(itemx.transaction_sender.email)" class="cursor-pointer">Write a review.</button></span
             >
           </div>
           <div class="grid grid-cols-2 p-5 gap-y-4 text-sm">
@@ -430,6 +430,18 @@ export default {
     };
   },
   methods: {
+      setDispatches(email) {
+      store.dispatch("getUserInfo", email).then(() => {
+        store.dispatch("getNotAuthUserAddress", email).then(() => {
+          store.dispatch("getUserFollow", email).then(() => {
+            this.$router.push({
+              name: "Profile",
+              query: { ID: this.toEncrypt(email)},
+            });
+          });
+        });
+      });
+    },
     filter_obj(e) {
       if (e == "Orders") {
         this.transaction_filter = [];

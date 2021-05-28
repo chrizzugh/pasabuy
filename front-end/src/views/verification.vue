@@ -62,6 +62,7 @@
               <a> Verify Now</a>
             </button>
           </div>
+          <br>
           <router-link to="/sign-up">
             <span class="left-auto self-start flex font-bold"
               >Back</span
@@ -69,25 +70,6 @@
           >
         </div>
       </div>
-      <div
-        class="ring-1 ring-gray-300 px-2 overflow-auto py-3 space-y-2 rounded-lg xl:flex xl:px-6 lg:flex lg:px-6 2xl:flex 2xl:px-6 items-center justify-between"
-      >
-        <div class="flex flex-col items-start">
-          <span class="font-bold">By phone number</span>
-          <span class="text-gray-500">+63 912 345 6789</span>
-        </div>
-        <button
-          @click="nextPage('phone')"
-          class="flex justify-center items-center bg-red-buttons w-max px-4 py-2 h-8 text-white font-bold rounded-full focus:outline-none text-sm"
-        >
-          <a> Verify Now</a>
-        </button>
-      </div>
-      <router-link to="/sign-up">
-        <span class="left-auto self-start flex font-bold"
-          >Back</span
-        ></router-link
-      >
     </div>
   </div>
 </template>
@@ -122,8 +104,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      email: localStorage.getItem("personal").email,
-      phoneNumber: localStorage.getItem("personal").phoneNumber,
+      email: JSON.parse(localStorage.getItem("personal")).email,
+      phoneNumber: JSON.parse(localStorage.getItem("personal")).phoneNumber,
     };
   },
   methods: {

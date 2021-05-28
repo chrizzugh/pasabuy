@@ -122,6 +122,9 @@ module.exports = {
         65: "65%",
         35: "35%",
       },
+       height: {
+         scrren: "100vh",
+      },
       fontFamily: {
         nunito: ["Nunito"],
         raleway: ["Raleway"],
