@@ -5,7 +5,7 @@ import VueSimpleAlert from 'vue-simple-alert'
 console.log('apit token', sessionStorage.getItem("Authorization"))
 
 const api = axios.create({
-    baseURL: `https://pasabuy-server.herokuapp.com/`,
+    baseURL: `http://localhost:8000/`,
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'

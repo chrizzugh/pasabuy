@@ -115,7 +115,7 @@ export default {
       console.log(params);
 
       axios
-        .post("https://pasabuy-server.herokuapp.com/api/sendCode", params, {
+        .post("http://localhost:8000/api/sendCode", params, {
           withCredentials: true,
           xsrfCookieName: "XSRF-TOKEN",
           xsrfHeaderName: "X-XSRF-TOKEN",
@@ -141,4 +141,4 @@ export default {
     document.body.style.backgroundColor = "rgb(235,235,235)";
   },
 };
-</script>
+</script>\
