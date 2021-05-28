@@ -603,7 +603,7 @@ export default {
     },
 
     ValidateEmail() {
-      var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      var mailformat = /\S+@\S+\.\S+/;
       this.emailvalidation = mailformat.test(this.PersonalInfo.email);
     },
     ValidateNumber() {
