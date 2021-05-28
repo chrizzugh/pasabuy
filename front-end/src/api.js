@@ -57,7 +57,7 @@ api.interceptors.response.use(
                 window.location.reload();
                 break;
             case 500:
-                VueSimpleAlert.alert('Oops, something went wrong!  The team have been notified.', 'Error', 'error')
+                // VueSimpleAlert.alert('Oops, something went wrong!  The team have been notified.', 'Error', 'error')
                 break;
             default:
                 // Allow individual requests to handle other errors
