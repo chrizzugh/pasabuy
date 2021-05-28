@@ -333,7 +333,8 @@ export default {
         },
         nextPage(){
             this.next = true;
-            
+                  axios.get("http://localhost:8000/sanctum/csrf-cookie",{withCredentials: true,xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN'}).then(() => {
              axios
           .post('http://localhost:8000/api/postPersonal',this.PersonalInfo,{withCredentials: true,xsrfCookieName: 'XSRF-TOKEN',
     xsrfHeaderName: 'X-XSRF-TOKEN'}).then((res)=>{
@@ -368,6 +369,7 @@ export default {
                 this.error_password=errors.response.data.password;
                 this.error_phonenumber=errors.response.data.phoneNumber;
             })//end catch
+    })
             
         },
     },

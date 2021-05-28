@@ -315,7 +315,7 @@
         </div>
         <!--end-->
 
-    <div class="justify-center flex sm:px-2 ssm:px-2 vs:px-2">
+    <div class="justify-center flex sm:px-2 ssm:px-2 vs:px-2" v-if="shopping_info.items!=null">
     <div class="flex flex-col se:h-36 ssm:h-36 mt-3 w-31.75 items-start p-4 ssm:p-2 vs:p-2 bg-gray-100 rounded-xl h-auto ssm:w-full vs:w-full">
             <div class="flex w-full flex-row justify-between items-center ssm:space-x-0 vs:space-x-0">
                 <p class="flex text-base ssm:text-sm vs:text-sm lvs:text-base leading-none text-gray-900">Shopping List ({{computedShopItemList(shopping_info.items).length}} items)</p>
@@ -923,7 +923,7 @@ import _ from "lodash";
 import $ from "jquery";
 
 export default {
-  props: ["post"],
+  props: ["post","ctrProp"],
   data() {
     return {
       editCreatedItem1:false,
@@ -979,10 +979,7 @@ export default {
       showEditShopListModal: false,
       oldList:null,
       selectedList:null,
-      ctr:
-        this.post.request_post.shoppingListContent[
-          this.post.request_post.shoppingListContent.length - 1
-        ].id + 1,
+      ctr:this.ctrProp,
       brandSearchTag:false,
       brands:null,
       new_items:[],

@@ -194,6 +194,8 @@ export default {
       await store.dispatch("getAuthUserFollow",this.dataForm.email);
       await store.dispatch("getAllUserAbout");
       await store.dispatch("getAuthEducation");
+      await store.dispatch("getVerifiedUsers");
+
 
     },
   },

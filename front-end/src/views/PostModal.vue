@@ -72,7 +72,7 @@
             </p>
           </div>
           <!--end-->
-
+          <p class="text-red-500 text-center" >{{errorOffer}}</p>
           <!--Delivery information list-->
           <div
             class="flex flex-col mt-1 vs:mt-1 ssm:px-2 vs:px-2 sm:px-2 justify-center items-center"
@@ -423,6 +423,7 @@
             </p>
           </div>
           <!--end-->
+          <p class="text-red-500 text-center" >{{errorOrder}}</p>
 
           <!--Delivery Information List-->
           <div
@@ -1532,6 +1533,8 @@ export default {
       edit3: false,
       editListFlag: false,
       mainModal: true,
+      errorOffer:null,
+      errorOrder:null,
 
       //end
     };
@@ -1556,14 +1559,18 @@ export default {
           caption: this.caption,
         };
         console.log(form);
-        this.$emit("closeModal");
+       
         store.dispatch("createPostOffer", form).then(() => {
           store.dispatch("getPosts").then(() => {
             store.dispatch("getShoppingPlaces");
             store.dispatch("getTransportModes");
             this.$emit("popUpPost");
             this.$emit("sortPosts");
+            this.$emit("closeModal");
+             this.errorOffer=''
           });
+        }).catch(errors=>{ 
+          this.errorOffer=errors.response.data.message.deliverySchedule
         });
       }
     },
@@ -1579,15 +1586,20 @@ export default {
         shoppingListTitle: this.selectedList.shoppingListTitle,
         shoppingListContent: this.selectedList.shoppingListContent,
       };
-      this.$emit("closeModal");
+      
       console.log("request form", form);
       store.dispatch("createPostRequest", form).then(() => {
         store.dispatch("getPosts").then(() => {
           store.dispatch("getShoppingPlaces");
           this.$emit("popUpPost");
           this.$emit("sortPosts");
+          this.$emit("closeModal");
+             this.errorOrder=''
+
         });
-      });
+      }).catch(errors=>{ 
+          this.errorOrder=errors.response.data.message.deliverySchedule
+        });
     },
     editShoppingList() {
       for (var i = 0; i < this.selectedList.shoppingListContent.length; i++) {

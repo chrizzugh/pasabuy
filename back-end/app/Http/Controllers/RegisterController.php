@@ -122,8 +122,11 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+    
 
         $this->addressInfo = ['houseNumber' => $request->houseNumber, 'province' => $request->province, 'barangay' => $request->barangay, 'cityMunicipality' => $request->cityMunicipality];
+        
+
 
 
         return response()->json($this->addressInfo);
@@ -165,7 +168,10 @@ class RegisterController extends Controller
             if ($userAuth->save()) {
                 $userAddress = new userAddress();
                 $userAddress->email = $request->email;
-                $userAddress->houseNumber = $request->houseNumber;
+                if($request->houseNumber == " " || $request->houseNumber == null || $request->houseNumber == "null" ){
+                }else{
+                    $userAddress->houseNumber = $request->houseNumber;
+                }
                 $userAddress->province = $request->province;
                 $userAddress->barangay = $request->barangay;
                 $userAddress->cityMunicipality = $request->cityMunicipality;

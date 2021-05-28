@@ -33,14 +33,13 @@
               />
               <button
                 @click="togglePostModal"
+                :disabled="!ifUserVerified(user.email)"
                 class="flex items-center justify-start py-5 pl-6 text-base leading-none text-gray-500 bg-gray-100 rounded-full outline-none md:w-full focus:outline-none lvs:text-sm vs:text-xs ssm:text-xs vs:h-12 ssm:h-10 h-14 w-448 vs:w-full ssm:w-full x-v:text-sm"
               >
-                Post a shopping offer
-                <span
-                  class="vs:hidden ssm:hidden sm:hidden xsm:hidden lg:mx-0 vsv:hidden"
+                <span v-if="ifUserVerified(user.email)"
+                  >Post a Shopping Offer or an Order Request</span
                 >
-                  or an order request</span
-                >
+                <span v-else>Get verified to unlock this feature</span>
               </button>
             </div>
           </div>
@@ -261,16 +260,17 @@
                               class="text-base font-bold leading-none text-gray-900 x-v:pl-10 vsv:text-xs ssm:text-sm vs:text-sm lvs:text-sm"
                             >
                               <button
-                              class="font-bold"
+                                class="font-bold"
                                 @click="setDispatches(post_info.user.email)"
                               >
                                 {{ post_info.user.firstName }}
-                                {{ post_info.user.lastName }} 
+                                {{ post_info.user.lastName }}
                               </button>
                               <span
+                                v-if="ifUserVerified(post_info.user.email)"
                                 class="pl-1 inline-block text-blue-900 align-middle material-icons-round md-18"
                               >
-                                 verified
+                                verified
                               </span>
                               <label
                                 v-if="post_info.offer_post != null"
@@ -394,10 +394,14 @@
                             v-if="edit1 && edit2 == post_info.postNumber"
                             class="absolute py-2 pt-2 pl-2 pr-4 leading-loose bg-white rounded-lg shadow-xl ssm:right-5 vs:right-5 sm:right-5 lg:right-0 md:right-5 xl:right-0 h-min w-40"
                           >
+                          <span v-if="post_info.request_post.shoppingListContent !=null" hidden>{{ctrProp=post_info.request_post.shoppingListContent[
+                                  post_info.request_post.shoppingListContent.length - 1
+                                ].id + 1}}</span><span hidden>{{ctrProp=1}}</span>
                             <EditOrderRequest
                               v-if="postModalVisible1"
                               @closeModal1="listener1"
                               :post="post_info"
+                              :ctrProp="ctrProp"
                               @getSortPosts="sortPosts"
                             />
                             <button
@@ -632,7 +636,10 @@
                     <!--section 4-->
                     <div
                       class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
-                      v-if="post_info.request_post != null"
+                      v-if="
+                        post_info.request_post != null &&
+                        post_info.request_post.shoppingListContent != null
+                      "
                     >
                       <div class="flex-col items-start w-full">
                         <span
@@ -641,8 +648,8 @@
                           <label class="font-normal text-gray-500"
                             >{{
                               computedShopItemList(
-                              post_info.request_post.shoppingListContent
-                            ).length
+                                post_info.request_post.shoppingListContent
+                              ).length
                             }}
                             items</label
                           >
@@ -672,9 +679,7 @@
                       </div>
                       <button
                         @click="showMoreshowLess"
-                        v-if="
-                          isFew(post_info.request_post.shoppingListContent)
-                        "
+                        v-if="isFew(post_info.request_post.shoppingListContent)"
                         class="focus:outline-none items-start justify-start text-sm text-gray-500"
                       >
                         {{ showListStatus }}
@@ -749,6 +754,7 @@
                           sendOfferOrRequestpostNum =
                             post_info.offer_post.postNumber;
                         "
+                        :disabled="!ifUserVerified(user.email)"
                         class="flex items-center space-x-2 focus:outline-none ssm:space-x-1"
                       >
                         <span
@@ -773,6 +779,7 @@
                           sendOfferOrRequestpostNum =
                             post_info.request_post.postNumber;
                         "
+                        :disabled="!ifUserVerified(user.email)"
                         class="flex items-center space-x-2 focus:outline-none ssm:space-x-1"
                       >
                         <span
@@ -902,18 +909,18 @@
                                 class="text-base font-bold leading-none text-gray-900 x-v:pl-10 vsv:text-xs ssm:text-sm vs:text-sm lvs:text-sm"
                               >
                                 <button
-                                class="font-bold"
+                                  class="font-bold"
                                   @click="
                                     setDispatches(post_info.post.user.email)
                                   "
                                 >
                                   {{ post_info.post.user.firstName }}
-                                  {{ post_info.post.user.lastName }} 
+                                  {{ post_info.post.user.lastName }}
                                 </button>
                                 <span
                                   class="pl-1 inline-block text-blue-900 align-middle material-icons-round md-18"
                                 >
-                                   verified
+                                  verified
                                 </span>
                                 <label
                                   v-if="post_info.post.offer_post != null"
@@ -1132,7 +1139,10 @@
                       <!--section 4-->
                       <div
                         class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
-                        v-if="post_info.post.request_post != null"
+                        v-if="
+                          post_info.post.request_post != null &&
+                          post_info.request_post.shoppingListContent != null
+                        "
                       >
                         <div class="flex-col items-start w-full">
                           <span
@@ -1141,8 +1151,9 @@
                             <label class="font-normal text-gray-500"
                               >{{
                                 computedShopItemList(
-                                post_info.post.request_post.shoppingListContent
-                              ).length
+                                  post_info.post.request_post
+                                    .shoppingListContent
+                                ).length
                               }}
                               items</label
                             >
@@ -1472,7 +1483,10 @@
             </div>
           </div>
           <div v-else>
-            <p class="text-center">No active Orders</p>
+            <p v-if="ifUserVerified(user.email)" class="text-center">
+              No active Orders
+            </p>
+            <p v-else class="text-center">Get verified</p>
           </div>
         </div>
         <!-----------END OF ACTIVE ORDERS---------------->
@@ -1660,7 +1674,10 @@
             </div>
           </div>
           <div v-else>
-            <p class="text-center">No active Deliveries</p>
+            <p v-if="ifUserVerified(user.email)" class="text-center">
+              No active Deliveries
+            </p>
+            <p v-else class="text-center">Get verified</p>
           </div>
         </div>
         <!-----------END OF ACTIVE DELIVERIES---------------->
@@ -1782,11 +1799,22 @@
                   @closeshopListModal="listener6"
                 />
                 <button
+                  v-show="ifUserVerified(user.email)"
                   @click="addlist = !addlist"
                   class="w-64 h-8 px-5 text-sm font-bold text-red-600 transition-colors duration-150 border-2 border-red-600 rounded-3xl focus:outline-none"
                 >
-                  Create New
+                  <span>Create New</span>
                 </button>
+                <router-link
+                  v-show="!ifUserVerified(user.email)"
+                  to="/account-settings"
+                >
+                  <button
+                    class="w-64 h-8 px-5 text-sm font-bold text-red-600 transition-colors duration-150 border-2 border-red-600 rounded-3xl focus:outline-none"
+                  >
+                    <span>Get verified</span>
+                  </button>
+                </router-link>
               </div>
               <!--Add new Shopping list-->
               <div
@@ -1838,45 +1866,47 @@
                         class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
                       />
                       <div class="flex flex-row space-x-2">
-                        <div class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100">
-                        <input
-                          id="brand"
-                          type="text"
-                          placeholder="Brand"
+                        <div
                           class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
-                          @keyup="brand()"
-                          @click="brand(), brandSearchTag = !brandSearchTag"
-                        />
+                        >
+                          <input
+                            id="brand"
+                            type="text"
+                            placeholder="Brand"
+                            class="rounded-xl pl-5 w-full focus:outline-none h-10 bg-gray-100"
+                            @keyup="brand(), (brandSearchTag = true)"
+                            @click="brand(), (brandSearchTag = !brandSearchTag)"
+                          />
                           <div class="relative">
+                            <div
+                              v-if="brandSearchTag"
+                              class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-full"
+                            >
                               <div
-                                v-if="brandSearchTag"
-                                class="absolute py-3 bg-white rounded-lg shadow-xl right-0 h-35.1 sm:w-full w-full"
+                                class="flex flex-col w-full px-2 justify-start items-start"
                               >
                                 <div
-                                  class="flex flex-col w-full px-2 justify-start items-start"
+                                  id="scroll1"
+                                  class="flex px-2 flex-col overflow-y-scroll w-full h-24"
                                 >
-                                  <div
-                                    id="scroll1"
-                                    class="flex px-2 flex-col overflow-y-scroll w-full h-24"
-                                  >
-                                    <ul id="myUL" class="space-y-1">
-                                      <li
-                                        v-for="(brand, index) in brands"
-                                        :key="index"
-                                        @click="
-                                          setBrand(index);
-                                          brandSearchTag = !brandSearchTag;
-                                        "
-                                      >
-                                        <a href="#" :id="'brand' + index">{{
-                                          brand
-                                        }}</a>
-                                      </li>
-                                    </ul>
-                                  </div>
+                                  <ul id="myUL" class="space-y-1">
+                                    <li
+                                      v-for="(brand, index) in brands"
+                                      :key="index"
+                                      @click="
+                                        setBrand(index);
+                                        brandSearchTag = !brandSearchTag;
+                                      "
+                                    >
+                                      <a href="#" :id="'brand' + index">{{
+                                        brand
+                                      }}</a>
+                                    </li>
+                                  </ul>
                                 </div>
                               </div>
                             </div>
+                          </div>
                         </div>
                         <input
                           id="size"
@@ -1885,8 +1915,7 @@
                           class="w-40 rounded-xl pl-5 focus:outline-none h-10 bg-gray-100"
                         />
                       </div>
-                      
-                      
+
                       <div class="flex flex-row space-x-2">
                         <p class="font-bold">Quantity</p>
                         <span
@@ -2435,8 +2464,6 @@ export default {
     });
     const TogglePopup = (trigger) => {
       popupTriggers.value[trigger] = !popupTriggers.value[trigger];
-      
-
     };
     setTimeout(() => {
       popupTriggers.value.popUp1 = true;
@@ -2445,13 +2472,12 @@ export default {
       popupTriggers.value.popUp2 = true;
     }, 5000);
     setTimeout(() => {
-      if( sessionStorage.getItem("sessionCookieNotify") === "true"){
+      if (sessionStorage.getItem("sessionCookieNotify") === "true") {
         popupTriggers.value.timedTrigger = true;
-      }else{
+      } else {
         popupTriggers.value.timedTrigger = false;
-
       }
-      console.log("cookie",popupTriggers.value.timedTrigger)
+      console.log("cookie", popupTriggers.value.timedTrigger);
     }, 3500);
     return {
       popupTriggers,
@@ -2460,7 +2486,8 @@ export default {
   },
   data() {
     return {
-      brandSearchTag:false,
+      ctrProp:0,
+      brandSearchTag: false,
       popUp3: false,
       popUpPost: false,
       shift: 0,
@@ -2655,7 +2682,7 @@ export default {
       showListStatus: "See More",
       showLessStatus: "See Less",
       isActive: false,
-      brands:null
+      brands: null,
     };
   },
   components: {
@@ -2679,26 +2706,29 @@ export default {
     },
   },
   methods: {
-    setCookie(){
-      this.popupTriggers.timedTrigger = false
-      sessionStorage.setItem("sessionCookieNotify", false)
+    setCookie() {
+      this.popupTriggers.timedTrigger = false;
+      sessionStorage.setItem("sessionCookieNotify", false);
     },
-    setBrand(index){
-      document.getElementById("brand").value = document.getElementById('brand'+index).innerHTML
+    setBrand(index) {
+      document.getElementById("brand").value = document.getElementById(
+        "brand" + index
+      ).innerHTML;
     },
-    brand(){
-      let vm = this
-      this.debounceSearchBrand(vm)
-      console.log('brandssssssssssssss', this.brands)
+    brand() {
+      let vm = this;
+      this.debounceSearchBrand(vm);
+      console.log("brandssssssssssssss", this.brands);
     },
     debounceSearchBrand: _.debounce((vm) => {
       var data = document.getElementById("brand").value;
       var brand = data.replace(" ", "%20");
       var returnBrands = [];
       console.log(brand);
-      var link =  "https://api.edamam.com/api/food-database/v2/parser?ingr=" +
-            brand +
-            "&app_id=df56563c&app_key=2ac03d7a37a55354a941d0e1289ac4b2"
+      var link =
+        "https://api.edamam.com/api/food-database/v2/parser?ingr=" +
+        brand +
+        "&app_id=df56563c&app_key=2ac03d7a37a55354a941d0e1289ac4b2";
       //get the mathced brand names from product brands api
       axios
         .get(link)
@@ -2707,17 +2737,19 @@ export default {
           console.log("search res: ", res.data);
           for (var i = 0; i < res.data.hints.length; i++) {
             console.log("brands: ", res.data.hints[i].food.brand);
-            returnBrands.push(res.data.hints[i].food.brand)
+            returnBrands.push(res.data.hints[i].food.label);
           }
           var temp = returnBrands;
-          returnBrands = []; 
-          $.each(temp, function(i, el){
-              if($.inArray(el, returnBrands) === -1) returnBrands.push(el);
+          returnBrands = [];
+          $.each(temp, function (i, el) {
+            if ($.inArray(el, returnBrands) === -1) returnBrands.push(el);
           });
-          console.log('returnint this',returnBrands)
+          console.log("returnint this", returnBrands);
           vm.brands = returnBrands;
-        }).catch(()=>{vm.brands = null});
-        
+        })
+        .catch(() => {
+          vm.brands = null;
+        });
     }, 1000),
     editListFromDashboard() {
       this.Editlist = true;
@@ -2748,9 +2780,13 @@ export default {
       }
     },
     computedShopItemList(list) {
-      var temp = list.filter((x)=>{return x.status ==1})
-      return this.limit_by ? temp.slice(0, this.limit_by) : temp;
-      
+      if (list != null) {
+        var temp = list.filter((x) => {
+          return x.status == 1;
+        });
+        return this.limit_by ? temp.slice(0, this.limit_by) : temp;
+      }
+      return null;
     },
     isFew(filter_itemList) {
       filter_itemList.length < 5;
@@ -2809,10 +2845,7 @@ export default {
       let y = document.getElementById("brand").value;
       let z = document.getElementById("size").value;
       let n = this.quantity;
-      if (x == "" || y == "" || z == "" || n <= 0) {
-        alert("Empty Field");
-        return false;
-      } else {
+      if (x != "" || y != "" || z != "") {
         let datax = {
           id: this.ctr,
           product: x,
@@ -2827,6 +2860,10 @@ export default {
         this.new_item = false;
         this.list_number++;
         console.log(this.new_items);
+      } else {
+   
+        alert("Empty Field");
+        return false;
       }
     },
     title_edit(e, m) {
@@ -3203,24 +3240,25 @@ export default {
     },
     timestamp(datetime) {
       var postedDate = new Date(datetime);
-      var dateToday = new Date();
-      var dateDiff = dateToday.getTime() - postedDate.getTime();
-      dateDiff = dateDiff / (1000 * 3600 * 24);
-      if (dateDiff < 1) return moment(datetime).format("[Today at] h:mm a");
-      else if (dateDiff >= 1 && dateDiff < 2)
-        return moment(datetime).format("[Yesterday at] h:mm a");
+      const today = moment().endOf("day");
+      const yesterday = moment().add(-1, "day").endOf("day");
+
+      if (postedDate < today) return moment(datetime).format("[Today at] h:mm a");
+      if (postedDate > yesterday)   return moment(datetime).format("[Yesterday at] h:mm a");
       else return moment(datetime).format("MMM DD, YYYY [at] h:mm a");
     },
     timestampSched(datetime) {
       var schedDate = new Date(datetime);
-      var dateToday = new Date();
-      var dateDiff = schedDate.getTime() - dateToday.getTime();
-      dateDiff = dateDiff / (1000 * 3600 * 24);
-      if (dateDiff < 1 && dateDiff > 0)
+      const today = moment().endOf("day");
+      const tomorrow = moment().add(1, "day").endOf("day");
+      if (schedDate < today) {
         return moment(datetime).format("[Today at] h:mm a");
-      else if (dateDiff >= 1 && dateDiff < 2)
+      }
+      if (schedDate < tomorrow) {
         return moment(datetime).format("[Tommorow at] h:mm a");
-      else return moment(datetime).format("[From] MMM DD, YYYY [at] h:mm a");
+      }
+
+      return moment(datetime).format("[From] MMM DD, YYYY [at] h:mm a");
     },
     setDispatches(email) {
       store.dispatch("getUserInfo", email).then(() => {
@@ -3357,8 +3395,22 @@ export default {
         return x.revieweeEmail == userEmail;
       });
     },
+    ifUserVerified(email) {
+      var temp = this.verifiedUsers.filter((x) => {
+        return x.email === email && x.verifyStatus == "verified";
+      });
+      if (temp.length <= 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    
   },
   computed: {
+    verifiedUsers() {
+      return store.getters.getVerifiedUsers;
+    },
     user() {
       return store.getters.getUser;
     },

@@ -102,9 +102,24 @@
                 >
                   <span class="font-medium text-sm" id="mark">
                     {{ chatRoomNames[index] }}
-                    <span class="material-icons pl-2" id="iCheck">
-                      check_circle
+                    <span v-if="chatRoom.email1 === authUser.email">
+                      <span
+                        v-show="ifUserVerified(chatRoom.email2)"
+                        class="material-icons pl-2"
+                        id="iCheck"
+                      >
+                        check_circle
+                      </span>
                     </span>
+                    <span v-else>
+                      <span
+                        v-show="ifUserVerified(chatRoom.email1)"
+                        class="material-icons pl-2"
+                        id="iCheck"
+                      >
+                        check_circle
+                      </span></span
+                    >
                   </span>
                   <span
                     class="text-xs text-gray-400 truncate w-36 flex items-end"
@@ -239,9 +254,24 @@
                 >
                   <span class="font-medium text-sm" id="mark">
                     {{ chatRoomNames[index] }}
-                    <span class="material-icons pl-2" id="iCheck">
-                      check_circle
+                    <span v-if="chatRoom.email1 === authUser.email">
+                      <span
+                        v-show="ifUserVerified(chatRoom.email2)"
+                        class="material-icons pl-2"
+                        id="iCheck"
+                      >
+                        check_circle
+                      </span>
                     </span>
+                    <span v-else>
+                      <span
+                        v-show="ifUserVerified(chatRoom.email1)"
+                        class="material-icons pl-2"
+                        id="iCheck"
+                      >
+                        check_circle
+                      </span></span
+                    >
                   </span>
                 </div>
               </div>
@@ -332,9 +362,24 @@
                 </button>
 
                 <h4 class="text-base font-bold pt-2 pl-4">{{ activeName }}</h4>
-                <span class="material-icons pl-3 pt-3" id="iCheck">
-                  check_circle
+                <span v-if="activeEmail1 === authUser.email">
+                  <span
+                    v-show="ifUserVerified(activeEmail2)"
+                    class="material-icons pl-3 pt-3"
+                    id="iCheck"
+                  >
+                    check_circle
+                  </span>
                 </span>
+                <span v-else>
+                  <span
+                    v-show="ifUserVerified(activeEmail1)"
+                    class="material-icons pl-3 pt-3"
+                    id="iCheck"
+                  >
+                    check_circle
+                  </span></span
+                >
               </div>
 
               <div class="align-middle absolute right-2">
@@ -353,17 +398,17 @@
         <div class="overflow-auto overflow-x-hidden h-4/5" id="journal-scroll">
           <div
             class="sticky top-0 w-full p-3 flex justify items-center shadow-lg bg-white border"
-            v-for="(transaction) in transactions"
+            v-for="transaction in transactions"
             :key="transaction.postNumber"
-            v-show="ifHide &&
+            v-show="
+              ifHide &&
               (transaction.emailCustomerShopper == activeEmail1 ||
                 transaction.emailCustomerShopper == activeEmail2) &&
               (transaction.transactionReceiver == activeEmail1 ||
-                transaction.transactionReceiver == activeEmail2) && activeDisplayingTransaction == transaction.transactionNumber
+                transaction.transactionReceiver == activeEmail2) &&
+              activeDisplayingTransaction == transaction.transactionNumber
             "
           >
-   
-            
             <!-- sent offer 1--->
             <div
               v-if="
@@ -375,11 +420,10 @@
               <div
                 class="text-sm w-full"
                 v-if="
-                  (transaction.transactionStatus == 'pending') &&
+                  transaction.transactionStatus == 'pending' &&
                   isRequestPost(transaction.transactionData) != -1
                 "
               >
-               
                 <div class="flex justify-between items-center">
                   <span
                     >You sent an offer to
@@ -414,7 +458,7 @@
                     <span>Cancel Offer</span>
                   </button>
                   <button
-                   @click="viewDetailsBtn(transaction.transactionNumber)"
+                    @click="viewDetailsBtn(transaction.transactionNumber)"
                     class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
                   >
                     <span>View Post</span>
@@ -426,7 +470,7 @@
               <!-- sent request 1--->
               <div
                 v-if="
-                  (transaction.transactionStatus == 'pending') &&
+                  transaction.transactionStatus == 'pending' &&
                   isRequestPost(transaction.transactionData) == -1
                 "
                 class="text-sm w-full"
@@ -465,7 +509,7 @@
                     <span>Cancel Request</span>
                   </button>
                   <button
-                     @click="viewDetailsBtn(transaction.transactionNumber)"
+                    @click="viewDetailsBtn(transaction.transactionNumber)"
                     class="mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
                   >
                     <span>View Post</span>
@@ -485,7 +529,7 @@
               <div
                 class="text-sm w-full"
                 v-if="
-                  (transaction.transactionStatus == 'pending') &&
+                  transaction.transactionStatus == 'pending' &&
                   isRequestPost(transaction.transactionData) != -1
                 "
               >
@@ -544,7 +588,7 @@
               <!-- received request 1--->
               <div
                 v-if="
-                  (transaction.transactionStatus == 'pending') &&
+                  transaction.transactionStatus == 'pending' &&
                   isRequestPost(transaction.transactionData) == -1
                 "
                 class="text-sm w-full"
@@ -605,21 +649,24 @@
             <!--------------transaction details confirmed------>
 
             <div
-              v-if="transaction.transactionStatus === 'Confirmed' || transaction.transactionStatus === 'In Transit'"
+              v-if="
+                transaction.transactionStatus === 'Confirmed' ||
+                transaction.transactionStatus === 'In Transit'
+              "
               class="text-sm w-full"
             >
               <div class="flex flex-row justify-between">
                 <span
                   >Transaction
                   <span class="font-semibold ml-2"
-                    >#{{ transaction.transactionNumber }} 
+                    >#{{ transaction.transactionNumber }}
                   </span>
                 </span>
 
                 <div class="flex items-center ml-2">
-                  <span class="rounded border h-6 border-blue-700 px-1"
-                    >{{transaction.transactionStatus}}</span
-                  >
+                  <span class="rounded border h-6 border-blue-700 px-1">{{
+                    transaction.transactionStatus
+                  }}</span>
 
                   <button
                     @click="vertiDots"
@@ -634,7 +681,7 @@
               </div>
               <div class="flex justify-end pr-3">
                 <button
-                @click="viewDetailsBtn(transaction.transactionNumber)"
+                  @click="viewDetailsBtn(transaction.transactionNumber)"
                   class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
                 >
                   <span>View Details</span>
@@ -652,8 +699,8 @@
 
             <div
               v-if="
-                (transaction.transactionStatus === 'Cancelled' ||
-                transaction.transactionStatus === 'Declined')
+                transaction.transactionStatus === 'Cancelled' ||
+                transaction.transactionStatus === 'Declined'
               "
               class="text-sm w-full"
             >
@@ -661,14 +708,13 @@
                 <span
                   >Transaction
                   <span class="font-semibold ml-2"
-                    >#{{ transaction.transactionNumber }} 
+                    >#{{ transaction.transactionNumber }}
                   </span>
                 </span>
                 <div class="flex items-center ml-2">
-                  <span
-                    class="rounded border h-6 px-1"
-                    >{{transaction.transactionStatus}}</span
-                  >
+                  <span class="rounded border h-6 px-1">{{
+                    transaction.transactionStatus
+                  }}</span>
                   <button
                     @click="vertiDots"
                     class="w-4 h-6 py-1 pb-1 pr-1 rounded-full focus:outline-none hover:text-red-700 hover:bg-gray-300 active:bg-gray-300"
@@ -682,7 +728,7 @@
               </div>
               <div class="flex justify-end pr-3">
                 <button
-                @click="viewDetailsBtn(transaction.transactionNumber)"
+                  @click="viewDetailsBtn(transaction.transactionNumber)"
                   class="mx-2 mt-2 h-7 px-2 hover:text-white hover:bg-gray-300 focus:outline-none rounded-full border border-gray-700"
                 >
                   <span>View Details</span>
@@ -763,7 +809,10 @@
                       @click="active_transact(transact.transactionNumber)"
                     >
                       <span
-                        v-if="transact.transactionStatus === 'Confirmed' || transact.transactionStatus === 'In Transit' "
+                        v-if="
+                          transact.transactionStatus === 'Confirmed' ||
+                          transact.transactionStatus === 'In Transit'
+                        "
                         class="h-6 flex items-center tracking-wide rounded py-1 flex text-xs hover:bg-gray-400 hover:text-white text-blue-500 justify-start pl-4"
                         >Transaction #{{ index + 1 }}</span
                       >
@@ -862,9 +911,10 @@
                         <p
                           v-else-if="
                             msgStatus.receiver ==
-                            this.userPersonal.firstName +
-                              ' ' +
-                              this.userPersonal.lastName && msgStatus.status=='Cancelled'
+                              this.userPersonal.firstName +
+                                ' ' +
+                                this.userPersonal.lastName &&
+                            msgStatus.status == 'Cancelled'
                           "
                         >
                           {{ msgStatus.sender }} {{ msgStatus.status }} their
@@ -881,7 +931,6 @@
                     <!-- if the message is a post--->
                     <!-----------------incoming post message------------------------>
                     <div
-           
                       v-for="(msgPost, index) in parseString(msg.messageText)"
                       :key="index"
                     >
@@ -978,7 +1027,10 @@
                           </div>
                         </div>
                       </div>
-                      <div class="flex items-end pr-10 mt-1" v-if="msgPost.message != null">
+                      <div
+                        class="flex items-end pr-10 mt-1"
+                        v-if="msgPost.message != null"
+                      >
                         <img
                           :src="msg.get_message_sender.profilePicture"
                           class="rounded-lg h-8 w-8"
@@ -1046,9 +1098,10 @@
                         <p
                           v-else-if="
                             msgStatus.receiver ==
-                            this.userPersonal.firstName +
-                              ' ' +
-                              this.userPersonal.lastName && msgStatus.status == 'Cancelled'
+                              this.userPersonal.firstName +
+                                ' ' +
+                                this.userPersonal.lastName &&
+                            msgStatus.status == 'Cancelled'
                           "
                         >
                           {{ msgStatus.sender }} {{ msgStatus.status }} their
@@ -1158,7 +1211,10 @@
                           </div>
                         </div>
                       </div>
-                      <div class="flex justify-end p-2" v-if="msgPost.message != null">
+                      <div
+                        class="flex justify-end p-2"
+                        v-if="msgPost.message != null"
+                      >
                         <div class="rounded-lg">
                           <div
                             class="ml-32 pt-2 pl-4 pb-3 pr-4 bg-gray-200 text-sm rounded-lg"
@@ -1320,8 +1376,9 @@
                       <button
                         @click="viewDetailsBtn(transaction.transactionNumber)"
                         class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
-                        ><span>View Post</span></button
                       >
+                        <span>View Post</span>
+                      </button>
                     </div>
                   </div>
 
@@ -1368,10 +1425,11 @@
                         <span>Cancel Request</span>
                       </button>
                       <button
-                         @click="viewDetailsBtn(transaction.transactionNumber)"
+                        @click="viewDetailsBtn(transaction.transactionNumber)"
                         class="flex items-center mx-2 mt-2 h-7 px-2 hover:bg-gray-300 rounded-full bg-red-700 text-white"
-                        ><span>View Post</span></button
                       >
+                        <span>View Post</span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1770,18 +1828,19 @@
                           <p
                             v-else-if="
                               msgStatus.receiver ==
-                              this.userPersonal.firstName +
-                                ' ' +
-                                this.userPersonal.lastName && msgStatus=='Cancelled'
+                                this.userPersonal.firstName +
+                                  ' ' +
+                                  this.userPersonal.lastName &&
+                              msgStatus == 'Cancelled'
                             "
                           >
                             {{ msgStatus.sender }} {{ msgStatus.status }} their
                             {{ msgStatus.postIdentity }}
                           </p>
                           <p v-else>
-                          {{ msgStatus.sender }} {{ msgStatus.status }} your
-                          {{ msgStatus.postIdentity }}
-                        </p>
+                            {{ msgStatus.sender }} {{ msgStatus.status }} your
+                            {{ msgStatus.postIdentity }}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -1789,7 +1848,6 @@
                     <!-----------------incoming post message------------------------>
                     <div v-else>
                       <div
-                       
                         v-for="(msgPost, index) in parseString(msg.messageText)"
                         :key="index"
                       >
@@ -1889,7 +1947,10 @@
                             </div>
                           </div>
                         </div>
-                        <div class="flex items-end pr-10 mt-1" v-if="msgPost.message != null">
+                        <div
+                          class="flex items-end pr-10 mt-1"
+                          v-if="msgPost.message != null"
+                        >
                           <img
                             :src="msg.get_message_sender.profilePicture"
                             class="rounded-lg h-8 w-8"
@@ -1963,18 +2024,19 @@
                           <p
                             v-else-if="
                               msgStatus.receiver ==
-                              this.userPersonal.firstName +
-                                ' ' +
-                                this.userPersonal.lastName && msgStatus.status=='Cancelled'
+                                this.userPersonal.firstName +
+                                  ' ' +
+                                  this.userPersonal.lastName &&
+                              msgStatus.status == 'Cancelled'
                             "
                           >
                             {{ msgStatus.sender }} {{ msgStatus.status }} their
                             {{ msgStatus.postIdentity }}
                           </p>
                           <p v-else>
-                          {{ msgStatus.sender }} {{ msgStatus.status }} your
-                          {{ msgStatus.postIdentity }}
-                        </p>
+                            {{ msgStatus.sender }} {{ msgStatus.status }} your
+                            {{ msgStatus.postIdentity }}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -2076,7 +2138,10 @@
                             </div>
                           </div>
                         </div>
-                        <div class="flex justify-end pr-0 mt-1" v-if="msgPost.message != null">
+                        <div
+                          class="flex justify-end pr-0 mt-1"
+                          v-if="msgPost.message != null"
+                        >
                           <div class="rounded-lg">
                             <div
                               class="ml-4 mr-10 p-3 bg-gray-100 text-sm rounded-lg"
@@ -2474,18 +2539,23 @@
         >
           Back</button
         ><!--invisible, used only for auto margin header. If design need close button just delete the invisible class-->
-        <p v-if="currentPostViewDetails.post.request_post!=null"
+        <p
+          v-if="currentPostViewDetails.post.request_post != null"
           class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
         >
-          Offer from {{recipient}}
+          Offer from {{ recipient }}
         </p>
-        <p v-else
+        <p
+          v-else
           class="text-lg ssm:text-sm vs:text-base font-bold leading-normal text-center text-gray-900"
         >
-          Request from {{recipient}}
+          Request from {{ recipient }}
         </p>
         <button
-          @click="toggleViewDetails=!toggleViewDetails; currentPostViewDetails=[]"
+          @click="
+            toggleViewDetails = !toggleViewDetails;
+            currentPostViewDetails = [];
+          "
           class="focus:outline-none text-sm font-bold leading-none text-right text-indigo-900"
         >
           Close
@@ -2493,17 +2563,27 @@
       </div>
       <hr class="w-full" />
       <div class="flex w-full flex-row items-center space-x-4">
-        <img :src="currentPostViewDetails.transaction_sender.profilePicture" class="rounded-full w-10 h-10" />
+        <img
+          :src="currentPostViewDetails.transaction_sender.profilePicture"
+          class="rounded-full w-10 h-10"
+        />
         <div class="flex flex-col">
           <div class="flex-row flex space-x-1 items-center">
             <p class="text-base font-bold leading-none text-gray-900">
-              {{recipient}}
+              {{ recipient }}
             </p>
-            <span class="text-blue-900 align-middle material-icons text-base">
+            <span
+              v-show="
+                ifUserVerified(currentPostViewDetails.transaction_sender.email)
+              "
+              class="text-blue-900 align-middle material-icons text-base"
+            >
               verified
             </span>
           </div>
-          <p class="text-sm leading-none text-gray-500">{{timestamp(currentPostViewDetails.dateCreated)}}</p>
+          <p class="text-sm leading-none text-gray-500">
+            {{ timestamp(currentPostViewDetails.dateCreated) }}
+          </p>
         </div>
       </div>
       <div class="flex flex-col w-full">
@@ -2517,7 +2597,7 @@
             {{ currentPostViewDetails.transactionData.deliveryAddress }}
           </p>
         </div>
- 
+
         <div class="flex space-x-2 py-2">
           <span class="w-6 h-6 rounded-full material-icons text-red-600">
             alarm
@@ -2525,7 +2605,11 @@
           <p
             class="text-sm ssm:text-xs vs:text-xs lvs:text-sm leading-none text-gray-900 py-1"
           >
-            {{ timestampSched(currentPostViewDetails.transactionData.deliverySchedule) }}
+            {{
+              timestampSched(
+                currentPostViewDetails.transactionData.deliverySchedule
+              )
+            }}
           </p>
         </div>
         <div class="flex space-x-2">
@@ -2557,14 +2641,19 @@
             >Shopping List</span
           >
           <span class="text-base ssm:text-sm leading-none text-gray-500"
-            >{{ currentPostViewDetails.transactionShoppingList.length }} items</span
+            >{{
+              currentPostViewDetails.transactionShoppingList.length
+            }}
+            items</span
           >
         </div>
         <div
           class="inline-flex flex-col ssm:px-0 w-full vs:px-0 space-y-2 py-4 px-4"
         >
           <li
-            v-for="shoppingItems in computedShopItemList(currentPostViewDetails.transactionShoppingList)"
+            v-for="shoppingItems in computedShopItemList(
+              currentPostViewDetails.transactionShoppingList
+            )"
             :key="shoppingItems"
             class="text-sm leading-none text-gray-900"
           >
@@ -2589,7 +2678,11 @@
           {{ currentPostViewDetails.transactionData.caption }}
         </p>
       </div>
-      <div v-if="currentPostViewDetails.transactionStatus == 'pending' && currentPostViewDetails.post.postIdentity=='request_post'"
+      <div
+        v-if="
+          currentPostViewDetails.transactionStatus == 'pending' &&
+          currentPostViewDetails.post.postIdentity == 'request_post'
+        "
         class="justify-between flex flex-row vs:space-x-2 ssm:space-x-2 sm:space-x-2 w-full"
       >
         <button
@@ -2926,7 +3019,7 @@
             check_circle
           </span>
           <p class="text-base leading-normal text-white">
-            Successfully Accepted {{recipient}}'s {{currentPostIdentity}}
+            Successfully Accepted {{ recipient }}'s {{ currentPostIdentity }}
           </p>
         </div>
         <button
@@ -2955,7 +3048,7 @@
             check_circle
           </span>
           <p class="text-base leading-normal text-white">
-            Successfully Declined {{recipient}}'s {{currentPostIdentity}}
+            Successfully Declined {{ recipient }}'s {{ currentPostIdentity }}
           </p>
         </div>
         <button
@@ -3183,9 +3276,9 @@ export default {
       decline: null,
       activeUser: null,
       accept: null,
-      activeDisplayingTransaction:null,
-      toggleViewDetails:false,
-      currentPostViewDetails:[],
+      activeDisplayingTransaction: null,
+      toggleViewDetails: false,
+      currentPostViewDetails: [],
       limit_by: 4,
       default_limit: 4,
       showListStatus: "See More",
@@ -3199,7 +3292,7 @@ export default {
       this.connect();
     },
     room() {
-      console.log("room changed")
+      console.log("room changed");
       this.getChatRooms();
     },
     transactions() {
@@ -3216,11 +3309,13 @@ export default {
     isFew(filter_itemList) {
       filter_itemList.length < 5;
     },
-    viewDetailsBtn(transactionNumber){
-    var temp = this.transactions.filter((x)=>{return x.transactionNumber == transactionNumber})
-    this.currentPostViewDetails =temp[0]
-    this.toggleViewDetails=!this.toggleViewDetails
-    console.log('detailss')
+    viewDetailsBtn(transactionNumber) {
+      var temp = this.transactions.filter((x) => {
+        return x.transactionNumber == transactionNumber;
+      });
+      this.currentPostViewDetails = temp[0];
+      this.toggleViewDetails = !this.toggleViewDetails;
+      console.log("detailss");
     },
     isRequestPost(transactionData) {
       return JSON.stringify(transactionData).search("indexOrderRequestPost");
@@ -3388,8 +3483,8 @@ export default {
     //   } //end if
     // }, //end sendbtn
     setRoom(name, room_ID, email1, email2) {
-      if(this.transactions.length>0){
-        this.activeDisplayingTransaction = this.transactions[0].transactionNumber
+      if (this.transactions.length > 0) {
+        this.activeDisplayingTransaction = this.transactions[0].transactionNumber;
       }
       this.toggleInbox = !this.toggleInbox;
       this.toggleChat = !this.toggleChat;
@@ -3399,21 +3494,21 @@ export default {
       this.recipient = name;
       this.activeEmail1 = email1;
       this.activeEmail2 = email2;
-      console.log(this.activeEmail1,this.activeEmail2,this.authUser.email)
+      console.log(this.activeEmail1, this.activeEmail2, this.authUser.email);
       console.log("set room");
-      this.debounceReadChatNotif(email1,email2,this.authUser.email);
+      this.debounceReadChatNotif(email1, email2, this.authUser.email);
       this.$nextTick(() => this.scrollToEnd());
     },
-    debounceReadChatNotif: _.debounce((email1,email2,authEmail) => {
+    debounceReadChatNotif: _.debounce((email1, email2, authEmail) => {
       var email = null;
-      console.log('asdfaf',email1,email2,authEmail)
-      if(email1 === authEmail){
-        email = email2
-      }else{
-        email = email1
+      console.log("asdfaf", email1, email2, authEmail);
+      if (email1 === authEmail) {
+        email = email2;
+      } else {
+        email = email1;
       }
       api
-        .post("/api/readMessageNotif",{email:email})
+        .post("/api/readMessageNotif", { email: email })
         .then(() => {
           store.dispatch("getUnreadNotifications");
         })
@@ -3431,11 +3526,20 @@ export default {
       //filtering the message room where there are no message and not the active room if there is
       var z = 0;
       for (i = 0; i < this.room.length; i++) {
-        console.log('chatroom temp',this.transactions)
-        var temp = this.transactions.filter(x=>{return (x.emailCustomerShopper == this.room[i].email1 || x.emailCustomerShopper == this.room[i].email2) && (x.transactionReceiver == this.room[i].email1 || x.transactionReceiver == this.room[i].email2)})
-        console.log('chatroom temp',temp)
-        console.log(this.room[i].get_messages.length == 0 && !(temp.length>0))
-        if (this.room[i].get_messages.length == 0 && !(temp.length>0)) {
+        console.log("chatroom temp", this.transactions);
+        var temp = this.transactions.filter((x) => {
+          return (
+            (x.emailCustomerShopper == this.room[i].email1 ||
+              x.emailCustomerShopper == this.room[i].email2) &&
+            (x.transactionReceiver == this.room[i].email1 ||
+              x.transactionReceiver == this.room[i].email2)
+          );
+        });
+        console.log("chatroom temp", temp);
+        console.log(
+          this.room[i].get_messages.length == 0 && !(temp.length > 0)
+        );
+        if (this.room[i].get_messages.length == 0 && !(temp.length > 0)) {
           //means epmty messages on room
           if (
             (this.authUser.email === this.room[i].email1 ||
@@ -3572,12 +3676,10 @@ export default {
           return x.email1 == params.userEmail || x.email2 == params.userEmail;
         });
         //if null execute create chat room, if exists, set room an render rooms
-        console.log('temp room',temp)
+        console.log("temp room", temp);
         if (temp.length == 0) {
           //if dont exists, create room
-          Axios.all([
-            api.post("api/createChatRoom", params),
-          ]).then(() => {
+          Axios.all([api.post("api/createChatRoom", params)]).then(() => {
             var foundPost = this.posts.find((x) => x.postNumber === postNum); //find the passed post in the stored objects in vuex
             if (foundPost.offer_post != null) {
               // dataMessage = {
@@ -3588,9 +3690,9 @@ export default {
                 email: email,
                 postNumber: postNum,
                 transactionData: requestData.message,
-                transactionShoppingList: requestData.message.shoppingListContent,
+                transactionShoppingList:
+                  requestData.message.shoppingListContent,
               };
-              
             } else {
               foundPost.request_post["message"] = requestData.message.message;
               foundPost.request_post["param"] = requestData.message.param;
@@ -3606,18 +3708,18 @@ export default {
                   foundPost.request_post.shoppingListContent,
               };
             }
-           
+
             Axios.all([
               // api.post("/api/sendMessage", dataMessage),
               api.post("/api/createTransaction", transactionDetails),
-              api.get("/api/getChatroom")
+              api.get("/api/getChatroom"),
             ])
               .then((responseArr) => {
                 store.commit("setUserTransactions", responseArr[0].data);
                 store.commit("FETCH_ROOMS", responseArr[1].data);
                 // this.getChatRooms();
-                console.log('response rooms',responseArr[1].data);
-                console.log('rooms', this.room)
+                console.log("response rooms", responseArr[1].data);
+                console.log("rooms", this.room);
               })
               .catch(() => {
                 console.log("error in creating transaction");
@@ -3654,7 +3756,7 @@ export default {
                 foundPost.request_post.shoppingListContent,
             };
           }
-           console.log('asdfas',transactionDetails)
+          console.log("asdfas", transactionDetails);
           Axios.all([
             // api.post("/api/sendMessage", dataMessage),
             api.post("/api/createTransaction", transactionDetails),
@@ -3815,8 +3917,8 @@ export default {
       this.toggleVerti = false;
     },
     active_transact(e) {
-      console.log('active transact',e)
-      this.activeDisplayingTransaction = e
+      console.log("active transact", e);
+      this.activeDisplayingTransaction = e;
       // if (this.active === "toggle1") this.toggle1 = false;
       // else if (this.active === "toggle2") this.toggle2 = false;
       // else if (this.active === "toggle3") this.toggle3 = false;
@@ -3893,13 +3995,15 @@ export default {
           postIdentity: this.currentPostIdentity,
         }),
       };
-      var currTrans = this.transactionsReceived.filter((x)=>{return x.indexTransactionPost == this.activeIndexTransNum})
-      console.log(currTrans)
+      var currTrans = this.transactionsReceived.filter((x) => {
+        return x.indexTransactionPost == this.activeIndexTransNum;
+      });
+      console.log(currTrans);
       var dataMessage2 = {
-              roomID: this.activeRoom,
-              message: JSON.stringify(currTrans[0].transactionData)
-            };
-            console.log(dataMessage,dataMessage2)
+        roomID: this.activeRoom,
+        message: JSON.stringify(currTrans[0].transactionData),
+      };
+      console.log(dataMessage, dataMessage2);
       Axios.all([
         api.post("api/confirmRequest", {
           postNumber: this.activePostNum,
@@ -3913,7 +4017,7 @@ export default {
       ]).then((resArr) => {
         store.commit("setUserTransactions", resArr[3].data);
         store.commit("FETCH_ROOMS", resArr[2].data);
-        $(".acceptRequestNotiPop").fadeIn(), (this.acceptReqNotiPop = true); 
+        $(".acceptRequestNotiPop").fadeIn(), (this.acceptReqNotiPop = true);
         setTimeout(function () {
           this.acceptReqNotiPop = false;
           $(".acceptRequestNotiPop").fadeOut();
@@ -3923,7 +4027,6 @@ export default {
         this.activeUser = null;
         this.currentPostIdentity = null;
       });
-     
     },
     confirmAcceptDisRequest2() {
       this.acceptOffer = !this.acceptOffer;
@@ -4045,12 +4148,25 @@ export default {
         this.cancel = !this.cancel;
       });
     },
+    ifUserVerified(email) {
+      var temp = this.verifiedUsers.filter((x) => {
+        return x.email === email && x.verifyStatus == "verified";
+      });
+      if (temp.length <= 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
   }, //end methods
   mounted() {
     this.getUrlQuery();
     console.log(this.onlineUsers);
   },
   computed: {
+    verifiedUsers() {
+      return store.getters.getVerifiedUsers;
+    },
     authUser() {
       return store.getters.getUser;
     },

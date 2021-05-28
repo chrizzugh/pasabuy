@@ -29,7 +29,8 @@ const store = new Vuex.Store({
         allUserAbout: [],
         authUserFollow: [],
         authEducation: [],
-        onlineUsers: []
+        onlineUsers: [],
+        verifiedUsers:[]
 
 
 
@@ -114,6 +115,9 @@ const store = new Vuex.Store({
         },
         setAuthEducation(state,data){
             state.authEducation = data
+        },
+        setVerifiedUsers(state,data){
+            state.verifiedUsers = data
         }
 
     },
@@ -370,6 +374,18 @@ const store = new Vuex.Store({
                 console.log(error)
             })
         },
+        async getVerifiedUsers(state){
+            return api
+            .get('api/getVerifiedUsers')
+            .then((res)=>{
+                //console.log("RESPONSE",res)
+                let data = res.data
+                state.commit('setVerifiedUsers',data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        },
     },
     modules: {},
     getters: {
@@ -395,6 +411,8 @@ const store = new Vuex.Store({
         getAuthEducation: (state) => state.authEducation,
         getAllLangauges:(state) => state.allLanguages,
         getAllUserAbout:(state) => state.allUserAbout,
+        getVerifiedUsers:(state) => state.verifiedUsers,
+
     }
 })
 

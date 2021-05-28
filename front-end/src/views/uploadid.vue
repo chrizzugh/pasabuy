@@ -139,10 +139,10 @@
                       </button>
                     </div> -->
         <div class="space-x-4">
-          <button class="font-bold" @click="saveUser">Skip for now</button>
+          <button class="font-bold" @click="saveUser(true)">Skip for now</button>
           <button
             class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none"
-            @click="saveUser"
+            @click="saveUser(false)"
           >
             Next
           </button>
@@ -240,7 +240,7 @@ export default {
       this.delete2 = null;
       this.edit2 = null;
     },
-    saveUser() {
+    saveUser(skip) {
       this.logginIn = !this.logginIn;
       this.show = !this.show;
       var dataform = {
@@ -281,7 +281,12 @@ export default {
               this.show = !this.show;
               sessionStorage.setItem("isLoggedIn", true);
               sessionStorage.setItem("Authorization", res.data.token);
-              this.$router.push({ name: "accountsettings" });
+              if(skip){
+                this.$router.push({ name: "accountsettings" });
+              }else{
+                this.$router.push({ name: "verifymessage" });
+
+              }
             });
           } else {
             this.logginIn = !this.logginIn;
@@ -314,6 +319,8 @@ export default {
       await store.dispatch("getShoppingPlaces");
       await store.dispatch("getAllShares");
       await store.dispatch("getUserShoppingList");
+      await store.dispatch("getVerifiedUsers");
+
     },
   },
 };

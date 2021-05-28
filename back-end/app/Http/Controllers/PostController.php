@@ -126,7 +126,10 @@ class PostController extends Controller
 		$request_post->deliverySchedule = $request->deliverySchedule;
 		$request_post->paymentMethod = $request->paymentMethod;
 		$request_post->shoppingListTitle = $request->shoppingListTitle;
-		$request_post->shoppingListContent = json_encode($request->shoppingListContent);
+		if($request->shoppingListContent == ' ' || $request->shoppingListContent == null){
+		}else{
+			$request_post->shoppingListContent = json_encode($request->shoppingListContent);
+		}
 		$request_post->caption = $request->caption;
 
 

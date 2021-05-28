@@ -20,7 +20,7 @@ use App\Http\Controllers\reviewController;
 use App\Http\Controllers\interestController;
 use App\Http\Controllers\skillsController;
 use App\Http\Controllers\userAboutController;
-
+use App\Http\Controllers\verificationIDController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -88,6 +88,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete("/clearNotif", [NotificationController::class, 'clearNotif']);
     Route::post("/updateEduc", [educationController::class, 'updateEduc']);
     Route::get("/getEduc", [educationController::class, 'getEduc']);
+    Route::get("/getVerifiedUsers", [verificationIDController::class, 'getVerifiedUsers']);
+
 
 
 

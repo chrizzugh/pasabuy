@@ -24,7 +24,7 @@
                 In the meantime, you can continue setting up your profile</p>
                 <div class="justify-end flex">
                     <button class="h-10 m-2 text-white transition-colors duration-150 bg-red-buttons px-7 rounded-3xl focus:outline-none">
-                     <router-link to="/edit-profile" >NEXT</router-link>
+                     <router-link to="/account-settings" >NEXT</router-link>
                     </button>
                 </div>
             </div>    

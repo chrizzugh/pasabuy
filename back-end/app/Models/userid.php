@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class userid extends Model
 {
     use HasFactory;
-    protected $table = 'tbl_userid';
+    protected $table = 'tbl_userID';
     protected $primaryKey = 'indexID';
     public $timestamps = false;
 }
