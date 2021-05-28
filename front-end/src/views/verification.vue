@@ -10,6 +10,17 @@
     </h1>
   </div>
 
+  <div class="flex items-center">
+    <router-link to="/">
+      <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 block" />
+    </router-link>
+    <h1
+      class="absolute text-xl font-black tracking-widest left-16 font-raleway text-red-buttons block"
+    >
+      pasaBUY
+    </h1>
+  </div>
+
   <div id="verifyemail" class="flex items-center justify-center w-full px-4">
     <div
       class="w-full my-12 overflow-hidden text-center bg-white shadow-md rounded-xl xl:w-2/5 lg:w-2/5 2xl:w-2/5 md:w-97 sm:w-97"
@@ -28,7 +39,7 @@
           >
             <div class="flex flex-col items-start">
               <span class="font-bold">By email</span>
-              <span class="text-gray-500">sarah_panadero@gmail.com</span>
+              <span class="text-gray-500">{{ email }}</span>
             </div>
             <button
               @click="nextPage('email')"
@@ -42,7 +53,7 @@
           >
             <div class="flex flex-col items-start">
               <span class="font-bold">By phone number</span>
-              <span class="text-gray-500">+63 912 345 6789</span>
+              <span class="text-gray-500">{{ phoneNumber }}</span>
             </div>
             <button
               @click="nextPage('phone')"
@@ -58,6 +69,25 @@
           >
         </div>
       </div>
+      <div
+        class="ring-1 ring-gray-300 px-2 overflow-auto py-3 space-y-2 rounded-lg xl:flex xl:px-6 lg:flex lg:px-6 2xl:flex 2xl:px-6 items-center justify-between"
+      >
+        <div class="flex flex-col items-start">
+          <span class="font-bold">By phone number</span>
+          <span class="text-gray-500">+63 912 345 6789</span>
+        </div>
+        <button
+          @click="nextPage('phone')"
+          class="flex justify-center items-center bg-red-buttons w-max px-4 py-2 h-8 text-white font-bold rounded-full focus:outline-none text-sm"
+        >
+          <a> Verify Now</a>
+        </button>
+      </div>
+      <router-link to="/sign-up">
+        <span class="left-auto self-start flex font-bold"
+          >Back</span
+        ></router-link
+      >
     </div>
   </div>
 </template>
@@ -90,7 +120,12 @@
 <script>
 import axios from "axios";
 export default {
-  data() {},
+  data() {
+    return {
+      email: localStorage.getItem("personal").email,
+      phoneNumber: localStorage.getItem("personal").phoneNumber,
+    };
+  },
   methods: {
     nextPage(choice) {
       var params = JSON.parse(localStorage.getItem("personal"));

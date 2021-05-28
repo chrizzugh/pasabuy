@@ -29,12 +29,7 @@
         </span>
       </span> -->
 
-      <span class="font-raleways font-bold grid grid-cols-2">
-        <p class="text-gray-500">HOUSE NUMBER</p>
-        <span>
-          <p>{{ address_info.house_number }}</p>
-        </span>
-      </span>
+      
       <span class="font-raleways font-bold grid grid-cols-2">
         <p class="text-gray-500">PROVINCE</p>
         <span>
@@ -51,6 +46,12 @@
         <p class="text-gray-500">BARANGAY</p>
         <span>
           <p>{{ address_info.barangay }}</p>
+        </span>
+      </span>
+      <span class="font-raleways font-bold grid grid-cols-2">
+        <p class="text-gray-500">HOUSE NUMBER</p>
+        <span>
+          <p>{{ address_info.house_number }}</p>
         </span>
       </span>
     </div>
@@ -92,12 +93,7 @@
         </span>
       </span> -->
 
-      <span class="font-raleways font-bold grid grid-cols-2">
-        <p class="text-gray-500">HOUSE NUMBER</p>
-        <span>
-          <p>{{ House_number }}</p>
-        </span>
-      </span>
+     
       <span class="font-raleways font-bold grid grid-cols-2">
         <p class="text-gray-500">PROVINCE</p>
         <span>
@@ -114,6 +110,12 @@
         <p class="text-gray-500">BARANGAY</p>
         <span>
           <p>{{ Barangay }}</p>
+        </span>
+      </span>
+       <span class="font-raleways font-bold grid grid-cols-2">
+        <p class="text-gray-500">HOUSE NUMBER</p>
+        <span>
+          <p>{{ House_number }}</p>
         </span>
       </span>
     </div>

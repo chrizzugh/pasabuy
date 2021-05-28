@@ -46,11 +46,20 @@ class userInformationController extends Controller
     {
         # code...
         $user = Auth::user();
-        $data = DB::select('SELECT * FROM tbl_userlanguages WHERE email = \''.$user->email.'\'');
-
+        $data = DB::select('SELECT * FROM tbl_languages ORDER BY  languages');
         if($data == null)
             return response()->json([]);
-        return response()->json($data[0]);
+        return response()->json($data);
+    }
+
+    public function getWorks()
+    {
+        # code...
+        $user = Auth::user();
+        $data = DB::select('SELECT * FROM tbl_work ORDER BY  work');
+        if($data == null)
+            return response()->json([]);
+        return response()->json($data);
     }
 
     public function getAllLanguages()
@@ -196,16 +205,27 @@ class userInformationController extends Controller
         if($validator->fails()) {
             return response()->json($validator->errors(),422);
         }
+
+       
+
         //updating userinfo table
         $userEmail = Auth::User()->email;
         $user = userInformation::where('email',$userEmail)->first();
         $user->firstName = $request->firstname;
+        $user->middleName = $request->middlename;
         $user->lastName = $request->lastname;
         $user->phoneNumber = $request->phone_number;
         $user->gender = $request->gender;
         $user->birthDate = $request->birdate;
-        $user->work = $request->work;
-        $user->language = $request->language;
+
+        echo "".$request->workList."";
+        // if($request->workList!=null)
+        //  $user->work = implode("," , $request->workList);
+        // else
+        //  $user->work = null;
+
+        $user->work = $request->workList;
+        $user->language = $request->languagesList;
 
        
         if($user->save()){

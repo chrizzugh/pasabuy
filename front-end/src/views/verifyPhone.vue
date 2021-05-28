@@ -19,7 +19,7 @@
          <div class="text-center mb-10">
           <h1 class="space-x-1 space-y-1 text-2xl font-bold pb-7">Verify your phone number</h1>
             <span class="pb-4   text-gray-500 ">
-              Please enter the code that we have sent to +63 912 345 6789.
+              Please enter the code that we have sent to {{phoneNumber}}.
              </span>
          </div>
             <form action="#" class="space-y-3">
@@ -75,6 +75,7 @@ import axios from "axios"
 export default {
     data(){
         return{
+          phoneNumber: localStorage.getItem('personal').phoneNumber,
            code: localStorage.getItem("code"),
            textCode: null,
            errors:null

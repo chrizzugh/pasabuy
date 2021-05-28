@@ -25,7 +25,7 @@
              <span class="  font-raleways font-bold grid grid-cols-2 "> 
         <p class="text-gray-500">NAME</p>
         <span>
-        <p >{{userPersonal.firstName}} {{userPersonal.lastName}}</p>
+        <p >{{userPersonal.firstName}} {{userPersonal.middleName}} {{userPersonal.lastName}}</p>
        </span>
         </span>
         <span class=" font-raleways font-bold  grid grid-cols-2 ">
@@ -88,16 +88,42 @@
             ">
                 <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Firstname</span> <input id="f_name"   type="text" v-model="userPersonal.firstName" class="focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                  </div>
-                <!-- <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Middlename</span> <input id="m_name" type="text" v-model="personal.midname" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
-                </div> -->
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Middlename</span> <input id="m_name" type="text" v-model="userPersonal.middleName" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                </div>
                 <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Lastname</span> <input id="l_name" type="text" v-model="userPersonal.lastName" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
                 </div>
                 <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Phone number </span> <input id="p_number" type="text" v-model="userPersonal.phoneNumber" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200" v-on:keypress=isNumber($event) :maxlength="16" v-mask="'+63 ### ### ####'"/>
                 </div>
-                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Work </span> <input id="work" type="text" v-model="userPersonal.work" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/>
+                <div class="flex flex-col">
+                  <span class="ml-2 text-gray-500 font-bold  text-sm">Work </span> 
+                  
+                  
+                  <div >
+                    <select id="work" v-model="userPersonal.work" @change="addWork" placeholder="Hey"
+                    class="flex items-center focus:outline-none justify-start outline-none leading-none text-gray-500  py-3 pl-4 bg-gray-100 rounded-xl h-auto w-full vs:w-full ssm:w-full">
+                  <option
+                    v-for="wrk in works" :key="wrk.indexWork"
+                    v-bind:value="wrk.work"
+                  >
+                  <!-- {{work.work}} -->
+                  {{wrk.work}}
+                  </option>
+                </select>
+
+                  <div class="flex w-full h-auto overflow-y-auto">
+                  <div class="flex-1 py-1 space-y-4 items-start justify-start w-full h-auto item-start">
+                    <div v-for="work in workList" :key="work" class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
+                      <p class="lvs:text-sm vs:text-xs ssm:text-xs text-base leading-loose text-center text-gray-900">{{ work }}</p>
+                      <button @click="deleteWork(work)" class="focus:outline-none">
+                      <span class="material-icons md-14 mt-2">clear</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                  </div>
                 </div>
                 <span class="ml-2 text-gray-500 font-bold  text-sm">Gender</span>
-                <div class=" space-x-4 ml-4">
+                <div class=" space-x-4 ml-4 ">
                   <span class="space-x-2">
                   <span><input type="radio" value="Male" id="male" v-model="userPersonal.gender" name="gender" /></span>
                   <label for="male">Male</label>
@@ -109,7 +135,31 @@
               </div>
                  <div class="flex flex-col "><span class="ml-2 text-gray-500 font-bold  text-sm">Birthday</span>  <input  type="date" id="b_date"  v-model="userPersonal.birthDate"   class="focus:outline-none rounded-xl w-full h-10 pl-2 bg-transparent bg-gray-200" 
                   ></div> 
-                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Language: </span> <input type="text" id="language" v-model="userPersonal.language" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div>
+                <div class="flex flex-col"><span class="ml-2 text-gray-500 font-bold  text-sm">Language: </span> 
+                <div >
+                    <select id="language" v-model="userPersonal.language" @change="addLanguage" placeholder="Hey"
+                    class="flex items-center focus:outline-none justify-start outline-none leading-none text-gray-500  py-3 pl-4 bg-gray-100 rounded-xl h-auto w-full vs:w-full ssm:w-full">
+                  <option
+                    v-for="language in languages" :key="language.indexLanguage"
+                    v-bind:value="language.languages"
+                  >
+                  <!-- {{work.work}} -->
+                  {{language.languages}}
+                  </option>
+                </select>
+
+                  <div class="flex w-full h-auto overflow-y-auto">
+                  <div class="flex-1 py-1 space-y-4 items-start justify-start w-full h-auto item-start">
+                    <div v-for="language in languagesList" :key="language" class="inline-flex space-x-2 items-center justify-start px-4 py-2 bg-gray-100 rounded-full mr-3">
+                      <p class="lvs:text-sm vs:text-xs ssm:text-xs text-base leading-loose text-center text-gray-900">{{ language }}</p>
+                      <button @click="deleteLanguage(language)" class="focus:outline-none">
+                      <span class="material-icons md-14 mt-2">clear</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                <!-- <input type="text" id="language" v-model="userPersonal.language" class=" focus:outline-none rounded-xl h-10 pl-2 bg-transparent bg-gray-200"/></div> -->
              
             </div>
            <div class="flex justify-between mt-10 space-x-4 items-center">
@@ -122,150 +172,245 @@
     </div>
 
     </div>
-  
+     </div>
 </template>
 <script>
-import api from '../api'
-import Profile from './ProfileEdit.vue'
-import VueSimpleAlert from 'vue-simple-alert'
-import moment from "moment"
-import store from '../store/index'
+import api from "../api";
+import Profile from "./ProfileEdit.vue";
+import VueSimpleAlert from "vue-simple-alert";
+import moment from "moment";
+import store from "../store/index";
 export default {
   name: "personal",
   component: {
     Profile,
   },
-data(){
-    return{
-      toggle:false,
-      avatar:null,
-    disabled: 0,
-    hidden:false,
-    show:true,
-    show2:true,
-    edit2:false,
-    message:'yeah',
-    personal:  {
-      firstname:'',
-      lastname:'',
-      phone_number:'',
-      work:'',
-      gender:'',
-      language:'',
-      birdate: '',
-      bday:'',
-      profilePic:null
-    },
-    old:  {
-      firstname:'',
-      lastname:'',
-      phone_number:'',
-      work:'',
-      gender:'',
-      language:'',
-      birdate: ''
-    },
-    errors:null
-    }
-  
-},
+  data() {
+    return {
+      toggle: false,
+      avatar: null,
+      disabled: 0,
+      hidden: false,
+      show: true,
+      show2: true,
+      edit2: false,
+      message: "yeah",
+      workList: [],
+      languages: [],
+      languagesList:[],
+      works: [],
+      
+      search: "",
+      personal: {
+        firstname: "",
+        middlename: "",
+        lastname: "",
+        phone_number: "",
+        work: "",
+        gender: "",
+        language: "",
+        birdate: "",
+        bday: "",
+        profilePic: null,
+      },
+      old: {
+        firstname: "",
+        middlename: "",
+        lastname: "",
+        phone_number: "",
+        work: "",
+        gender: "",
+        language: "",
+        birdate: "",
+      },
+      errors: null,
+    };
+  },
 
-methods:{
-     isNumber(e) {
-             let char = String.fromCharCode(e.keyCode); // Get the character
-             if(/^[0-9]+$/.test(char)) return true; // Match with regex 
-                 else e.preventDefault(); // If not match, don't add to input text
-        },
-    save_data () {
-       
-      var personal=  {
-        firstname:this.userPersonal.firstName,
-        lastname:this.userPersonal.lastName,
-        phone_number:this.userPersonal.phoneNumber,
-        gender:this.userPersonal.gender,
-        work:this.userPersonal.work,
-        language:this.userPersonal.language,
+  methods: {
+    isNumber(e) {
+      let char = String.fromCharCode(e.keyCode); // Get the character
+      if (/^[0-9]+$/.test(char)) return true;
+      // Match with regex
+      else e.preventDefault(); // If not match, don't add to input text
+    },
+    addWork() {
+
+      // var work=d.options[d.selectedIndex].text;
+      console.log("work", this.userPersonal.work);
+      if (!this.workList.includes(this.userPersonal.work)) {
+        this.workList.push(this.userPersonal.work);
+        this.userPersonal.work = "";
+      } else {
+        alert("You already have this Work");
+      }
+
+      console.log("workList", this.workList);
+    },
+    addLanguage() {
+
+      if (!this.languagesList.includes(this.userPersonal.language)) {
+        this.languagesList.push(this.userPersonal.language);
+        this.userPersonal.language = "";
+      } else {
+        alert("You already have this Work");
+      }
+
+      console.log("languagesList", this.languagesList);
+    },
+    save_data() {
+      var personal = {
+        firstname: this.userPersonal.firstName,
+        middlename: this.userPersonal.middleName,
+        lastname: this.userPersonal.lastName,
+        phone_number: this.userPersonal.phoneNumber,
+        gender: this.userPersonal.gender,
+        workList: this.workList.join(),
+        languagesList: this.languagesList.join(),
         birdate: this.userPersonal.birthDate,
       };
-      api.post('/api/editPersonal', personal).then((res)=>{
-          this.dispatchThis().then(()=>{
-            this.setBday()
-            VueSimpleAlert.alert(res.data.message,"Success","success")
-            this.toggle=false
-          })
-      //this.user = res.data;
-      }).catch((errors)=>{
-        console.log(errors.response.data)
-        if(errors.response.data.firstname == undefined)
-           errors.response.data.firstname =' '
-        if(errors.response.data.lastname == undefined)
-           errors.response.data.lastname =' '
-        if(errors.response.data.phone_number == undefined)
-           errors.response.data.phone_number =' '
-        this.errors = errors.response.data.firstname +' '+ errors.response.data.lastname +' '+errors.response.data.phone_number
-        
-      })
-    },
-      handleInput(value) {
-      this.name = value;
-      alert(this.name)
-    },
-    setOldData(){
-        this.errors = ''
-        this.old.firstname=this.userPersonal.firstName
-        this.old.lastname=this.userPersonal.lastName
-        this.old.phone_number=this.userPersonal.phoneNumber
-        this.old.work=this.userPersonal.work
-        this.old.gender=this.userPersonal.gender
-        this.old.language=this.userPersonal.languages
-        this.old.birdate=this.userPersonal.birthDate
-    },
-    getOldData(){
-        this.userPersonal.firstName=this.old.firstname
-        this.userPersonal.lastName=this.old.lastname
-        this.userPersonal.phoneNumber=this.old.phone_number
-        this.personal.work=this.old.work
-        this.userPersonal.gender=this.old.gender
-        this.userPersonal.languages=this.old.language
-        this.userPersonal.birthDate=this.old.birdate
-    },
-    change_profile(e){
-      const file=e.target.files[0]
-      this.profile=URL.createObjectURL(file);
-      const data = new FormData();
-      data.append('photo', file);
-      console.log('image',data)
-      api.post('/api/updateProfilePic',data).then((res)=>{
-        this.dispatchThis().then(()=>{
-          VueSimpleAlert.alert(res.data.message,"Success","success")
+      api
+        .post("/api/editPersonal", personal)
+        .then((res) => {
+          this.dispatchThis().then(() => {
+            this.setBday();
+            VueSimpleAlert.alert(res.data.message, "Success", "success");
+            this.toggle = false;
+          });
+          this.user = res.data;
         })
-      }).catch((errors)=>{
-        VueSimpleAlert.alert("Something went wrong.","Error","error")
-        console.log(errors.response)
-      })
+        .catch((errors) => {
+          console.log(errors.response.data);
+          if (errors.response.data.firstname == undefined)
+            errors.response.data.firstname = " ";
+          if (errors.response.data.lastname == undefined)
+            errors.response.data.lastname = " ";
+          if (errors.response.data.phone_number == undefined)
+            errors.response.data.phone_number = " ";
+          this.errors =
+            errors.response.data.firstname +
+            " " +
+            errors.response.data.lastname +
+            " " +
+            errors.response.data.phone_number;
+        });
+    },
+
+      getLanguages() {
+      api.get("/api/getLanguages").then((res) => {
+        this.languages = res.data;
+        // for (var i=0;i < this.provinces.length;i++){
+        //  // this.provinces[i] = JSON.stringify(this.provinces[i].provDesc); 
+        //   this.provinces[i].provDesc=this.provinces[i].provDesc.toString();
+        //   this.provinces[i].provDesc=(this.provinces[i].provDesc).charAt(0).toUpperCase() + (this.provinces[i].provDesc).slice(1);
+        // }
+        
+        console.log('Languages: ', this.languages);
+      });
+    },
+
+    getWorks() {
+      console.log('works lumabas ka');
+      api.get("/api/getWorks").then((res) => {
+        this.works = res.data;
+        console.log('Works: ', this.works);
+      });
+      
+    },
+
+    deleteWork(work) {
+      this.workList = this.workList.filter((item) => {
+        return work !== item;
+      });
+    },
+    deleteLanguage(language) {
+      this.languagesList = this.languagesList.filter((item) => {
+        return language !== item;
+      });
+    },
+    handleInput(value) {
+      this.name = value;
+      alert(this.name);
+    },
+    setOldData() {
+      this.errors = "";
+      this.old.firstname = this.userPersonal.firstName;
+      this.old.middlename = this.userPersonal.middleName;
+      this.old.lastname = this.userPersonal.lastName;
+      this.old.phone_number = this.userPersonal.phoneNumber;
+      this.old.work = this.userPersonal.work;
+      this.old.gender = this.userPersonal.gender;
+      this.old.language = this.userPersonal.language;
+      this.old.birdate = this.userPersonal.birthDate;
+    },
+    getOldData() {
+      this.userPersonal.firstName = this.old.firstname;
+      this.userPersonal.middleName = this.old.middlename;
+      this.userPersonal.lastName = this.old.lastname;
+      this.userPersonal.phoneNumber = this.old.phone_number;
+      this.userPersonal.work = this.old.work;
+      this.workList = (this.old.work).split(',');
+      this.userPersonal.gender = this.old.gender;
+      this.userPersonal.language = this.old.language;
+      this.languagesList = (this.old.language).split(',');
+      this.userPersonal.birthDate = this.old.birdate;
+    },
+    change_profile(e) {
+      const file = e.target.files[0];
+      this.profile = URL.createObjectURL(file);
+      const data = new FormData();
+      data.append("photo", file);
+      console.log("image", data);
+      api
+        .post("/api/updateProfilePic", data)
+        .then((res) => {
+          this.dispatchThis().then(() => {
+            VueSimpleAlert.alert(res.data.message, "Success", "success");
+          });
+        })
+        .catch((errors) => {
+          VueSimpleAlert.alert("Something went wrong.", "Error", "error");
+          console.log(errors.response);
+        });
     },
     async dispatchThis(){
       await store.dispatch('getPersonal')
       await store.dispatch('getPosts')
-
     },
-    setBday(){
-    //get the user information from the laravel API
-        if(this.userPersonal.birthDate==null){
-          this.personal.bday = "";
-
-        }else{
-          this.personal.bday = moment( this.userPersonal.birthDate).format("MMMM DD, YYYY");
-        }
-    }
-},
-mounted(){
-    this.setBday()
-  },
-computed:{
-    userPersonal(){
-      return store.getters.getPersonal
+    setBday() {
+      //get the user information from the laravel API
+      if (this.userPersonal.birthDate == null) {
+        this.personal.bday = "";
+      } else {
+        this.personal.bday = moment(this.userPersonal.birthDate).format(
+          "MMMM DD, YYYY"
+        );
+      }
     },
   },
+  mounted() {
+    this.setBday();
+    this.getWorks();
+    this.getLanguages();
+    
+  },
+  computed: {
+    userPersonal() {
+      return store.getters.getPersonal;
+    },
+    // filterworks: function(){
+    //   return this.workouts.filter((workout) => {
+    //     if(this.search != "")
+    //       // this.search=null
+    //     return workout.work.toLowerCase().match(this.search.toLowerCase())
+    //   });
+    // }
+  },
+  created() {
+        // console.log("Skilled",this.userPersonal);
+    
+          this.workList = (this.userPersonal.work).split(',');
+          this.languagesList = (this.userPersonal.language).split(',');
+  }
 };
 </script>

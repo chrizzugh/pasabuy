@@ -19,7 +19,7 @@
          <div class="text-center mb-10">
           <h1 class="space-x-1 space-y-1 text-2xl font-bold pb-7">Verify your email</h1>
             <span class="pb-4   text-gray-500 ">
-               Please enter the code that we have sent to sarah.panadero@gmail.com
+               Please enter the code that we have sent to {{email}}
              </span>
              <p class="text-red-500 text-center">{{errors}}</p>
          </div>
@@ -76,6 +76,7 @@ import axios from "axios"
 export default {
     data(){
         return{
+          email: localStorage.getItem('personal').email,
            code: localStorage.getItem("code"),
            textCode: null,
            errors:null
