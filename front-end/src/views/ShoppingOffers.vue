@@ -56,7 +56,7 @@
                       >{{ shoppingOffer_info.user.firstName }}
                       {{ shoppingOffer_info.user.lastName }}</router-link
                     >
-                    <span
+                    <span v-show="ifUserVerified(shoppingOffer_info.email)"
                       class="text-blue-900 align-middle material-icons md-18"
                     >
                       verified
@@ -285,7 +285,7 @@
               <div class="flex flex-col space-y-1">
                 <div class="flex flex-row vs:space-x-1 space-x-2">
                   <p class="text-base vs:text-xs ssm:text-xs font-bold leading-none text-gray-900">{{transaction.transaction_sender.firstName}} {{transaction.transaction_sender.lastName}}</p>
-                  <span class="text-blue-900 align-middle material-icons md-14 ">
+                  <span v-show="ifUserVerified(transaction.transaction_sender.email)" class="text-blue-900 align-middle material-icons md-14 ">
                   verified
                 </span>
                 </div>
@@ -504,7 +504,7 @@
             <p class="text-base font-bold leading-none text-gray-900">
               {{currentPostViewDetails.transaction_sender.firstName}} {{currentPostViewDetails.transaction_sender.lastName}}
             </p>
-            <span class="text-blue-900 align-middle material-icons text-base">
+            <span v-show="ifUserVerified(currentPostViewDetails.transaction_sender.email)" class="text-blue-900 align-middle material-icons text-base">
               verified
             </span>
           </div>
@@ -1088,6 +1088,16 @@ export default {
         store.dispatch("getPosts").then(() => {});
       });
     },
+       ifUserVerified(email) {
+      var temp = this.verifiedUsers.filter((x) => {
+        return x.email === email && x.verifyStatus == "verified";
+      });
+      if (temp.length <= 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
   },
   // created(){
   //   this.loadShoppingOffer_infos();
@@ -1097,6 +1107,9 @@ export default {
     console.log("posts", this.shoppingOffer_infos);
   },
   computed: {
+       verifiedUsers() {
+      return store.getters.getVerifiedUsers;
+    },
     user() {
       //console.log('user',this.store.getters.getPersonal)
       return store.getters.getPersonal;

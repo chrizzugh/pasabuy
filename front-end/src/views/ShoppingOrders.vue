@@ -54,7 +54,7 @@
                   >
                     {{ shoppingOrder_info.user.firstName }}
                     {{ shoppingOrder_info.user.lastName }}
-                    <span
+                    <span v-show="ifUserVerified(shoppingOrder_info.email)"
                       class="text-blue-900 align-middle material-icons md-18 vs:md-14"
                     >
                       verified
@@ -297,7 +297,7 @@
               <div class="flex flex-col space-y-1">
                 <div class="flex flex-row vs:space-x-1 space-x-2">
                   <p class="text-base vs:text-sm ssm:text-xs font-bold leading-none text-gray-900">{{transaction.transaction_sender.firstName}} {{transaction.transaction_sender.lastName}}</p>
-                  <span class="text-blue-900 align-middle material-icons md-14 ">
+                  <span v-show="ifUserVerified(transaction.transaction_sender.email)" class="text-blue-900 align-middle material-icons md-14 ">
                   verified
                 </span>
                 </div>
@@ -785,6 +785,16 @@ export default {
     SendRequest,
   },
   methods: {
+          ifUserVerified(email) {
+      var temp = this.verifiedUsers.filter((x) => {
+        return x.email === email && x.verifyStatus == "verified";
+      });
+      if (temp.length <= 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
      declineDisRequest1() {
       this.decline = !this.decline;
       $(".hideMe1").fadeIn();
@@ -1007,6 +1017,9 @@ export default {
     this.shoppingOrder_infos = this.request_post;
   },
   computed: {
+       verifiedUsers() {
+      return store.getters.getVerifiedUsers;
+    },
     user() {
       return store.getters.getPersonal;
     },

@@ -23,7 +23,7 @@
                 class="text-3xl ssm:text-base vs:text-xl sm:text-xl font-bold sm:mt-1 tracking-wide leading-normal text-gray-900"
               >
                 {{ account_infos.firstName }} {{ account_infos.lastName }}
-                <span
+                <span v-show="ifUserVerified(account_infos.email)"
                   class="pb-1 text-blue-900 align-middle material-icons md-24"
                 >
                   verified
@@ -276,6 +276,9 @@ export default {
     }
   },
   computed: {
+      verifiedUsers() {
+      return store.getters.getVerifiedUsers;
+    },
     account_infos() {
       return store.getters.getUserInfo;
     },
@@ -315,6 +318,16 @@ export default {
   },
 
   methods: {
+    ifUserVerified(email) {
+      var temp = this.verifiedUsers.filter((x) => {
+        return x.email === email && x.verifyStatus == "verified";
+      });
+      if (temp.length <= 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     toggle() {
       if (this.component != ShoppingOffers) this.component = ShoppingOffers;
     },
