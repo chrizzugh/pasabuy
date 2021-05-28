@@ -993,7 +993,7 @@
                                 <span class="font-semibold"
                                   >Shopping List<span class="ml-3 text-gray-500"
                                     >{{
-                                      msgPost.shoppingListContent.length
+                                      computedShopItemList(msgPost.shoppingListContent).length
                                     }}
                                     items</span
                                   ></span
@@ -1004,7 +1004,7 @@
                                   class="text-gray-600 list-disc list-inside pl-4"
                                 >
                                   <li
-                                    v-for="items in msgPost.shoppingListContent"
+                                    v-for="items in  computedShopItemList(msgPost.shoppingListContent)"
                                     :key="items.id"
                                   >
                                     <span>
@@ -1177,7 +1177,7 @@
                                 <span class="font-semibold"
                                   >Shopping List<span class="ml-3 text-gray-500"
                                     >{{
-                                      msgPost.shoppingListContent.length
+                                       computedShopItemList(msgPost.shoppingListContent).length
                                     }}
                                     items</span
                                   ></span
@@ -1188,7 +1188,7 @@
                                   class="text-gray-600 list-disc list-inside pl-4"
                                 >
                                   <li
-                                    v-for="items in msgPost.shoppingListContent"
+                                    v-for="items in  computedShopItemList(msgPost.shoppingListContent)"
                                     :key="items.ShoppingList"
                                   >
                                     <span>
@@ -1913,7 +1913,7 @@
                                     >Shopping List<span
                                       class="ml-3 text-gray-500"
                                       >{{
-                                        msgPost.shoppingListContent.length
+                                         computedShopItemList(msgPost.shoppingListContent).length
                                       }}
                                       items</span
                                     ></span
@@ -1924,7 +1924,7 @@
                                     class="text-gray-600 list-disc list-inside pl-4"
                                   >
                                     <li
-                                      v-for="items in msgPost.shoppingListContent"
+                                      v-for="items in  computedShopItemList(msgPost.shoppingListContent)"
                                       :key="items.id"
                                     >
                                       <span>
@@ -2104,7 +2104,7 @@
                                     >Shopping List<span
                                       class="ml-3 text-gray-500"
                                       >{{
-                                        msgPost.shoppingListContent.length
+                                        computedShopItemList(msgPost.shoppingListContent).length
                                       }}
                                       items</span
                                     ></span
@@ -2115,7 +2115,7 @@
                                     class="text-gray-600 list-disc list-inside pl-4"
                                   >
                                     <li
-                                      v-for="items in msgPost.shoppingListContent"
+                                      v-for="items in  computedShopItemList(msgPost.shoppingListContent)"
                                       :key="items.ShoppingList"
                                     >
                                       <span>
@@ -3304,7 +3304,13 @@ export default {
   },
   methods: {
     computedShopItemList(list) {
-      return this.limit_by ? list.slice(0, this.limit_by) : list;
+      if (list != null) {
+        var temp = list.filter((x) => {
+          return x.status == 1;
+        });
+        return this.limit_by ? temp.slice(0, this.limit_by) : temp;
+      }
+      return null;
     },
     isFew(filter_itemList) {
       filter_itemList.length < 5;

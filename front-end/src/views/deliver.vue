@@ -493,7 +493,6 @@ export default {
       var complete = document.getElementById("completedDeliver").checked;
       var cancel = document.getElementById("cancelledDeliver").checked;
       var inTransit = document.getElementById("inTransitDeliver").checked;
-
       if (complete) {
         api
           .post("api/updateTransaction", {
