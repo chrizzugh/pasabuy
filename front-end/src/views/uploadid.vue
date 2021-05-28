@@ -263,7 +263,7 @@ export default {
       );
       this.logginIn = !this.logginIn;
       axios
-        .post("https://pasabuy-server.herokuapp.com/api/register", this.registrationData, {
+        .post("http://localhost:8000/api/register", this.registrationData, {
           withCredentials: true,
         })
         .then((res) => {
