@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class shoppingOrders extends Model
 {
     use HasFactory;
-    protected $table = 'tbl_orderrequestpost';
+    protected $table = 'tbl_orderRequestPost';
     protected $primaryKey = 'indexOrderRequestPost';
     public $timestamps = false;
 

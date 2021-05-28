@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class userAbout extends Model
 {
     use HasFactory;
-    protected $table = 'tbl_userabout';
+    protected $table = 'tbl_userAbout';
     protected $primaryKey = 'indexUserAbout ';
     public $timestamps = false;
 

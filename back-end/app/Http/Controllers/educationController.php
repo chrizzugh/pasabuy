@@ -13,7 +13,7 @@ class educationController extends Controller
     {
         # code...
         // return DB::select('SELECT * from tbl_usereducation WHERE email = \'' . Auth::user()->email . '\'');
-        $data = DB::select('SELECT * FROM tbl_usereducation ORDER BY  schoolName');
+        $data = DB::select('SELECT * FROM tbl_userEducation ORDER BY  schoolName');
 
         // $data = userAbout::all();
 
