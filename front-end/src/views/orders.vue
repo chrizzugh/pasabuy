@@ -189,8 +189,15 @@
           <div class="bg-gray-200 py-1 px-3 rounded-2xl">
             <div class="flex text-sm sm: space-x-2">
               <p>Shopping List</p>
-              <p class="text-gray-500">{{ itemx.transactionShoppingList.length }}</p>
-              <p v-if="itemx.transactionShoppingList.length > 1" class="text-gray-500">items</p>
+              <p class="text-gray-500">{{
+                              computedShopItemList(
+                                itemx.transactionShoppingList
+                              ).length
+                           }}</p>
+              <p v-if=" computedShopItemList(
+                                itemx.transactionShoppingList
+                              ).length
+                             > 1" class="text-gray-500">items</p>
               <p v-else class="text-gray-500">item</p>
             </div>
             <ul
@@ -198,11 +205,11 @@
               class="list-disc text-sm space-y-2 list-inside p-5"
             >
               <li
-                v-for="item in itemx.transactionShoppingList"
+                v-for="item in computedShopItemList(itemx.transactionShoppingList)"
                 :key="item.id"
                 class="list-disc items-center"
               >
-                <label class="text-md" style="font-size: 16px"
+                <label v-if="item.status===1" class="text-md" style="font-size: 16px"
                   >{{ item.product }}({{ item.size }})-{{ item.brand }} [{{
                     item.quantity
                   }}unit/s]</label
@@ -430,6 +437,15 @@ export default {
     };
   },
   methods: {
+    computedShopItemList(list) {
+      if (list != null) {
+        var temp = list.filter((x) => {
+          return x.status == 1;
+        });
+        return this.limit_by ? temp.slice(0, this.limit_by) : temp;
+      }
+      return null;
+    },
       setDispatches(email) {
       store.dispatch("getUserInfo", email).then(() => {
         store.dispatch("getNotAuthUserAddress", email).then(() => {
