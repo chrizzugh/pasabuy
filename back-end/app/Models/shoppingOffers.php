@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class shoppingOffers extends Model
 {
     use HasFactory;
-    protected $table = 'tbl_shoppingofferpost';
+    protected $table = 'tbl_shoppingOfferPost';
     protected $primaryKey = 'indexShoppingOfferPost';
     public $timestamps = false;
 

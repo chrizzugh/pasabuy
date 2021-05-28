@@ -668,14 +668,14 @@ export default {
     nextPage() {
       this.next = true;
       axios
-        .get("http://localhost:8000/sanctum/csrf-cookie", {
+        .get("https://pasabuy-server.herokuapp.com/sanctum/csrf-cookie", {
           withCredentials: true,
           xsrfCookieName: "XSRF-TOKEN",
           xsrfHeaderName: "X-XSRF-TOKEN",
         })
         .then(() => {
           axios
-            .post("http://localhost:8000/api/postPersonal", this.PersonalInfo, {
+            .post("https://pasabuy-server.herokuapp.com/api/postPersonal", this.PersonalInfo, {
               withCredentials: true,
               xsrfCookieName: "XSRF-TOKEN",
               xsrfHeaderName: "X-XSRF-TOKEN",

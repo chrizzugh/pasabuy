@@ -115,7 +115,7 @@ export default {
       console.log(params);
 
       axios
-        .post("http://localhost:8000/api/sendCode", params, {
+        .post("https://pasabuy-server.herokuapp.com/api/sendCode", params, {
           withCredentials: true,
           xsrfCookieName: "XSRF-TOKEN",
           xsrfHeaderName: "X-XSRF-TOKEN",

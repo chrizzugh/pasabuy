@@ -72,7 +72,7 @@ class userInformationController extends Controller
     {
         # code...
         $user = Auth::user();
-        $data = DB::select('SELECT * FROM tbl_userid WHERE email = \''.$user->email.'\'');
+        $data = DB::select('SELECT * FROM tbl_userID WHERE email = \''.$user->email.'\'');
 
         if($data == null)
             return response()->json('');
