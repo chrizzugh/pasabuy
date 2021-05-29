@@ -1,5 +1,6 @@
 import axios from 'axios';
-// import app from './main' 
+// import app from './main'
+import Echo from 'laravel-echo'
 import VueSimpleAlert from 'vue-simple-alert'
 
 console.log('apit token', sessionStorage.getItem("Authorization"))
@@ -16,8 +17,8 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(function (config) {
-    const token =  sessionStorage.getItem("Authorization")
-    config.headers.Authorization =  `Bearer `+ token;
+    const token = sessionStorage.getItem("Authorization")
+    config.headers.Authorization = `Bearer ` + token;
     console.log('apiiiiiiiii token', token)
     return config;
 });
@@ -65,6 +66,31 @@ api.interceptors.response.use(
         }
     });
 
+window.Pusher = require('pusher-js');
+window.Echo = new Echo({
+    broadcaster: "pusher",
+    cluster: 'ap1',
+    encrypted: true,
+    forceTLS: true,
+    key: '410753cda4969a0b8071',
+    // activityTimeout:1000000,
+    authorizer: (channel) => {
+        return {
+            authorize: (socketId, callback) => {
+                api.post('/api/broadcasting/auth', {
+                    socket_id: socketId,
+                    channel_name: channel.name
+                })
+                    .then(response => {
+                        callback(false, response.data);
+                    })
+                    .catch(error => {
+                        callback(true, error);
+                    });
+            }
+        };
+    },
+})
 // api.interceptors.request.use((config) => {
 //     app.VueProgressBar.start(); // for every request start the progress
 //     console.log("laoding")

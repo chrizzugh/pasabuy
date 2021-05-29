@@ -9,17 +9,7 @@
       pasaBUY
     </h1>
   </div>
-
-  <div class="flex items-center">
-    <router-link to="/">
-      <img src="/img/pasaBUYLogoOnly.png" class="w-16 h-16 block" />
-    </router-link>
-    <h1
-      class="absolute text-xl font-black tracking-widest left-16 font-raleway text-red-buttons block"
-    >
-      pasaBUY
-    </h1>
-  </div>
+ 
 
   <div id="verifyemail" class="flex items-center justify-center w-full px-4">
     <div
@@ -127,7 +117,7 @@ export default {
             if (choice === "email") {
               this.$router.push({ name: "verifyemail" });
             } else {
-              this.$router.push({ name: "verifyPhone" });
+              this.$router.push({ name: "VerifyPhone" });
             }
           }
         })

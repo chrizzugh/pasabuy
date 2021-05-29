@@ -1141,7 +1141,7 @@
                         class="flex flex-col ssm:mt-2 vs:mt-2 mt-3 w-full items-start justify-start h-auto vs:pr-0 vs:min-w-0 vs:px-2 ssm:pr-0 ssm:min-w-0 ssm:px-2 p-4 bg-gray-100 rounded-xl"
                         v-if="
                           post_info.post.request_post != null &&
-                          post_info.request_post.shoppingListContent != null
+                          post_info.post.request_post.shoppingListContent != null
                         "
                       >
                         <div class="flex-col items-start w-full">

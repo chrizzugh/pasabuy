@@ -2,36 +2,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/css/tailwind.css'
-import api from './api'
-import Echo from 'laravel-echo'
+// import api from './api'
+// import Echo from 'laravel-echo'
 import VueTheMask from 'vue-the-mask'
 import feather from 'vue-icon'
 
 // import VueProgressBar from "@aacassandra/vue3-progressbar";
 
-window.Pusher = require('pusher-js');
-window.Echo = new Echo({
-    broadcaster: "pusher",
-    cluster: 'ap1',
-    encrypted: true,
-    key: '410753cda4969a0b8071',
-    authorizer: (channel) => {
-        return {
-            authorize: (socketId, callback) => {
-                api.post('/api/broadcasting/auth', {
-                    socket_id: socketId,
-                    channel_name: channel.name
-                })
-                    .then(response => {
-                        callback(false, response.data);
-                    })
-                    .catch(error => {
-                        callback(true, error);
-                    });
-            }
-        };
-    },
-})
+
 
 
 // window.Echo = new Echo({

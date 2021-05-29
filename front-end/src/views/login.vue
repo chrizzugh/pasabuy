@@ -145,11 +145,11 @@ export default {
       this.show = !this.show
       this.logginIn1 = !this.logginIn1
       
-      axios.get("https://pasabuy-server.herokuapp.com/sanctum/csrf-cookie",{withCredentials: true,xsrfCookieName: 'XSRF-TOKEN',
+      axios.get("http://localhost:8000/sanctum/csrf-cookie",{withCredentials: true,xsrfCookieName: 'XSRF-TOKEN',
     xsrfHeaderName: 'X-XSRF-TOKEN'}).then(() => {
         // Login...
         axios
-          .post("https://pasabuy-server.herokuapp.com/api/login", this.dataForm,{withCredentials: true,xsrfCookieName: 'XSRF-TOKEN',
+          .post("http://localhost:8000/api/login", this.dataForm,{withCredentials: true,xsrfCookieName: 'XSRF-TOKEN',
     xsrfHeaderName: 'X-XSRF-TOKEN'})
           .then((res) => {
             sessionStorage.setItem("isLoggedIn", true);

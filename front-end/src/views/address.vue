@@ -151,7 +151,7 @@ export default {
      var getCityCode = document.getElementById("City").value;
       console.log(getCityCode)
        axios
-          .get("http://localhost:8000/api/refBrgy', {params:{cityCode: getCityCode}},{withCredentials: true}).then((res)=>{
+          .get("http://localhost:8000/api/refBrgy", {params:{cityCode: getCityCode}},{withCredentials: true}).then((res)=>{
         console.log('brgy', res.data)
         this.barangays = res.data
       }).catch((errors)=>{
