@@ -263,11 +263,14 @@ export default {
       );
       this.logginIn = !this.logginIn;
       axios
-        .post("http://localhost:8000/api/register", this.registrationData, {
-          withCredentials: true,
-        })
+        .post("https://pasabuy-server.herokuapp.com/api/register", this.registrationData, {
+              withCredentials: true,
+              xsrfCookieName: "XSRF-TOKEN",
+              xsrfHeaderName: "X-XSRF-TOKEN",
+            })
         .then((res) => {
           console.log(res.data);
+          sessionStorage.setItem("Authorization", res.data.token);
           if (res) {
             this.dispatches().then(() => {
               //wait for the dispatches to finish
@@ -276,7 +279,6 @@ export default {
               localStorage.removeItem("address");
               this.show = !this.show;
               sessionStorage.setItem("isLoggedIn", true);
-              sessionStorage.setItem("Authorization", res.data.token);
               if(skip){
                 this.$router.push({ name: "accountsettings" });
               }else{

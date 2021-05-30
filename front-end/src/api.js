@@ -6,7 +6,7 @@ import VueSimpleAlert from 'vue-simple-alert'
 console.log('apit token', sessionStorage.getItem("Authorization"))
 
 const api = axios.create({
-    baseURL: `http://localhost:8000/`,
+    baseURL: `https://pasabuy-server.herokuapp.com/`,
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
@@ -32,18 +32,18 @@ api.interceptors.response.use(
         switch (error.response.status) {
             case 401: // Not logged in
                 VueSimpleAlert.alert("Session expired, Please Log in again", "Session Expired", "warning")
-                api.post('api/logout').then(() => {
-                    sessionStorage.clear();
-                    window.location.reload();
+                // api.post('api/logout').then(() => {
+                //     sessionStorage.clear();
+                //     window.location.reload();
 
-                })
+                // })
                 break;
             case 419: // Session expired
                 VueSimpleAlert.alert("Session expired, Please Log in again", "Session Expired", "warning")
-                api.post('api/logout').then(() => {
-                    sessionStorage.clear();
-                    window.location.reload();
-                })
+                // api.post('api/logout').then(() => {
+                //     sessionStorage.clear();
+                //     window.location.reload();
+                // })
                 break;
             case 429:
                 VueSimpleAlert.alert("Too many, requests", "Throttled", "error")
@@ -51,10 +51,10 @@ api.interceptors.response.use(
             case 503: // Down for maintenance
                 // Bounce the user to the login screen with a redirect back
                 VueSimpleAlert.alert("We're sorry, our site is down for maintenance, Thank you", "Down for maintenance", "info")
-                api.post('api/logout').then(() => {
-                    sessionStorage.clear();
-                    window.location.reload();
-                })
+                // api.post('api/logout').then(() => {
+                //     sessionStorage.clear();
+                //     window.location.reload();
+                // })
                 window.location.reload();
                 break;
             case 500:

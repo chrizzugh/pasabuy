@@ -42,7 +42,7 @@ class RegisterController extends Controller
             'firstName' => ['required', 'regex:/^[a-zA-Z ]+$/'],
             'lastName' => ['required', 'regex:/^[a-zA-Z ]+$/'],
             'email' => ['required', 'email', 'unique:tbl_userAuthentication', 'regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'],
-            'phoneNumber' => ['required','regex:(\+?[6][3]?\s?[9]\d{2}\s?\d{3}\s?\d{4}),unique:tbl_userInformation'],
+            'phoneNumber' => ['required','regex:(\+?[6][3]?\s?[9]\d{2}\s?\d{3}\s?\d{4})','unique:tbl_userInformation'],
             'password' => [
                 'required',
                 'min:8',
@@ -188,21 +188,37 @@ class RegisterController extends Controller
                     if (($request->file('front_image') != NULL) && ($request->file('back_image') != NULL)) {
 
                         $user->email = $request->email;
+                        // $image = $request->file('front_image');
+                        // $file_name = $request->file('front_image')->hashName();
+                        // $image_resize = Image::make($image->getRealPath());
+                        // $image_resize->save(public_path('storage\images\\' . $request->indexUserInformation . '\\' . $file_name))->fit(500, 500);
+
+
+                        // $user->IDFrontPicture = Storage::url('/images/' . $request->indexUserInformation . '/' . $file_name);
+
                         $image = $request->file('front_image');
                         $file_name = $request->file('front_image')->hashName();
-                        $image_resize = Image::make($image->getRealPath());
-                        $image_resize->save(public_path('storage\images\\' . $request->indexUserInformation . '\\' . $file_name))->fit(500, 500);
+                        $image_resize = Image::make($image);
+                
+                        Storage::disk('s3')->put('/images/'.$userInfo->indexUserInformation.'/validID/Front/'.$file_name, $image_resize->stream(),'public');
+                 
+                        $user->IDFrontPicture = Storage::disk('s3')->url('images/'.$userInfo->indexUserInformation.'/validID/Front/'.$file_name);
 
+                        // $image = $request->file('back_image');
+                        // $file_name = $request->file('back_image')->hashName();
+                        // $image_resize = Image::make($image->getRealPath());
+                        // $image_resize->save(public_path('storage\images\\' . $request->indexUserInformation . '\\' . $file_name))->fit(500, 500);
 
-                        $user->IDFrontPicture = Storage::url('/images/' . $request->indexUserInformation . '/' . $file_name);
+                        // $user->IDBackPicture = Storage::url('/images/' . $request->indexUserInformation . '/' . $file_name);
+
 
                         $image = $request->file('back_image');
                         $file_name = $request->file('back_image')->hashName();
-                        $image_resize = Image::make($image->getRealPath());
-                        $image_resize->save(public_path('storage\images\\' . $request->indexUserInformation . '\\' . $file_name))->fit(500, 500);
-
-                        $user->IDBackPicture = Storage::url('/images/' . $request->indexUserInformation . '/' . $file_name);
-
+                        $image_resize = Image::make($image);
+                
+                        Storage::disk('s3')->put('/images/'.$userInfo->indexUserInformation.'/validID/Back/'.$file_name, $image_resize->stream(),'public');
+                 
+                        $user->IDFrontPicture = Storage::disk('s3')->url('images/'.$userInfo->indexUserInformation.'/validID/Back/'.$file_name);
 
                         $user->save();
                     }

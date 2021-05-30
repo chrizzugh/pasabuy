@@ -118,7 +118,11 @@ export default {
       console.log(this.addressInfo);
 
        axios
-          .post('http://localhost:8000/api/postAddress', this.addressInfo,{withCredentials: true}).then((res) => {
+          .post('https://pasabuy-server.herokuapp.com/api/postAddress', this.addressInfo,{
+              withCredentials: true,
+              xsrfCookieName: "XSRF-TOKEN",
+              xsrfHeaderName: "X-XSRF-TOKEN",
+            }).then((res) => {
         console.log(res.data);
         localStorage.setItem("address", JSON.stringify(res.data));
         this.$router.push({ name: "uploadid" });
@@ -139,7 +143,11 @@ export default {
       var getProvCode = document.getElementById("Province").value;
       console.log(getProvCode)
        axios
-          .get('http://localhost:8000/api/refcityMunicipality', {params:{provCode: getProvCode}},{withCredentials: true}).then((res)=>{
+          .get('https://pasabuy-server.herokuapp.com/api/refcityMunicipality', {params:{provCode: getProvCode}},{
+              withCredentials: true,
+              xsrfCookieName: "XSRF-TOKEN",
+              xsrfHeaderName: "X-XSRF-TOKEN",
+            }).then((res)=>{
         this.cityMunicipality = res.data
       }).catch((errors)=>{
         console.log(errors)
@@ -151,7 +159,11 @@ export default {
      var getCityCode = document.getElementById("City").value;
       console.log(getCityCode)
        axios
-          .get("http://localhost:8000/api/refBrgy", {params:{cityCode: getCityCode}},{withCredentials: true}).then((res)=>{
+          .get("https://pasabuy-server.herokuapp.com/api/refBrgy", {params:{cityCode: getCityCode}},{
+              withCredentials: true,
+              xsrfCookieName: "XSRF-TOKEN",
+              xsrfHeaderName: "X-XSRF-TOKEN",
+            }).then((res)=>{
         console.log('brgy', res.data)
         this.barangays = res.data
       }).catch((errors)=>{
@@ -162,7 +174,11 @@ export default {
     },
     refProvince() {
        axios
-          .get("http://localhost:8000/api/refProvince",{withCredentials: true}).then((res) => {
+          .get("https://pasabuy-server.herokuapp.com/api/refProvince",{
+              withCredentials: true,
+              xsrfCookieName: "XSRF-TOKEN",
+              xsrfHeaderName: "X-XSRF-TOKEN",
+            }).then((res) => {
         this.provinces = res.data;
         // for (var i=0;i < this.provinces.length;i++){
         //  // this.provinces[i] = JSON.stringify(this.provinces[i].provDesc); 

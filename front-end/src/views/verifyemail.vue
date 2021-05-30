@@ -103,7 +103,7 @@ export default {
     nextPage() {
       var params = { code: localStorage.getItem("code"), textCode: this.textCode };
       axios
-        .post("http://localhost:8000/api/confirmVerificationCode", params, {
+        .post("https://pasabuy-server.herokuapp.com/api/confirmVerificationCode", params, {
           withCredentials: true,
           xsrfCookieName: "XSRF-TOKEN",
           xsrfHeaderName: "X-XSRF-TOKEN",
@@ -124,7 +124,7 @@ export default {
       console.log(params);
 
       axios
-        .post("http://localhost:8000/api/sendCode", params, {
+        .post("https://pasabuy-server.herokuapp.com/api/sendCode", params, {
           withCredentials: true,
           xsrfCookieName: "XSRF-TOKEN",
           xsrfHeaderName: "X-XSRF-TOKEN",
