@@ -547,8 +547,7 @@ h1 {
 </style>
 
 <script>
-import axios from "axios";
-
+import api from "../api-guest"
 export default {
   data() {
     return {
@@ -667,19 +666,11 @@ export default {
     },
     nextPage() {
       this.next = true;
-      axios
-        .get("https://pasabuy-server.herokuapp.com/sanctum/csrf-cookie", {
-          withCredentials: true,
-          xsrfCookieName: "XSRF-TOKEN",
-          xsrfHeaderName: "X-XSRF-TOKEN",
-        })
+      api
+        .get("/sanctum/csrf-cookie")
         .then(() => {
-          axios
-            .post("https://pasabuy-server.herokuapp.com/api/postPersonal", this.PersonalInfo, {
-              withCredentials: true,
-              xsrfCookieName: "XSRF-TOKEN",
-              xsrfHeaderName: "X-XSRF-TOKEN",
-            })
+          api
+            .post("/api/postPersonal", this.PersonalInfo)
             .then((res) => {
               if (res != null) {
                 localStorage.setItem(

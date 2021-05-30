@@ -1479,7 +1479,7 @@
             <div
               class="pt-2 pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl"
             >
-              <a href="" class="float-right font-bold">View Full Details</a>
+              <router-link :to="'/singlePostOrder/?transactionNumber='+toEncrypt(confirmedOrders[0].transactionNumber)" class="float-right font-bold">View Full Details</router-link>
             </div>
           </div>
           <div v-else>
@@ -1670,7 +1670,7 @@
               </label>
             </div>
             <div class="pb-8 pr-3 text-sm tracking-wide bg-white rounded-b-xl">
-              <a href="" class="float-right font-bold">View Full Details</a>
+             <router-link :to="'/singlePostDelivery/?transactionNumber='+toEncrypt(confirmedDeliveries[0].transactionNumber)" class="float-right font-bold">View Full Details</router-link>
             </div>
           </div>
           <div v-else>

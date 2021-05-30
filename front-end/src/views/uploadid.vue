@@ -168,7 +168,7 @@
 // import api from "../api";
 import store from "../store/index";
 import loading from "./loading";
-import axios from "axios";
+import api from "../api-guest"
 export default {
   components: {
     loading,
@@ -262,12 +262,8 @@ export default {
         dataform.address.cityMunicipality
       );
       this.logginIn = !this.logginIn;
-      axios
-        .post("https://pasabuy-server.herokuapp.com/api/register", this.registrationData, {
-              withCredentials: true,
-              xsrfCookieName: "XSRF-TOKEN",
-              xsrfHeaderName: "X-XSRF-TOKEN",
-            })
+      api
+        .post("/api/register", this.registrationData)
         .then((res) => {
           console.log(res.data);
           sessionStorage.setItem("Authorization", res.data.token);

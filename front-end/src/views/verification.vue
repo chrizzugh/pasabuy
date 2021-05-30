@@ -90,7 +90,7 @@
 </style>
 
 <script>
-import axios from "axios";
+import api from "../api-guest"
 export default {
   data() {
     return {
@@ -104,12 +104,8 @@ export default {
       params.verificationChoice = choice;
       console.log(params);
 
-      axios
-        .post("https://pasabuy-server.herokuapp.com/api/sendCode", params, {
-          withCredentials: true,
-          xsrfCookieName: "XSRF-TOKEN",
-          xsrfHeaderName: "X-XSRF-TOKEN",
-        })
+      api
+        .post("/api/sendCode", params)
         .then((res) => {
           console.log(res);
           if (res.data) {
