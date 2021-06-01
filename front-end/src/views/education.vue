@@ -219,15 +219,9 @@ export default {
   },
   mounted() {},
   computed: {
-    account_infos() {
-      return store.getters.getUserInfo;
-    },
     userEducs() {
       console.log("sss", store.getters.getAuthEducation);
-      console.log("sssss", this.account_infos);
-      return store.getters.getAuthEducation.filter((x) => {
-        return x.email == this.account_infos.email;
-      });
+      return store.getters.getAuthEducation.filter((value) => {return (value.email ==  this.userPersonal.email)})
     },
     userPersonal() {
       return store.getters.getPersonal;
