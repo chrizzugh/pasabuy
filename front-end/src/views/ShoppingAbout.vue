@@ -384,7 +384,8 @@ export default {
       
     userEducs(){
       console.log("ssssss", store.getters.getAuthEducation);
-      return store.getters.getAuthEducation;
+      return store.getters.getAuthEducation.filter((value) => {return (value.email ==  this.account_infos.email)})
+        
       
     },
     
