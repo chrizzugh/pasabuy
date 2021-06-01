@@ -147,3 +147,4 @@ Route::post("/postVisitedPlace", [userAboutController::class, 'postUserVisitedPl
 Route::post("/updateVisitedPlace", [userAboutController::class, 'updateUserVisitedPlaces'] );
 Route::get("/allLanguages", [userInformationController::class, 'getAllLanguages'] );
 Route::get("/getUserAbout", [userAboutController::class, 'getUserAbout'] );
+Route::get("/getAllTransaction", [transactionController::class, 'getAllTransaction'] );

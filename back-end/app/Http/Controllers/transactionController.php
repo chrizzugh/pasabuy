@@ -167,4 +167,14 @@ class transactionController extends Controller
             return response()->json(["error"=>"Error updating transaction."],201);
 
     }
+    public function getAllTransaction()
+    {
+        // $transaction = transaction::all();
+        $transaction = transaction::with('post')
+            ->orderBy('dateCreated','desc')
+            ->get();
+   
+        
+        return response()->json($transaction);
+    }
 }
