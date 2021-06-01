@@ -218,13 +218,13 @@ export default {
   },
   mounted() {},
   computed: {
+    userPersonal() {
+      return store.getters.getPersonal;
+    },
     userEducs() {
       console.log("sss", store.getters.getAuthEducation);
       return store.getters.getAuthEducation.filter((value) => {return (value.email ==  this.userPersonal.email)})
 
-    },
-    userPersonal() {
-      return store.getters.getPersonal;
     },
   },
   created() {
