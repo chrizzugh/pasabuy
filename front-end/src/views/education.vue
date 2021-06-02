@@ -203,6 +203,7 @@ export default {
         .post("/api/updateEduc", info)
         .then(() => {
           console.log("infor", info);
+          // this.schoolsList = [];
           store.dispatch("getAuthEducation");
           VueSimpleAlert.alert(
             "Schools created successfully",
@@ -226,7 +227,7 @@ export default {
 
     userPersonal() {
       return store.getters.getPersonal;
-    },
+    }
   },
   created() {
     // this.loadskills();

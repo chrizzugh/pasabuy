@@ -173,4 +173,14 @@ class transactionController extends Controller
         
         return response()->json($transaction);
     }
+    public function getAllTransaction()
+    {
+        // $transaction = transaction::all();
+        $transaction = transaction::with('post')
+            ->orderBy('dateCreated','desc')
+            ->get();
+   
+        
+        return response()->json($transaction);
+    }
 }

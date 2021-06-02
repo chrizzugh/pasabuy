@@ -386,24 +386,6 @@ export default {
       console.log("ssssss", store.getters.getAuthEducation);
       return store.getters.getAuthEducation.filter((value) => {return (value.email ==  this.account_infos.email)})
     },
-
-    // userTransactions(){
-    //   // return api.get("api/getAllTransactions")
-    //   return api.get("api/getAllTransactions").filter((transaction) => {
-    //     return transaction.emailCustomerShopper == this.account_infos.email && transaction.transactionReceiver == this.account_infos.email;
-        
-    //   });
-    // },
-      // userTransactions() {
-      //   return api.get("api/getAllTransactions").filter((x) => {
-      //   return (
-      //     (x.transactionStatus == "Completed" &&
-      //       x.emailCustomerShopper   != this.user.email) ||
-      //     (x.transactionStatus == "Completed" &&
-      //       x.transactionReceiver  == this.user.email)
-      //   );
-      // });
-      // },
       allTransactions() {
       return store.getters.getAllTransactions.filter((x) => {
         return (
@@ -421,7 +403,7 @@ export default {
 
     this.allTransactions.forEach((value, index) => {
     arr.push(value);
-    console.log("interests",value);
+    console.log("transaction",value);
     console.log(index);
     if(value!=null){
       if(value.post.postIdentity == "post_offer")
