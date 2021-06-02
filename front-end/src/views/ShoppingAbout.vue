@@ -289,8 +289,8 @@ export default {
   data(){
     return{
       // rating: '4.9',
-      deliveries: '0',
-      orders: '0',
+      deliveries: 0,
+      orders: 0,
       postModalVisible: false,
       postModalVisible1: false,
       postModalVisible2: false,
